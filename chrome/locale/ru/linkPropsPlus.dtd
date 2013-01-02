@@ -1,0 +1,64 @@
+<!ENTITY linkPropsPlus.ownWindowTitle "Свойства ссылки">
+<!ENTITY linkPropsPlus.labelLink "Ссылка:">
+<!ENTITY linkPropsPlus.labelLinkAccesskey "С">
+<!ENTITY linkPropsPlus.labelReferer "Referer:">
+<!ENTITY linkPropsPlus.labelRefererAccesskey "R">
+<!ENTITY linkPropsPlus.labelOnlyHttpTip "Только для HTTP-ссылок">
+<!ENTITY linkPropsPlus.buttonGetProps "Получить свойства">
+<!ENTITY linkPropsPlus.buttonGetPropsAccesskey "П">
+<!ENTITY linkPropsPlus.buttonOptions "Настройки">
+<!ENTITY linkPropsPlus.buttonOptionsAccesskey "Н">
+
+<!ENTITY linkPropsPlus.labelSize "Размер файла:">
+<!ENTITY linkPropsPlus.labelLastModified "Последнее изменение:">
+<!ENTITY linkPropsPlus.labelContentType "Тип содержимого:">
+<!ENTITY linkPropsPlus.labelStatus "Статус:">
+<!ENTITY linkPropsPlus.labelDirectURI "Прямая ссылка:">
+<!ENTITY linkPropsPlus.labelGoToURI "Перейти по ссылке">
+<!ENTITY linkPropsPlus.labelDownloadURI "Сохранить как…">
+<!ENTITY linkPropsPlus.labelHeaders "Заголовки HTTP:">
+
+<!ENTITY linkPropsPlus.autoCloseTip "Автоматическое закрытие">
+
+<!ENTITY linkPropsPlus.copyRow "Копировать строку">
+<!ENTITY linkPropsPlus.copyRowAccesskey "с">
+<!ENTITY linkPropsPlus.copyAll "Копировать всё">
+<!ENTITY linkPropsPlus.copyAllAccesskey "в">
+
+<!-- Page info -->
+<!ENTITY linkPropsPlus.linkProperties "Свойства ссылки">
+<!ENTITY linkPropsPlus.linksProperties "Свойства ссылок">
+<!ENTITY linkPropsPlus.linkPropertiesAccesskey "С">
+
+<!-- Options -->
+<!ENTITY linkPropsPlus.opts.windowTitle "Link Properties Plus: Настройки">
+<!ENTITY linkPropsPlus.opts.apply "Применить">
+
+<!ENTITY linkPropsPlus.opts.paneGeneral "Основные">
+<!ENTITY linkPropsPlus.opts.propertiesDialog "Диалог свойств">
+<!ENTITY linkPropsPlus.opts.ownWindow "Отдельное окно">
+<!ENTITY linkPropsPlus.opts.downloadDialog "Диалог открытия файла">
+<!ENTITY linkPropsPlus.opts.showStatus "Статус ответа">
+<!ENTITY linkPropsPlus.opts.showDirectURI "Прямая ссылка">
+<!ENTITY linkPropsPlus.opts.showHeaders "Заголовки HTTP">
+
+<!ENTITY linkPropsPlus.opts.linkProperties "Свойства ссылки">
+<!ENTITY linkPropsPlus.opts.precision "Округлять размер файлов до:">
+<!ENTITY linkPropsPlus.opts.useBinaryPrefixes "Использовать двоичные приставки (1 Кбайт = 1024 байт)">
+<!ENTITY linkPropsPlus.opts.decodeURIs "Декодировать ссылки">
+
+<!ENTITY linkPropsPlus.opts.paneIntegration "Интеграция">
+<!ENTITY linkPropsPlus.opts.contextOnLinks "Показывать пункт контекстного меню для ссылок">
+<!ENTITY linkPropsPlus.opts.contextOnSelection "Показывать пункт контекстного меню для выделенных текстовых ссылок">
+<!ENTITY linkPropsPlus.opts.showInToolsMenu "Показывать пункт в меню Инструменты">
+<!ENTITY linkPropsPlus.opts.showInToolsSubMenu "Показывать в меню «Веб-разработка»">
+<!ENTITY linkPropsPlus.opts.showInAppMenu "Показывать пункт в меню приложения">
+<!ENTITY linkPropsPlus.opts.showIcon "Показывать иконку">
+
+<!ENTITY linkPropsPlus.opts.paneMiscellaneous "Разное">
+<!ENTITY linkPropsPlus.opts.close "Закрывать окно после открытия или сохранения ссылки">
+<!ENTITY linkPropsPlus.opts.autoClose "Автоматическое закрытие">
+<!ENTITY linkPropsPlus.opts.autoCloseAfter "Закрывать окно через">
+<!ENTITY linkPropsPlus.opts.ms "мс">
+<!ENTITY linkPropsPlus.opts.dontCloseUnderCursor "Не закрывать под курсором">
+<!ENTITY linkPropsPlus.opts.onlyAfterRequest "Только после запроса свойств ссылки">

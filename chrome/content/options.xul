@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://linkpropsplus/skin/linkPropsPlus.css" type="text/css"?>
+
+<!DOCTYPE prefwindow SYSTEM "chrome://linkpropsplus/locale/linkPropsPlus.dtd">
+
+<prefwindow xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	id="linkPropsPlusOptionsWindow"
+	windowtype="linkPropsPlus:optionsWindow"
+	buttons="accept, cancel, extra1"
+	ondialogextra1="linkPropsPlusOpts.savePrefpanes();"
+	buttonlabelextra1="&linkPropsPlus.opts.apply;"
+	onload="linkPropsPlusOpts.init();"
+	oncommand="linkPropsPlusOpts.checkUnsaved();"
+	onchange="linkPropsPlusOpts.checkUnsaved();"
+	oninput="linkPropsPlusOpts.checkUnsaved();"
+	ondrop="linkPropsPlusOpts.checkUnsaved();"
+	title="&linkPropsPlus.opts.windowTitle;"
+	minwidth="320">
+
+	<prefpane id="pane-general" label="&linkPropsPlus.opts.paneGeneral;" flex="1">
+		<preferences>
+			<preference id="propertiesStatus" name="extensions.linkPropertiesPlus.properties.showResponseStatus" type="bool" />
+			<preference id="propertiesHeaders" name="extensions.linkPropertiesPlus.properties.showHttpHeaders" type="bool" />
+			<preference id="propertiesDirectURI" name="extensions.linkPropertiesPlus.properties.showDirectURI" type="bool" />
+
+			<preference id="ownWindowStatus" name="extensions.linkPropertiesPlus.ownWindow.showResponseStatus" type="bool" />
+			<preference id="ownWindowHeaders" name="extensions.linkPropertiesPlus.ownWindow.showHttpHeaders" type="bool" />
+			<preference id="ownWindowDirectURI" name="extensions.linkPropertiesPlus.ownWindow.showDirectURI" type="bool" />
+
+			<preference id="downloadStatus" name="extensions.linkPropertiesPlus.download.showResponseStatus" type="bool" />
+			<preference id="downloadHeaders" name="extensions.linkPropertiesPlus.download.showHttpHeaders" type="bool" />
+			<preference id="downloadDirectURI" name="extensions.linkPropertiesPlus.download.showDirectURI" type="bool" />
+
+			<preference id="sizePrecision" name="extensions.linkPropertiesPlus.sizePrecision" type="int" />
+			<preference id="useBinaryPrefixes" name="extensions.linkPropertiesPlus.useBinaryPrefixes" type="bool" />
+			<preference id="decodeURIs" name="extensions.linkPropertiesPlus.decodeURIs" type="bool" />
+		</preferences>
+
+		<groupbox id="propertiesBox" orient="horizontal" hidden="true">
+			<caption label="&linkPropsPlus.opts.propertiesDialog;" />
+			<checkbox preference="propertiesStatus" label="&linkPropsPlus.opts.showStatus;" />
+			<spacer flex="1" />
+			<checkbox preference="propertiesDirectURI" label="&linkPropsPlus.opts.showDirectURI;"
+				oncommand="linkPropsPlusOpts.disableDecodeCheckbox();" />
+			<spacer flex="1" />
+			<checkbox preference="propertiesHeaders" label="&linkPropsPlus.opts.showHeaders;" />
+			<spacer flex="1" />
+		</groupbox>
+		<groupbox id="ownWindowBox" orient="horizontal">
+			<caption label="&linkPropsPlus.opts.ownWindow;" />
+			<checkbox preference="ownWindowStatus" label="&linkPropsPlus.opts.showStatus;" />
+			<spacer flex="1" />
+			<checkbox preference="ownWindowDirectURI" label="&linkPropsPlus.opts.showDirectURI;"
+				oncommand="linkPropsPlusOpts.disableDecodeCheckbox();" />
+			<spacer flex="1" />
+			<checkbox preference="ownWindowHeaders" label="&linkPropsPlus.opts.showHeaders;" />
+			<spacer flex="1" />
+		</groupbox>
+		<groupbox id="downloadBox" orient="horizontal">
+			<caption label="&linkPropsPlus.opts.downloadDialog;" />
+			<checkbox preference="downloadStatus" label="&linkPropsPlus.opts.showStatus;" />
+			<spacer flex="1" />
+			<checkbox preference="downloadDirectURI" label="&linkPropsPlus.opts.showDirectURI;"
+				oncommand="linkPropsPlusOpts.disableDecodeCheckbox();" />
+			<spacer flex="1" />
+			<checkbox preference="downloadHeaders" label="&linkPropsPlus.opts.showHeaders;" />
+			<spacer flex="1" />
+		</groupbox>
+		<groupbox>
+			<caption label="&linkPropsPlus.opts.linkProperties;" />
+			<hbox align="center">
+				<label value="&linkPropsPlus.opts.precision;" />
+				<textbox preference="sizePrecision" size="1" type="number" min="0" max="3" increment="1" />
+			</hbox>
+			<checkbox preference="useBinaryPrefixes" label="&linkPropsPlus.opts.useBinaryPrefixes;" />
+			<checkbox preference="decodeURIs" label="&linkPropsPlus.opts.decodeURIs;" />
+		</groupbox>
+	</prefpane>
+
+	<prefpane id="pane-integration" label="&linkPropsPlus.opts.paneIntegration;" flex="1">
+		<preferences>
+			<preference id="context.onLinks" name="extensions.linkPropertiesPlus.context.onLinks" type="bool" />
+			<preference id="context.onSelection" name="extensions.linkPropertiesPlus.context.onSelection" type="bool" />
+			<preference id="icon.contextMenu" name="extensions.linkPropertiesPlus.icon.contextMenu" type="bool" />
+
+			<preference id="showInToolsMenu" name="extensions.linkPropertiesPlus.showInToolsMenu" type="bool" />
+			<preference id="showInToolsMenuSub" name="extensions.linkPropertiesPlus.showInToolsMenuSub" type="bool" />
+			<preference id="icon.toolsMenu" name="extensions.linkPropertiesPlus.icon.toolsMenu" type="bool" />
+
+			<preference id="showInAppMenu" name="extensions.linkPropertiesPlus.showInAppMenu" type="bool" />
+			<preference id="icon.appMenu" name="extensions.linkPropertiesPlus.icon.appMenu" type="bool" />
+		</preferences>
+
+		<vbox oncommand="linkPropsPlusOpts.disableIconsCheckboxes();">
+			<checkbox preference="context.onLinks" label="&linkPropsPlus.opts.contextOnLinks;" />
+			<checkbox preference="context.onSelection" label="&linkPropsPlus.opts.contextOnSelection;" />
+			<checkbox preference="icon.contextMenu" label="&linkPropsPlus.opts.showIcon;" class="indent" />
+			<separator class="thin" />
+			<checkbox preference="showInToolsMenu" label="&linkPropsPlus.opts.showInToolsMenu;" />
+			<checkbox preference="showInToolsMenuSub" label="&linkPropsPlus.opts.showInToolsSubMenu;" class="indent" />
+			<checkbox preference="icon.toolsMenu" label="&linkPropsPlus.opts.showIcon;" class="indent" />
+			<vbox id="appMenuOptions">
+				<separator class="thin" />
+				<checkbox preference="showInAppMenu" label="&linkPropsPlus.opts.showInAppMenu;" />
+				<checkbox preference="icon.appMenu" label="&linkPropsPlus.opts.showIcon;" class="indent" />
+			</vbox>
+		</vbox>
+	</prefpane>
+
+	<prefpane id="pane-misc" label="&linkPropsPlus.opts.paneMiscellaneous;" flex="1">
+		<preferences>
+			<preference id="closeAfterOpen" name="extensions.linkPropertiesPlus.closeAfterOpen" type="bool" />
+			<preference id="autoClose.enabled" name="extensions.linkPropertiesPlus.autoClose.enabled" type="bool" />
+			<preference id="autoClose.delay" name="extensions.linkPropertiesPlus.autoClose.delay" type="int" />
+			<preference id="autoClose.dontCloseUnderCursor" name="extensions.linkPropertiesPlus.autoClose.dontCloseUnderCursor" type="bool" />
+			<preference id="autoClose.onlyAfterRequest" name="extensions.linkPropertiesPlus.autoClose.onlyAfterRequest" type="bool" />
+		</preferences>
+
+		<checkbox preference="closeAfterOpen" label="&linkPropsPlus.opts.close;" />
+		<groupbox>
+			<caption label="&linkPropsPlus.opts.autoClose;" />
+			<hbox align="center">
+				<checkbox preference="autoClose.enabled" label="&linkPropsPlus.opts.autoCloseAfter;"
+					oncommand="linkPropsPlusOpts.disableAutoCloseOptionsDelay();" />
+				<textbox preference="autoClose.delay" size="6" type="number" min="0" max="1800000" increment="500"
+					oninput="linkPropsPlusOpts.disableAutoCloseOptionsDelay();"
+					onchange="linkPropsPlusOpts.disableAutoCloseOptionsDelay();"
+					ondrop="linkPropsPlusOpts.disableAutoCloseOptionsDelay();" />
+				<label value="&linkPropsPlus.opts.ms;" />
+			</hbox>
+			<checkbox preference="autoClose.dontCloseUnderCursor" label="&linkPropsPlus.opts.dontCloseUnderCursor;" />
+			<checkbox preference="autoClose.onlyAfterRequest" label="&linkPropsPlus.opts.onlyAfterRequest;" />
+		</groupbox>
+	</prefpane>
+
+	<!--
+		https://developer.mozilla.org/En/Preferences_System/Prefwindow#Issues_when_using_prefpanes_in_prefwindow
+		https://bugzilla.mozilla.org/show_bug.cgi?id=296418
+	-->
+	<script type="application/javascript" src="chrome://linkpropsplus/content/prefUtils.js" />
+	<script type="application/javascript" src="chrome://linkpropsplus/content/options.js" />
+	<keyset>
+		<key key="s" modifiers="control" oncommand="linkPropsPlusOpts.savePrefpanes();" />
+	</keyset>
+
+</prefwindow>

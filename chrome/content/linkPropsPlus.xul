@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://linkpropsplus/skin/linkPropsPlus.css" type="text/css"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://linkpropsplus/locale/linkPropsPlus.dtd">
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script type="application/javascript" src="chrome://linkpropsplus/content/utils.js" />
+	<script type="application/javascript" src="chrome://linkpropsplus/content/prefUtils.js" />
+	<script type="application/javascript" src="chrome://linkpropsplus/content/linkPropsPlus.js" />
+	<vbox id="linkPropsPlus-container" hidden="true" flex="1">
+		<grid id="linkPropsPlus-grid" flex="1"
+			context="linkPropsPlus-context"
+			onmousedown="linkPropsPlusSvc.openOptionsClick(event);"
+			onclick="linkPropsPlusSvc.openOptionsClick(event);"
+			ondblclick="linkPropsPlusSvc.openOptionsClick(event);">
+			<columns>
+				<column id="linkPropsPlus-columnLabels" />
+				<column flex="1" />
+			</columns>
+			<rows id="linkPropsPlus-rows" flex="1">
+				<row id="linkPropsPlus-rowSize">
+					<label value="&linkPropsPlus.labelSize;" control="linkPropsPlus-size" />
+					<textbox id="linkPropsPlus-size" readonly="true" />
+				</row>
+				<row id="linkPropsPlus-rowLastModified">
+					<label value="&linkPropsPlus.labelLastModified;" control="linkPropsPlus-lastModified" />
+					<textbox id="linkPropsPlus-lastModified" readonly="true" />
+				</row>
+				<row id="linkPropsPlus-rowContentType">
+					<label value="&linkPropsPlus.labelContentType;" control="linkPropsPlus-contentType" />
+					<textbox id="linkPropsPlus-contentType" readonly="true" />
+				</row>
+				<row id="linkPropsPlus-rowStatus">
+					<label value="&linkPropsPlus.labelStatus;" control="linkPropsPlus-status" />
+					<textbox id="linkPropsPlus-status" readonly="true" />
+				</row>
+				<row id="linkPropsPlus-rowDirectURI" align="center">
+					<label value="&linkPropsPlus.labelDirectURI;" control="linkPropsPlus-directURI" />
+					<hbox id="linkPropsPlus-directURIBox" flex="1">
+						<textbox id="linkPropsPlus-directURI" readonly="true" flex="1" />
+						<toolbarbutton id="linkPropsPlus-goToDirectURI"
+							class="linkPropsPlus-toolbarbutton linkPropsPlus-go"
+							oncommand="linkPropsPlusSvc.goToURI('directURI', event);"
+							onclick="if(event.button > 0) linkPropsPlusSvc.goToURI('directURI', true);"
+							tooltiptext="&linkPropsPlus.labelGoToURI;"
+							lpp_key="linkPropsPlus-key-goToDirectURI" />
+						<toolbarbutton id="linkPropsPlus-downloadDirectURI"
+							class="linkPropsPlus-toolbarbutton linkPropsPlus-download"
+							oncommand="linkPropsPlusSvc.saveLink('directURI', event);"
+							onclick="if(event.button > 0) linkPropsPlusSvc.saveLink('directURI', true);"
+							tooltiptext="&linkPropsPlus.labelDownloadURI;"
+							lpp_key="linkPropsPlus-key-downloadDirectURI" />
+					</hbox>
+				</row>
+				<row id="linkPropsPlus-rowHeaders" hidden="true" flex="1">
+					<label value="&linkPropsPlus.labelHeaders;" control="linkPropsPlus-headers"
+						tooltiptext="&linkPropsPlus.labelOnlyHttpTip;" />
+					<textbox id="linkPropsPlus-headers" readonly="true" flex="1" multiline="true" wrap="off" />
+				</row>
+			</rows>
+		</grid>
+		<menupopup id="linkPropsPlus-context"
+			onpopupshowing="return linkPropsPlusSvc.isClickOnLeftCol(event);">
+			<menuitem id="linkPropsPlus-context-copyRow"
+				oncommand="linkPropsPlusSvc.copy(this.parentNode.triggerNode || this.ownerDocument.popupNode);"
+				label="&linkPropsPlus.copyRow;"
+				accesskey="&linkPropsPlus.copyRowAccesskey;" />
+			<menuitem id="linkPropsPlus-context-copyAll"
+				oncommand="linkPropsPlusSvc.copy();"
+				label="&linkPropsPlus.copyAll;"
+				accesskey="&linkPropsPlus.copyAllAccesskey;" />
+			<menuseparator id="linkPropsPlus-context-optionsSeparator" />
+			<menuitem id="linkPropsPlus-context-options"
+				oncommand="linkPropsPlusSvc.openOptions();"
+				label="&linkPropsPlus.buttonOptions;"
+				accesskey="&linkPropsPlus.buttonOptionsAccesskey;" />
+		</menupopup>
+		<hbox id="linkPropsPlus-autocloseProgressBlock">
+			<progressmeter id="linkPropsPlus-autocloseProgress" mode="normal"
+				onclick="linkPropsPlusSvc.openOptions('pane-misc');"
+				tooltiptext="&linkPropsPlus.autoCloseTip;"
+				hidden="true" />
+		</hbox>
+		<keyset id="linkPropsPlus-keyset">
+			<key id="linkPropsPlus-key-goToURI" key="o" modifiers="control"
+				oncommand="linkPropsPlusSvc.goToURI('uri');" />
+			<key id="linkPropsPlus-key-goToDirectURI" key="o" modifiers="control,shift"
+				oncommand="linkPropsPlusSvc.goToURI('directURI');" />
+			<key id="linkPropsPlus-key-downloadURI" key="s" modifiers="control"
+				oncommand="linkPropsPlusSvc.saveLink('uri');" />
+			<key id="linkPropsPlus-key-downloadDirectURI" key="s" modifiers="control,shift"
+				oncommand="linkPropsPlusSvc.saveLink('directURI');" />
+		</keyset>
+	</vbox>
+</overlay>

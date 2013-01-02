@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://linkpropsplus/skin/linkPropsPlus.css" type="text/css"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://linkpropsplus/locale/linkPropsPlus.dtd">
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script type="application/javascript" src="chrome://linkpropsplus/content/utils.js" />
+	<script type="application/javascript" src="chrome://linkpropsplus/content/prefUtils.js" />
+	<script type="application/javascript" src="chrome://linkpropsplus/content/overlayPageInfo.js" />
+	<vbox id="mediaPreviewBox">
+		<button id="linkPropsPlus-getLinkProperties"
+			oncommand="linkPropsPlusPageInfo.showLinksProperties();"
+			label="&linkPropsPlus.linkProperties;" accesskey="&linkPropsPlus.linkPropertiesAccesskey;" />
+	</vbox>
+	<hbox id="mediaSaveBox">
+		<button id="linkPropsPlus-getLinksProperties"
+			oncommand="linkPropsPlusPageInfo.showLinksProperties();"
+			label="&linkPropsPlus.linksProperties;" accesskey="&linkPropsPlus.linkPropertiesAccesskey;" />
+	</hbox>
+</overlay>

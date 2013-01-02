@@ -1,0 +1,129 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+#linkPropsPlus-grid textbox {
+	/* Based on code from chrome://browser/skin/pageInfo.css */
+	background: transparent !important;
+	border: none;
+	padding: 0;
+	margin-top: 1px;
+	-moz-appearance: none;
+}
+#linkPropsPlus-grid #linkPropsPlus-headers {
+	border: 2px solid;
+	-moz-border-top-colors: ThreeDShadow ThreeDLightShadow;
+	-moz-border-right-colors: ThreeDShadow ThreeDLightShadow;
+	-moz-border-bottom-colors: ThreeDShadow ThreeDLightShadow;
+	-moz-border-left-colors: ThreeDShadow ThreeDLightShadow;
+	min-height: 90px;
+	min-width: 160px;
+}
+#linkPropsPlus-grid textbox[lpp_missing="true"] {
+	font-style: italic;
+}
+
+#linkPropsPlusOptionsWindow groupbox[lpp_current="true"] > caption {
+	font-weight: bold;
+}
+#linkPropsPlusOptionsWindow radio[pane] {
+	list-style-image: url("prefs32.png");
+	height: 32px;
+}
+#linkPropsPlusOptionsWindow radio[pane="pane-general"] {
+	-moz-image-region: rect(0 32px 32px 0);
+}
+#linkPropsPlusOptionsWindow radio[pane="pane-integration"] {
+	-moz-image-region: rect(0 64px 32px 32px);
+}
+#linkPropsPlusOptionsWindow radio[pane="pane-misc"] {
+	-moz-image-region: rect(0 96px 32px 64px);
+}
+
+#linkPropsPlusOwnWindow label[tooltiptext] {
+	cursor: help;
+	/*border-bottom: 1px dotted;*/
+}
+#linkPropsPlusOwnWindow #linkPropsPlus-context-optionsSeparator,
+#linkPropsPlusOwnWindow #linkPropsPlus-context-options {
+	visibility: collapse;
+}
+#linkPropsPlus-referer-label[lpp_notUsed="true"],
+#linkPropsPlus-referer[lpp_notUsed="true"],
+#linkPropsPlus-rowHeaders[lpp_notAvailable="true"] {
+	color: grayText;
+}
+
+.linkPropsPlus-toolbarbutton {
+	list-style-image: url("icons16.png");
+	margin: 0;
+	/*padding: 0 4px;*/
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.linkPropsPlus-go {
+	/* Gnome icons (http://art.gnome.org/themes/icon) */
+	-moz-image-region: rect(16px 16px 32px 0);
+}
+.linkPropsPlus-download {
+	/* Gnome icons (http://art.gnome.org/themes/icon) */
+	-moz-image-region: rect(32px 16px 48px 0);
+}
+
+[lpp_empty="true"] > .linkPropsPlus-toolbarbutton,
+:root[linkPropsPlus_showButtons="false"] .linkPropsPlus-toolbarbutton,
+:root[linkPropsPlus_showButtonsAlways="false"] [lpp_missing="true"] > .linkPropsPlus-toolbarbutton {
+	display: none;
+}
+.linkPropsPlus-toolbarbutton > .toolbarbutton-icon {
+  margin: 0;
+  padding: 0;
+}
+.linkPropsPlus-download {
+	-moz-margin-end: 4px; /* Same as textbox */
+}
+:root[linkPropsPlus_showButtons="true"] #linkPropsPlus-uri:not([lpp_empty="true"]),
+:root[linkPropsPlus_showButtons="true"][linkPropsPlus_showButtonsAlways="true"]
+	#linkPropsPlus-directURI:not([lpp_empty="true"]),
+:root[linkPropsPlus_showButtons="true"][linkPropsPlus_showButtonsAlways="false"]
+	#linkPropsPlus-directURI:not([lpp_missing="true"]) {
+	-moz-margin-end: 0;
+}
+
+#linkPropsPlus-autocloseProgressBlock {
+	position: fixed !important;
+	right: 0 !important;
+	bottom: 0 !important;
+}
+#linkPropsPlus-autocloseProgressBlock * {
+	position: fixed !important; /* Hack for old Firefox versions */
+}
+#linkPropsPlus-autocloseProgress {
+	margin: 0 2px 2px !important;
+	padding: 0 !important;
+	height: 8px !important;
+	max-height: 8px !important;
+	min-height: 0 !important;
+}
+#linkPropsPlus-autocloseProgressBlock[chromedir="rtl"] {
+	right: auto !important;
+	left: 0 !important;
+}
+[lpp_hover="true"] #linkPropsPlus-autocloseProgress {
+	opacity: 0.6 !important;
+}
+#linkPropsPlus-autocloseProgress > .progress-bar,
+#linkPropsPlus-autocloseProgress > .progress-remainder {
+	/* Hack for old Firefox versions */
+	max-height: 6px !important;
+	min-height: 0 !important;
+}
+
+/* Page Info window */
+#linkPropsPlus-getLinkProperties,
+#linkPropsPlus-getLinksProperties {
+	list-style-image: url("icons16.png");
+	-moz-image-region: rect(0 16px 16px 0);
+}
+#linkPropsPlus-getLinkProperties .button-text,
+#linkPropsPlus-getLinksProperties .button-text {
+	-moz-margin-start: 2px !important;
+}

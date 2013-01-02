@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<?xul-overlay href="chrome://linkpropsplus/content/linkPropsPlus.xul"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://linkpropsplus/locale/linkPropsPlus.dtd">
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<vbox id="container" flex="1">
+		<vbox id="linkPropsPlus-container" insertbefore="basicBox" flex="1" />
+		<separator class="thin" insertbefore="basicBox" />
+	</vbox>
+</overlay>

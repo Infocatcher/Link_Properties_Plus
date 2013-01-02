@@ -1,0 +1,5 @@
+<!ENTITY linkPropsPlus.context "Свойства ссылки">
+<!ENTITY linkPropsPlus.contextFor "Свойства ссылки $S">
+<!ENTITY linkPropsPlus.contextAccesskey "й">
+<!ENTITY linkPropsPlus.tools "Свойства ссылки…">
+<!ENTITY linkPropsPlus.toolsAccesskey "й">

@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://linkpropsplus/skin/overlayMainWindow.css" type="text/css"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://linkpropsplus/locale/mainWindow.dtd">
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script type="application/javascript" src="chrome://linkpropsplus/content/utils.js" />
+	<script type="application/javascript" src="chrome://linkpropsplus/content/prefUtils.js" />
+	<script type="application/javascript" src="chrome://linkpropsplus/content/overlayMainWindow.js" />
+
+	<commandset id="mainCommandSet">
+		<command id="linkPropsPlus-cmd-openWindow" oncommand="linkPropsPlus.openWindow();"
+			label="&linkPropsPlus.tools;" accesskey="&linkPropsPlus.toolsAccesskey;" />
+	</commandset>
+	<keyset id="mainKeyset">
+		<key id="linkPropsPlus-key-openWindow" command="linkPropsPlus-cmd-openWindow" disabled="true" />
+	</keyset>
+	<menupopup id="menu_ToolsPopup">
+		<menuitem id="linkPropsPlus-toolsMenuitem" class="menuitem-iconic" insertbefore="sanitizeSeparator"
+			command="linkPropsPlus-cmd-openWindow" key="linkPropsPlus-key-openWindow" />
+	</menupopup>
+	<menupopup id="contentAreaContextMenu">
+		<menuitem id="linkPropsPlus-contextMenuitem" class="menuitem-iconic"
+			insertafter="context-copylink"
+			oncommand="linkPropsPlus.openWindowContext();"
+			label="&linkPropsPlus.context;"
+			lpp_label_for="&linkPropsPlus.contextFor;"
+			accesskey="&linkPropsPlus.contextAccesskey;" />
+	</menupopup>
+
+	<!-- Firefox 4 -->
+	<menupopup id="appmenu_webDeveloper_popup">
+		<menuitem id="linkPropsPlus-appMenuitem" class="menuitem-iconic"
+			insertafter="appmenu_webConsole,appmenu_pageInspect,appmenu_pageSource"
+			command="linkPropsPlus-cmd-openWindow" key="linkPropsPlus-key-openWindow" />
+	</menupopup>
+	<menupopup id="menuWebDeveloperPopup">
+		<menuitem id="linkPropsPlus-toolsMenuitemSub" class="menuitem-iconic"
+			insertafter="webConsole,javascriptConsole"
+			command="linkPropsPlus-cmd-openWindow" key="linkPropsPlus-key-openWindow" />
+	</menupopup>
+
+	<!-- SeaMonkey and Thunderbird -->
+	<menupopup id="taskPopup">
+		<menuitem id="linkPropsPlus-toolsMenuitem" class="menuitem-iconic"
+			insertbefore="sanitizeSeparator,javascriptConsole,sep_switchprofile,sync-setup"
+			command="linkPropsPlus-cmd-openWindow" key="linkPropsPlus-key-openWindow" />
+	</menupopup>
+	<menupopup id="toolsPopup">
+		<menuitem id="linkPropsPlus-toolsMenuitemSub" class="menuitem-iconic"
+			insertafter="errorConsole,javascriptConsole"
+			command="linkPropsPlus-cmd-openWindow" key="linkPropsPlus-key-openWindow" />
+	</menupopup>
+
+	<!-- Thunderbird -->
+	<commandset id="mailCommands">
+		<command id="linkPropsPlus-cmd-openWindow" oncommand="linkPropsPlus.openWindow();"
+			label="&linkPropsPlus.tools;" accesskey="&linkPropsPlus.toolsAccesskey;" />
+	</commandset>
+	<keyset id="mailKeys">
+		<key id="linkPropsPlus-key-openWindow" command="linkPropsPlus-cmd-openWindow" disabled="true" />
+	</keyset>
+	<menupopup id="mailContext">
+		<menuitem id="linkPropsPlus-contextMenuitem" class="menuitem-iconic"
+			insertafter="mailContext-copylink"
+			oncommand="linkPropsPlus.openWindowContext();"
+			label="&linkPropsPlus.context;"
+			lpp_label_for="&linkPropsPlus.contextFor;"
+			accesskey="&linkPropsPlus.contextAccesskey;" />
+	</menupopup>
+
+	<!-- Thunderbird 17 -->
+	<menupopup id="appmenu_taskPopup">
+		<menuitem id="linkPropsPlus-appMenuitem" class="menuitem-iconic"
+			insertbefore="appmenu_javascriptConsole"
+			command="linkPropsPlus-cmd-openWindow" key="linkPropsPlus-key-openWindow" />
+	</menupopup>
+</overlay>

@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xul-overlay href="chrome://linkpropsplus/content/linkPropsPlus.xul"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://linkpropsplus/locale/linkPropsPlus.dtd">
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	id="linkPropsPlusOwnWindow"
+	windowtype="linkPropsPlus:ownWindow"
+	title="&linkPropsPlus.ownWindowTitle;"
+	buttons=" "
+	width="620"
+	height="80"
+	persist="screenX screenY width height">
+
+	<script type="application/javascript" src="chrome://linkpropsplus/content/ownWindow.js" />
+
+	<grid>
+		<columns>
+			<column />
+			<column flex="1" minwidth="150" />
+			<column />
+		</columns>
+		<rows>
+			<row align="center">
+				<label value="&linkPropsPlus.labelLink;" accesskey="&linkPropsPlus.labelLinkAccesskey;"
+					control="linkPropsPlus-uri" />
+				<hbox flex="1">
+					<textbox id="linkPropsPlus-uri" flex="1"
+						oninput="linkPropsPlusWnd.uriChangedDelay();"
+						ondragexit="linkPropsPlusWnd.uriChangedDelay();"
+						ondrop="linkPropsPlusWnd.uriChangedDelay();" />
+					<toolbarbutton id="linkPropsPlus-goToURI"
+						class="linkPropsPlus-toolbarbutton linkPropsPlus-go"
+						oncommand="linkPropsPlusSvc.goToURI('uri', event);"
+						onclick="if(event.button > 0) linkPropsPlusSvc.goToURI('uri', true);"
+						tooltiptext="&linkPropsPlus.labelGoToURI;"
+						lpp_key="linkPropsPlus-key-goToURI" />
+					<toolbarbutton id="linkPropsPlus-downloadURI"
+						class="linkPropsPlus-toolbarbutton linkPropsPlus-download"
+						oncommand="linkPropsPlusSvc.saveLink('uri', event);"
+						onclick="if(event.button > 0) linkPropsPlusSvc.saveLink('uri', true);"
+						tooltiptext="&linkPropsPlus.labelDownloadURI;"
+						lpp_key="linkPropsPlus-key-downloadURI" />
+				</hbox>
+				<button id="linkPropsPlus-getHeaders" oncommand="linkPropsPlusWnd.getHeaders();"
+					label="&linkPropsPlus.buttonGetProps;" accesskey="&linkPropsPlus.buttonGetPropsAccesskey;" />
+			</row>
+			<row align="center">
+				<label id="linkPropsPlus-referer-label"
+					value="&linkPropsPlus.labelReferer;" accesskey="&linkPropsPlus.labelRefererAccesskey;"
+					tooltiptext="&linkPropsPlus.labelOnlyHttpTip;"
+					control="linkPropsPlus-referer" />
+				<textbox id="linkPropsPlus-referer" flex="1" />
+				<button oncommand="linkPropsPlusSvc.openOptions();"
+					label="&linkPropsPlus.buttonOptions;" accesskey="&linkPropsPlus.buttonOptionsAccesskey;" />
+			</row>
+		</rows>
+	</grid>
+	<vbox id="linkPropsPlus-container" flex="1" />
+	<keyset id="linkPropsPlus-keyset">
+		<key keycode="VK_ESCAPE" modifiers="shift" oncommand="linkPropsPlusWnd.closeOther();" />
+	</keyset>
+</dialog>

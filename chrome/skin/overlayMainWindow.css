@@ -1,0 +1,9 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+#linkPropsPlus-contextMenuitem[lpp_iconized="true"],
+#linkPropsPlus-toolsMenuitem[lpp_iconized="true"],
+#linkPropsPlus-toolsMenuitemSub[lpp_iconized="true"],
+#linkPropsPlus-appMenuitem[lpp_iconized="true"] {
+	list-style-image: url("icons16.png");
+	-moz-image-region: rect(0 16px 16px 0);
+}

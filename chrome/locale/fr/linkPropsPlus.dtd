@@ -1,0 +1,64 @@
+<!ENTITY linkPropsPlus.ownWindowTitle "Propriétés du lien">
+<!ENTITY linkPropsPlus.labelLink "Lien :">
+<!ENTITY linkPropsPlus.labelLinkAccesskey "l">
+<!ENTITY linkPropsPlus.labelReferer "Page de provenance :">
+<!ENTITY linkPropsPlus.labelRefererAccesskey "R">
+<!ENTITY linkPropsPlus.labelOnlyHttpTip "Uniquement pour des liens HTTP">
+<!ENTITY linkPropsPlus.buttonGetProps "Obtenir les propriétés">
+<!ENTITY linkPropsPlus.buttonGetPropsAccesskey "p">
+<!ENTITY linkPropsPlus.buttonOptions "Options">
+<!ENTITY linkPropsPlus.buttonOptionsAccesskey "O">
+
+<!ENTITY linkPropsPlus.labelSize "Taille du fichier :">
+<!ENTITY linkPropsPlus.labelLastModified "Dernière modification :">
+<!ENTITY linkPropsPlus.labelContentType "Type de contenu :">
+<!ENTITY linkPropsPlus.labelStatus "Statut :">
+<!ENTITY linkPropsPlus.labelDirectURI "Lien direct :">
+<!ENTITY linkPropsPlus.labelGoToURI "Suivre le lien">
+<!ENTITY linkPropsPlus.labelDownloadURI "Enregistrer le lien…">
+<!ENTITY linkPropsPlus.labelHeaders "En-têtes HTTP :">
+
+<!ENTITY linkPropsPlus.autoCloseTip "Fermeture automatique">
+
+<!ENTITY linkPropsPlus.copyRow "Copier la ligne">
+<!ENTITY linkPropsPlus.copyRowAccesskey "l">
+<!ENTITY linkPropsPlus.copyAll "Copier tout">
+<!ENTITY linkPropsPlus.copyAllAccesskey "t">
+
+<!-- Page info -->
+<!ENTITY linkPropsPlus.linkProperties "Propriété du lien">
+<!ENTITY linkPropsPlus.linksProperties "Propriété des liens">
+<!ENTITY linkPropsPlus.linkPropertiesAccesskey "l">
+
+<!-- Options -->
+<!ENTITY linkPropsPlus.opts.windowTitle "Link Properties Plus : Options">
+<!ENTITY linkPropsPlus.opts.apply "Appliquer">
+
+<!ENTITY linkPropsPlus.opts.paneGeneral "Général">
+<!ENTITY linkPropsPlus.opts.propertiesDialog "Boîte de dialogue des propriétés">
+<!ENTITY linkPropsPlus.opts.ownWindow "Fenêtre séparée">
+<!ENTITY linkPropsPlus.opts.downloadDialog "Ouverture de la boîte de dialogue du fichier">
+<!ENTITY linkPropsPlus.opts.showStatus "Statut">
+<!ENTITY linkPropsPlus.opts.showDirectURI "Lien direct">
+<!ENTITY linkPropsPlus.opts.showHeaders "En-têtes HTTP">
+
+<!ENTITY linkPropsPlus.opts.linkProperties "Propriétés du lien">
+<!ENTITY linkPropsPlus.opts.precision "Arrondir la taille du fichier à :">
+<!ENTITY linkPropsPlus.opts.useBinaryPrefixes "Utiliser les préfixes binaires (1 Kio = 1024 octets)">
+<!ENTITY linkPropsPlus.opts.decodeURIs "Décoder les URIs">
+
+<!ENTITY linkPropsPlus.opts.paneIntegration "Intégration">
+<!ENTITY linkPropsPlus.opts.contextOnLinks "Ajouter au menu contextuel des liens">
+<!ENTITY linkPropsPlus.opts.contextOnSelection "Ajouter au menu contextuel des liens sélectionnés">
+<!ENTITY linkPropsPlus.opts.showInToolsMenu "Ajouter au menu “Outils”">
+<!ENTITY linkPropsPlus.opts.showInToolsSubMenu "Ajouter au sous-menu “Développeur Web”">
+<!ENTITY linkPropsPlus.opts.showInAppMenu "Ajouter au menu “App”">
+<!ENTITY linkPropsPlus.opts.showIcon "Afficher l'icône">
+
+<!ENTITY linkPropsPlus.opts.paneMiscellaneous "Divers">
+<!ENTITY linkPropsPlus.opts.close "Fermer la fenêtre après ouverture ou sauvegarde du lien">
+<!ENTITY linkPropsPlus.opts.autoClose "Fermeture automatique">
+<!ENTITY linkPropsPlus.opts.autoCloseAfter "Fermer la fenêtre après">
+<!ENTITY linkPropsPlus.opts.ms "ms">
+<!ENTITY linkPropsPlus.opts.dontCloseUnderCursor "Ne pas fermer la fenêtre sous le curseur">
+<!ENTITY linkPropsPlus.opts.onlyAfterRequest "Seulement après la requête des propriétés du lien">

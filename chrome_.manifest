@@ -6,7 +6,7 @@ overlay chrome://mozapps/content/downloads/unknownContentType.xul chrome://linkp
 overlay chrome://browser/content/pageinfo/pageInfo.xul chrome://linkpropsplus/content/overlayPageInfo.xul
 
 # https://bugzilla.mozilla.org/show_bug.cgi?id=513147
-# https://addons.mozilla.org/firefox/addon/14228/
+# https://addons.mozilla.org/firefox/addon/element-properties/
 overlay chrome://properties/content/metaData.xul chrome://linkpropsplus/content/overlayMetaData.xul
 # Element Properties 4+
 overlay chrome://properties_darktrojan_net/content/metaData.xul chrome://linkpropsplus/content/overlayMetaData.xul
@@ -20,7 +20,8 @@ overlay chrome://navigator/content/pageinfo/pageInfo.xul chrome://linkpropsplus/
 overlay chrome://messenger/content/messenger.xul chrome://linkpropsplus/content/overlayMainWindow.xul
 
 skin linkpropsplus classic/1.0 jar:chrome/linkpropsplus.jar!/skin/
-skin linkpropsplus-icon classic/1.0 .
+skin linkpropsplus-icon classic/1.0 ./
 
 locale linkpropsplus en-US jar:chrome/linkpropsplus.jar!/locale/en-US/
 locale linkpropsplus ru    jar:chrome/linkpropsplus.jar!/locale/ru/
+locale linkpropsplus fr    jar:chrome/linkpropsplus.jar!/locale/fr/

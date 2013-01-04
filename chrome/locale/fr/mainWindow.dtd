@@ -1,0 +1,5 @@
+<!ENTITY linkPropsPlus.context "Propriétés du lien">
+<!ENTITY linkPropsPlus.contextFor "Propriétés du lien pour $S">
+<!ENTITY linkPropsPlus.contextAccesskey "r">
+<!ENTITY linkPropsPlus.tools "Propriétés du lien…">
+<!ENTITY linkPropsPlus.toolsAccesskey "r">

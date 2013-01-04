@@ -14,7 +14,8 @@
 	oncommand="linkPropsPlusOpts.checkUnsaved();"
 	onchange="linkPropsPlusOpts.checkUnsaved();"
 	oninput="linkPropsPlusOpts.checkUnsaved();"
-	ondrop="linkPropsPlusOpts.checkUnsaved();"
+	ondrop="linkPropsPlusOpts.checkUnsavedDelay();"
+	oncut="linkPropsPlusOpts.checkUnsavedDelay();"
 	title="&linkPropsPlus.opts.windowTitle;"
 	minwidth="320">
 
@@ -126,7 +127,8 @@
 				<textbox preference="autoClose.delay" size="6" type="number" min="0" max="1800000" increment="500"
 					oninput="linkPropsPlusOpts.disableAutoCloseOptionsDelay();"
 					onchange="linkPropsPlusOpts.disableAutoCloseOptionsDelay();"
-					ondrop="linkPropsPlusOpts.disableAutoCloseOptionsDelay();" />
+					ondrop="linkPropsPlusOpts.disableAutoCloseOptionsDelay();"
+					oncut="linkPropsPlusOpts.disableAutoCloseOptionsDelay();" />
 				<label value="&linkPropsPlus.opts.ms;" />
 			</hbox>
 			<checkbox preference="autoClose.dontCloseUnderCursor" label="&linkPropsPlus.opts.dontCloseUnderCursor;" />

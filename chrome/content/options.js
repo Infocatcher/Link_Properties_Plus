@@ -157,6 +157,11 @@ var linkPropsPlusOpts = {
 		if(!this.applyBtn.hidden)
 			this.saveState();
 	},
+	checkUnsavedDelay: function() {
+		setTimeout(function(_this) {
+			_this.checkUnsaved();
+		}, 0, this);
+	},
 	checkUnsaved: function() {
 		if(!this.applyBtn.hidden)
 			this.applyBtn.disabled = !this.hasUnsaved;
@@ -183,6 +188,8 @@ var linkPropsPlusOpts = {
 	getNodeValue: function(node) {
 		if("checked" in node)
 			return node.checked;
+		if("inputField" in node)
+			return node.inputField.value;
 		return node.value;
 	}
 };

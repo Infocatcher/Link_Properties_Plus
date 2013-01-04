@@ -1,12 +1,15 @@
 var linkPropsPlusOpts = {
+	showApply: true,
 	get pu() {
 		return window.linkPropsPlusPrefUtils;
 	},
 	init: function() {
 		var de = document.documentElement;
 		var applyBtn = this.applyBtn = de.getButton("extra1");
-		if(this.pu.getPref("browser.preferences.instantApply"))
+		if(this.pu.getPref("browser.preferences.instantApply")) {
+			this.showApply = false;
 			applyBtn.hidden = true;
+		}
 		else {
 			this.saveState();
 			applyBtn.setAttribute("icon", "apply");
@@ -154,16 +157,16 @@ var linkPropsPlusOpts = {
 				pp.writePreferences(true /* aFlushToDisk */);
 			}
 		);
-		if(!this.applyBtn.hidden)
+		if(this.showApply)
 			this.saveState();
 	},
 	checkUnsavedDelay: function() {
-		setTimeout(function(_this) {
+		this.showApply && setTimeout(function(_this) {
 			_this.checkUnsaved();
 		}, 0, this);
 	},
 	checkUnsaved: function() {
-		if(!this.applyBtn.hidden)
+		if(this.showApply)
 			this.applyBtn.disabled = !this.hasUnsaved;
 	},
 	saveState: function() {

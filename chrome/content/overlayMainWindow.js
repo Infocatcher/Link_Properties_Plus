@@ -42,7 +42,7 @@ var linkPropsPlus = {
 			case "load":         this.init();    break;
 			case "unload":       this.destroy(); break;
 			case "popupshowing":
-				if(e.explicitOriginalTarget == this.cm)
+				if(e.target == e.currentTarget)
 					this.setContextMenu();
 		}
 	},

@@ -23,10 +23,10 @@ var linkPropsPlus = {
 		this.cm.addEventListener("popupshowing", this, false);
 		this.pu.prefsMigration();
 		this.registerHotkeys();
-		setTimeout(function(_this) {(function() {
-			this.showMenuitems();
-			this.showIcons();
-		}).call(_this)}, 10, this);
+		setTimeout(function(_this) {
+			_this.showMenuitems();
+			_this.showIcons();
+		}, 50, this);
 	},
 	destroy: function() {
 		window.removeEventListener("unload", this, false);

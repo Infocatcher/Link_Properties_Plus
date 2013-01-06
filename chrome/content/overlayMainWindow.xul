@@ -4,7 +4,6 @@
 <!DOCTYPE overlay SYSTEM "chrome://linkpropsplus/locale/mainWindow.dtd">
 
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<script type="application/javascript" src="chrome://linkpropsplus/content/utils.js" />
 	<script type="application/javascript" src="chrome://linkpropsplus/content/prefUtils.js" />
 	<script type="application/javascript" src="chrome://linkpropsplus/content/overlayMainWindow.js" />
 

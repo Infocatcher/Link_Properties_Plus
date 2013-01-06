@@ -11,7 +11,12 @@ var linkPropsPlus = {
 	referer: null,
 
 	get ut() {
-		return window.linkPropsPlusUtils;
+		var tmp = {};
+		Components.classes["@mozilla.org/moz/jssubscript-loader;1"]
+			.getService(Components.interfaces.mozIJSSubScriptLoader)
+			.loadSubScript("chrome://linkpropsplus/content/utils.js", tmp);
+		delete this.ut;
+		return this.ut = tmp.linkPropsPlusUtils;
 	},
 	get pu() {
 		return window.linkPropsPlusPrefUtils;

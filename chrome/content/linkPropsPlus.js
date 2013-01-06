@@ -471,18 +471,21 @@ var linkPropsPlusSvc = {
 		// Hack: we use nsContextMenu.saveLink() from chrome://browser/content/nsContextMenu.js
 		// to get correct name (see http://kb.mozillazine.org/Browser.download.saveLinkAsFilenameTimeout)
 		var browserDoc = browserWin.document;
-		var link = document.createElementNS("http://www.w3.org/1999/xhtml", "a");
+		var content = browserWin.content;
+		var contentDoc = content.document;
+		var link = contentDoc.createElementNS("http://www.w3.org/1999/xhtml", "a");
 		link.href = uri;
 		var fakeDoc = {
-			nodePrincipal: browserWin.content.document.nodePrincipal,
+			nodePrincipal: contentDoc.nodePrincipal,
 			documentURI: this.referer,
-			documentURIObject: this.refererURI,
-			defaultView: browserWin.content,
-			__proto__: browserWin.content.document
+			documentURIObject: this.refererURI || null,
+			defaultView: content,
+			__proto__: contentDoc
 		};
 		browserDoc.popupNode = link;
 		try {
-			link.__defineGetter__("ownerDocument", function() {
+			link = link.wrappedJSObject || link;
+			Object.__defineGetter__.call(link, "ownerDocument", function() {
 				return fakeDoc;
 			});
 			new browserWin.nsContextMenu(
@@ -494,7 +497,15 @@ var linkPropsPlusSvc = {
 		catch(e) {
 			this.error("new nsContextMenu( ... ).saveLink() failed");
 			Components.utils.reportError(e);
-			browserWin.saveURL(uri, null, null, true, false, this.refererURI);
+			try {
+				// See chrome://global/content/contentAreaUtils.js
+				// "aSourceDocument" argument is only for nsILoadContext.usePrivateBrowsing for now
+				browserWin.saveURL(uri, null, null, true, false, this.refererURI, contentDoc);
+			}
+			catch(e2) {
+				this.error("saveURL() failed");
+				Components.utils.reportError(e2);
+			}
 		}
 		browserDoc.popupNode = null;
 	},

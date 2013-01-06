@@ -16,8 +16,7 @@ var linkPropsPlusSvc = {
 
 	get ios() {
 		delete this.ios;
-		return this.ios = Components.classes["@mozilla.org/network/io-service;1"]
-			.getService(Components.interfaces.nsIIOService);
+		return this.ios = this.ut.ios;
 	},
 	get fullHeader() {
 		delete this.fullHeader;
@@ -602,7 +601,7 @@ var linkPropsPlusSvc = {
 			if(ch instanceof Components.interfaces.nsIHttpChannel) {
 				ch.requestMethod = "HEAD";
 				if(isManualCall || this.sendReferer)
-					ch.setRequestHeader("Referer", this.referer, null);
+					ch.setRequestHeader("Referer", this.referer, false);
 				ch.loadFlags |= ch.LOAD_BACKGROUND | ch.INHIBIT_CACHING;
 				ch.visitRequestHeaders(this);
 				ch.asyncOpen(this, null);
@@ -762,7 +761,7 @@ var linkPropsPlusSvc = {
 		// content\flashgot\flashgotDMOverlay.js
 		return this._uri = dialog.mLauncher.source.spec;
 	},
-	get referer() {
+	get realReferer() {
 		if(this.isPropsDialog)
 			return window.arguments[0].ownerDocument.defaultView.location.href;
 		if(this.isOwnWindow)
@@ -786,6 +785,9 @@ var linkPropsPlusSvc = {
 			 referer = openerDoc && openerDoc.URL || this._uri;
 		}
 		return referer;
+	},
+	get referer() {
+		return this.ut.checkReferer(this.realReferer, this.uri);
 	},
 	get refererURI() {
 		try {

@@ -6,8 +6,6 @@ var linkPropsPlus = {
 			String(this.validURI).slice(2, -2) // Remove /^ and $/
 		);
 	},
-	// We use following mask to don't use internal links as referers
-	validReferer: /^(?:http|ftp)s?:\/\/\S+$/,
 
 	linkURL: "",
 	referer: null,
@@ -68,9 +66,7 @@ var linkPropsPlus = {
 	isValidURI: function(s) {
 		return s && this.validURI.test(s);
 	},
-	isValidReferer: function(s) {
-		return s && this.validReferer.test(s);
-	},
+
 	extractURI: function(s) {
 		if(
 			!this.validURIExtract.test(s)
@@ -189,23 +185,7 @@ var linkPropsPlus = {
 		}
 		if(!referer)
 			referer = content.location.href;
-		if(!this.isValidReferer(referer)) {
-			switch(this.pu.pref("useFakeReferer")) {
-				case 1:
-					try {
-						var uriObj = makeURI(uri);
-						// Thanks to RefControl https://addons.mozilla.org/firefox/addon/refcontrol/
-						referer = uriObj.scheme + "://" + uriObj.hostPort + "/";
-						break;
-					}
-					catch(e) { // Will use "uri" as referer
-					}
-				case 2:
-					referer = uri;
-			}
-			if(!referer || !this.isValidReferer(referer))
-				referer = undefined;
-		}
+		referer = this.ut.checkReferer(referer, uri);
 		this.ut.openWindow(uri, referer, arguments.length > 0, win, tab);
 	},
 	openWindowContext: function() {

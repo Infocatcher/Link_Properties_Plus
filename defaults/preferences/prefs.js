@@ -13,11 +13,11 @@ pref("extensions.linkPropertiesPlus.ownWindow.showHttpHeaders", false);
 pref("extensions.linkPropertiesPlus.ownWindow.showDirectURI", true);
 pref("extensions.linkPropertiesPlus.ownWindow.clickSelectsAll", true);
 
-// For Thunderbird with useless internal mailbox:// URIs and Tools - Get file size...
-// 0 - empty referer in case of "internal" URI
-// 1 - use site root
-// 2 - use same link
 pref("extensions.linkPropertiesPlus.useFakeReferer", 1);
+// We don't use "internal" or file:// URIs as referers
+// 0 - empty referer in case of "internal" or file:// URI
+// 1 - use site root
+// 2 - use the same link
 
 pref("extensions.linkPropertiesPlus.sizePrecision", 2);
 pref("extensions.linkPropertiesPlus.useBinaryPrefixes", true);

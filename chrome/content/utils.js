@@ -1,4 +1,7 @@
 var linkPropsPlusUtils = {
+	// We use following mask to don't use internal or file:// links as referers
+	validReferer: /^(?:http|ftp)s?:\/\/\S+$/,
+
 	get pu() {
 		return window.linkPropsPlusPrefUtils;
 	},
@@ -6,6 +9,35 @@ var linkPropsPlusUtils = {
 		delete this.wm;
 		return this.wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
 			.getService(Components.interfaces.nsIWindowMediator);
+	},
+	get ios() {
+		delete this.ios;
+		return this.ios = Components.classes["@mozilla.org/network/io-service;1"]
+			.getService(Components.interfaces.nsIIOService);
+	},
+
+	isValidReferer: function(s) {
+		return s && this.validReferer.test(s);
+	},
+	checkReferer: function(referer, uri) {
+		if(this.isValidReferer(referer))
+			return referer;
+		switch(this.pu.pref("useFakeReferer")) {
+			case 1:
+				try {
+					var uriObj = this.ios.newURI(uri, null, null);
+					// Thanks to RefControl https://addons.mozilla.org/firefox/addon/refcontrol/
+					referer = uriObj.scheme + "://" + uriObj.hostPort + "/";
+					break;
+				}
+				catch(e) { // Will use "uri" as referer
+				}
+			case 2:
+				referer = uri;
+		}
+		if(this.isValidReferer(referer))
+			return referer;
+		return undefined;
 	},
 	openWindow: function(uri, referer, autostart, win, tab) {
 		var ws = this.wm.getEnumerator("linkPropsPlus:ownWindow");

@@ -4,6 +4,9 @@ var linkPropsPlusSvc = {
 	channel: null,
 	realCount: 0,
 
+	// We use following mask to don't use internal or file:// links as referers
+	validReferer: /^(?:http|ftp)s?:\/\/\S+$/,
+
 	get ut() {
 		return window.linkPropsPlusUtils;
 	},
@@ -16,7 +19,8 @@ var linkPropsPlusSvc = {
 
 	get ios() {
 		delete this.ios;
-		return this.ios = this.ut.ios;
+		return this.ios = Components.classes["@mozilla.org/network/io-service;1"]
+			.getService(Components.interfaces.nsIIOService);
 	},
 	get fullHeader() {
 		delete this.fullHeader;
@@ -426,7 +430,7 @@ var linkPropsPlusSvc = {
 				}
 			}
 
-			gBrowser.selectedTab = gBrowser.addTab(uri, this.sendReferer ? this.refererURI : undefined);
+			gBrowser.selectedTab = gBrowser.addTab(uri, this.refererURI || undefined);
 
 			hasTabKit && browserWin.tabkit.addingTabOver();
 		}
@@ -519,7 +523,7 @@ var linkPropsPlusSvc = {
 			"chrome,all,dialog=no",
 			uri,
 			null,
-			this.refererURI,
+			this.refererURI || null,
 			null,
 			false
 		);
@@ -600,8 +604,8 @@ var linkPropsPlusSvc = {
 			}
 			if(ch instanceof Components.interfaces.nsIHttpChannel) {
 				ch.requestMethod = "HEAD";
-				if(isManualCall || this.sendReferer)
-					ch.setRequestHeader("Referer", this.referer, false);
+				var ref = isManualCall ? this.realReferer : this.referer;
+				ref && ch.setRequestHeader("Referer", ref, false);
 				ch.loadFlags |= ch.LOAD_BACKGROUND | ch.INHIBIT_CACHING;
 				ch.visitRequestHeaders(this);
 				ch.asyncOpen(this, null);
@@ -623,9 +627,6 @@ var linkPropsPlusSvc = {
 		}
 		this.onStopRequestCallback(false);
 		return false;
-	},
-	get sendReferer() {
-		return this.pu.getPref("network.http.sendRefererHeader", 2) > 1;
 	},
 
 	// Autoclose feature
@@ -787,7 +788,7 @@ var linkPropsPlusSvc = {
 		return referer;
 	},
 	get referer() {
-		return this.ut.checkReferer(this.realReferer, this.uri);
+		return this.checkReferer(this.realReferer, this.uri);
 	},
 	get refererURI() {
 		try {
@@ -795,6 +796,37 @@ var linkPropsPlusSvc = {
 		}
 		catch(e) {
 		}
+		return undefined;
+	},
+	get sendReferer() {
+		return this.pu.getPref("network.http.sendRefererHeader", 2) > 1;
+	},
+	isValidReferer: function(s) {
+		return s && this.validReferer.test(s);
+	},
+	checkReferer: function(referer, uri) {
+		if(!this.sendReferer) {
+			if(!this.pu.pref("useFakeReferer.force"))
+				return undefined;
+			referer = ""; // Make it "invalid"
+		}
+		if(this.isValidReferer(referer))
+			return referer;
+		switch(this.pu.pref("useFakeReferer")) {
+			case 1:
+				try {
+					var uriObj = this.ios.newURI(uri, null, null);
+					// Thanks to RefControl https://addons.mozilla.org/firefox/addon/refcontrol/
+					referer = uriObj.scheme + "://" + uriObj.hostPort + "/";
+					break;
+				}
+				catch(e) { // Will use "uri" as referer
+				}
+			case 2:
+				referer = uri;
+		}
+		if(this.isValidReferer(referer))
+			return referer;
 		return undefined;
 	},
 	compareURIs: function(uri, uri2) {

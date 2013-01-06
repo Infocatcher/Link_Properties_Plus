@@ -185,7 +185,6 @@ var linkPropsPlus = {
 		}
 		if(!referer)
 			referer = content.location.href;
-		referer = this.ut.checkReferer(referer, uri);
 		this.ut.openWindow(uri, referer, arguments.length > 0, win, tab);
 	},
 	openWindowContext: function() {

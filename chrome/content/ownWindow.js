@@ -93,13 +93,17 @@ var linkPropsPlusWnd = {
 	set cantGet(val) {
 		this.getHeadersBtn.disabled = val;
 	},
-	getHeaders: function() {
+	getHeaders: function(e) {
+		var bypassCache = e && (
+			e.shiftKey
+			|| e.type == "click" && e.button > 0
+		);
 		var uri = this.uri;
 		if(!uri || this.cantGet)
 			return;
 		this.cantGet = true;
 		this.setTitle();
-		this.svc.getHeaders(true);
+		this.svc.getHeaders(true, bypassCache);
 		this.fixWindowHeight();
 	},
 	onStopRequest: function(ok) {

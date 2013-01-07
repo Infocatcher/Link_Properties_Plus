@@ -111,13 +111,13 @@ var linkPropsPlusSvc = {
 				if("defaultPrevented" in e ? e.defaultPrevented : e.getPreventDefault())
 					break;
 				this.restartAutoClose();
-				if(e.shiftKey || e.altKey || e.metaKey)
+				if(e.altKey || e.metaKey)
 					break;
-				if(e.keyCode == e.DOM_VK_RETURN && this.isOwnWindow) { // Enter or Ctrl+Enter pressed
+				if(e.keyCode == e.DOM_VK_RETURN && this.isOwnWindow) { // Enter, Ctrl+Enter or Shift+Enter pressed
 					this.stopEvent(e);
-					this.wnd.getHeaders();
+					this.wnd.getHeaders(e);
 				}
-				else if(!e.ctrlKey && e.keyCode == e.DOM_VK_ESCAPE) { // Escape pressed
+				else if(!e.shiftKey && !e.ctrlKey && e.keyCode == e.DOM_VK_ESCAPE) { // Escape pressed
 					this.cancel() && this.stopEvent(e);
 				}
 			break;
@@ -255,10 +255,10 @@ var linkPropsPlusSvc = {
 		else if(pName.substr(0, 10) == "autoClose.")
 			this.reinitAutoClose();
 	},
-	getHeaders: function(isManualCall) {
+	getHeaders: function(isManualCall, bypassCache) {
 		if(isManualCall)
 			this.clearResults();
-		if(this.request(isManualCall)) {
+		if(this.request(isManualCall, bypassCache)) {
 			document.getElementById("linkPropsPlus-container").removeAttribute("hidden");
 			this.restartAutoClose();
 			document.getElementById("linkPropsPlus-rowHeaders").setAttribute(
@@ -539,7 +539,7 @@ var linkPropsPlusSvc = {
 		return close;
 	},
 
-	request: function(isManualCall) {
+	request: function(isManualCall, bypassCache) {
 		var _uri = this.requestURI = this.uri;
 		if(!_uri)
 			return false;
@@ -597,8 +597,16 @@ var linkPropsPlusSvc = {
 					. newChannel(uri)
 				: this.ios.newChannelFromURI(uri);
 
-			if(ch instanceof Components.interfaces.nsIFTPChannel) {
+			if(ch instanceof Components.interfaces.nsIRequest) try {
 				ch.loadFlags |= ch.LOAD_BACKGROUND | ch.INHIBIT_CACHING;
+				if(bypassCache)
+					ch.loadFlags |= ch.LOAD_BYPASS_CACHE;
+			}
+			catch(e2) {
+				Components.utils.reportError(e2);
+			}
+
+			if(ch instanceof Components.interfaces.nsIFTPChannel) {
 				ch.asyncOpen(this, null);
 				return this.activeRequest = true;
 			}
@@ -606,7 +614,6 @@ var linkPropsPlusSvc = {
 				ch.requestMethod = "HEAD";
 				var ref = isManualCall ? this.realReferer : this.referer;
 				ref && ch.setRequestHeader("Referer", ref, false);
-				ch.loadFlags |= ch.LOAD_BACKGROUND | ch.INHIBIT_CACHING;
 				ch.visitRequestHeaders(this);
 				ch.asyncOpen(this, null);
 				return this.activeRequest = true;

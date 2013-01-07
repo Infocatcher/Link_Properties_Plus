@@ -43,7 +43,9 @@
 						tooltiptext="&linkPropsPlus.labelDownloadURI;"
 						lpp_key="linkPropsPlus-key-downloadURI" />
 				</hbox>
-				<button id="linkPropsPlus-getHeaders" oncommand="linkPropsPlusWnd.getHeaders();"
+				<button id="linkPropsPlus-getHeaders"
+					oncommand="linkPropsPlusWnd.getHeaders(event);"
+					onclick="if(event.button == 1) linkPropsPlusWnd.getHeaders(event);"
 					label="&linkPropsPlus.buttonGetProps;" accesskey="&linkPropsPlus.buttonGetPropsAccesskey;" />
 			</row>
 			<row align="center">

@@ -184,11 +184,11 @@ var linkPropsPlus = {
 	},
 	openWindow: function(uri, referer, win, tab) {
 		if(!uri) {
-			uri = this.readFromClipboard();
-			if(!this.isValidURI(uri))
-				uri = "";
+			var clipUri = this.readFromClipboard();
+			if(this.isValidURI(clipUri))
+				uri = clipUri;
 		}
-		if(!referer)
+		if(!referer && referer !== null)
 			referer = content.location.href;
 		this.ut.openWindow(uri, referer, arguments.length > 0, win, tab);
 	},

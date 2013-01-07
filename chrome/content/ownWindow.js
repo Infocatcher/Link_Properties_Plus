@@ -10,12 +10,15 @@ var linkPropsPlusWnd = {
 	get svc() {
 		return window.linkPropsPlusSvc;
 	},
+
+	_parentWindow: null,
 	get parentWindow() {
 		var w = this._parentWindow;
-		if(w && !w.closed)
-			return w;
-		return null;
+		if(w && w.closed)
+			w = this._parentWindow = null;
+		return w;
 	},
+	parentTab: null,
 
 	instantInit: function() {
 		if("arguments" in window) {

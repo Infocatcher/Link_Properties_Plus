@@ -83,11 +83,15 @@ var linkPropsPlusWnd = {
 		}
 		document.title = ttl;
 	},
+	get getHeadersBtn() {
+		delete this.getHeadersBtn;
+		return this.getHeadersBtn = document.getElementById("linkPropsPlus-getHeaders");
+	},
 	get cantGet() {
-		return document.getElementById("linkPropsPlus-getHeaders").disabled;
+		return this.getHeadersBtn.disabled;
 	},
 	set cantGet(val) {
-		document.getElementById("linkPropsPlus-getHeaders").disabled = val;
+		this.getHeadersBtn.disabled = val;
 	},
 	getHeaders: function() {
 		var uri = this.uri;

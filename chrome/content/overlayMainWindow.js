@@ -134,12 +134,15 @@ var linkPropsPlus = {
 			}
 		}
 		else if(this.pu.pref("context.onSelection")) {
-			var sel = document.commandDispatcher.focusedWindow.getSelection().toString();
+			var selObj = document.commandDispatcher.focusedWindow.getSelection();
+			var sel = selObj.toString();
 			uri = this.extractURI(sel);
 			if(uri) {
 				this.linkURL = uri;
 				this.referer = this.pu.pref("useRealRefererForTextLinks")
-					? gContextMenu.target.ownerDocument.location.href
+					//? gContextMenu.target.ownerDocument.location.href
+					// Bug in SeaMonkey 2.14.1 ?
+					? selObj.getRangeAt(0).commonAncestorContainer.ownerDocument.location.href
 					: null;
 				hide = false;
 			}

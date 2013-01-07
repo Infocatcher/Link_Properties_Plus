@@ -161,8 +161,12 @@ var linkPropsPlus = {
 		}
 	},
 	readFromClipboard: function() {
-		// For Thunderbird
-		// Based on function readFromClipboard() from chrome://browser/content/browser.js
+		// See chrome://browser/content/browser.js
+		if("readFromClipboard" in window)
+			return readFromClipboard() || "";
+
+		// Fallback implementation for Thunderbird
+		// Based on code from Firefox 20.0a1 (2013-01-06)
 		var str = "";
 		try {
 			var cb = Components.classes["@mozilla.org/widget/clipboard;1"]
@@ -170,6 +174,13 @@ var linkPropsPlus = {
 			var trans = Components.classes["@mozilla.org/widget/transferable;1"]
 				.createInstance(Components.interfaces.nsITransferable);
 			trans.addDataFlavor("text/unicode");
+			if("init" in trans) {
+				trans.init(
+					window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+						.getInterface(Components.interfaces.nsIWebNavigation)
+						.QueryInterface(Components.interfaces.nsILoadContext)
+				);
+			}
 			var cbId = cb.supportsSelectionClipboard() ? cb.kSelectionClipboard : cb.kGlobalClipboard;
 			cb.getData(trans, cbId);
 			var data = {};

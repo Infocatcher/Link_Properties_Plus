@@ -138,7 +138,9 @@ var linkPropsPlus = {
 			uri = this.extractURI(sel);
 			if(uri) {
 				this.linkURL = uri;
-				this.referer = null; //gContextMenu.target.ownerDocument.location.href;
+				this.referer = this.pu.pref("useRealRefererForTextLinks")
+					? gContextMenu.target.ownerDocument.location.href
+					: null;
 				hide = false;
 			}
 		}

@@ -20,6 +20,7 @@ pref("extensions.linkPropertiesPlus.useFakeReferer", 1);
 // 2 - use the same link
 pref("extensions.linkPropertiesPlus.useFakeReferer.force", true);
 // Set fake referer header, if network.http.sendRefererHeader <= 1
+pref("extensions.linkPropertiesPlus.useRealRefererForTextLinks", false);
 
 pref("extensions.linkPropertiesPlus.sizePrecision", 2);
 pref("extensions.linkPropertiesPlus.useBinaryPrefixes", true);

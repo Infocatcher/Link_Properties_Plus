@@ -1022,8 +1022,10 @@ var linkPropsPlusSvc = {
 		target.parentNode.setAttribute("lpp_missing", isMissing);
 	},
 
+	Components: Components, // We can receive nsIChannel notifications after window will be closed
+	// And in Firefox <= 3.6 garbage collector may already remove Components from scope
 	onDataAvailable: function(request, ctxt, input, offset, count) {
-		request.cancel(Components.results.NS_BINDING_ABORTED); //?
+		request.cancel(this.Components.results.NS_BINDING_ABORTED); //?
 		if(window.closed)
 			return;
 		if(request.URI && request.URI.scheme == "data")

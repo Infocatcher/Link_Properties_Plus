@@ -61,7 +61,7 @@
 	</keyset>
 	<menupopup id="mailContext">
 		<menuitem id="linkPropsPlus-contextMenuitem" class="menuitem-iconic"
-			insertafter="mailContext-copylink"
+			insertafter="mailContext-copylink,context-copylink"
 			oncommand="linkPropsPlus.openWindowContext();"
 			label="&linkPropsPlus.context;"
 			lpp_label_for="&linkPropsPlus.contextFor;"

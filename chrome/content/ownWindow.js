@@ -23,7 +23,8 @@ var linkPropsPlusWnd = {
 	instantInit: function() {
 		if("arguments" in window) {
 			var wa = window.arguments || [];
-			var uri = this.uri = wa[0] || "";
+			var uri = wa[0] || "";
+			this.uri = uri;
 			this.referer = this.svc.checkReferer(wa[1], uri) || null;
 			this.autostart = !!wa[2];
 			if(this.autostart)

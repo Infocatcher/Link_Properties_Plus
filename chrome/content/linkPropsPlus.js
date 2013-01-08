@@ -351,7 +351,7 @@ var linkPropsPlusSvc = {
 		});
 		Components.classes["@mozilla.org/widget/clipboardhelper;1"]
 			.getService(Components.interfaces.nsIClipboardHelper)
-			.copyString(lines.join("\n"));
+			.copyString(lines.join("\n"), document);
 	},
 	get parentWindow() {
 		if(this.isOwnWindow)

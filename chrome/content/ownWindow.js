@@ -109,8 +109,6 @@ var linkPropsPlusWnd = {
 	},
 	onStopRequest: function(ok) {
 		this.cantGet = !this.uri;
-		if(!ok)
-			return;
 	},
 	uriChanged: function(cantGet) {
 		var uri = this.uri;

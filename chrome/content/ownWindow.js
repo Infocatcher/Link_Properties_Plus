@@ -115,12 +115,18 @@ var linkPropsPlusWnd = {
 	uriChanged: function(cantGet) {
 		var uri = this.uri;
 		this.cantGet = cantGet || this.svc.activeRequest || !uri;
-		var notHttp = !/^https?:\//.test(uri);
-		this.refererField.setAttribute("lpp_notUsed", notHttp);
-		this.refererField.previousSibling.setAttribute("lpp_notUsed", notHttp);
-		var empty = !uri;
-		this.uriField.setAttribute("lpp_empty", empty);
-		this.uriField.parentNode.setAttribute("lpp_empty", empty);
+		var notHttp = String(!/^https?:\//.test(uri));
+		var rf = this.refererField;
+		if(rf.getAttribute("lpp_notUsed") != notHttp) {
+			rf.setAttribute("lpp_notUsed", notHttp);
+			rf.previousSibling.setAttribute("lpp_notUsed", notHttp);
+		}
+		var empty = String(!uri);
+		var uf = this.uriField;
+		if(uf.getAttribute("lpp_empty") != empty) {
+			uf.setAttribute("lpp_empty", empty);
+			uf.parentNode.setAttribute("lpp_empty", empty);
+		}
 	},
 	uriChangedDelay: function() {
 		setTimeout(function(_this) {

@@ -29,7 +29,8 @@
 					<textbox id="linkPropsPlus-uri" flex="1"
 						oninput="linkPropsPlusWnd.uriChangedDelay();"
 						ondragexit="linkPropsPlusWnd.uriChangedDelay();"
-						ondrop="linkPropsPlusWnd.uriChangedDelay();" />
+						ondrop="linkPropsPlusWnd.uriChangedDelay();"
+						oncut="linkPropsPlusWnd.uriChangedDelay();" />
 					<toolbarbutton id="linkPropsPlus-goToURI"
 						class="linkPropsPlus-toolbarbutton linkPropsPlus-go"
 						oncommand="linkPropsPlusSvc.goToURI('uri', event);"

@@ -349,9 +349,12 @@ var linkPropsPlusSvc = {
 			return row.getElementsByTagName("label")[0].getAttribute("value")
 				+ (data.indexOf("\n") == -1 ? " " : "\n") + data;
 		});
+		var strToCopy = lines
+			.join("\n")
+			.replace(/\r\n?|\n/g, this.appInfo.OS == "WINNT" ? "\r\n" : "\n");
 		Components.classes["@mozilla.org/widget/clipboardhelper;1"]
 			.getService(Components.interfaces.nsIClipboardHelper)
-			.copyString(lines.join("\n"), document);
+			.copyString(strToCopy, document);
 	},
 	get parentWindow() {
 		if(this.isOwnWindow)

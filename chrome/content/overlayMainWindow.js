@@ -136,6 +136,17 @@ var linkPropsPlus = {
 		else if(this.pu.pref("context.onSelection")) {
 			var selObj = document.commandDispatcher.focusedWindow.getSelection();
 			var sel = selObj.toString();
+			if(!sel && gContextMenu && gContextMenu.target) {
+				var trg = gContextMenu.target;
+				if(
+					trg instanceof HTMLTextAreaElement
+					|| trg instanceof HTMLInputElement && trg.type != "password"
+				) try {
+					sel = trg.value.substring(trg.selectionStart, trg.selectionEnd);
+				}
+				catch(e) { // Non-text HTMLInputElement
+				}
+			}
 			uri = this.extractURI(sel);
 			if(uri) {
 				this.linkURL = uri;

@@ -32,6 +32,7 @@ pref("extensions.linkPropertiesPlus.openMultipleLimit", 5);
 
 pref("extensions.linkPropertiesPlus.context.onLinks", true);
 pref("extensions.linkPropertiesPlus.context.onSelection", true);
+pref("extensions.linkPropertiesPlus.context.onSelection.inInputFields", true);
 pref("extensions.linkPropertiesPlus.context.onSelection.cropLinkInLabel", 25); // 0 - don't show link in label
 pref("extensions.linkPropertiesPlus.icon.contextMenu", true);
 

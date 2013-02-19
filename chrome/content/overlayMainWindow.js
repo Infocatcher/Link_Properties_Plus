@@ -136,7 +136,11 @@ var linkPropsPlus = {
 		else if(this.pu.pref("context.onSelection")) {
 			var selObj = document.commandDispatcher.focusedWindow.getSelection();
 			var sel = selObj.toString();
-			if(!sel && gContextMenu && gContextMenu.target) {
+			if(
+				!sel
+				&& gContextMenu && gContextMenu.target
+				&& this.pu.pref("context.onSelection.inInputFields")
+			) {
 				var trg = gContextMenu.target;
 				if(
 					trg instanceof HTMLTextAreaElement

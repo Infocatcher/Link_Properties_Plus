@@ -354,7 +354,7 @@ var linkPropsPlusSvc = {
 			.replace(/\r\n?|\n/g, this.appInfo.OS == "WINNT" ? "\r\n" : "\n");
 		Components.classes["@mozilla.org/widget/clipboardhelper;1"]
 			.getService(Components.interfaces.nsIClipboardHelper)
-			.copyString(strToCopy, document);
+			.copyString(strToCopy, this.sourceDocument || document);
 	},
 	get parentWindow() {
 		if(this.isOwnWindow)
@@ -477,7 +477,7 @@ var linkPropsPlusSvc = {
 		// Hack: we use nsContextMenu.saveLink() from chrome://browser/content/nsContextMenu.js
 		// to get correct name (see http://kb.mozillazine.org/Browser.download.saveLinkAsFilenameTimeout)
 		var browserDoc = browserWin.document;
-		var content = browserWin.content;
+		var content = this.sourceWindow || browserWin.content;
 		var contentDoc = content.document;
 		var link = contentDoc.createElementNS("http://www.w3.org/1999/xhtml", "a");
 		link.href = uri;
@@ -776,8 +776,8 @@ var linkPropsPlusSvc = {
 		if(this.isPropsDialog)
 			return document.getElementById("link-url-text").value;
 
-		// Following code is part of FlashGot extension ( http://flashgot.net/ )
-		// content\flashgot\flashgotDMOverlay.js
+		// Based on code of FlashGot extension https://addons.mozilla.org/addon/flashgot/
+		// chrome://flashgot/content/flashgotDMOverlay.js
 		return this._uri = dialog.mLauncher.source.spec;
 	},
 	get realReferer() {
@@ -786,24 +786,16 @@ var linkPropsPlusSvc = {
 		if(this.isOwnWindow)
 			return this.wnd.referer;
 
-		// Following code is part of FlashGot extension ( http://flashgot.net/ )
-		// content\flashgot\flashgotDMOverlay.js
-		var openerDoc;
 		try {
-			openerDoc = dialog.mContext.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
-				.getInterface(Components.interfaces.nsIDOMWindow)
-				.document;
-		} catch(ex) {
-			openerDoc = top.opener && top.opener.content && top.opener.content.document || null;
-		}
-		var referer;
-		try {
-			referer = dialog.mContext.QueryInterface(Components.interfaces.nsIWebNavigation)
+			return dialog.mContext
+				.QueryInterface(Components.interfaces.nsIWebNavigation)
 				.currentURI.spec;
-		} catch(ex) {
-			 referer = openerDoc && openerDoc.URL || this._uri;
 		}
-		return referer;
+		catch(e) {
+			Components.utils.reportError(e);
+		}
+		var sourceDoc = this.sourceDocument;
+		return sourceDoc && sourceDoc.documentURI || this._uri;
 	},
 	get referer() {
 		return this.checkReferer(this.realReferer, this.uri);
@@ -856,23 +848,33 @@ var linkPropsPlusSvc = {
 		}
 		return uri == uri2;
 	},
+	get sourceDocument() {
+		var win = this.sourceWindow;
+		return win && win.document || null;
+	},
 	get sourceWindow() {
+		var win = this._sourceWindow;
+		if(!win || win.closed)
+			return null;
+		return win;
+	},
+	get _sourceWindow() {
 		if(this.isPropsDialog)
 			return window.arguments[0].ownerDocument.defaultView;
 		if(this.isOwnWindow)
 			return this.wnd.sourceWindow;
 
-		// Following code is part of FlashGot extension ( http://flashgot.net/ )
-		// content\flashgot\flashgotDMOverlay.js
-		var openerDoc;
+		// Based on code of FlashGot extension https://addons.mozilla.org/addon/flashgot/
+		// chrome://flashgot/content/flashgotDMOverlay.js
 		try {
-			return dialog.mContext.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+			return dialog.mContext
+				.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
 				.getInterface(Components.interfaces.nsIDOMWindow);
 		}
 		catch(e) {
 			Components.utils.reportError(e);
 		}
-		return null;
+		return top.opener && top.opener.content || null;
 	},
 	_isPrivate: false,
 	get isPrivate() {

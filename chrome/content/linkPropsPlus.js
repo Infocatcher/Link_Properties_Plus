@@ -362,7 +362,7 @@ var linkPropsPlusSvc = {
 		if(
 			this.isPropsDialog
 			&& "nodeView" in window
-			&& window.opener && !opener.closed
+			&& window.opener && this.ensureWindowOpened(opener)
 			&& "gBrowser" in opener && opener.gBrowser
 			&& "_getTabForContentWindow" in opener.gBrowser
 		) {
@@ -853,10 +853,7 @@ var linkPropsPlusSvc = {
 		return win && win.document || null;
 	},
 	get sourceWindow() {
-		var win = this._sourceWindow;
-		if(!win || win.closed)
-			return null;
-		return win;
+		return this.ensureWindowOpened(this._sourceWindow);
 	},
 	get _sourceWindow() {
 		if(this.isPropsDialog)
@@ -875,6 +872,15 @@ var linkPropsPlusSvc = {
 			Components.utils.reportError(e);
 		}
 		return top.opener && top.opener.content || null;
+	},
+	ensureWindowOpened: function(win) {
+		try {
+			if(win && !win.closed)
+				return win;
+		}
+		catch(e) { // TypeError: can't access dead object
+		}
+		return null;
 	},
 	_isPrivate: false,
 	get isPrivate() {

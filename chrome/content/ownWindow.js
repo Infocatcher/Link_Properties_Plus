@@ -13,19 +13,13 @@ var linkPropsPlusWnd = {
 
 	_parentWindow: null,
 	get parentWindow() {
-		var w = this._parentWindow;
-		if(w && w.closed)
-			w = this._parentWindow = null;
-		return w;
+		return this.svc.ensureWindowOpened(this._parentWindow);
 	},
 	parentTab: null,
 
 	_sourceWindow: null,
 	get sourceWindow() {
-		var w = this._sourceWindow;
-		if(w && w.closed)
-			w = this._sourceWindow = null;
-		return w;
+		return this.svc.ensureWindowOpened(this._sourceWindow);
 	},
 
 	instantInit: function() {

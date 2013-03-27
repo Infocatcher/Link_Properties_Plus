@@ -8,7 +8,8 @@ var linkPropsPlus = {
 	},
 
 	linkURL: "",
-	referer: null,
+	referer: "",
+	sourceWindow: null,
 
 	get ut() {
 		var tmp = {};
@@ -119,6 +120,7 @@ var linkPropsPlus = {
 		var hide = true;
 		var uri = "";
 		this.linkURL = this.referer = "";
+		this.sourceWindow = null;
 		if(
 			gContextMenu
 			&& gContextMenu.onSaveableLink
@@ -128,8 +130,10 @@ var linkPropsPlus = {
 				? gContextMenu.linkURL()
 				: gContextMenu.linkURL;
 			if(this.isValidURI(uri)) {
+				var sourceDoc = gContextMenu.link.ownerDocument;
 				this.linkURL = uri;
-				this.referer = gContextMenu.link.ownerDocument.location.href;
+				this.referer = sourceDoc.location.href;
+				this.sourceWindow = sourceDoc.defaultView;
 				hide = false;
 			}
 		}
@@ -153,12 +157,13 @@ var linkPropsPlus = {
 			}
 			uri = this.extractURI(sel);
 			if(uri) {
+				var sourceDoc = gContextMenu && gContextMenu.target && gContextMenu.target.ownerDocument
+					|| selObj.getRangeAt(0).commonAncestorContainer.ownerDocument; // For SeaMonkey
 				this.linkURL = uri;
 				this.referer = this.pu.pref("useRealRefererForTextLinks")
-					//? gContextMenu.target.ownerDocument.location.href
-					// Bug in SeaMonkey 2.14.1 ?
-					? selObj.getRangeAt(0).commonAncestorContainer.ownerDocument.location.href
+					? sourceDoc.location.href
 					: null;
+				this.sourceWindow = sourceDoc.defaultView;
 				hide = false;
 			}
 		}

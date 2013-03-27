@@ -33,7 +33,7 @@ var linkPropsPlusWnd = {
 			if(this.autostart)
 				this.cantGet = true;
 			this._parentWindow = options.parentWindow || null;
-			this.parentTab = options.parentTab || null;
+			this.parentTab = options.sourceTab || null;
 		}
 		this.uriChanged(this.autostart);
 		this.setTitle();

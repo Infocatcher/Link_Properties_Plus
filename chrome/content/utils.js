@@ -42,7 +42,7 @@ var linkPropsPlusUtils = {
 				referer: referer,
 				sourceWindow: sourceWindow,
 				autostart: autostart,
-				browserWindow: browserWindow,
+				parentWindow: browserWindow,
 				sourceTab: sourceTab
 			}
 		);

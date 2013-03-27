@@ -597,13 +597,33 @@ var linkPropsPlusSvc = {
 			var ch = this.channel = schm == "about" && "nsIAboutModule" in Components.interfaces
 				? Components.classes["@mozilla.org/network/protocol/about;1?what=" + uri.path.replace(/[?&#].*$/, "")]
 					.getService(Components.interfaces.nsIAboutModule)
-					. newChannel(uri)
+					.newChannel(uri)
 				: this.ios.newChannelFromURI(uri);
 
 			if(ch instanceof Components.interfaces.nsIRequest) try {
 				ch.loadFlags |= ch.LOAD_BACKGROUND | ch.INHIBIT_CACHING;
 				if(bypassCache)
 					ch.loadFlags |= ch.LOAD_BYPASS_CACHE;
+			}
+			catch(e2) {
+				Components.utils.reportError(e2);
+			}
+
+			if(
+				"nsIPrivateBrowsingChannel" in Components.interfaces
+				&& ch instanceof Components.interfaces.nsIPrivateBrowsingChannel
+			) try {
+				Components.classes["@mozilla.org/consoleservice;1"]
+					.getService(Components.interfaces.nsIConsoleService)
+					.logStringMessage("isChannelPrivate: " + ch.isChannelPrivate);
+				Components.utils["import"]("resource://gre/modules/PrivateBrowsingUtils.jsm");
+				var sourceWindow = this.sourceWindow;
+				if(sourceWindow && PrivateBrowsingUtils.isWindowPrivate(sourceWindow)) {
+					ch.setPrivate(true);
+					Components.classes["@mozilla.org/consoleservice;1"]
+						.getService(Components.interfaces.nsIConsoleService)
+						.logStringMessage("isChannelPrivate.setPrivate(true)");
+				}
 			}
 			catch(e2) {
 				Components.utils.reportError(e2);
@@ -847,6 +867,24 @@ var linkPropsPlusSvc = {
 		catch(e) {
 		}
 		return uri == uri2;
+	},
+	get sourceWindow() {
+		if(this.isPropsDialog)
+			return window.arguments[0].ownerDocument.defaultView;
+		if(this.isOwnWindow)
+			return this.wnd.sourceWindow;
+
+		// Following code is part of FlashGot extension ( http://flashgot.net/ )
+		// content\flashgot\flashgotDMOverlay.js
+		var openerDoc;
+		try {
+			return dialog.mContext.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+				.getInterface(Components.interfaces.nsIDOMWindow);
+		}
+		catch(e) {
+			Components.utils.reportError(e);
+		}
+		return null;
 	},
 
 	addHeaderLine: function(line) {

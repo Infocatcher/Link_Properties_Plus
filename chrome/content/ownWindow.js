@@ -58,6 +58,9 @@ var linkPropsPlusWnd = {
 			this.uriField.setAttribute("clickSelectsAll", csa);
 			this.refererField.setAttribute("clickSelectsAll", csa);
 		}
+		else if(pName == "ownWindow.cropFileNameInTitle") {
+			this.setTitle();
+		}
 	},
 
 	get uriField() {
@@ -89,11 +92,18 @@ var linkPropsPlusWnd = {
 		var ttl = this.baseTitle;
 		var uri = this.uri;
 		if(uri) {
-			var uri = this.ut.decodeURI(uri);
- 			var fName = /[^\/\\]+$/.test(uri)
- 				&& RegExp.lastMatch.replace(/#.*$/, "")
-				|| uri;
-			ttl += " [" + fName + "]";
+			var crop = this.pu.pref("ownWindow.cropFileNameInTitle");
+			if(crop > 0) {
+				var uri = this.ut.decodeURI(uri);
+	 			var fName = /[^\/\\]+$/.test(uri)
+	 				&& RegExp.lastMatch.replace(/#.*$/, "")
+					|| uri;
+				if(fName.length > crop) {
+					var half = Math.floor(crop/2);
+					fName = fName.substr(0, half) + "…" + fName.substr(half - crop);
+				}
+				ttl += " [" + fName + "]";
+			}
 		}
 		if(this.svc.isPrivate)
 			ttl += this.ut.getLocalized("privateTitleModifier");

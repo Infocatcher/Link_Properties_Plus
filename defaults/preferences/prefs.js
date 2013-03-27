@@ -12,6 +12,7 @@ pref("extensions.linkPropertiesPlus.ownWindow.showResponseStatus", true);
 pref("extensions.linkPropertiesPlus.ownWindow.showHttpHeaders", false);
 pref("extensions.linkPropertiesPlus.ownWindow.showDirectURI", true);
 pref("extensions.linkPropertiesPlus.ownWindow.clickSelectsAll", true);
+pref("extensions.linkPropertiesPlus.ownWindow.cropFileNameInTitle", 35); // 0 - don't show file name in window title
 
 pref("extensions.linkPropertiesPlus.useFakeReferer", 1);
 // We don't use "internal" or file:// URIs as referers

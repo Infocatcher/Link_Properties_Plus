@@ -27,6 +27,7 @@ var linkPropsPlus = {
 		window.removeEventListener("load", this, false);
 		window.addEventListener("unload", this, false);
 		this.cm.addEventListener("popupshowing", this, false);
+		this.cm.addEventListener("popuphidden", this, false);
 		this.pu.prefsMigration();
 		this.registerHotkeys();
 		setTimeout(function(_this) {
@@ -37,14 +38,14 @@ var linkPropsPlus = {
 	destroy: function() {
 		window.removeEventListener("unload", this, false);
 		this.cm.removeEventListener("popupshowing", this, false);
+		this.cm.removeEventListener("popuphidden", this, false);
 	},
 	handleEvent: function(e) {
 		switch(e.type) {
-			case "load":         this.init();    break;
-			case "unload":       this.destroy(); break;
-			case "popupshowing":
-				if(e.target == e.currentTarget)
-					this.setContextMenu();
+			case "load":         this.init();                                              break;
+			case "unload":       this.destroy();                                           break;
+			case "popupshowing": e.target == e.currentTarget && this.setContextMenu();     break;
+			case "popuphidden":  e.target == e.currentTarget && this.destroyContextMenu();
 		}
 	},
 
@@ -117,10 +118,9 @@ var linkPropsPlus = {
 		this.appMi      && this.appMi     .setAttribute(attr, this.pu.pref("icon.appMenu"));
 	},
 	setContextMenu: function() {
+		this.destroyContextMenu();
 		var hide = true;
 		var uri = "";
-		this.linkURL = this.referer = "";
-		this.sourceWindow = null;
 		if(
 			gContextMenu
 			&& gContextMenu.onSaveableLink
@@ -182,6 +182,10 @@ var linkPropsPlus = {
 			if(mi.getAttribute("label") != label)
 				mi.setAttribute("label", label);
 		}
+	},
+	destroyContextMenu: function() {
+		this.linkURL = this.referer = "";
+		this.sourceWindow = null;
 	},
 	readFromClipboard: function() {
 		// See chrome://browser/content/browser.js

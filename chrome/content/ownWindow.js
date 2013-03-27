@@ -81,8 +81,12 @@ var linkPropsPlusWnd = {
 		this.refererField.value = val || "";
 	},
 
+	get baseTitle() {
+		delete this.baseTitle;
+		return this.baseTitle = document.title;
+	},
 	setTitle: function() {
-		var ttl = document.title.replace(/\s+\[.*\]$/, "");
+		var ttl = this.baseTitle;
 		var uri = this.uri;
 		if(uri) {
 			var uri = this.ut.decodeURI(uri);
@@ -91,6 +95,8 @@ var linkPropsPlusWnd = {
 				|| uri;
 			ttl += " [" + fName + "]";
 		}
+		if(this.svc.isPrivate)
+			ttl += this.ut.getLocalized("privateTitleModifier");
 		document.title = ttl;
 	},
 	get getHeadersBtn() {

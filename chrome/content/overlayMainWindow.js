@@ -222,7 +222,7 @@ var linkPropsPlus = {
 		}
 		return str;
 	},
-	openWindow: function(uri, referer, win, tab) {
+	openWindow: function(uri, referer, sourceWindow, browserWindow, sourceTab) {
 		if(!uri) {
 			var clipUri = this.readFromClipboard();
 			if(this.isValidURI(clipUri))
@@ -230,10 +230,18 @@ var linkPropsPlus = {
 		}
 		if(!referer && referer !== null)
 			referer = content.location.href;
-		this.ut.openWindow(uri, referer, arguments.length > 0, win, tab);
+		if(!sourceWindow)
+			sourceWindow = content;
+		this.ut.openWindow(uri, referer, sourceWindow, arguments.length > 0, browserWindow, sourceTab);
 	},
 	openWindowContext: function() {
-		this.openWindow(this.linkURL, this.referer, window, "gBrowser" in window && gBrowser.selectedTab);
+		this.openWindow(
+			this.linkURL,
+			this.referer,
+			this.sourceWindow,
+			window,
+			"gBrowser" in window && gBrowser.selectedTab
+		);
 	},
 
 	// Hotkeys:

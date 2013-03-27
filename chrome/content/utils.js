@@ -8,7 +8,7 @@ var linkPropsPlusUtils = {
 			.getService(Components.interfaces.nsIWindowMediator);
 	},
 
-	openWindow: function(uri, referer, autostart, win, tab) {
+	openWindow: function(uri, referer, sourceWindow, autostart, browserWindow, sourceTab) {
 		var ws = this.wm.getEnumerator("linkPropsPlus:ownWindow");
 		while(ws.hasMoreElements()) {
 			var w = ws.getNext();
@@ -23,7 +23,14 @@ var linkPropsPlusUtils = {
 			"chrome://linkpropsplus/content/ownWindow.xul",
 			"_blank",
 			"chrome,resizable,centerscreen,dialog=0",
-			uri, referer, autostart, win, tab
+			{
+				uri: uri,
+				referer: referer,
+				sourceWindow: sourceWindow,
+				autostart: autostart,
+				browserWindow: browserWindow,
+				sourceTab: sourceTab
+			}
 		);
 	},
 	decodeURI: function(uri) {

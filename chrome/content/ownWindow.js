@@ -20,17 +20,26 @@ var linkPropsPlusWnd = {
 	},
 	parentTab: null,
 
+	_sourceWindow: null,
+	get sourceWindow() {
+		var w = this._sourceWindow;
+		if(w && w.closed)
+			w = this._sourceWindow = null;
+		return w;
+	},
+
 	instantInit: function() {
 		if("arguments" in window) {
-			var wa = window.arguments || [];
-			var uri = wa[0] || "";
+			var options = window.arguments && window.arguments[0];
+			var uri = options.uri || "";
 			this.uri = uri;
-			this.referer = this.svc.checkReferer(wa[1], uri) || null;
-			this.autostart = !!wa[2];
+			this.referer = this.svc.checkReferer(options.referer || "", uri) || null;
+			this._sourceWindow = options.sourceWindow || null;
+			this.autostart = !!options.autostart;
 			if(this.autostart)
 				this.cantGet = true;
-			this._parentWindow = wa[3];
-			this.parentTab = wa[4];
+			this._parentWindow = options.parentWindow || null;
+			this.parentTab = options.parentTab || null;
 		}
 		this.uriChanged(this.autostart);
 		this.setTitle();

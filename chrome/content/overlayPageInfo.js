@@ -23,6 +23,7 @@ var linkPropsPlusPageInfo = {
 		var tree = document.getElementById("imagetree");
 		var numRanges = tree.view.selection.getRangeCount();
 		var links = { __proto__: null };
+		var wins = { __proto__: null };
 		var count = 0;
 		for(var t = 0; t < numRanges; ++t) {
 			var start = {};
@@ -31,17 +32,19 @@ var linkPropsPlusPageInfo = {
 			for(var v = start.value; v <= end.value; ++v) {
 				var data = gImageView.data[v];
 				var uri  = data[COL_IMAGE_ADDRESS];
-				if(uri in links)
+				if(uri in links) //~ todo: what to do for the same URIs from different documents?
 					continue;
 				var item = data[COL_IMAGE_NODE];
-				var referer = item.ownerDocument.location.href;
+				var doc = item.ownerDocument;
+				var referer = doc.location.href;
 				links[uri] = referer;
+				wins[uri] = doc.defaultView;
 				++count;
 			}
 		}
 		if(this.allowOpen(count))
 			for(var uri in links)
-				this.ut.openWindow(uri, links[uri], true);
+				this.ut.openWindow(uri, links[uri], wins[uri], true);
 	},
 	allowOpen: function(n) {
 		var max = this.pu.pref("openMultipleLimit") || 0;

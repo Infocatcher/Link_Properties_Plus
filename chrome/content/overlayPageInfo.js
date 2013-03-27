@@ -31,6 +31,8 @@ var linkPropsPlusPageInfo = {
 			for(var v = start.value; v <= end.value; ++v) {
 				var data = gImageView.data[v];
 				var uri  = data[COL_IMAGE_ADDRESS];
+				if(uri in links)
+					continue;
 				var item = data[COL_IMAGE_NODE];
 				var referer = item.ownerDocument.location.href;
 				links[uri] = referer;

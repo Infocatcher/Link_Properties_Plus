@@ -7,13 +7,27 @@ var linkPropsPlusUtils = {
 		return this.wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
 			.getService(Components.interfaces.nsIWindowMediator);
 	},
+	get pbu() {
+		if(!("PrivateBrowsingUtils" in window)) try {
+			Components.utils["import"]("resource://gre/modules/PrivateBrowsingUtils.jsm");
+		}
+		catch(e) {
+		}
+		delete this.pbu;
+		return this.pbu = "PrivateBrowsingUtils" in window ? PrivateBrowsingUtils : null;
+	},
 
 	openWindow: function(uri, referer, sourceWindow, autostart, browserWindow, sourceTab) {
 		var ws = this.wm.getEnumerator("linkPropsPlus:ownWindow");
 		while(ws.hasMoreElements()) {
 			var w = ws.getNext();
 			var o = w.linkPropsPlusWnd;
-			if(o && o.uri == uri && o.referer == referer) {
+			if(
+				o
+				&& o.uri == uri
+				&& o.referer == referer
+				&& o.svc.isPrivate == this.isWindowPrivate(sourceWindow)
+			) {
 				w.focus();
 				o.svc.restartAutoClose();
 				return;
@@ -32,6 +46,12 @@ var linkPropsPlusUtils = {
 				sourceTab: sourceTab
 			}
 		);
+	},
+	isWindowPrivate: function(win) {
+		if(!win)
+			return false;
+		var pbu = this.pbu;
+		return pbu && pbu.isWindowPrivate(win);
 	},
 	decodeURI: function(uri) {
 		if(!this.pu.pref("decodeURIs"))

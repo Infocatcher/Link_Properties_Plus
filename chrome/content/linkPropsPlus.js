@@ -879,14 +879,7 @@ var linkPropsPlusSvc = {
 		var sourceWindow = this.sourceWindow;
 		if(!sourceWindow) // Already closed? Will use cached value
 			return this._isPrivate;
-		var isPrivate = false;
-		try {
-			Components.utils["import"]("resource://gre/modules/PrivateBrowsingUtils.jsm");
-			isPrivate = PrivateBrowsingUtils.isWindowPrivate(sourceWindow);
-		}
-		catch(e) {
-		}
-		return this._isPrivate = isPrivate;
+		return this._isPrivate = this.ut.isWindowPrivate(sourceWindow);
 	},
 
 	addHeaderLine: function(line) {

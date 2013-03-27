@@ -612,22 +612,10 @@ var linkPropsPlusSvc = {
 			if(
 				"nsIPrivateBrowsingChannel" in Components.interfaces
 				&& ch instanceof Components.interfaces.nsIPrivateBrowsingChannel
-			) try {
-				Components.classes["@mozilla.org/consoleservice;1"]
-					.getService(Components.interfaces.nsIConsoleService)
-					.logStringMessage("isChannelPrivate: " + ch.isChannelPrivate);
-				Components.utils["import"]("resource://gre/modules/PrivateBrowsingUtils.jsm");
-				var sourceWindow = this.sourceWindow;
-				if(sourceWindow && PrivateBrowsingUtils.isWindowPrivate(sourceWindow)) {
-					ch.setPrivate(true);
-					Components.classes["@mozilla.org/consoleservice;1"]
-						.getService(Components.interfaces.nsIConsoleService)
-						.logStringMessage("isChannelPrivate.setPrivate(true)");
-				}
-			}
-			catch(e2) {
-				Components.utils.reportError(e2);
-			}
+				&& "setPrivate" in ch
+				&& this.isPrivate
+			)
+				ch.setPrivate(true);
 
 			if(ch instanceof Components.interfaces.nsIFTPChannel) {
 				ch.asyncOpen(this, null);
@@ -885,6 +873,20 @@ var linkPropsPlusSvc = {
 			Components.utils.reportError(e);
 		}
 		return null;
+	},
+	_isPrivate: false,
+	get isPrivate() {
+		var sourceWindow = this.sourceWindow;
+		if(!sourceWindow) // Already closed? Will use cached value
+			return this._isPrivate;
+		var isPrivate = false;
+		try {
+			Components.utils["import"]("resource://gre/modules/PrivateBrowsingUtils.jsm");
+			isPrivate = PrivateBrowsingUtils.isWindowPrivate(sourceWindow);
+		}
+		catch(e) {
+		}
+		return this._isPrivate = isPrivate;
 	},
 
 	addHeaderLine: function(line) {

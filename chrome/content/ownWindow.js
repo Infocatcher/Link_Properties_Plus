@@ -33,17 +33,49 @@ var linkPropsPlusWnd = {
 			if(this.autostart)
 				this.cantGet = true;
 			this._parentWindow = options.parentWindow || null;
-			this.parentTab = options.sourceTab || null;
+			var tab = this.parentTab = options.sourceTab || null;
+			if(tab) {
+				var win = tab.ownerDocument.defaultView;
+				// https://github.com/Infocatcher/Private_Tab#api-for-other-extensions
+				win.addEventListener("PrivateTab:PrivateChanged", this, false);
+				win.addEventListener("TabClose", this, false);
+				win.addEventListener("unload", this, false);
+			}
 		}
 		this.uriChanged(this.autostart);
 		this.setTitle();
 		this.prefsChanged("ownWindow.clickSelectsAll");
 		window.addEventListener("resize", this, false);
 	},
+	destroy: function() {
+		this.destroyTabWatcher();
+	},
+	destroyTabWatcher: function() {
+		var tab = this.parentTab;
+		if(!tab)
+			return;
+		this.parentTab = null;
+		var win = tab.ownerDocument.defaultView;
+		win.removeEventListener("PrivateTab:PrivateChanged", this, false);
+		win.removeEventListener("TabClose", this, false);
+		win.removeEventListener("unload", this, false);
+	},
 	handleEvent: function(e) {
-		if(e.type == "resize") {
-			window.removeEventListener(e.type, this, false);
+		var type = e.type;
+		if(type == "resize") {
+			window.removeEventListener(type, this, false);
 			this.fixWindowHeight();
+		}
+		else if(type == "PrivateTab:PrivateChanged") {
+			if((e.originalTarget || e.target) == this.parentTab)
+				this.setTitle();
+		}
+		else if(type == "TabClose") {
+			if((e.originalTarget || e.target) == this.parentTab)
+				this.destroyTabWatcher();
+		}
+		else if(type == "unload") {
+			this.destroyTabWatcher();
 		}
 	},
 	prefsChanged: function(pName) {

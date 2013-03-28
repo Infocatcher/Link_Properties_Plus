@@ -98,6 +98,7 @@ var linkPropsPlusSvc = {
 		window.removeEventListener("unload", this, false);
 		window.removeEventListener("keypress", this, false);
 		this.destroyAutoClose();
+		this.isOwnWindow && this.wnd.destroy();
 		if(!this.channel)
 			return;
 		this.channel.cancel(Components.results.NS_BINDING_ABORTED);

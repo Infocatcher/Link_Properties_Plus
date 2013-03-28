@@ -84,7 +84,7 @@ var linkPropsPlusWnd = {
 	},
 	setTitle: function() {
 		var ttl = this.baseTitle;
-		var uri = this.uri;
+		var uri = this.svc.requestURI || this.uri;
 		if(uri) {
 			var crop = this.pu.pref("ownWindow.cropFileNameInTitle");
 			if(crop > 0) {
@@ -122,8 +122,8 @@ var linkPropsPlusWnd = {
 		if(!uri || this.cantGet)
 			return;
 		this.cantGet = true;
-		this.setTitle();
 		this.svc.getHeaders(true, bypassCache);
+		this.setTitle();
 		this.fixWindowHeight();
 	},
 	onStopRequest: function(ok) {

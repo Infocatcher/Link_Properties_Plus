@@ -502,7 +502,7 @@ var linkPropsPlusSvc = {
 			).saveLink();
 		}
 		catch(e) {
-			this.error("new nsContextMenu( ... ).saveLink() failed");
+			this.ut.error("new nsContextMenu( ... ).saveLink() failed");
 			Components.utils.reportError(e);
 			try {
 				// See chrome://global/content/contentAreaUtils.js
@@ -510,7 +510,7 @@ var linkPropsPlusSvc = {
 				browserWin.saveURL(uri, null, null, true, false, this.refererURI, contentDoc);
 			}
 			catch(e2) {
-				this.error("saveURL() failed");
+				this.ut.error("saveURL() failed");
 				Components.utils.reportError(e2);
 			}
 		}
@@ -586,7 +586,7 @@ var linkPropsPlusSvc = {
 			if("URI_DOES_NOT_RETURN_DATA" in ph) { // Firefox 3
 				var flags = this.ios.getProtocolFlags(schm);
 				if(flags & ph.URI_DOES_NOT_RETURN_DATA) {
-					this.warning('URI_DOES_NOT_RETURN_DATA (scheme: "' + schm + '")');
+					this.ut.warning('URI_DOES_NOT_RETURN_DATA (scheme: "' + schm + '")');
 					this.onStopRequestCallback(false);
 					return false;
 				}
@@ -1017,27 +1017,6 @@ var linkPropsPlusSvc = {
 		tb.parentNode.setAttribute("lpp_empty", empty);
 		this.setMissingStyle(tb, this.compareURIs(uri, this.requestURI));
 	},
-	error: function(msg, isWarning, caller) {
-		if(!caller)
-			caller = Components.stack.caller;
-		var err = Components.classes["@mozilla.org/scripterror;1"]
-			.createInstance(Components.interfaces.nsIScriptError);
-		err.init(
-			"[Link Properties Plus]: " + msg,
-			caller.filename || caller.fileName, // Allow use new Error() as caller
-			null,
-			caller.lineNumber || 0,
-			caller.columnNumber || 0, // Doesn't exist for now
-			isWarning ? err.warningFlag : err.errorFlag,
-			null
-		);
-		Components.classes["@mozilla.org/consoleservice;1"]
-			.getService(Components.interfaces.nsIConsoleService)
-			.logMessage(err);
-	},
-	warning: function(msg) {
-		this.error(msg, true, Components.stack.caller);
-	},
 
 	fillInBlank: function() {
 		var target = document.getElementById("linkPropsPlus-size");
@@ -1117,7 +1096,7 @@ var linkPropsPlusSvc = {
 			}
 		}
 		catch(err) {
-			this.error("Can't get information from request");
+			this.ut.error("Can't get information from request");
 			Components.utils.reportError(err);
 		}
 		finally {

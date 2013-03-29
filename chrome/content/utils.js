@@ -111,8 +111,30 @@ var linkPropsPlusUtils = {
 			return this.strings.GetStringFromName(id);
 		}
 		catch(e) {
+			this.error('Can\'t get localized string for "' + id + '"', Components.stack.caller);
 			Components.utils.reportError(e);
 		}
 		return id;
+	},
+	error: function(msg, caller, isWarning) {
+		if(!caller)
+			caller = Components.stack.caller;
+		var err = Components.classes["@mozilla.org/scripterror;1"]
+			.createInstance(Components.interfaces.nsIScriptError);
+		err.init(
+			"[Link Properties Plus]: " + msg,
+			caller.filename || caller.fileName, // Allow use new Error() as caller
+			null,
+			caller.lineNumber || 0,
+			caller.columnNumber || 0, // Doesn't exist for now
+			isWarning ? err.warningFlag : err.errorFlag,
+			null
+		);
+		Components.classes["@mozilla.org/consoleservice;1"]
+			.getService(Components.interfaces.nsIConsoleService)
+			.logMessage(err);
+	},
+	warning: function(msg) {
+		this.error(msg, Components.stack.caller, true);
 	}
 };

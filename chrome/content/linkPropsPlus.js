@@ -1047,7 +1047,7 @@ var linkPropsPlusSvc = {
 		if(!redirects.length)
 			tb.removeAttribute("tooltiptext");
 		else {
-			var header = this.ut.getLocalized("redirectsHeader") + " \n";
+			var header = this.ut.getLocalized("redirectsHeader", [redirects.length - 1]) + " \n";
 			tb.tooltipText = header + redirects.map(function(redirect, i) {
 				var uri = redirect.uri;
 				if(i == 0) {

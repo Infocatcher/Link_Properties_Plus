@@ -22,6 +22,8 @@
 
 <!ENTITY linkPropsPlus.copyRow "Copy Row">
 <!ENTITY linkPropsPlus.copyRowAccesskey "R">
+<!ENTITY linkPropsPlus.copyTip "Copy Tip">
+<!ENTITY linkPropsPlus.copyTipAccesskey "T">
 <!ENTITY linkPropsPlus.copyAll "Copy All">
 <!ENTITY linkPropsPlus.copyAllAccesskey "A">
 

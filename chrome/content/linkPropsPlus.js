@@ -291,6 +291,21 @@ var linkPropsPlusSvc = {
 		return this.appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
 			.getService(Components.interfaces.nsIXULAppInfo);
 	},
+	initContextMenu: function(e) {
+		if(!this.isClickOnLeftCol(e))
+			return false;
+		var popup = e.currentTarget;
+		var trg = popup.triggerNode || popup.ownerDocument.popupNode;
+		var row = this.getRowFromChild(trg);
+		var tip = this.getTip(row);
+		var copyTip = document.getElementById("linkPropsPlus-context-copyTip");
+		copyTip.hidden = !tip;
+		if(tip)
+			copyTip.tooltipText = tip;
+		else
+			copyTip.removeAttribute("tooltiptext");
+		return true;
+	},
 	openOptions: function(paneId) {
 		var win = this.ut.wm.getMostRecentWindow("linkPropsPlus:optionsWindow");
 		var showPane = paneId && function showPane(e) {
@@ -328,15 +343,18 @@ var linkPropsPlusSvc = {
 		return e.screenX >= bo.screenX && e.screenX <= bo.screenX + bo.width
 		    && e.screenY >= bo.screenY && e.screenY <= bo.screenY + bo.height;
 	},
+	getRowFromChild: function(node) {
+		for(var row = node; row; row = row.parentNode)
+			if(row.localName == "row")
+				return row;
+		return null;
+	},
 	copy: function(node) {
 		var rows;
 		if(node) {
-			for(var row = node; row; row = row.parentNode) {
-				if(row.localName == "row") {
-					rows = [row];
-					break;
-				}
-			}
+			var row = this.getRowFromChild(node);
+			if(row)
+				rows = [row];
 		}
 		else {
 			rows = Array.filter(
@@ -355,9 +373,18 @@ var linkPropsPlusSvc = {
 		var strToCopy = lines
 			.join("\n")
 			.replace(/\r\n?|\n/g, this.appInfo.OS == "WINNT" ? "\r\n" : "\n");
+		this.copyString(strToCopy);
+	},
+	getTip: function(row) {
+		return row && row.getElementsByTagName("textbox")[0].tooltipText || "";
+	},
+	copyTip: function(node) {
+		this.copyString(this.getTip(this.getRowFromChild(node)));
+	},
+	copyString: function(s) {
 		Components.classes["@mozilla.org/widget/clipboardhelper;1"]
 			.getService(Components.interfaces.nsIClipboardHelper)
-			.copyString(strToCopy, this.sourceDocument || document);
+			.copyString(s, this.sourceDocument || document);
 	},
 	get parentWindow() {
 		if(this.isOwnWindow)

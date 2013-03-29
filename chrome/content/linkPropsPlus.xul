@@ -60,11 +60,15 @@
 			</rows>
 		</grid>
 		<menupopup id="linkPropsPlus-context"
-			onpopupshowing="return linkPropsPlusSvc.isClickOnLeftCol(event);">
+			onpopupshowing="return linkPropsPlusSvc.initContextMenu(event);">
 			<menuitem id="linkPropsPlus-context-copyRow"
 				oncommand="linkPropsPlusSvc.copy(this.parentNode.triggerNode || this.ownerDocument.popupNode);"
 				label="&linkPropsPlus.copyRow;"
 				accesskey="&linkPropsPlus.copyRowAccesskey;" />
+			<menuitem id="linkPropsPlus-context-copyTip"
+				oncommand="linkPropsPlusSvc.copyTip(this.parentNode.triggerNode || this.ownerDocument.popupNode);"
+				label="&linkPropsPlus.copyTip;"
+				accesskey="&linkPropsPlus.copyTipAccesskey;" />
 			<menuitem id="linkPropsPlus-context-copyAll"
 				oncommand="linkPropsPlusSvc.copy();"
 				label="&linkPropsPlus.copyAll;"

@@ -3,6 +3,7 @@ var linkPropsPlusSvc = {
 	requestFinished: false,
 	channel: null,
 	realCount: 0,
+	redirects: [],
 
 	// We use following mask to don't use internal or file:// links as referers
 	validReferer: /^(?:http|ftp)s?:\/\/\S+$/,
@@ -283,6 +284,7 @@ var linkPropsPlusSvc = {
 		);
 		this.realCount = 0;
 		this._lastSize = this._lastSizeTip = null;
+		this.redirects.length = 0;
 	},
 	get appInfo() {
 		delete this.appInfo;
@@ -600,6 +602,8 @@ var linkPropsPlusSvc = {
 					.getService(Components.interfaces.nsIAboutModule)
 					.newChannel(uri)
 				: this.ios.newChannelFromURI(uri);
+			ch.notificationCallbacks = this; // Detect redirects
+			// => getInterface() => asyncOnChannelRedirect()
 
 			if(ch instanceof Components.interfaces.nsIRequest) try {
 				ch.loadFlags |= ch.LOAD_BACKGROUND | ch.INHIBIT_CACHING;
@@ -1016,6 +1020,32 @@ var linkPropsPlusSvc = {
 		tb.setAttribute("lpp_empty", empty);
 		tb.parentNode.setAttribute("lpp_empty", empty);
 		this.setMissingStyle(tb, this.compareURIs(uri, this.requestURI));
+
+		var redirects = this.redirects;
+		if(!redirects.length)
+			tb.removeAttribute("tooltiptext");
+		else {
+			var header = this.ut.getLocalized("redirectsHeader") + " \n";
+			tb.tooltipText = header + redirects.map(function(redirect, i) {
+				var uri = redirect.uri;
+				if(i == 0) {
+					if(uri == this.requestedURI) // Hide ?ramdom hack
+						uri = this.requestURI;
+					return this.ut.decodeURI(uri);
+				}
+				var types = [];
+				var flags = redirect.flags;
+				var ces = Components.interfaces.nsIChannelEventSink;
+				if(flags & ces.REDIRECT_TEMPORARY)
+					types.push(this.ut.getLocalized("temporary"));
+				if(flags & ces.REDIRECT_PERMANENT)
+					types.push(this.ut.getLocalized("permanent"));
+				if(flags & ces.REDIRECT_INTERNAL)
+					types.push(this.ut.getLocalized("internal"));
+				var type = types.join(this.ut.getLocalized("separator").slice(1, -1));
+				return this.ut.getLocalized("redirectInfo", [type, this.ut.decodeURI(uri)]);
+			}, this).join(" \n");
+		}
 	},
 
 	fillInBlank: function() {
@@ -1123,6 +1153,28 @@ var linkPropsPlusSvc = {
 			this.wnd.onStopRequest(ok);
 		this.initAutoClose();
 	},
+
+	// nsIInterfaceRequestor
+	getInterface: function(iid) {
+		if(iid.equals(Components.interfaces.nsIChannelEventSink))
+			return this;
+		throw Components.results.NS_ERROR_NO_INTERFACE;
+	},
+	// nsIChannelEventSink
+	onChannelRedirect: function(oldChannel, newChannel, flags) { // Gecko < 2
+		this.onRedirect.apply(this, arguments);
+	},
+	asyncOnChannelRedirect: function(oldChannel, newChannel, flags, callback) {
+		callback.onRedirectVerifyCallback(Components.results.NS_OK); // Allow redirect
+		this.onRedirect.apply(this, arguments);
+	},
+	onRedirect: function(oldChannel, newChannel, flags) {
+		var redirects = this.redirects;
+		if(!redirects.length)
+			redirects.push({ uri: oldChannel.URI.spec });
+		redirects.push({ uri: newChannel.URI.spec, flags: flags });
+	},
+
 	cancel: function() {
 		if(this.activeRequest && this.channel) {
 			this.channel.cancel(Components.results.NS_BINDING_ABORTED);

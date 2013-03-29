@@ -367,10 +367,7 @@ var linkPropsPlusSvc = {
 			return row.getElementsByTagName("label")[0].getAttribute("value")
 				+ (data.indexOf("\n") == -1 ? " " : "\n") + data;
 		});
-		var strToCopy = lines
-			.join("\n")
-			.replace(/\r\n?|\n/g, this.appInfo.OS == "WINNT" ? "\r\n" : "\n");
-		this.copyString(strToCopy);
+		this.copyString(lines.join("\n"));
 	},
 	getTip: function(row) {
 		return row && row.getElementsByTagName("textbox")[0].tooltipText || "";
@@ -379,6 +376,7 @@ var linkPropsPlusSvc = {
 		this.copyString(this.getTip(this.getRowFromChild(node)));
 	},
 	copyString: function(s) {
+		s = s.replace(/\r\n?|\n/g, this.appInfo.OS == "WINNT" ? "\r\n" : "\n");
 		Components.classes["@mozilla.org/widget/clipboardhelper;1"]
 			.getService(Components.interfaces.nsIClipboardHelper)
 			.copyString(s, this.sourceDocument || document);

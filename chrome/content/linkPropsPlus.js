@@ -43,13 +43,15 @@ var linkPropsPlusSvc = {
 		delete this.canAutoClose;
 		return this.canAutoClose = this.isOwnWindow || this.isPropsDialog;
 	},
+	get appInfo() {
+		delete this.appInfo;
+		return this.appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
+			.getService(Components.interfaces.nsIXULAppInfo)
+			.QueryInterface(Components.interfaces.nsIXULRuntime);
+	},
 	get platformVersion() {
 		delete this.platformVersion;
-		return this.platformVersion = parseFloat(
-			Components.classes["@mozilla.org/xre/app-info;1"]
-				.getService(Components.interfaces.nsIXULAppInfo)
-				.platformVersion
-		);
+		return this.platformVersion = parseFloat(this.appInfo.platformVersion);
 	},
 
 	instantInit: function() {
@@ -285,11 +287,6 @@ var linkPropsPlusSvc = {
 		this.realCount = 0;
 		this._lastSize = this._lastSizeTip = null;
 		this.redirects.length = 0;
-	},
-	get appInfo() {
-		delete this.appInfo;
-		return this.appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
-			.getService(Components.interfaces.nsIXULAppInfo);
 	},
 	initContextMenu: function(e) {
 		if(!this.isClickOnLeftCol(e))

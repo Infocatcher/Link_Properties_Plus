@@ -42,9 +42,20 @@ var linkPropsPlusPageInfo = {
 				++count;
 			}
 		}
-		if(this.allowOpen(count))
-			for(var uri in links)
-				this.ut.openWindow(uri, links[uri], wins[uri], true);
+		if(!this.allowOpen(count))
+			return;
+		var browserWindow = opener && "gBrowser" in opener && "browsers" in opener.gBrowser && opener;
+		for(var uri in links) {
+			var win = wins[uri];
+			this.ut.openWindow(
+				uri,
+				links[uri],
+				win,
+				true,
+				browserWindow,
+				this.getSourceTab(browserWindow, win.top)
+			);
+		}
 	},
 	allowOpen: function(n) {
 		var max = this.pu.pref("openMultipleLimit") || 0;
@@ -57,6 +68,16 @@ var linkPropsPlusPageInfo = {
 				this.ut.getLocalized("openMultipleLimitTitle"),
 				this.ut.getLocalized("openMultipleLimitMessage", [n])
 			);
+	},
+	getSourceTab: function(browserWindow, contentWindow) {
+		// Based on gBrowser._getTabForContentWindow() (doesn't exist in SeaMonkey)
+		var gBrowser = browserWindow.gBrowser;
+		var browsers = gBrowser.browsers;
+		var tabs = gBrowser.tabs || gBrowser.tabContainer.childNodes;
+		for(var i = 0, l = browsers.length; i < l; ++i)
+			if(browsers[i].contentWindow == contentWindow)
+				return tabs[i];
+		return null;
 	}
 };
 window.addEventListener("load", linkPropsPlusPageInfo, false);

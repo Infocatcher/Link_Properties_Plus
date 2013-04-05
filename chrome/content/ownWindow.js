@@ -43,9 +43,11 @@ var linkPropsPlusWnd = {
 			}
 		}
 		this.uriChanged(this.autostart);
-		this.setTitle();
 		this.prefsChanged("ownWindow.clickSelectsAll");
 		window.addEventListener("resize", this, false);
+	},
+	init: function() {
+		this.setTitle();
 	},
 	destroy: function() {
 		this.destroyTabWatcher();

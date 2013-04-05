@@ -94,6 +94,7 @@ var linkPropsPlusSvc = {
 
 		this.initAutoClose();
 
+		this.isOwnWindow && this.wnd.init();
 		if(!this.isOwnWindow || this.wnd.autostart)
 			this.getHeaders();
 	},

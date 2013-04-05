@@ -373,7 +373,9 @@ var linkPropsPlusSvc = {
 		return row && row.getElementsByTagName("textbox")[0].tooltipText || "";
 	},
 	copyTip: function(node) {
-		this.copyString(this.getTip(this.getRowFromChild(node)));
+		var tip = (this.getTip(this.getRowFromChild(node)) || "")
+			.replace(/\s+$/mg, "");
+		this.copyString(tip);
 	},
 	copyString: function(s) {
 		s = s.replace(/\r\n?|\n/g, this.appInfo.OS == "WINNT" ? "\r\n" : "\n");

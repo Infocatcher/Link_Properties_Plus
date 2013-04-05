@@ -15,7 +15,7 @@
 		<key id="linkPropsPlus-key-openWindow" command="linkPropsPlus-cmd-openWindow" disabled="true" />
 	</keyset>
 	<menupopup id="menu_ToolsPopup">
-		<menuitem id="linkPropsPlus-toolsMenuitem" class="menuitem-iconic" insertbefore="sanitizeSeparator"
+		<menuitem id="linkPropsPlus-toolsMenuitem" class="menuitem-iconic" insertafter="menu_pageInfo"
 			command="linkPropsPlus-cmd-openWindow" key="linkPropsPlus-key-openWindow" />
 	</menupopup>
 	<menupopup id="contentAreaContextMenu">

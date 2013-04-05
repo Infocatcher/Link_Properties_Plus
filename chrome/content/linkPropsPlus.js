@@ -290,7 +290,7 @@ var linkPropsPlusSvc = {
 		this.redirects.length = 0;
 	},
 	initContextMenu: function(e) {
-		if(!this.isClickOnLeftCol(e))
+		if(!this._allowOptions)
 			return false;
 		var popup = e.currentTarget;
 		var trg = popup.triggerNode || popup.ownerDocument.popupNode;

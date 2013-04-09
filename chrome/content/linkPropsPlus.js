@@ -280,6 +280,7 @@ var linkPropsPlusSvc = {
 					return;
 				tb.value = "";
 				this.setMissingStyle(tb, false);
+				tb.removeAttribute("tooltiptext");
 				tb.setAttribute("lpp_empty", "true");
 				tb.parentNode.setAttribute("lpp_empty", "true");
 			},
@@ -1011,8 +1012,12 @@ var linkPropsPlusSvc = {
 	},
 	formatDate: function(str) {
 		var target = document.getElementById("linkPropsPlus-lastModified");
-		this.setMissingStyle(target, !str);
-		target.value = new Date(str).toLocaleString();
+		var date = new Date(str);
+		var isInvalid = !str || !isFinite(date.getTime());
+		this.setMissingStyle(target, isInvalid);
+		if(str && isInvalid)
+			target.tooltipText = str;
+		target.value = date.toLocaleString();
 	},
 	formatType: function(str) {
 		var target = document.getElementById("linkPropsPlus-contentType");

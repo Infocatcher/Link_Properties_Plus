@@ -1011,7 +1011,7 @@ var linkPropsPlusSvc = {
 	},
 	formatDate: function(str) {
 		var target = document.getElementById("linkPropsPlus-lastModified");
-		this.setMissingStyle(target, str);
+		this.setMissingStyle(target, !str);
 		target.value = new Date(str).toLocaleString();
 	},
 	formatType: function(str) {
@@ -1022,7 +1022,7 @@ var linkPropsPlusSvc = {
 		}
 		else {
 			this._hasType = true;
-			this.setMissingStyle(target, str);
+			this.setMissingStyle(target, !str);
 			target.value = str;
 			target.removeAttribute("tooltiptext");
 		}

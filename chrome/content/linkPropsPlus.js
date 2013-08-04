@@ -1186,7 +1186,10 @@ var linkPropsPlusSvc = {
 
 	// nsIInterfaceRequestor
 	getInterface: function(iid) {
-		if(iid.equals(Components.interfaces.nsIChannelEventSink))
+		if(
+			iid.equals(Components.interfaces.nsIChannelEventSink)
+			|| iid.equals(Components.interfaces.nsILoadContext)
+		)
 			return this;
 		throw Components.results.NS_ERROR_NO_INTERFACE;
 	},
@@ -1203,6 +1206,16 @@ var linkPropsPlusSvc = {
 		if(!redirects.length)
 			redirects.push({ uri: oldChannel.URI.spec });
 		redirects.push({ uri: newChannel.URI.spec, flags: flags });
+	},
+	// nsILoadContext
+	setPrivate: function(isPrivate) {
+		return this.channel.setPrivate.apply(this.channel, arguments);
+	},
+	get isChannelPrivate() {
+		return this.channel.isChannelPrivate;
+	},
+	get isPrivateModeOverriden() {
+		return this.channel.isPrivateModeOverriden;
 	},
 
 	cancel: function() {

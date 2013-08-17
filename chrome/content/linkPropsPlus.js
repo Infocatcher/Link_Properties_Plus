@@ -1143,6 +1143,15 @@ var linkPropsPlusSvc = {
 				this.addHeaderLine("\nStatus: " + request.responseStatus + " " + request.responseStatusText);
 				this.formatStatus(request.responseStatus, request.responseStatusText);
 				request.visitResponseHeaders(this);
+				try { // Placed here to prefer Last-Modified, if available
+					// Used on http://archive.org/
+					var xLastMod = request.getResponseHeader("X-Archive-Orig-Last-Modified");
+					var lastMod  = request.getResponseHeader("Last-Modified");
+				}
+				catch(e2) {
+				}
+				if(xLastMod && !lastMod)
+					this.formatDate(xLastMod);
 			}
 			else {
 				if("contentType" in ch)

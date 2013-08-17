@@ -925,6 +925,7 @@ var linkPropsPlusSvc = {
 		var fh = this.fullHeader;
 		fh.value += (fh.value ? "\n" : "") + line;
 	},
+	// nsIHttpHeaderVisitor
 	visitHeader: function(header, value) {
 		this.addHeaderLine(header + ": " + value);
 		switch(header) {
@@ -933,6 +934,7 @@ var linkPropsPlusSvc = {
 			case "Content-Type":   this.formatType(value);
 		}
 	},
+
 	formatSize: function(rawSize) {
 		var textSize = this.getSizeStr(rawSize);
 		if(!textSize)

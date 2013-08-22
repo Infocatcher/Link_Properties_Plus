@@ -578,6 +578,7 @@ var linkPropsPlusSvc = {
 
 		this._lastSize = this._lastSizeTip = null;
 		this._hasSize = this._hasType = false;
+		delete this._isPrivateOverrided;
 
 		if(this.isDownloadDialog) {
 			var dl = dialog.mLauncher;
@@ -915,6 +916,8 @@ var linkPropsPlusSvc = {
 	},
 	_isPrivate: false,
 	get isPrivate() {
+		if("_isPrivateOverrided" in this)
+			return this._isPrivateOverrided;
 		var sourceWindow = this.sourceWindow;
 		if(!sourceWindow) // Already closed? Will use cached value
 			return this._isPrivate;
@@ -1219,15 +1222,14 @@ var linkPropsPlusSvc = {
 			redirects.push({ uri: oldChannel.URI.spec });
 		redirects.push({ uri: newChannel.URI.spec, flags: flags });
 	},
-	// nsILoadContext
-	setPrivate: function(isPrivate) {
-		return this.channel.setPrivate.apply(this.channel, arguments);
+	// nsILoadContext (fake, only for Private Tab extension)
+	get usePrivateBrowsing() {
+		return this.isPrivate;
 	},
-	get isChannelPrivate() {
-		return this.channel.isChannelPrivate;
-	},
-	get isPrivateModeOverriden() {
-		return this.channel.isPrivateModeOverriden;
+	set usePrivateBrowsing(isPrivate) {
+		this._isPrivateOverrided = isPrivate;
+		if(this.isOwnWindow)
+			this.wnd.setTitle();
 	},
 
 	cancel: function() {

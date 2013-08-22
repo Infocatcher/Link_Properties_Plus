@@ -1199,7 +1199,8 @@ var linkPropsPlusSvc = {
 	getInterface: function(iid) {
 		if(
 			iid.equals(Components.interfaces.nsIChannelEventSink)
-			|| iid.equals(Components.interfaces.nsILoadContext)
+			|| iid.equals(Components.interfaces.nsILoadContext) // Hack for Private Tab extension
+				&& new Error().stack.indexOf("@chrome://privatetab/content/protocol.js:") != -1
 		)
 			return this;
 		throw Components.results.NS_ERROR_NO_INTERFACE;

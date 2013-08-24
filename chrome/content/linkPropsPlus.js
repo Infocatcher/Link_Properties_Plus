@@ -930,9 +930,11 @@ var linkPropsPlusSvc = {
 		var fh = this.fullHeader;
 		fh.value += (fh.value ? "\n" : "") + line;
 	},
+	_responseHeaders: { __proto__: null },
 	// nsIHttpHeaderVisitor
 	visitHeader: function(header, value) {
 		this.addHeaderLine(header + ": " + value);
+		this._responseHeaders[header] = value;
 		switch(header) {
 			case "Content-Length": this.formatSize(value); break;
 			case "Last-Modified":  this.formatDate(value); break;
@@ -1039,10 +1041,20 @@ var linkPropsPlusSvc = {
 			target.removeAttribute("tooltiptext");
 		}
 	},
-	formatStatus: function(status, statusText) {
+	formatStatus: function(status, statusText, canResumeDownload) {
 		var tb = document.getElementById("linkPropsPlus-status");
 		tb.value = status + (statusText ? " " + statusText : "");
 		this.setMissingStyle(tb, status >= 400 && status < 600);
+		document.getElementById("linkPropsPlus-grid") // For userChrome.css :)
+			.setAttribute("lpp_canResumeDownload", !!canResumeDownload);
+		if(canResumeDownload) {
+			tb.tooltipText = this.ut.getLocalized("canResumeDownload");
+			tb.style.color = "green";
+		}
+		else {
+			tb.removeAttribute("tooltiptext");
+			tb.style.color = "";
+		}
 	},
 	formatURI: function(uri) {
 		var tb = document.getElementById("linkPropsPlus-directURI");
@@ -1146,17 +1158,19 @@ var linkPropsPlusSvc = {
 		try {
 			if(request instanceof Components.interfaces.nsIHttpChannel) {
 				this.addHeaderLine("\nStatus: " + request.responseStatus + " " + request.responseStatusText);
-				this.formatStatus(request.responseStatus, request.responseStatusText);
+				var headers = this._responseHeaders = { __proto__: null };
 				request.visitResponseHeaders(this);
-				try { // Placed here to prefer Last-Modified, if available
-					// Used on http://archive.org/
-					var xLastMod = request.getResponseHeader("X-Archive-Orig-Last-Modified");
-					var lastMod  = request.getResponseHeader("Last-Modified");
-				}
-				catch(e2) {
-				}
-				if(xLastMod && !lastMod)
-					this.formatDate(xLastMod);
+				this._responseHeaders = { __proto__: null };
+				if(
+					"X-Archive-Orig-Last-Modified" in headers // Used on http://archive.org/
+					&& !("Last-Modified" in headers) // We prefer Last-Modified, if available
+				)
+					this.formatDate(headers["X-Archive-Orig-Last-Modified"]);
+				var canResumeDownload = "Accept-Ranges" in headers
+					&& headers["Accept-Ranges"] == "bytes"
+					&& "Content-Length" in headers
+					&& headers["Content-Length"] > 0;
+				this.formatStatus(request.responseStatus, request.responseStatusText, canResumeDownload);
 			}
 			else {
 				if("contentType" in ch)

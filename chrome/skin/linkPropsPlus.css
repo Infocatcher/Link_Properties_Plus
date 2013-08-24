@@ -20,6 +20,9 @@
 #linkPropsPlus-grid textbox[lpp_missing="true"] {
 	font-style: italic;
 }
+#linkPropsPlus-status[lpp_canResumeDownload="true"] {
+	color: #090;
+}
 
 #linkPropsPlusOptionsWindow groupbox[lpp_current="true"] > caption {
 	font-weight: bold;

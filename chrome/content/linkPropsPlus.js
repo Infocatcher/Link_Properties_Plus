@@ -1047,14 +1047,11 @@ var linkPropsPlusSvc = {
 		this.setMissingStyle(tb, status >= 400 && status < 600);
 		document.getElementById("linkPropsPlus-grid") // For userChrome.css :)
 			.setAttribute("lpp_canResumeDownload", !!canResumeDownload);
-		if(canResumeDownload) {
+		tb.setAttribute("lpp_canResumeDownload", !!canResumeDownload);
+		if(canResumeDownload)
 			tb.tooltipText = this.ut.getLocalized("canResumeDownload");
-			tb.style.color = "green";
-		}
-		else {
+		else
 			tb.removeAttribute("tooltiptext");
-			tb.style.color = "";
-		}
 	},
 	formatURI: function(uri) {
 		var tb = document.getElementById("linkPropsPlus-directURI");

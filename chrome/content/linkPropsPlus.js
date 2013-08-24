@@ -462,6 +462,8 @@ var linkPropsPlusSvc = {
 				}
 			}
 
+			if("privateTab" in browserWin)
+				browserWin.privateTab.readyToOpenTab(this.isPrivate);
 			gBrowser.selectedTab = gBrowser.addTab(uri, this.refererURI || undefined);
 
 			hasTabKit && browserWin.tabkit.addingTabOver();

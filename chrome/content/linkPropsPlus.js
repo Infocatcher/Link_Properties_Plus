@@ -1205,6 +1205,7 @@ var linkPropsPlusSvc = {
 		if(
 			iid.equals(Components.interfaces.nsIChannelEventSink)
 			|| iid.equals(Components.interfaces.nsILoadContext) // Hack for Private Tab extension
+				&& "@mozilla.org/network/protocol;1?name=private" in Components.classes
 				&& new Error().stack.indexOf("@chrome://privatetab/content/protocol.js:") != -1
 		)
 			return this;

@@ -1232,7 +1232,10 @@ var linkPropsPlusSvc = {
 			this.formatSize(this.realCount.toString());
 		if(request instanceof Components.interfaces.nsIChannel && request.URI)
 			this.formatURI(request.URI.spec);
-		if(request instanceof Components.interfaces.nsIResumableChannel)
+		if(
+			this.pu.pref("testDownloadResumability")
+			&& request instanceof Components.interfaces.nsIResumableChannel
+		)
 			this.checkChannelResumable(request);
 
 		this.onStopRequestCallback(true);

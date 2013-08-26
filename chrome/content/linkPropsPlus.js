@@ -1046,9 +1046,11 @@ var linkPropsPlusSvc = {
 		tb.value = status + (statusText ? " " + statusText : "");
 		this.setMissingStyle(tb, status >= 400 && status < 600);
 		document.getElementById("linkPropsPlus-grid") // For userChrome.css :)
-			.setAttribute("lpp_canResumeDownload", !!canResumeDownload);
-		tb.setAttribute("lpp_canResumeDownload", !!canResumeDownload);
-		if(canResumeDownload)
+			.setAttribute("lpp_canResumeDownload", canResumeDownload);
+		tb.setAttribute("lpp_canResumeDownload", canResumeDownload);
+		if(canResumeDownload == "probably")
+			tb.tooltipText = this.ut.getLocalized("probablyCanResumeDownload");
+		else if(canResumeDownload)
 			tb.tooltipText = this.ut.getLocalized("canResumeDownload");
 		else
 			tb.removeAttribute("tooltiptext");
@@ -1163,19 +1165,24 @@ var linkPropsPlusSvc = {
 					&& !("Last-Modified" in headers) // We prefer Last-Modified, if available
 				)
 					this.formatDate(headers["X-Archive-Orig-Last-Modified"]);
-				var canResumeDownload = "Accept-Ranges" in headers
+				var canResumeDownload = request instanceof Components.interfaces.nsIResumableChannel
+					&& "Accept-Ranges" in headers
 					&& headers["Accept-Ranges"] == "bytes"
 					&& "Content-Length" in headers
 					&& headers["Content-Length"] > 0;
 				this.formatStatus(request.responseStatus, request.responseStatusText, canResumeDownload);
 			}
 			else {
+				var canResumeDownload = request instanceof Components.interfaces.nsIResumableChannel
+					? "probably"
+					: false;
+				var status = "responseStatus" in request && request.responseStatus || "";
+				var statusText = "responseStatusText" in request && request.responseStatusText || "";
+				this.formatStatus(status, statusText, canResumeDownload);
 				if("contentType" in ch)
 					this.formatType(ch.contentType);
 				if("contentLength" in ch)
 					this.formatSize(ch.contentLength);
-				if("responseStatus" in ch && "responseStatusText" in ch)
-					this.formatStatus(ch.responseStatus, ch.responseStatusText);
 				if("lastModifiedTime" in request && request.lastModifiedTime) { // Firefox 4
 					var t = request.lastModifiedTime;
 					this.formatDate(t > 1e14 ? t/1000 : t);

@@ -103,6 +103,7 @@ var linkPropsPlusSvc = {
 		window.removeEventListener("keypress", this, false);
 		this.destroyAutoClose();
 		this.isOwnWindow && this.wnd.destroy();
+		this.cancelCheckChannelResumable();
 		if(!this.channel)
 			return;
 		this.channel.cancel(Components.results.NS_BINDING_ABORTED);
@@ -671,6 +672,7 @@ var linkPropsPlusSvc = {
 
 			if(this.channel)
 				this.channel.cancel(Components.results.NS_BINDING_ABORTED);
+			this.cancelCheckChannelResumable();
 
 			var ch = this.channel = this.newChannelFromURI(uri, bypassCache);
 			ch.notificationCallbacks = this; // Detect redirects
@@ -1289,6 +1291,7 @@ var linkPropsPlusSvc = {
 		this.onStopRequestCallback(true);
 	},
 
+	checkResumableChannel: null,
 	checkChannelResumable: function(origChannel) {
 		if(origChannel)
 			var uri = origChannel.originalURI;
@@ -1299,16 +1302,18 @@ var linkPropsPlusSvc = {
 		var ch = this.newChannelFromURI(uri);
 		if(!(ch instanceof Components.interfaces.nsIResumableChannel))
 			return;
+		this.checkResumableChannel = ch;
 		ch.resumeAt(1, "");
 		ch.asyncOpen({
 			parent: this,
 			done: false,
 			setCanResumeDownload: function(canResumeDownload) {
-				if(this.done || window.closed)
+				if(this.done || !this.parent.checkResumableChannel || window.closed)
 					return;
 				this.done = true;
 				this.parent.formatCanResumeDownload(canResumeDownload, true);
 				this.parent.fillInBlank();
+				this.parent.checkResumableChannel = null;
 			},
 			// nsIStreamListener
 			onDataAvailable: function(request, ctxt, input, offset, count) {
@@ -1321,6 +1326,13 @@ var linkPropsPlusSvc = {
 				this.setCanResumeDownload(false);
 			}
 		}, null);
+	},
+	cancelCheckChannelResumable: function() {
+		var crCh = this.checkResumableChannel;
+		if(crCh) {
+			this.checkResumableChannel = null;
+			crCh.cancel(Components.results.NS_BINDING_ABORTED);
+		}
 	},
 	onStopRequestCallback: function(ok) {
 		this.requestFinished = true;
@@ -1373,6 +1385,7 @@ var linkPropsPlusSvc = {
 			this.channel = null;
 			return true;
 		}
+		this.cancelCheckChannelResumable();
 		return false;
 	}
 };

@@ -313,6 +313,15 @@ var linkPropsPlusSvc = {
 			copyTip.tooltipText = tip;
 		else
 			copyTip.removeAttribute("tooltiptext");
+
+		var rowStatus = document.getElementById("linkPropsPlus-rowStatus");
+		var testResume = document.getElementById("linkPropsPlus-context-testDownloadResumability");
+		var testResumeSep = document.getElementById("linkPropsPlus-context-testDownloadResumabilitySeparator");
+		var hideTestResume = testResume.hidden = testResumeSep.hidden = this.pu.pref("testDownloadResumability")
+			|| rowStatus.scrollHeight <= 0;
+		if(!hideTestResume)
+			testResume.disabled = !this.uri;
+
 		return true;
 	},
 	openOptions: function(paneId) {
@@ -606,15 +615,7 @@ var linkPropsPlusSvc = {
 		}
 
 		try {
-			// Ugly workaround...
-			// Request will be sended after downloading file from "_uri" to %temp%.
-			// Following works for me in some tests, but it is very bad hack.
-			if(
-				this.isDownloadDialog
-				&& (this.platformVersion < 2 || this.pu.pref("download.forceFakeURIHack")) //~ todo: test!
-			)
-				_uri += "?" + Math.random().toFixed(16).substr(2) + Math.random().toFixed(16).substr(2);
-
+			_uri = this.checkFakeURINeeded(_uri);
 			this.requestedURI = _uri;
 
 			//var uri = Components.classes["@mozilla.org/network/standard-url;1"]
@@ -685,6 +686,17 @@ var linkPropsPlusSvc = {
 		}
 		this.onStopRequestCallback(false);
 		return false;
+	},
+	checkFakeURINeeded: function(uri) {
+		// Ugly workaround...
+		// Request will be sended after downloading file from "_uri" to %temp%.
+		// Following works for me in some tests, but it is very bad hack.
+		if(
+			this.isDownloadDialog
+			&& (this.platformVersion < 2 || this.pu.pref("download.forceFakeURIHack")) //~ todo: test!
+		)
+			uri += "?" + Math.random().toFixed(16).substr(2) + Math.random().toFixed(16).substr(2);
+		return uri;
 	},
 	newChannelFromURI: function(uri) {
 		return uri.scheme == "about" && "nsIAboutModule" in Components.interfaces
@@ -1242,7 +1254,12 @@ var linkPropsPlusSvc = {
 	},
 
 	checkChannelResumable: function(origChannel) {
-		var uri = origChannel.originalURI;
+		if(origChannel)
+			var uri = origChannel.originalURI;
+		else {
+			var _uri = this.checkFakeURINeeded(this.uri);
+			var uri = this.ios.newURI(_uri, null, null);
+		}
 		var ch = this.newChannelFromURI(uri);
 		if(!(ch instanceof Components.interfaces.nsIResumableChannel))
 			return;

@@ -73,6 +73,11 @@
 				oncommand="linkPropsPlusSvc.copy();"
 				label="&linkPropsPlus.copyAll;"
 				accesskey="&linkPropsPlus.copyAllAccesskey;" />
+			<menuseparator id="linkPropsPlus-context-testDownloadResumabilitySeparator" />
+			<menuitem id="linkPropsPlus-context-testDownloadResumability"
+				oncommand="linkPropsPlusSvc.checkChannelResumable();"
+				label="&linkPropsPlus.testDownloadResumability;"
+				accesskey="&linkPropsPlus.testDownloadResumabilityAccesskey;" />
 			<menuseparator id="linkPropsPlus-context-optionsSeparator" />
 			<menuitem id="linkPropsPlus-context-options"
 				oncommand="linkPropsPlusSvc.openOptions();"

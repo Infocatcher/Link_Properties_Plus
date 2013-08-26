@@ -26,6 +26,8 @@
 <!ENTITY linkPropsPlus.copyTipAccesskey "п">
 <!ENTITY linkPropsPlus.copyAll "Копировать всё">
 <!ENTITY linkPropsPlus.copyAllAccesskey "в">
+<!ENTITY linkPropsPlus.testDownloadResumability "Проверить возможность докачки">
+<!ENTITY linkPropsPlus.testDownloadResumabilityAccesskey "д">
 
 <!-- Page info -->
 <!ENTITY linkPropsPlus.linkProperties "Свойства ссылки">

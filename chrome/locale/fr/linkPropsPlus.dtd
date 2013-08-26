@@ -26,6 +26,8 @@
 <!ENTITY linkPropsPlus.copyTipAccesskey "b">
 <!ENTITY linkPropsPlus.copyAll "Copier tout">
 <!ENTITY linkPropsPlus.copyAllAccesskey "t">
+<!ENTITY linkPropsPlus.testDownloadResumability "Test resumability">
+<!ENTITY linkPropsPlus.testDownloadResumabilityAccesskey "e">
 
 <!-- Page info -->
 <!ENTITY linkPropsPlus.linkProperties "Propriété du lien">

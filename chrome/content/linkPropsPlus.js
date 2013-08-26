@@ -668,15 +668,9 @@ var linkPropsPlusSvc = {
 			ch.notificationCallbacks = this; // Detect redirects
 			// => getInterface() => asyncOnChannelRedirect()
 
-			if(ch instanceof Components.interfaces.nsIFTPChannel) {
-				ch.asyncOpen(this, null);
-				return this.activeRequest = true;
-			}
 			if(ch instanceof Components.interfaces.nsIHttpChannel) {
 				ch.requestMethod = "HEAD";
 				ch.visitRequestHeaders(this);
-				ch.asyncOpen(this, null);
-				return this.activeRequest = true;
 			}
 
 			try {
@@ -735,6 +729,7 @@ var linkPropsPlusSvc = {
 			ref && ch.setRequestHeader("Referer", ref, false);
 		}
 
+		ch instanceof Components.interfaces.nsIFTPChannel;
 		return ch;
 	},
 
@@ -1295,8 +1290,6 @@ var linkPropsPlusSvc = {
 		var ch = this.newChannelFromURI(uri);
 		if(!(ch instanceof Components.interfaces.nsIResumableChannel))
 			return;
-		ch instanceof Components.interfaces.nsIHttpChannel;
-		ch instanceof Components.interfaces.nsIFTPChannel;
 		ch.resumeAt(1, "");
 		ch.asyncOpen({
 			parent: this,

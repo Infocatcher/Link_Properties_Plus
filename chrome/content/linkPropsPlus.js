@@ -270,10 +270,10 @@ var linkPropsPlusSvc = {
 		else if(pName.substr(0, 10) == "autoClose.")
 			this.reinitAutoClose();
 	},
-	getHeaders: function(isManualCall, bypassCache) {
-		if(isManualCall)
+	getHeaders: function(clear, bypassCache) {
+		if(clear)
 			this.clearResults();
-		if(this.request(isManualCall, bypassCache)) {
+		if(this.request(bypassCache)) {
 			document.getElementById("linkPropsPlus-container").removeAttribute("hidden");
 			this.restartAutoClose();
 			document.getElementById("linkPropsPlus-rowHeaders").setAttribute(
@@ -619,7 +619,7 @@ var linkPropsPlusSvc = {
 		return close;
 	},
 
-	request: function(isManualCall, bypassCache) {
+	request: function(bypassCache) {
 		var _uri = this.requestURI = this.uri;
 		if(!_uri)
 			return false;
@@ -664,26 +664,9 @@ var linkPropsPlusSvc = {
 			if(this.channel)
 				this.channel.cancel(Components.results.NS_BINDING_ABORTED);
 
-			var ch = this.channel = this.newChannelFromURI(uri);
+			var ch = this.channel = this.newChannelFromURI(uri, bypassCache);
 			ch.notificationCallbacks = this; // Detect redirects
 			// => getInterface() => asyncOnChannelRedirect()
-
-			if(ch instanceof Components.interfaces.nsIRequest) try {
-				ch.loadFlags |= ch.LOAD_BACKGROUND | ch.INHIBIT_CACHING;
-				if(bypassCache)
-					ch.loadFlags |= ch.LOAD_BYPASS_CACHE;
-			}
-			catch(e2) {
-				Components.utils.reportError(e2);
-			}
-
-			if(
-				"nsIPrivateBrowsingChannel" in Components.interfaces
-				&& ch instanceof Components.interfaces.nsIPrivateBrowsingChannel
-				&& "setPrivate" in ch
-				&& this.isPrivate
-			)
-				ch.setPrivate(true);
 
 			if(ch instanceof Components.interfaces.nsIFTPChannel) {
 				ch.asyncOpen(this, null);
@@ -691,8 +674,6 @@ var linkPropsPlusSvc = {
 			}
 			if(ch instanceof Components.interfaces.nsIHttpChannel) {
 				ch.requestMethod = "HEAD";
-				var ref = isManualCall ? this.realReferer : this.referer;
-				ref && ch.setRequestHeader("Referer", ref, false);
 				ch.visitRequestHeaders(this);
 				ch.asyncOpen(this, null);
 				return this.activeRequest = true;
@@ -725,12 +706,36 @@ var linkPropsPlusSvc = {
 			uri += "?" + Math.random().toFixed(16).substr(2) + Math.random().toFixed(16).substr(2);
 		return uri;
 	},
-	newChannelFromURI: function(uri) {
-		return uri.scheme == "about" && "nsIAboutModule" in Components.interfaces
+	newChannelFromURI: function(uri, bypassCache) {
+		var ch = uri.scheme == "about" && "nsIAboutModule" in Components.interfaces
 			? Components.classes["@mozilla.org/network/protocol/about;1?what=" + uri.path.replace(/[?&#].*$/, "")]
 				.getService(Components.interfaces.nsIAboutModule)
 				.newChannel(uri)
 			: this.ios.newChannelFromURI(uri);
+
+		if(ch instanceof Components.interfaces.nsIRequest) try {
+			ch.loadFlags |= ch.LOAD_BACKGROUND | ch.INHIBIT_CACHING;
+			if(bypassCache)
+				ch.loadFlags |= ch.LOAD_BYPASS_CACHE;
+		}
+		catch(e) {
+			Components.utils.reportError(e);
+		}
+
+		if(
+			"nsIPrivateBrowsingChannel" in Components.interfaces
+			&& ch instanceof Components.interfaces.nsIPrivateBrowsingChannel
+			&& "setPrivate" in ch
+			&& this.isPrivate
+		)
+			ch.setPrivate(true);
+
+		if(ch instanceof Components.interfaces.nsIHttpChannel) {
+			var ref = this.isOwnWindow ? this.realReferer : this.referer;
+			ref && ch.setRequestHeader("Referer", ref, false);
+		}
+
+		return ch;
 	},
 
 	// Autoclose feature

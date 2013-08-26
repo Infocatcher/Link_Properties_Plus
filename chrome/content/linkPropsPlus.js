@@ -178,6 +178,16 @@ var linkPropsPlusSvc = {
 		var showButtons = this.isDownloadDialog ? 0 : this.pu.pref("showLinkButtons");
 		root.setAttribute("linkPropsPlus_showButtons",       showButtons > 0);
 		root.setAttribute("linkPropsPlus_showButtonsAlways", showButtons > 1);
+		setTimeout(function() {
+			var isDarkBG = false;
+			var bg = window.getComputedStyle(root, null).backgroundColor;
+			if(/^rgb\((\d+), *(\d+), *(\d+)\)$/.test(bg)) {
+				var r = +RegExp.$1, g = +RegExp.$2, b = +RegExp.$3;
+				var brightness = Math.max(r/255, g/255, b/255); // HSV, 0..1
+				isDarkBG = brightness < 0.4;
+			}
+			root.setAttribute("linkPropsPlus_darkBackground", isDarkBG);
+		}, 0);
 	},
 	showRows: function() {
 		this.showRow("Status", "showResponseStatus");

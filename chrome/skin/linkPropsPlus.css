@@ -23,8 +23,14 @@
 #linkPropsPlus-status[lpp_canResumeDownload="probably"] {
 	color: #770;
 }
+:root[linkPropsPlus_darkBackground="true"] #linkPropsPlus-status[lpp_canResumeDownload="probably"] {
+	color: #aa0;
+}
 #linkPropsPlus-status[lpp_canResumeDownload="true"] {
 	color: #090;
+}
+:root[linkPropsPlus_darkBackground="true"] #linkPropsPlus-status[lpp_canResumeDownload="true"] {
+	color: #0b0;
 }
 
 #linkPropsPlusOptionsWindow groupbox[lpp_current="true"] > caption {

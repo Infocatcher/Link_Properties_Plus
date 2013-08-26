@@ -300,11 +300,17 @@ var linkPropsPlusSvc = {
 		this._lastSize = this._lastSizeTip = null;
 		this.redirects.length = 0;
 	},
+	_contextNode: null,
+	get contextNode() {
+		return this._contextNode
+			|| document.getElementById("linkPropsPlus-context").triggerNode
+			|| document.popupNode;
+	},
 	initContextMenu: function(e) {
 		if(!this._allowOptions)
 			return false;
 		var popup = e.currentTarget;
-		var trg = popup.triggerNode || popup.ownerDocument.popupNode;
+		var trg = this.contextNode;
 		var row = this.getRowFromChild(trg);
 		var tip = this.getTip(row);
 		var copyTip = document.getElementById("linkPropsPlus-context-copyTip");
@@ -323,6 +329,27 @@ var linkPropsPlusSvc = {
 			testResume.disabled = !this.uri;
 
 		return true;
+	},
+	showContextMenu: function() {
+		this._allowOptions = true;
+		var fe = document.commandDispatcher.focusedElement;
+		var row = this.getRowFromChild(fe);
+		if(!row || row.parentNode.id != "linkPropsPlus-rows") {
+			var rows = document.getElementById("linkPropsPlus-rows").childNodes;
+			for(var i = 0, l = rows.length; i < l; ++i) {
+				var r = rows[i];
+				if(r.scrollHeight > 0) {
+					row = r;
+					break;
+				}
+			}
+		}
+		this._contextNode = row;
+		var cm = document.getElementById("linkPropsPlus-context");
+		if("openPopup" in cm)
+			cm.openPopup(row, "after_start");
+		else
+			cm.showPopup(row, -1, -1, "popup", "bottomleft", "topleft");
 	},
 	openOptions: function(paneId) {
 		var win = this.ut.wm.getMostRecentWindow("linkPropsPlus:optionsWindow");

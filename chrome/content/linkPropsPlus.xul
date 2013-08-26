@@ -60,13 +60,14 @@
 			</rows>
 		</grid>
 		<menupopup id="linkPropsPlus-context"
-			onpopupshowing="return linkPropsPlusSvc.initContextMenu(event);">
+			onpopupshowing="return linkPropsPlusSvc.initContextMenu(event);"
+			onpopuphidden="linkPropsPlusSvc._contextNode = null;">
 			<menuitem id="linkPropsPlus-context-copyRow"
-				oncommand="linkPropsPlusSvc.copy(this.parentNode.triggerNode || this.ownerDocument.popupNode);"
+				oncommand="linkPropsPlusSvc.copy(linkPropsPlusSvc.contextNode);"
 				label="&linkPropsPlus.copyRow;"
 				accesskey="&linkPropsPlus.copyRowAccesskey;" />
 			<menuitem id="linkPropsPlus-context-copyTip"
-				oncommand="linkPropsPlusSvc.copyTip(this.parentNode.triggerNode || this.ownerDocument.popupNode);"
+				oncommand="linkPropsPlusSvc.copyTip(linkPropsPlusSvc.contextNode);"
 				label="&linkPropsPlus.copyTip;"
 				accesskey="&linkPropsPlus.copyTipAccesskey;" />
 			<menuitem id="linkPropsPlus-context-copyAll"
@@ -99,6 +100,8 @@
 				oncommand="linkPropsPlusSvc.saveLink('uri');" />
 			<key id="linkPropsPlus-key-downloadDirectURI" key="s" modifiers="control,shift"
 				oncommand="linkPropsPlusSvc.saveLink('directURI');" />
+			<key id="linkPropsPlus-key-contextMenu" key="c" modifiers="control,shift"
+				oncommand="linkPropsPlusSvc.showContextMenu();" />
 		</keyset>
 	</vbox>
 </overlay>

@@ -296,6 +296,14 @@ var linkPropsPlusSvc = {
 			},
 			this
 		);
+
+		var grid = document.getElementById("linkPropsPlus-grid");
+		grid.removeAttribute("lpp_canResumeDownload");
+		grid.removeAttribute("lpp_resumeDownloadTested");
+		var status = document.getElementById("linkPropsPlus-status");
+		status.removeAttribute("lpp_canResumeDownload");
+		status.removeAttribute("lpp_resumeDownloadTested");
+
 		this.realCount = 0;
 		this._lastSize = this._lastSizeTip = null;
 		this.redirects.length = 0;
@@ -1102,8 +1110,9 @@ var linkPropsPlusSvc = {
 	formatCanResumeDownload: function(canResumeDownload, isTested, tb) {
 		if(!tb)
 			tb = document.getElementById("linkPropsPlus-status");
-		document.getElementById("linkPropsPlus-grid") // For userChrome.css :)
-			.setAttribute("lpp_canResumeDownload", canResumeDownload);
+		var grid = document.getElementById("linkPropsPlus-grid"); // May be used in userChrome.css
+		grid.setAttribute("lpp_canResumeDownload", canResumeDownload);
+		grid.setAttribute("lpp_resumeDownloadTested", !!isTested);
 		tb.setAttribute("lpp_canResumeDownload", canResumeDownload);
 		tb.setAttribute("lpp_resumeDownloadTested", !!isTested);
 		if(canResumeDownload == "probably")

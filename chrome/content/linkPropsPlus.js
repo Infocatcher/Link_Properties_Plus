@@ -636,11 +636,7 @@ var linkPropsPlusSvc = {
 			if(this.channel)
 				this.channel.cancel(Components.results.NS_BINDING_ABORTED);
 
-			var ch = this.channel = schm == "about" && "nsIAboutModule" in Components.interfaces
-				? Components.classes["@mozilla.org/network/protocol/about;1?what=" + uri.path.replace(/[?&#].*$/, "")]
-					.getService(Components.interfaces.nsIAboutModule)
-					.newChannel(uri)
-				: this.ios.newChannelFromURI(uri);
+			var ch = this.channel = this.newChannelFromURI(uri);
 			ch.notificationCallbacks = this; // Detect redirects
 			// => getInterface() => asyncOnChannelRedirect()
 
@@ -689,6 +685,13 @@ var linkPropsPlusSvc = {
 		}
 		this.onStopRequestCallback(false);
 		return false;
+	},
+	newChannelFromURI: function(uri) {
+		return uri.scheme == "about" && "nsIAboutModule" in Components.interfaces
+			? Components.classes["@mozilla.org/network/protocol/about;1?what=" + uri.path.replace(/[?&#].*$/, "")]
+				.getService(Components.interfaces.nsIAboutModule)
+				.newChannel(uri)
+			: this.ios.newChannelFromURI(uri);
 	},
 
 	// Autoclose feature
@@ -1051,19 +1054,28 @@ var linkPropsPlusSvc = {
 			target.removeAttribute("tooltiptext");
 		}
 	},
-	formatStatus: function(status, statusText, canResumeDownload) {
+	formatStatus: function(status, statusText, canResumeDownload, isTested) {
 		var tb = document.getElementById("linkPropsPlus-status");
 		tb.value = status + (statusText ? " " + statusText : "");
 		this.setMissingStyle(tb, status >= 400 && status < 600);
+		this.formatCanResumeDownload(canResumeDownload, isTested, tb);
+	},
+	formatCanResumeDownload: function(canResumeDownload, isTested, tb) {
+		if(!tb)
+			tb = document.getElementById("linkPropsPlus-status");
 		document.getElementById("linkPropsPlus-grid") // For userChrome.css :)
 			.setAttribute("lpp_canResumeDownload", canResumeDownload);
 		tb.setAttribute("lpp_canResumeDownload", canResumeDownload);
+		tb.setAttribute("lpp_resumeDownloadTested", !!isTested);
 		if(canResumeDownload == "probably")
 			tb.tooltipText = this.ut.getLocalized("probablyCanResumeDownload");
-		else if(canResumeDownload)
-			tb.tooltipText = this.ut.getLocalized("canResumeDownload");
-		else
+		else if(canResumeDownload) {
+			tb.tooltipText = this.ut.getLocalized("canResumeDownload")
+				+ (isTested ? " \n" + this.ut.getLocalized("canResumeDownloadTested") : "");
+		}
+		else {
 			tb.removeAttribute("tooltiptext");
+		}
 	},
 	formatURI: function(uri) {
 		var tb = document.getElementById("linkPropsPlus-directURI");
@@ -1143,6 +1155,7 @@ var linkPropsPlusSvc = {
 
 	Components: Components, // We can receive nsIChannel notifications after window will be closed
 	// And in Firefox <= 3.6 garbage collector may already remove Components from scope
+	// nsIStreamListener
 	onDataAvailable: function(request, ctxt, input, offset, count) {
 		request.cancel(this.Components.results.NS_BINDING_ABORTED); //?
 		if(window.closed)
@@ -1160,6 +1173,7 @@ var linkPropsPlusSvc = {
 		bInput.setInputStream(input);
 		this.fullHeader.value = val + bInput.readBytes(count);
 	},
+	// nsIRequestObserver
 	onStartRequest: function(request, ctxt) {
 		var ch = this.channel;
 		if(!ch)
@@ -1218,8 +1232,41 @@ var linkPropsPlusSvc = {
 			this.formatSize(this.realCount.toString());
 		if(request instanceof Components.interfaces.nsIChannel && request.URI)
 			this.formatURI(request.URI.spec);
+		if(request instanceof Components.interfaces.nsIResumableChannel)
+			this.checkChannelResumable(request);
 
 		this.onStopRequestCallback(true);
+	},
+
+	checkChannelResumable: function(origChannel) {
+		var uri = origChannel.originalURI;
+		var ch = this.newChannelFromURI(uri);
+		if(!(ch instanceof Components.interfaces.nsIResumableChannel))
+			return;
+		ch instanceof Components.interfaces.nsIHttpChannel;
+		ch instanceof Components.interfaces.nsIFTPChannel;
+		ch.resumeAt(1, "");
+		ch.asyncOpen({
+			parent: this,
+			done: false,
+			setCanResumeDownload: function(canResumeDownload) {
+				if(this.done || window.closed)
+					return;
+				this.done = true;
+				this.parent.formatCanResumeDownload(canResumeDownload, true);
+				this.parent.fillInBlank();
+			},
+			// nsIStreamListener
+			onDataAvailable: function(request, ctxt, input, offset, count) {
+				request.cancel(this.parent.Components.results.NS_BINDING_ABORTED);
+				this.setCanResumeDownload(true);
+			},
+			// nsIRequestObserver
+			onStartRequest: function(request, ctxt) {},
+			onStopRequest: function(request, ctxt, status) {
+				this.setCanResumeDownload(false);
+			}
+		}, null);
 	},
 	onStopRequestCallback: function(ok) {
 		this.requestFinished = true;

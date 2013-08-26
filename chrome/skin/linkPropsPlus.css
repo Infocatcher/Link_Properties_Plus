@@ -32,6 +32,9 @@
 :root[linkPropsPlus_darkBackground="true"] #linkPropsPlus-status[lpp_canResumeDownload="true"] {
 	color: #0b0;
 }
+#linkPropsPlus-status[lpp_resumeDownloadTested="true"] {
+	font-weight: bold;
+}
 
 #linkPropsPlusOptionsWindow groupbox[lpp_current="true"] > caption {
 	font-weight: bold;

@@ -59,7 +59,7 @@
 }
 #linkPropsPlusOwnWindow #linkPropsPlus-context-optionsSeparator,
 #linkPropsPlusOwnWindow #linkPropsPlus-context-options {
-	visibility: collapse;
+	display: none;
 }
 #linkPropsPlus-referer-label[lpp_notUsed="true"],
 #linkPropsPlus-referer[lpp_notUsed="true"],

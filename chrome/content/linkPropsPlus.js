@@ -1121,10 +1121,11 @@ var linkPropsPlusSvc = {
 			tb.tooltipText = this.ut.getLocalized("probablyCanResumeDownload");
 		else if(canResumeDownload) {
 			tb.tooltipText = this.ut.getLocalized("canResumeDownload")
-				+ (isTested ? " \n" + this.ut.getLocalized("canResumeDownloadTested") : "");
+				+ (isTested ? " \n" + this.ut.getLocalized("resumeSuccessfullyTested") : "");
 		}
 		else {
-			tb.removeAttribute("tooltiptext");
+			tb.tooltipText = this.ut.getLocalized("cantResumeDownload")
+				+ (isTested ? " \n" + this.ut.getLocalized("resumeTested") : "");
 		}
 	},
 	formatURI: function(uri) {
@@ -1282,10 +1283,7 @@ var linkPropsPlusSvc = {
 			this.formatSize(this.realCount.toString());
 		if(request instanceof Components.interfaces.nsIChannel && request.URI)
 			this.formatURI(request.URI.spec);
-		if(
-			this.pu.pref("testDownloadResumability")
-			&& request instanceof Components.interfaces.nsIResumableChannel
-		)
+		if(this.pu.pref("testDownloadResumability"))
 			this.checkChannelResumable(request);
 
 		this.onStopRequestCallback(true);
@@ -1293,15 +1291,22 @@ var linkPropsPlusSvc = {
 
 	checkResumableChannel: null,
 	checkChannelResumable: function(origChannel) {
-		if(origChannel)
+		if(origChannel) {
+			if(!(origChannel instanceof Components.interfaces.nsIResumableChannel)) {
+				this.formatCanResumeDownload(false, true);
+				return;
+			}
 			var uri = origChannel.originalURI;
+		}
 		else {
 			var _uri = this.checkFakeURINeeded(this.uri);
 			var uri = this.ios.newURI(_uri, null, null);
 		}
 		var ch = this.newChannelFromURI(uri);
-		if(!(ch instanceof Components.interfaces.nsIResumableChannel))
+		if(!(ch instanceof Components.interfaces.nsIResumableChannel)) {
+			this.formatCanResumeDownload(false, true);
 			return;
+		}
 		this.checkResumableChannel = ch;
 		ch.resumeAt(1, "");
 		ch.asyncOpen({
@@ -1312,7 +1317,6 @@ var linkPropsPlusSvc = {
 					return;
 				this.done = true;
 				this.parent.formatCanResumeDownload(canResumeDownload, true);
-				this.parent.fillInBlank();
 				this.parent.checkResumableChannel = null;
 			},
 			// nsIStreamListener

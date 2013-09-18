@@ -92,15 +92,15 @@
 				hidden="true" />
 		</hbox>
 		<keyset id="linkPropsPlus-keyset">
-			<key id="linkPropsPlus-key-goToURI" key="o" modifiers="control"
+			<key id="linkPropsPlus-key-goToURI" disabled="true"
 				oncommand="linkPropsPlusSvc.goToURI('uri');" />
-			<key id="linkPropsPlus-key-goToDirectURI" key="o" modifiers="control,shift"
+			<key id="linkPropsPlus-key-goToDirectURI" disabled="true"
 				oncommand="linkPropsPlusSvc.goToURI('directURI');" />
-			<key id="linkPropsPlus-key-downloadURI" key="s" modifiers="control"
+			<key id="linkPropsPlus-key-downloadURI" disabled="true"
 				oncommand="linkPropsPlusSvc.saveLink('uri');" />
-			<key id="linkPropsPlus-key-downloadDirectURI" key="s" modifiers="control,shift"
+			<key id="linkPropsPlus-key-downloadDirectURI" disabled="true"
 				oncommand="linkPropsPlusSvc.saveLink('directURI');" />
-			<key id="linkPropsPlus-key-contextMenu" key="c" modifiers="control,shift"
+			<key id="linkPropsPlus-key-contextMenu" disabled="true"
 				oncommand="linkPropsPlusSvc.showContextMenu();" />
 		</keyset>
 	</vbox>

@@ -62,6 +62,6 @@
 	</grid>
 	<vbox id="linkPropsPlus-container" flex="1" />
 	<keyset id="linkPropsPlus-keyset">
-		<key keycode="VK_ESCAPE" modifiers="shift" oncommand="linkPropsPlusWnd.closeOther();" />
+		<key id="linkPropsPlus-key-closeOtherWindows" oncommand="linkPropsPlusWnd.closeOther();" disabled="true" />
 	</keyset>
 </dialog>

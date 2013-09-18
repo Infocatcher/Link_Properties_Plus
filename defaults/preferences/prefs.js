@@ -51,6 +51,15 @@ pref("extensions.linkPropertiesPlus.autoClose.delay", 8000);
 pref("extensions.linkPropertiesPlus.autoClose.dontCloseUnderCursor", true);
 pref("extensions.linkPropertiesPlus.autoClose.onlyAfterRequest", true);
 
+// Browser window:
 pref("extensions.linkPropertiesPlus.key.openWindow", "control alt s");
+// All windows with link properties:
+pref("extensions.linkPropertiesPlus.key.goToURI", "control o");
+pref("extensions.linkPropertiesPlus.key.goToDirectURI", "control shift o");
+pref("extensions.linkPropertiesPlus.key.downloadURI", "control s");
+pref("extensions.linkPropertiesPlus.key.downloadDirectURI", "control shift s");
+pref("extensions.linkPropertiesPlus.key.contextMenu", "control shift c");
+// Separate window:
+pref("extensions.linkPropertiesPlus.key.closeOtherWindows", "shift VK_ESCAPE");
 
 pref("extensions.linkPropertiesPlus.prefsVersion", 0);

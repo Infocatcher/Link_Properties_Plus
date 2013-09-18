@@ -124,7 +124,7 @@ var linkPropsPlusPrefUtils = {
 	registerHotkey: function(kId) {
 		var kElt = document.getElementById("linkPropsPlus-key-" + kId);
 		if(!kElt)
-			return; //~ todo: show warning in console
+			return;
 		var keyStr = this.pref("key." + kId);
 		if(!keyStr) { // Key is disabled
 			// Strange things may happens without this for <key command="..." />

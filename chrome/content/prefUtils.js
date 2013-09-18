@@ -11,6 +11,8 @@ var linkPropsPlusPrefUtils = {
 
 	init: function() {
 		window.addEventListener("unload", this, false);
+		this.prefsMigration();
+		this.registerHotkeys();
 		this.prefSvc.addObserver(this.prefNS, this, false);
 	},
 	destroy: function() {
@@ -111,6 +113,29 @@ var linkPropsPlusPrefUtils = {
 			ps.savePrefFile(null);
 		}, 0);
 		return true;
+	},
+
+	// Hotkeys:
+	registerHotkeys: function() {
+		this.prefSvc.getBranch(this.prefNS + "key.")
+			.getChildList("", {})
+			.forEach(this.registerHotkey, this);
+	},
+	registerHotkey: function(kId) {
+		var kElt = document.getElementById("linkPropsPlus-key-" + kId);
+		if(!kElt)
+			return; //~ todo: show warning in console
+		var keyStr = this.pref("key." + kId);
+		if(!keyStr) { // Key is disabled
+			// Strange things may happens without this for <key command="..." />
+			kElt.parentNode.removeChild(kElt);
+			return;
+		}
+		var tokens = keyStr.split(" ");
+		var key = tokens.pop() || " ";
+		var modifiers = tokens.join(",");
+		kElt.removeAttribute("disabled");
+		kElt.setAttribute(key.indexOf("VK_") == 0 ? "keycode" : "key", key);
+		kElt.setAttribute("modifiers", modifiers);
 	}
 };
-linkPropsPlusPrefUtils.init();

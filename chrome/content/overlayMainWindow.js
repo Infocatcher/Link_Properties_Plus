@@ -28,8 +28,7 @@ var linkPropsPlus = {
 		window.addEventListener("unload", this, false);
 		this.cm.addEventListener("popupshowing", this, false);
 		this.cm.addEventListener("popuphidden", this, false);
-		this.pu.prefsMigration();
-		this.registerHotkeys();
+		this.pu.init();
 		setTimeout(function(_this) {
 			_this.showMenuitems();
 			_this.showIcons();
@@ -242,30 +241,6 @@ var linkPropsPlus = {
 			window,
 			"gBrowser" in window && gBrowser.selectedTab
 		);
-	},
-
-	// Hotkeys:
-	registerHotkeys: function() {
-		this.pu.prefSvc.getBranch(this.pu.prefNS + "key.")
-			.getChildList("", {})
-			.forEach(this.registerHotkey, this);
-	},
-	registerHotkey: function(kId) {
-		var kElt = document.getElementById("linkPropsPlus-key-" + kId);
-		if(!kElt)
-			return; //~ todo: show warning in console
-		var keyStr = this.pu.pref("key." + kId);
-		if(!keyStr) { // Key is disabled
-			// Strange things may happens without this for <key command="..." />
-			kElt.parentNode.removeChild(kElt);
-			return;
-		}
-		var tokens = keyStr.split(" ");
-		var key = tokens.pop() || " ";
-		var modifiers = tokens.join(",");
-		kElt.removeAttribute("disabled");
-		kElt.setAttribute(key.indexOf("VK_") == 0 ? "keycode" : "key", key);
-		kElt.setAttribute("modifiers", modifiers);
 	}
 };
 window.addEventListener("load", linkPropsPlus, false);

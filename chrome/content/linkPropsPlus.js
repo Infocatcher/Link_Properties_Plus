@@ -62,6 +62,7 @@ var linkPropsPlusSvc = {
 		window.removeEventListener("load", this, false);
 		window.addEventListener("unload", this, false);
 		window.addEventListener("keypress", this, false);
+		this.pu.init();
 		this.showRows();
 		this.setKeysDescDelay();
 

@@ -4,6 +4,7 @@ var linkPropsPlusOpts = {
 		return window.linkPropsPlusPrefUtils;
 	},
 	init: function() {
+		this.pu.init();
 		var de = document.documentElement;
 		var applyBtn = this.applyBtn = de.getButton("extra1");
 		if(this.pu.getPref("browser.preferences.instantApply")) {

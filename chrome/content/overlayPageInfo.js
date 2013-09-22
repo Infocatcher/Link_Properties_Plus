@@ -6,6 +6,7 @@ var linkPropsPlusPageInfo = {
 		return window.linkPropsPlusPrefUtils;
 	},
 	init: function() {
+		//this.pu.init();
 		var btn1 = document.getElementById("linkPropsPlus-getLinkProperties");
 		var trg1 = document.getElementById("imagesaveasbutton");
 		if(btn1 && trg1)

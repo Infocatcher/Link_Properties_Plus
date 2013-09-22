@@ -6,6 +6,7 @@ var linkPropsPlusPageInfo = {
 		return window.linkPropsPlusPrefUtils;
 	},
 	init: function() {
+		window.removeEventListener("load", this, false);
 		//this.pu.init();
 		var btn1 = document.getElementById("linkPropsPlus-getLinkProperties");
 		var trg1 = document.getElementById("imagesaveasbutton");
@@ -16,7 +17,8 @@ var linkPropsPlusPageInfo = {
 			btn2.parentNode.insertBefore(btn2, btn2.previousSibling);
 	},
 	handleEvent: function(e) {
-		this.init();
+		if(e.type == "load")
+			this.init();
 	},
 	showLinksProperties: function() {
 		// See chrome://browser/content/pageinfo/pageInfo.js

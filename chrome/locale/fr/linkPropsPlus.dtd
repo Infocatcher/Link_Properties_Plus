@@ -50,6 +50,7 @@
 <!ENTITY linkPropsPlus.opts.precision "Arrondir la taille du fichier à :">
 <!ENTITY linkPropsPlus.opts.useBinaryPrefixes "Utiliser les préfixes binaires (1 Kio = 1024 octets)">
 <!ENTITY linkPropsPlus.opts.decodeURIs "Décoder les URIs">
+<!ENTITY linkPropsPlus.opts.testDownloadResumability "Automatically test download resumability">
 
 <!ENTITY linkPropsPlus.opts.paneIntegration "Intégration">
 <!ENTITY linkPropsPlus.opts.contextOnLinks "Ajouter au menu contextuel des liens">

@@ -36,6 +36,7 @@
 			<preference id="sizePrecision" name="extensions.linkPropertiesPlus.sizePrecision" type="int" />
 			<preference id="useBinaryPrefixes" name="extensions.linkPropertiesPlus.useBinaryPrefixes" type="bool" />
 			<preference id="decodeURIs" name="extensions.linkPropertiesPlus.decodeURIs" type="bool" />
+			<preference id="testDownloadResumability" name="extensions.linkPropertiesPlus.testDownloadResumability" type="bool" />
 		</preferences>
 
 		<groupbox id="propertiesBox" orient="horizontal" hidden="true">
@@ -76,6 +77,7 @@
 			</hbox>
 			<checkbox preference="useBinaryPrefixes" label="&linkPropsPlus.opts.useBinaryPrefixes;" />
 			<checkbox preference="decodeURIs" label="&linkPropsPlus.opts.decodeURIs;" />
+			<checkbox preference="testDownloadResumability" label="&linkPropsPlus.opts.testDownloadResumability;" />
 		</groupbox>
 	</prefpane>
 

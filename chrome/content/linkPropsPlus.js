@@ -267,6 +267,8 @@ var linkPropsPlusSvc = {
 			if(this.isOwnWindow)
 				this.wnd.setTitle();
 		}
+		else if(pName == "testDownloadResumability")
+			this.pu.pref(pName) && this.checkChannelResumable(this.channel);
 		else if(pName == "showLinkButtons")
 			this.initStyles();
 		else if(pName.substr(0, 10) == "autoClose.")
@@ -1298,6 +1300,7 @@ var linkPropsPlusSvc = {
 
 	checkResumableChannel: null,
 	checkChannelResumable: function(origChannel) {
+		this.cancelCheckChannelResumable();
 		if(origChannel) {
 			if(!(origChannel instanceof Components.interfaces.nsIResumableChannel)) {
 				this.formatCanResumeDownload(false, true);

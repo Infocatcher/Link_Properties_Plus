@@ -282,6 +282,9 @@ var linkPropsPlusSvc = {
 				"lpp_notAvailable",
 				!(this.channel instanceof Components.interfaces.nsIHttpChannel)
 			);
+			if(this.pu.pref("testDownloadResumability")) setTimeout(function(_this) {
+				_this.checkChannelResumable(_this.channel);
+			}, 0, this);
 		}
 	},
 	clearResults: function() {
@@ -1287,8 +1290,8 @@ var linkPropsPlusSvc = {
 			this.formatSize(this.realCount.toString());
 		if(request instanceof Components.interfaces.nsIChannel && request.URI)
 			this.formatURI(request.URI.spec);
-		if(this.pu.pref("testDownloadResumability"))
-			this.checkChannelResumable(request);
+		//if(this.pu.pref("testDownloadResumability"))
+		//	this.checkChannelResumable(request);
 
 		this.onStopRequestCallback(true);
 	},

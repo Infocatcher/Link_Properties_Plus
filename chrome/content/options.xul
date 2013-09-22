@@ -41,7 +41,8 @@
 
 		<groupbox id="propertiesBox" orient="horizontal" hidden="true">
 			<caption label="&linkPropsPlus.opts.propertiesDialog;" />
-			<checkbox preference="propertiesStatus" label="&linkPropsPlus.opts.showStatus;" />
+			<checkbox preference="propertiesStatus" label="&linkPropsPlus.opts.showStatus;"
+				oncommand="linkPropsPlusOpts.disableTestResumabilityDelay();" />
 			<spacer flex="1" />
 			<checkbox preference="propertiesDirectURI" label="&linkPropsPlus.opts.showDirectURI;"
 				oncommand="linkPropsPlusOpts.disableDecodeCheckbox();" />
@@ -51,7 +52,8 @@
 		</groupbox>
 		<groupbox id="ownWindowBox" orient="horizontal">
 			<caption label="&linkPropsPlus.opts.ownWindow;" />
-			<checkbox preference="ownWindowStatus" label="&linkPropsPlus.opts.showStatus;" />
+			<checkbox preference="ownWindowStatus" label="&linkPropsPlus.opts.showStatus;"
+				oncommand="linkPropsPlusOpts.disableTestResumabilityDelay();" />
 			<spacer flex="1" />
 			<checkbox preference="ownWindowDirectURI" label="&linkPropsPlus.opts.showDirectURI;"
 				oncommand="linkPropsPlusOpts.disableDecodeCheckbox();" />
@@ -61,7 +63,8 @@
 		</groupbox>
 		<groupbox id="downloadBox" orient="horizontal">
 			<caption label="&linkPropsPlus.opts.downloadDialog;" />
-			<checkbox preference="downloadStatus" label="&linkPropsPlus.opts.showStatus;" />
+			<checkbox preference="downloadStatus" label="&linkPropsPlus.opts.showStatus;"
+				oncommand="linkPropsPlusOpts.disableTestResumabilityDelay();" />
 			<spacer flex="1" />
 			<checkbox preference="downloadDirectURI" label="&linkPropsPlus.opts.showDirectURI;"
 				oncommand="linkPropsPlusOpts.disableDecodeCheckbox();" />

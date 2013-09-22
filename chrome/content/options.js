@@ -105,6 +105,7 @@ var linkPropsPlusOpts = {
 		this.disableDecodeCheckbox();
 		this.disableIconsCheckboxes();
 		this.disableAutoCloseOptions();
+		this.disableTestResumabilityDelay();
 	},
 	disableDecodeCheckbox: function() {
 		this.e("decodeURIs").disabled = (
@@ -130,6 +131,23 @@ var linkPropsPlusOpts = {
 		this.e("autoClose.dontCloseUnderCursor").disabled
 			= this.e("autoClose.onlyAfterRequest").disabled
 			= dis || parseInt(this.e("autoClose.delay").inputField.value) < 1000;
+	},
+	disableTestResumabilityDelay: function() {
+		setTimeout(function(_this) {
+			_this.disableTestResumability();
+		}, 0, this);
+	},
+	disableTestResumability: function() {
+		this.e("testDownloadResumability").disabled = ![
+			"propertiesStatus",
+			"ownWindowStatus",
+			"downloadStatus"
+		].some(function(id) {
+			var ch = this.e(id);
+			var bo = ch.boxObject;
+			return bo.width > 0 && bo.height > 0
+				&& ch.getAttribute("checked") == "true";
+		}, this);
 	},
 	highlight: function(win) {
 		var cur = document.getElementsByAttribute("lpp_current", "true");

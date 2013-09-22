@@ -1113,6 +1113,9 @@ var linkPropsPlusSvc = {
 	formatCanResumeDownload: function(canResumeDownload, isTested, tb) {
 		if(!tb)
 			tb = document.getElementById("linkPropsPlus-status");
+		// We use clearResults() and may receive "tested" value before "non-tested"
+		if(!isTested && tb.getAttribute("lpp_resumeDownloadTested") == "true")
+			return;
 		var grid = document.getElementById("linkPropsPlus-grid"); // May be used in userChrome.css
 		grid.setAttribute("lpp_canResumeDownload", canResumeDownload);
 		grid.setAttribute("lpp_resumeDownloadTested", !!isTested);

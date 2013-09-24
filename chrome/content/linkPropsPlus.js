@@ -39,6 +39,17 @@ var linkPropsPlusSvc = {
 		delete this.isPropsDialog;
 		return this.isPropsDialog = "showMetadataFor" in window;
 	},
+	get windowType() {
+		var wt;
+		if(this.isOwnWindow)
+			wt = "ownWindow";
+		else if(this.isDownloadDialog)
+			wt = "download";
+		else if(this.isPropsDialog)
+			wt = "properties";
+		delete this.windowType;
+		return this.windowType = wt;
+	},
 	get canAutoClose() {
 		delete this.canAutoClose;
 		return this.canAutoClose = this.isOwnWindow || this.isPropsDialog;
@@ -246,9 +257,9 @@ var linkPropsPlusSvc = {
 	},
 	prefsChanged: function(pName) {
 		if(
-			pName.indexOf(".showResponseStatus") != -1
-			|| pName.indexOf(".showDirectURI") != -1
-			|| pName.indexOf(".showHttpHeaders") != -1
+			pName == this.windowType + ".showResponseStatus"
+			|| pName == this.windowType + ".showDirectURI"
+			|| pName == this.windowType + ".showHttpHeaders"
 		) {
 			this.showRows();
 			if(this.isOwnWindow) {

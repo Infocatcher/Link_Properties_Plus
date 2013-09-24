@@ -202,7 +202,7 @@ var linkPropsPlusWnd = {
 				contentHeight += this.getHeight(a);
 		}
 		var containerHeight = this.getHeight(de, true);
-		if(contentHeight > containerHeight)
+		if(contentHeight > containerHeight || !this.pu.pref("ownWindow.showHttpHeaders"))
 			window.resizeBy(0, contentHeight - containerHeight);
 	},
 	getNumProperty: function(elt, pName) {

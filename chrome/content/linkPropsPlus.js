@@ -898,17 +898,21 @@ var linkPropsPlusSvc = {
 			return window.arguments[0].ownerDocument.defaultView.location.href;
 		if(this.isOwnWindow)
 			return this.wnd.referer;
-
+		var err;
 		try {
 			return dialog.mContext
 				.QueryInterface(Components.interfaces.nsIWebNavigation)
 				.currentURI.spec;
 		}
 		catch(e) {
-			Components.utils.reportError(e);
+			err = e;
 		}
 		var sourceDoc = this.sourceDocument;
-		return sourceDoc && sourceDoc.documentURI || this._uri;
+		var ref = sourceDoc && sourceDoc.documentURI;
+		if(ref)
+			return ref;
+		Components.utils.reportError(err);
+		return this._uri;
 	},
 	get referer() {
 		return this.checkReferer(this.realReferer, this.uri);

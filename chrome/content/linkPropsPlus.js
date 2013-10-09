@@ -1083,7 +1083,7 @@ var linkPropsPlusSvc = {
 		delete this.localeDelimiter;
 		delete this.localeSeparator;
 		this.localeDelimiter = ld && ls ? ld : ".";
-		this.localeSeparator = ld && ls ? ls : " ";
+		this.localeSeparator = ld && ls ? ls : "\xa0";
 	},
 	get localeDelimiter() {
 		this.initLocaleNumbers();

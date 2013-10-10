@@ -5,7 +5,14 @@ var linkPropsPlusSvc = {
 	realCount: 0,
 	redirects: [],
 
-	// We use following mask to don't use internal or file:// links as referers
+	// Block Escape key directly after request finished to don't close window instead of request cancellation
+	blockEscapeKey: false,
+	blockEscapeKeyTimer: 0,
+	get blockEscapeKeyDelay() {
+		return this.pu.pref("blockEscapeKeyDelay");
+	},
+
+	// We use following mask to not use internal or file:// links as referers
 	validReferer: /^(?:http|ftp)s?:\/\/\S+$/,
 
 	get ut() {
@@ -136,7 +143,13 @@ var linkPropsPlusSvc = {
 					this.wnd.getHeaders(e);
 				}
 				else if(!e.shiftKey && !e.ctrlKey && e.keyCode == e.DOM_VK_ESCAPE) { // Escape pressed
-					this.cancel() && this.stopEvent(e);
+					if(this.cancel())
+						this.stopEvent(e);
+					else if(this.blockEscapeKey) {
+						this.blockEscapeKey = false; // Second press will close window anyway
+						clearTimeout(this.blockEscapeKeyTimer);
+						this.stopEvent(e);
+					}
 				}
 			break;
 			case "mouseover":
@@ -1303,6 +1316,13 @@ var linkPropsPlusSvc = {
 		this.activeRequest = false;
 		if(window.closed)
 			return;
+		if(!this.cancelling) {
+			this.blockEscapeKey = true;
+			clearTimeout(this.blockEscapeKeyTimer);
+			this.blockEscapeKeyTimer = setTimeout(function(_this) {
+				_this.blockEscapeKey = false;
+			}, this.blockEscapeKeyDelay, this);
+		}
 		if(this.realCount > 0)
 			this.formatSize(this.realCount.toString());
 		if(request instanceof Components.interfaces.nsIChannel && request.URI)
@@ -1405,8 +1425,17 @@ var linkPropsPlusSvc = {
 			this.wnd.setTitle();
 	},
 
+	cancelling: false,
+	cancellingTimer: 0,
 	cancel: function() {
 		if(this.activeRequest && this.channel) {
+			// Allow press Escape twice to cancel request and close window
+			this.cancelling = true;
+			clearTimeout(this.cancellingTimer);
+			this.cancellingTimer = setTimeout(function(_this) {
+				_this.cancelling = false;
+			}, this.blockEscapeKeyDelay, this);
+
 			this.channel.cancel(Components.results.NS_BINDING_ABORTED);
 			this.fillInBlank();
 			//if(this.channel instanceof Components.interfaces.nsIFTPChannel)

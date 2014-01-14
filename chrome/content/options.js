@@ -103,7 +103,7 @@ var linkPropsPlusOpts = {
 	},
 	setDisabled: function() {
 		this.disableDecodeCheckbox();
-		this.disableIconsCheckboxes();
+		this.disableMenusCheckboxes();
 		this.disableAutoCloseOptions();
 		this.disableTestResumabilityDelay();
 	},
@@ -115,8 +115,9 @@ var linkPropsPlusOpts = {
 			&& !this.e("ownWindowDirectURI").checked
 			&& !this.e("downloadDirectURI").checked;
 	},
-	disableIconsCheckboxes: function() {
+	disableMenusCheckboxes: function() {
 		this.e("icon.contextMenu").disabled = !this.e("context.onLinks").checked && !this.e("context.onSelection").checked;
+		this.e("context.onSelection.inInputFields").disabled = !this.e("context.onSelection").checked;
 		this.e("icon.toolsMenu").disabled = this.e("showInToolsMenuSub").disabled = !this.e("showInToolsMenu").checked;
 		this.e("icon.appMenu").disabled = !this.e("showInAppMenu").checked;
 	},

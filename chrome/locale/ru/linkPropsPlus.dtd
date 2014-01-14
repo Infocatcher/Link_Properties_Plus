@@ -56,6 +56,7 @@
 <!ENTITY linkPropsPlus.opts.paneIntegration "Интеграция">
 <!ENTITY linkPropsPlus.opts.contextOnLinks "Показывать пункт контекстного меню для ссылок">
 <!ENTITY linkPropsPlus.opts.contextOnSelection "Показывать пункт контекстного меню для выделенных текстовых ссылок">
+<!ENTITY linkPropsPlus.opts.contextOnSelection.inInputFields "Также показывать в полях для ввода">
 <!ENTITY linkPropsPlus.opts.showInToolsMenu "Показывать пункт в меню Инструменты">
 <!ENTITY linkPropsPlus.opts.showInToolsSubMenu "Показывать в меню «Веб-разработка»">
 <!ENTITY linkPropsPlus.opts.showInAppMenu "Показывать пункт в меню приложения">

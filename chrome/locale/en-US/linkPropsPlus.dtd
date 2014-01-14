@@ -56,6 +56,7 @@
 <!ENTITY linkPropsPlus.opts.paneIntegration "Integration">
 <!ENTITY linkPropsPlus.opts.contextOnLinks "Show item in context menu for links">
 <!ENTITY linkPropsPlus.opts.contextOnSelection "Show item in context menu for selected text links">
+<!ENTITY linkPropsPlus.opts.contextOnSelection.inInputFields "Also show in input fields">
 <!ENTITY linkPropsPlus.opts.showInToolsMenu "Show item in Tools menu">
 <!ENTITY linkPropsPlus.opts.showInToolsSubMenu "Show in “Web Developer” submenu">
 <!ENTITY linkPropsPlus.opts.showInAppMenu "Show item in App menu">

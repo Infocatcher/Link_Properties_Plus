@@ -91,6 +91,7 @@
 		<preferences>
 			<preference id="context.onLinks" name="extensions.linkPropertiesPlus.context.onLinks" type="bool" />
 			<preference id="context.onSelection" name="extensions.linkPropertiesPlus.context.onSelection" type="bool" />
+			<preference id="context.onSelection.inInputFields" name="extensions.linkPropertiesPlus.context.onSelection.inInputFields" type="bool" />
 			<preference id="icon.contextMenu" name="extensions.linkPropertiesPlus.icon.contextMenu" type="bool" />
 
 			<preference id="showInToolsMenu" name="extensions.linkPropertiesPlus.showInToolsMenu" type="bool" />
@@ -101,9 +102,10 @@
 			<preference id="icon.appMenu" name="extensions.linkPropertiesPlus.icon.appMenu" type="bool" />
 		</preferences>
 
-		<vbox oncommand="linkPropsPlusOpts.disableIconsCheckboxes();">
+		<vbox oncommand="linkPropsPlusOpts.disableMenusCheckboxes();">
 			<checkbox preference="context.onLinks" label="&linkPropsPlus.opts.contextOnLinks;" />
 			<checkbox preference="context.onSelection" label="&linkPropsPlus.opts.contextOnSelection;" />
+			<checkbox preference="context.onSelection.inInputFields" label="&linkPropsPlus.opts.contextOnSelection.inInputFields;" class="indent" />
 			<checkbox preference="icon.contextMenu" label="&linkPropsPlus.opts.showIcon;" class="indent" />
 			<separator class="thin" />
 			<checkbox preference="showInToolsMenu" label="&linkPropsPlus.opts.showInToolsMenu;" />

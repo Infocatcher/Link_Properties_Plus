@@ -374,8 +374,9 @@ var linkPropsPlusSvc = {
 		var rowStatus = document.getElementById("linkPropsPlus-rowStatus");
 		var testResume = document.getElementById("linkPropsPlus-context-testDownloadResumability");
 		var testResumeSep = document.getElementById("linkPropsPlus-context-testDownloadResumabilitySeparator");
-		var hideTestResume = testResume.hidden = testResumeSep.hidden = this.testResumability
-			|| rowStatus.scrollHeight <= 0;
+		var hideTestResume = testResume.hidden = testResumeSep.hidden =
+			!this.pu.pref("testDownloadResumability.alwaysShowMenuItem")
+			&& (this.testResumability || rowStatus.scrollHeight <= 0);
 		if(!hideTestResume)
 			testResume.disabled = !this.uri || this.checkResumableChannel;
 

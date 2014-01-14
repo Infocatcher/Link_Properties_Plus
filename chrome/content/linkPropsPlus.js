@@ -377,7 +377,7 @@ var linkPropsPlusSvc = {
 		var hideTestResume = testResume.hidden = testResumeSep.hidden = this.testResumability
 			|| rowStatus.scrollHeight <= 0;
 		if(!hideTestResume)
-			testResume.disabled = !this.uri;
+			testResume.disabled = !this.uri || this.checkResumableChannel;
 
 		return true;
 	},
@@ -1364,6 +1364,8 @@ var linkPropsPlusSvc = {
 			this.formatCanResumeDownload(false, true);
 			return;
 		}
+		var testResume = document.getElementById("linkPropsPlus-context-testDownloadResumability");
+		testResume.disabled = true;
 		this.checkResumableChannel = ch;
 		ch.resumeAt(1, "");
 		ch.asyncOpen({
@@ -1373,6 +1375,7 @@ var linkPropsPlusSvc = {
 				if(this.done || !this.parent.checkResumableChannel || window.closed)
 					return;
 				this.done = true;
+				testResume.disabled = false;
 				this.parent.formatCanResumeDownload(canResumeDownload, true);
 				this.parent.checkResumableChannel = null;
 			},

@@ -57,6 +57,12 @@ var linkPropsPlusSvc = {
 		delete this.windowType;
 		return this.windowType = wt;
 	},
+	get testResumability() {
+		return this.pu.pref("testDownloadResumability") && (
+			!this.isDownloadDialog
+			|| this.pu.pref("testDownloadResumability.download")
+		);
+	},
 	get canAutoClose() {
 		delete this.canAutoClose;
 		return this.canAutoClose = this.isOwnWindow || this.isPropsDialog;
@@ -291,8 +297,14 @@ var linkPropsPlusSvc = {
 			if(this.isOwnWindow)
 				this.wnd.setTitle();
 		}
-		else if(pName == "testDownloadResumability")
-			this.pu.pref(pName) && this.checkChannelResumable(this.channel);
+		else if(pName == "testDownloadResumability") {
+			if(this.testResumability)
+				this.checkChannelResumable(this.channel);
+		}
+		else if(pName == "testDownloadResumability.download") {
+			if(this.isDownloadDialog && this.testResumability)
+				this.checkChannelResumable(this.channel);
+		}
 		else if(pName == "showLinkButtons")
 			this.initStyles();
 		else if(pName.substr(0, 10) == "autoClose.")
@@ -308,7 +320,7 @@ var linkPropsPlusSvc = {
 				"lpp_notAvailable",
 				!(this.channel instanceof Components.interfaces.nsIHttpChannel)
 			);
-			if(this.pu.pref("testDownloadResumability")) setTimeout(function(_this) {
+			if(this.testResumability) setTimeout(function(_this) {
 				_this.checkChannelResumable(_this.channel);
 			}, 0, this);
 		}
@@ -1327,7 +1339,7 @@ var linkPropsPlusSvc = {
 			this.formatSize(this.realCount.toString());
 		if(request instanceof Components.interfaces.nsIChannel && request.URI)
 			this.formatURI(request.URI.spec);
-		//if(this.pu.pref("testDownloadResumability"))
+		//if(this.testResumability)
 		//	this.checkChannelResumable(request);
 
 		this.onStopRequestCallback(true);

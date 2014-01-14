@@ -24,6 +24,7 @@ pref("extensions.linkPropertiesPlus.useFakeReferer.force", true);
 pref("extensions.linkPropertiesPlus.useRealRefererForTextLinks", false);
 
 pref("extensions.linkPropertiesPlus.testDownloadResumability", true);
+pref("extensions.linkPropertiesPlus.testDownloadResumability.download", false);
 
 pref("extensions.linkPropertiesPlus.sizePrecision", 2);
 pref("extensions.linkPropertiesPlus.useBinaryPrefixes", true);

@@ -1383,7 +1383,10 @@ var linkPropsPlusSvc = {
 			// nsIStreamListener
 			onDataAvailable: function(request, ctxt, input, offset, count) {
 				request.cancel(this.parent.Components.results.NS_BINDING_ABORTED);
-				this.setCanResumeDownload(true);
+				var bInput = Components.classes["@mozilla.org/binaryinputstream;1"]
+					.createInstance(Components.interfaces.nsIBinaryInputStream);
+				bInput.setInputStream(input);
+				this.setCanResumeDownload(!!bInput.readBytes(count));
 			},
 			// nsIRequestObserver
 			onStartRequest: function(request, ctxt) {},

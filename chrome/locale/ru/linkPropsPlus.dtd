@@ -51,6 +51,7 @@
 <!ENTITY linkPropsPlus.opts.useBinaryPrefixes "Использовать двоичные приставки (1 Кбайт = 1024 байт)">
 <!ENTITY linkPropsPlus.opts.decodeURIs "Декодировать ссылки">
 <!ENTITY linkPropsPlus.opts.testDownloadResumability "Автоматически проверять возможность докачки">
+<!ENTITY linkPropsPlus.opts.testDownloadResumability.download "Также проверять в диалоге открытия файла">
 
 <!ENTITY linkPropsPlus.opts.paneIntegration "Интеграция">
 <!ENTITY linkPropsPlus.opts.contextOnLinks "Показывать пункт контекстного меню для ссылок">

@@ -138,7 +138,7 @@ var linkPropsPlusOpts = {
 		}, 0, this);
 	},
 	disableTestResumability: function() {
-		this.e("testDownloadResumability").disabled = ![
+		var dis = ![
 			"propertiesStatus",
 			"ownWindowStatus",
 			"downloadStatus"
@@ -148,6 +148,9 @@ var linkPropsPlusOpts = {
 			return bo.width > 0 && bo.height > 0
 				&& ch.getAttribute("checked") == "true";
 		}, this);
+		var testResumability = this.e("testDownloadResumability");
+		testResumability.disabled = dis;
+		this.e("testDownloadResumability.download").disabled = dis || !testResumability.checked;
 	},
 	highlight: function(win) {
 		var cur = document.getElementsByAttribute("lpp_current", "true");

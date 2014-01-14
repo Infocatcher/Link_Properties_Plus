@@ -51,6 +51,7 @@
 <!ENTITY linkPropsPlus.opts.useBinaryPrefixes "Use binary prefixes (1 KiB = 1024 bytes)">
 <!ENTITY linkPropsPlus.opts.decodeURIs "Decode URIs">
 <!ENTITY linkPropsPlus.opts.testDownloadResumability "Automatically test download resumability">
+<!ENTITY linkPropsPlus.opts.testDownloadResumability.download "Also test in opening file dialog">
 
 <!ENTITY linkPropsPlus.opts.paneIntegration "Integration">
 <!ENTITY linkPropsPlus.opts.contextOnLinks "Show item in context menu for links">

@@ -723,6 +723,7 @@ var linkPropsPlusSvc = {
 
 			if(ch instanceof Components.interfaces.nsIHttpChannel) {
 				ch.requestMethod = "HEAD";
+				this.addHeaderLine(this.ut.getLocalized("request"));
 				ch.visitRequestHeaders(this);
 			}
 
@@ -1291,7 +1292,8 @@ var linkPropsPlusSvc = {
 			return; // Window is closed
 		try {
 			if(request instanceof Components.interfaces.nsIHttpChannel) {
-				this.addHeaderLine("\nStatus: " + request.responseStatus + " " + request.responseStatusText);
+				this.addHeaderLine("\n" + this.ut.getLocalized("response"));
+				this.addHeaderLine("Status: " + request.responseStatus + " " + request.responseStatusText);
 				var headers = this._responseHeaders = { __proto__: null };
 				request.visitResponseHeaders(this);
 				this._responseHeaders = { __proto__: null };
@@ -1383,7 +1385,7 @@ var linkPropsPlusSvc = {
 		ch.resumeAt(1, "");
 		var showHeaders = this.pu.pref("testDownloadResumability.showHttpHeaders");
 		if(showHeaders && ch instanceof Components.interfaces.nsIHttpChannel) try {
-			this.addHeaderLine("\nTest resumability request:");
+			this.addHeaderLine("\n" + this.ut.getLocalized("testResumabilityRequest"));
 			ch.visitRequestHeaders(this);
 		}
 		catch(e) {
@@ -1414,7 +1416,7 @@ var linkPropsPlusSvc = {
 				if(window.closed)
 					return;
 				if(showHeaders && request instanceof Components.interfaces.nsIHttpChannel) try {
-					this.parent.addHeaderLine("\nTest resumability response:");
+					this.parent.addHeaderLine("\n" + this.parent.ut.getLocalized("testResumabilityResponse"));
 					this.parent.addHeaderLine("Status: " + request.responseStatus + " " + request.responseStatusText);
 					request.visitResponseHeaders(this.parent);
 				}

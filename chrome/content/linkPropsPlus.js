@@ -1404,11 +1404,15 @@ var linkPropsPlusSvc = {
 			onDataAvailable: function(request, ctxt, input, offset, count) {
 				var data = this.parent.getStreamData(input, count);
 				request.cancel(this.parent.Components.results.NS_BINDING_ABORTED);
+				if(window.closed)
+					return;
 				this.setCanResumeDownload(!!data);
 			},
 			// nsIRequestObserver
 			onStartRequest: function(request, ctxt) {},
 			onStopRequest: function(request, ctxt, status) {
+				if(window.closed)
+					return;
 				if(showHeaders && request instanceof Components.interfaces.nsIHttpChannel) try {
 					this.parent.addHeaderLine("\nTest resumability response:");
 					this.parent.addHeaderLine("Status: " + request.responseStatus + " " + request.responseStatusText);

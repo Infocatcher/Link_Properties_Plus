@@ -1381,6 +1381,13 @@ var linkPropsPlusSvc = {
 		if(ch instanceof Components.interfaces.nsIHttpChannel)
 			ch.setRequestHeader("Range", "bytes=1-32", false);
 		ch.resumeAt(1, "");
+		if(ch instanceof Components.interfaces.nsIHttpChannel) try {
+			this.addHeaderLine("\nTest resumability request:");
+			ch.visitRequestHeaders(this);
+		}
+		catch(e) {
+			Components.utils.reportError(e);
+		}
 		ch.asyncOpen({
 			parent: this,
 			done: false,
@@ -1401,6 +1408,14 @@ var linkPropsPlusSvc = {
 			// nsIRequestObserver
 			onStartRequest: function(request, ctxt) {},
 			onStopRequest: function(request, ctxt, status) {
+				if(request instanceof Components.interfaces.nsIHttpChannel) try {
+					this.parent.addHeaderLine("\nTest resumability response:");
+					this.parent.addHeaderLine("Status: " + request.responseStatus + " " + request.responseStatusText);
+					request.visitResponseHeaders(this.parent);
+				}
+				catch(e) {
+					Components.utils.reportError(e);
+				}
 				this.setCanResumeDownload(false);
 			}
 		}, null);

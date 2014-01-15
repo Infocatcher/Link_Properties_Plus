@@ -1272,18 +1272,14 @@ var linkPropsPlusSvc = {
 	// nsIStreamListener
 	onDataAvailable: function(request, ctxt, input, offset, count) {
 		var data = this.getStreamData(input, count);
-		request.cancel(this.Components.results.NS_BINDING_ABORTED); //?
+		request.cancel(this.Components.results.NS_BINDING_ABORTED);
 		if(window.closed)
 			return;
 		if(request.URI && request.URI.scheme == "data")
 			return;
 		this.realCount += count;
-		var val = this.fullHeader.value;
-		if(val.length > 1e5) {
-			this.fullHeader.value = val + "\n[\u2026]";
-			return;
-		}
-		this.fullHeader.value = val + data;
+		var maxLen = 2e3;
+		this.addHeaderLine("\n" + data.substr(0, maxLen) + (data.length > maxLen ? "\n[\u2026]" : ""));
 	},
 	getStreamData: function(inputStream, count) {
 		try {
@@ -1347,7 +1343,6 @@ var linkPropsPlusSvc = {
 		}
 		finally {
 			request.cancel(Components.results.NS_BINDING_ABORTED);
-			ch.cancel(Components.results.NS_BINDING_ABORTED); //?
 			this.fillInBlank();
 			this.channel = null;
 		}

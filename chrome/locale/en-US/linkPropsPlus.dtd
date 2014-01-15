@@ -44,7 +44,7 @@
 <!ENTITY linkPropsPlus.opts.downloadDialog "Opening file dialog">
 <!ENTITY linkPropsPlus.opts.showStatus "Response status">
 <!ENTITY linkPropsPlus.opts.showDirectURI "Direct link">
-<!ENTITY linkPropsPlus.opts.showHeaders "HTTP Headers">
+<!ENTITY linkPropsPlus.opts.showHeaders "HTTP headers">
 
 <!ENTITY linkPropsPlus.opts.linkProperties "Link properties">
 <!ENTITY linkPropsPlus.opts.precision "Round file size to:">

@@ -1258,6 +1258,7 @@ var linkPropsPlusSvc = {
 	// And in Firefox <= 3.6 garbage collector may already remove Components from scope
 	// nsIStreamListener
 	onDataAvailable: function(request, ctxt, input, offset, count) {
+		var data = this.getStreamData(input, count);
 		request.cancel(this.Components.results.NS_BINDING_ABORTED); //?
 		if(window.closed)
 			return;
@@ -1269,10 +1270,19 @@ var linkPropsPlusSvc = {
 			this.fullHeader.value = val + "\n[\u2026]";
 			return;
 		}
-		var bInput = Components.classes["@mozilla.org/binaryinputstream;1"]
-			.createInstance(Components.interfaces.nsIBinaryInputStream);
-		bInput.setInputStream(input);
-		this.fullHeader.value = val + bInput.readBytes(count);
+		this.fullHeader.value = val + data;
+	},
+	getStreamData: function(inputStream, count) {
+		try {
+			var bInput = Components.classes["@mozilla.org/binaryinputstream;1"]
+				.createInstance(Components.interfaces.nsIBinaryInputStream);
+			bInput.setInputStream(inputStream);
+			return bInput.readBytes(count);
+		}
+		catch(e) {
+			Components.utils.reportError(e);
+		}
+		return "";
 	},
 	// nsIRequestObserver
 	onStartRequest: function(request, ctxt) {
@@ -1382,11 +1392,9 @@ var linkPropsPlusSvc = {
 			},
 			// nsIStreamListener
 			onDataAvailable: function(request, ctxt, input, offset, count) {
+				var data = this.parent.getStreamData(input, count);
 				request.cancel(this.parent.Components.results.NS_BINDING_ABORTED);
-				var bInput = Components.classes["@mozilla.org/binaryinputstream;1"]
-					.createInstance(Components.interfaces.nsIBinaryInputStream);
-				bInput.setInputStream(input);
-				this.setCanResumeDownload(!!bInput.readBytes(count));
+				this.setCanResumeDownload(!!data);
 			},
 			// nsIRequestObserver
 			onStartRequest: function(request, ctxt) {},

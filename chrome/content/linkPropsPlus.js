@@ -723,7 +723,8 @@ var linkPropsPlusSvc = {
 
 			if(ch instanceof Components.interfaces.nsIHttpChannel) {
 				ch.requestMethod = "HEAD";
-				this.addHeaderLine(this.ut.getLocalized("request"));
+				if(this.pu.pref("showCaptionsInHttpHeaders"))
+					this.addHeaderLine(this.ut.getLocalized("request"));
 				ch.visitRequestHeaders(this);
 			}
 
@@ -1292,7 +1293,10 @@ var linkPropsPlusSvc = {
 			return; // Window is closed
 		try {
 			if(request instanceof Components.interfaces.nsIHttpChannel) {
-				this.addHeaderLine("\n" + this.ut.getLocalized("response"));
+				if(this.pu.pref("showCaptionsInHttpHeaders"))
+					this.addHeaderLine("\n" + this.ut.getLocalized("response"));
+				else
+					this.addHeaderLine("");
 				this.addHeaderLine("Status: " + request.responseStatus + " " + request.responseStatusText);
 				var headers = this._responseHeaders = { __proto__: null };
 				request.visitResponseHeaders(this);

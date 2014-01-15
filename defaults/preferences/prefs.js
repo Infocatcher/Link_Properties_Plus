@@ -23,6 +23,10 @@ pref("extensions.linkPropertiesPlus.useFakeReferer.force", true);
 // Set fake referer header, if network.http.sendRefererHeader <= 1
 pref("extensions.linkPropertiesPlus.useRealRefererForTextLinks", false);
 
+pref("extensions.linkPropertiesPlus.showCaptionsInHttpHeaders", true);
+// true  - always show captions like "Request:" and "Response:"
+// false - show only captions about resumability tests
+
 pref("extensions.linkPropertiesPlus.testDownloadResumability", true);
 pref("extensions.linkPropertiesPlus.testDownloadResumability.download", false);
 pref("extensions.linkPropertiesPlus.testDownloadResumability.alwaysShowMenuItem", false);

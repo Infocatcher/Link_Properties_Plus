@@ -48,7 +48,8 @@
 			<checkbox preference="propertiesDirectURI" label="&linkPropsPlus.opts.showDirectURI;"
 				oncommand="linkPropsPlusOpts.disableDecodeCheckbox();" />
 			<spacer flex="1" />
-			<checkbox preference="propertiesHeaders" label="&linkPropsPlus.opts.showHeaders;" />
+			<checkbox preference="propertiesHeaders" label="&linkPropsPlus.opts.showHeaders;"
+				oncommand="linkPropsPlusOpts.disableHeadersOptions();" />
 			<spacer flex="1" />
 		</groupbox>
 		<groupbox id="ownWindowBox" orient="horizontal">
@@ -59,7 +60,8 @@
 			<checkbox preference="ownWindowDirectURI" label="&linkPropsPlus.opts.showDirectURI;"
 				oncommand="linkPropsPlusOpts.disableDecodeCheckbox();" />
 			<spacer flex="1" />
-			<checkbox preference="ownWindowHeaders" label="&linkPropsPlus.opts.showHeaders;" />
+			<checkbox preference="ownWindowHeaders" label="&linkPropsPlus.opts.showHeaders;"
+				oncommand="linkPropsPlusOpts.disableHeadersOptions();" />
 			<spacer flex="1" />
 		</groupbox>
 		<groupbox id="downloadBox" orient="horizontal">
@@ -70,7 +72,8 @@
 			<checkbox preference="downloadDirectURI" label="&linkPropsPlus.opts.showDirectURI;"
 				oncommand="linkPropsPlusOpts.disableDecodeCheckbox();" />
 			<spacer flex="1" />
-			<checkbox preference="downloadHeaders" label="&linkPropsPlus.opts.showHeaders;" />
+			<checkbox preference="downloadHeaders" label="&linkPropsPlus.opts.showHeaders;"
+				oncommand="linkPropsPlusOpts.disableHeadersOptions();" />
 			<spacer flex="1" />
 		</groupbox>
 		<groupbox>
@@ -126,6 +129,8 @@
 			<preference id="autoClose.delay" name="extensions.linkPropertiesPlus.autoClose.delay" type="int" />
 			<preference id="autoClose.dontCloseUnderCursor" name="extensions.linkPropertiesPlus.autoClose.dontCloseUnderCursor" type="bool" />
 			<preference id="autoClose.onlyAfterRequest" name="extensions.linkPropertiesPlus.autoClose.onlyAfterRequest" type="bool" />
+			<preference id="testDownloadResumability.showHttpHeaders" name="extensions.linkPropertiesPlus.testDownloadResumability.showHttpHeaders" type="bool" />
+			<preference id="showCaptionsInHttpHeaders" name="extensions.linkPropertiesPlus.showCaptionsInHttpHeaders" type="bool" />
 		</preferences>
 
 		<checkbox preference="closeAfterOpen" label="&linkPropsPlus.opts.close;" />
@@ -143,6 +148,11 @@
 			</hbox>
 			<checkbox preference="autoClose.dontCloseUnderCursor" label="&linkPropsPlus.opts.dontCloseUnderCursor;" />
 			<checkbox preference="autoClose.onlyAfterRequest" label="&linkPropsPlus.opts.onlyAfterRequest;" />
+		</groupbox>
+		<groupbox>
+			<caption label="&linkPropsPlus.opts.httpHeaders;" />
+			<checkbox preference="testDownloadResumability.showHttpHeaders" label="&linkPropsPlus.opts.showTestResumabilityHeaders;" />
+			<checkbox preference="showCaptionsInHttpHeaders" label="&linkPropsPlus.opts.showCaptionsInHeaders;" />
 		</groupbox>
 	</prefpane>
 

@@ -69,3 +69,7 @@
 <!ENTITY linkPropsPlus.opts.ms "ms">
 <!ENTITY linkPropsPlus.opts.dontCloseUnderCursor "Don't close under cursor">
 <!ENTITY linkPropsPlus.opts.onlyAfterRequest "Only after link properties request">
+
+<!ENTITY linkPropsPlus.opts.httpHeaders "HTTP headers">
+<!ENTITY linkPropsPlus.opts.showTestResumabilityHeaders "Show headers from download resumability test">
+<!ENTITY linkPropsPlus.opts.showCaptionsInHeaders "Always show captions before data sections">

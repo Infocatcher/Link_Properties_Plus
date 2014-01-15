@@ -63,6 +63,7 @@ var linkPropsPlusOpts = {
 					if(exts.has(guid) && exts.get(guid).enabled) {
 						_this.hide(propsBox, false)
 						_this.disableDecodeCheckbox();
+						_this.disableHeadersOptions();
 						_this._sizeChanged && window.sizeToContent();
 					}
 				});
@@ -103,6 +104,7 @@ var linkPropsPlusOpts = {
 	},
 	setDisabled: function() {
 		this.disableDecodeCheckbox();
+		this.disableHeadersOptions();
 		this.disableMenusCheckboxes();
 		this.disableAutoCloseOptions();
 		this.disableTestResumabilityDelay();
@@ -114,6 +116,15 @@ var linkPropsPlusOpts = {
 			)
 			&& !this.e("ownWindowDirectURI").checked
 			&& !this.e("downloadDirectURI").checked;
+	},
+	disableHeadersOptions: function() {
+		this.e("testDownloadResumability.showHttpHeaders").disabled =
+			this.e("showCaptionsInHttpHeaders").disabled = (
+				document.getElementById("propertiesBox").getAttribute("hidden") == "true"
+				|| !this.e("propertiesHeaders").checked
+			)
+			&& !this.e("ownWindowHeaders").checked
+			&& !this.e("downloadHeaders").checked;
 	},
 	disableMenusCheckboxes: function() {
 		this.e("icon.contextMenu").disabled = !this.e("context.onLinks").checked && !this.e("context.onSelection").checked;

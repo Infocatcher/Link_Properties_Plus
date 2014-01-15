@@ -1398,28 +1398,25 @@ var linkPropsPlusSvc = {
 		ch.asyncOpen({
 			parent: this,
 			done: false,
+			get canceled() {
+				return !this.parent.checkResumableChannel || window.closed;
+			},
 			setCanResumeDownload: function(canResumeDownload) {
-				if(this.done || !this.parent.checkResumableChannel || window.closed)
+				if(this.done || this.canceled)
 					return;
 				this.done = true;
-				testResume.disabled = false;
 				this.parent.formatCanResumeDownload(canResumeDownload, true);
-				this.parent.checkResumableChannel = null;
 			},
 			// nsIStreamListener
 			onDataAvailable: function(request, ctxt, input, offset, count) {
 				var data = this.parent.getStreamData(input, count);
 				request.cancel(this.parent.Components.results.NS_BINDING_ABORTED);
-				if(window.closed)
-					return;
 				this.setCanResumeDownload(!!data);
 			},
 			// nsIRequestObserver
 			onStartRequest: function(request, ctxt) {},
 			onStopRequest: function(request, ctxt, status) {
-				if(window.closed)
-					return;
-				if(showHeaders && request instanceof Components.interfaces.nsIHttpChannel) try {
+				if(!this.canceled && showHeaders && request instanceof Components.interfaces.nsIHttpChannel) try {
 					this.parent.addHeaderLine("\n" + this.parent.ut.getLocalized("testResumabilityResponse"));
 					this.parent.addHeaderLine("Status: " + request.responseStatus + " " + request.responseStatusText);
 					request.visitResponseHeaders(this.parent);
@@ -1428,6 +1425,8 @@ var linkPropsPlusSvc = {
 					Components.utils.reportError(e);
 				}
 				this.setCanResumeDownload(false);
+				testResume.disabled = false;
+				this.parent.checkResumableChannel = null;
 			}
 		}, null);
 	},

@@ -1381,7 +1381,8 @@ var linkPropsPlusSvc = {
 		if(ch instanceof Components.interfaces.nsIHttpChannel)
 			ch.setRequestHeader("Range", "bytes=1-32", false);
 		ch.resumeAt(1, "");
-		if(ch instanceof Components.interfaces.nsIHttpChannel) try {
+		var showHeaders = this.pu.pref("testDownloadResumability.showHttpHeaders");
+		if(showHeaders && ch instanceof Components.interfaces.nsIHttpChannel) try {
 			this.addHeaderLine("\nTest resumability request:");
 			ch.visitRequestHeaders(this);
 		}
@@ -1408,7 +1409,7 @@ var linkPropsPlusSvc = {
 			// nsIRequestObserver
 			onStartRequest: function(request, ctxt) {},
 			onStopRequest: function(request, ctxt, status) {
-				if(request instanceof Components.interfaces.nsIHttpChannel) try {
+				if(showHeaders && request instanceof Components.interfaces.nsIHttpChannel) try {
 					this.parent.addHeaderLine("\nTest resumability response:");
 					this.parent.addHeaderLine("Status: " + request.responseStatus + " " + request.responseStatusText);
 					request.visitResponseHeaders(this.parent);

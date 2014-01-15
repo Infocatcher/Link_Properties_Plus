@@ -1378,6 +1378,8 @@ var linkPropsPlusSvc = {
 		var testResume = document.getElementById("linkPropsPlus-context-testDownloadResumability");
 		testResume.disabled = true;
 		this.checkResumableChannel = ch;
+		if(ch instanceof Components.interfaces.nsIHttpChannel)
+			ch.setRequestHeader("Range", "bytes=1-32", false);
 		ch.resumeAt(1, "");
 		ch.asyncOpen({
 			parent: this,

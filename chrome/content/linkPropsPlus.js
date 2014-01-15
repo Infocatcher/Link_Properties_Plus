@@ -4,6 +4,7 @@ var linkPropsPlusSvc = {
 	channel: null,
 	realCount: 0,
 	redirects: [],
+	requestHash: "",
 
 	// Block Escape key directly after request finished to don't close window instead of request cancellation
 	blockEscapeKey: false,
@@ -310,7 +311,7 @@ var linkPropsPlusSvc = {
 		else if(pName.substr(0, 10) == "autoClose.")
 			this.reinitAutoClose();
 	},
-	getHeaders: function(clear, bypassCache) {
+	getHeaders: function(clear, bypassCache, forceTestResumability) {
 		if(clear)
 			this.clearResults();
 		if(this.request(bypassCache)) {
@@ -320,7 +321,7 @@ var linkPropsPlusSvc = {
 				"lpp_notAvailable",
 				!(this.channel instanceof Components.interfaces.nsIHttpChannel)
 			);
-			if(this.testResumability) setTimeout(function(_this) {
+			if(forceTestResumability || this.testResumability) setTimeout(function(_this) {
 				_this.checkChannelResumable(_this.channel);
 			}, 0, this);
 		}
@@ -730,6 +731,7 @@ var linkPropsPlusSvc = {
 
 			try {
 				ch.asyncOpen(this, null);
+				this.requestHash = this.getRequestHash(ch);
 				return this.activeRequest = true;
 			}
 			catch(e2) {
@@ -786,6 +788,15 @@ var linkPropsPlusSvc = {
 
 		ch instanceof Components.interfaces.nsIFTPChannel;
 		return ch;
+	},
+	getRequestHash: function(ch) {
+		var hash = ch.originalURI.spec;
+		if(ch instanceof Components.interfaces.nsIHttpChannel) try {
+			hash += "\n" + ch.getRequestHeader("Referer");
+		}
+		catch(e) {
+		}
+		return hash;
 	},
 
 	// Autoclose feature
@@ -1377,6 +1388,10 @@ var linkPropsPlusSvc = {
 			var uri = this.ios.newURI(_uri, null, null);
 		}
 		var ch = this.newChannelFromURI(uri);
+		if(!origChannel && this.getRequestHash(ch) != this.requestHash) {
+			this.getHeaders(true, false, true);
+			return;
+		}
 		if(!(ch instanceof Components.interfaces.nsIResumableChannel)) {
 			this.formatCanResumeDownload(false, true);
 			return;

@@ -327,6 +327,11 @@ var linkPropsPlusSvc = {
 			if(this.isDownloadDialog && this.testResumability)
 				this.checkChannelResumable(this.channel);
 		}
+		else if(
+			pName == "showCaptionsInHttpHeaders"
+			|| pName == "testDownloadResumability.showHttpHeaders"
+		)
+			this.headers.initStyles();
 		else if(pName == "showLinkButtons")
 			this.initStyles();
 		else if(pName.substr(0, 10) == "autoClose.")
@@ -776,8 +781,7 @@ var linkPropsPlusSvc = {
 
 			if(ch instanceof Components.interfaces.nsIHttpChannel) {
 				ch.requestMethod = "HEAD";
-				if(this.pu.pref("showCaptionsInHttpHeaders"))
-					this.headers.caption(this.ut.getLocalized("request"));
+				this.headers.caption(this.ut.getLocalized("request"));
 				this.headers.beginSection();
 				ch.visitRequestHeaders(this);
 				this.headers.endSection();
@@ -1115,6 +1119,18 @@ var linkPropsPlusSvc = {
 					_this.field.style.background = "-moz-Dialog";
 			}, 0, this);
 		},
+		initStyles: function(field) {
+			if(!field)
+				field = this.field;
+			function attr(name, add) {
+				if(add)
+					field.setAttribute(name, "true");
+				else
+					field.removeAttribute(name);
+			}
+			attr("hideCaptions",   !this.parent.pu.pref("showCaptionsInHttpHeaders"));
+			attr("hideTestResume", !this.parent.pu.pref("testDownloadResumability.showHttpHeaders"));
+		},
 		destroy: function() {
 			this.parent = null;
 		},
@@ -1127,20 +1143,27 @@ var linkPropsPlusSvc = {
 			return this.frame = document.getElementById("linkPropsPlus-headers");
 		},
 		get field() {
+			var field = this.frame.contentDocument.body
+			this.initStyles(field);
 			delete this.field;
-			return this.field = this.frame.contentDocument.body;
+			return this.field = field;
 		},
 		clear: function() {
 			this.field.textContent = "";
 		},
-		caption: function(s) {
-			var h = this._appendNode("h1", "caption", s);
+		caption: function(s, nodeClass) {
+			var h = this._appendNode("h1", nodeClass || "caption", s);
 			var prev = h.previousSibling;
-			if(prev)
-				this.spacer(h);
+			if(prev) {
+				var spacerClass = (
+					"spacer "
+					+ (nodeClass || "").replace(/(?:^|\s+)caption(?:\s+|$)/, "")
+				).replace(/ $/, "");
+				this.spacer(h, spacerClass);
+			}
 		},
-		spacer: function(insPos) {
-			var spacer = this._node("div", "spacer");
+		spacer: function(insPos, nodeClass) {
+			var spacer = this._node("div", nodeClass || "spacer");
 			spacer.appendChild(this._node("br", "copyHack"));
 			if(insPos)
 				insPos.parentNode.insertBefore(spacer, insPos);
@@ -1503,10 +1526,7 @@ var linkPropsPlusSvc = {
 			return; // Window is closed
 		try {
 			if(request instanceof Components.interfaces.nsIHttpChannel) {
-				if(this.pu.pref("showCaptionsInHttpHeaders"))
-					this.headers.caption(this.ut.getLocalized("response"));
-				else
-					this.headers.spacer();
+				this.headers.caption(this.ut.getLocalized("response"));
 				this.headers.beginSection();
 				this.headers.entry("Status", request.responseStatus + " " + request.responseStatusText);
 				var headers = this._responseHeaders = { __proto__: null };
@@ -1602,10 +1622,9 @@ var linkPropsPlusSvc = {
 		if(ch instanceof Components.interfaces.nsIHttpChannel)
 			ch.setRequestHeader("Range", "bytes=1-32", false);
 		ch.resumeAt(1, "");
-		var showHeaders = this.pu.pref("testDownloadResumability.showHttpHeaders");
-		if(showHeaders && ch instanceof Components.interfaces.nsIHttpChannel) try {
-			this.headers.caption(this.ut.getLocalized("testResumabilityRequest"));
-			this.headers.beginSection();
+		if(ch instanceof Components.interfaces.nsIHttpChannel) try {
+			this.headers.caption(this.ut.getLocalized("testResumabilityRequest"), "caption testResume");
+			this.headers.beginSection("block testResume");
 			ch.visitRequestHeaders(this);
 			this.headers.endSection();
 		}
@@ -1633,10 +1652,10 @@ var linkPropsPlusSvc = {
 			// nsIRequestObserver
 			onStartRequest: function(request, ctxt) {},
 			onStopRequest: function(request, ctxt, status) {
-				if(!this.canceled && showHeaders && request instanceof Components.interfaces.nsIHttpChannel) try {
+				if(!this.canceled && request instanceof Components.interfaces.nsIHttpChannel) try {
 					var headers = this.parent.headers;
-					headers.caption(this.parent.ut.getLocalized("testResumabilityResponse"));
-					headers.beginSection();
+					headers.caption(this.parent.ut.getLocalized("testResumabilityResponse"), "caption testResume");
+					headers.beginSection("block testResume");
 					headers.entry("Status", request.responseStatus + " " + request.responseStatusText);
 					request.visitResponseHeaders(this.parent);
 					headers.endSection();

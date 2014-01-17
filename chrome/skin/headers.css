@@ -17,3 +17,13 @@ body {
 	height: 0.6em;
 	max-height: 0.6em;
 }
+
+body[hideCaptions] .caption:not(.testResume),
+body[hideTestResume] .testResume {
+	display: none;
+}
+
+body[hideCaptions][hideTestResume] .spacer {
+	height: 1em;
+	max-height: 1em;
+}

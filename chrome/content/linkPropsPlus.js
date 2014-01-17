@@ -399,7 +399,7 @@ var linkPropsPlusSvc = {
 		var testResumeSep = document.getElementById("linkPropsPlus-context-testDownloadResumabilitySeparator");
 		var hideTestResume = testResume.hidden = testResumeSep.hidden =
 			!this.pu.pref("testDownloadResumability.alwaysShowMenuItem")
-			&& (this.testResumability || rowStatus.scrollHeight <= 0);
+			&& (this.testResumability || rowStatus.boxObject.height <= 0);
 		if(!hideTestResume)
 			testResume.disabled = !this.uri || this.checkResumableChannel;
 
@@ -413,7 +413,7 @@ var linkPropsPlusSvc = {
 			var rows = document.getElementById("linkPropsPlus-rows").childNodes;
 			for(var i = 0, l = rows.length; i < l; ++i) {
 				var r = rows[i];
-				if(r.scrollHeight > 0) {
+				if(r.boxObject.height > 0) {
 					row = r;
 					break;
 				}

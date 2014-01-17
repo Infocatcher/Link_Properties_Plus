@@ -1107,6 +1107,7 @@ var linkPropsPlusSvc = {
 			// after setRowHeight() in Firefox 3.6
 			this.frame.setAttribute("transparent", "true");
 			setTimeout(function(_this) {
+				_this.createMenu();
 				if(_this.parent.fxVersion < 3.6)
 					_this.field.style.background = "-moz-Dialog";
 			}, 0, this);
@@ -1183,6 +1184,70 @@ var linkPropsPlusSvc = {
 		_append: function(node) {
 			var section = this._activeSection || this.field;
 			return section.appendChild(node);
+		},
+
+		createMenu: function() {
+			var dtd = "chrome://global/locale/textcontext.dtd";
+			// Trick: fallback entities works fine, but only if all previous DTD files exists
+			try {
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", dtd, true);
+				xhr.overrideMimeType("text/plain"); // Prevent parsing errors
+				xhr.onreadystatechange = function() {
+					xhr.onreadystatechange = null;
+					xhr.abort();
+				};
+				xhr.send(null);
+			}
+			catch(e) { // NS_ERROR_FILE_NOT_FOUND
+				this.parent.ut.error(dtd + " not found, will use not localized context menu");
+				Components.utils.reportError(e);
+				dtd = "chrome://linkpropsplus/locale/linkPropsPlus.dtd";
+			}
+			var cm = new DOMParser().parseFromString(('\
+				<!DOCTYPE menupopup [\n\
+					<!ENTITY % textcontextDTD SYSTEM "' + dtd + '">\n\
+					%textcontextDTD;\n\
+					<!ENTITY copyCmd.label "Copy">\n\
+					<!ENTITY copyCmd.accesskey "c">\n\
+					<!ENTITY selectAllCmd.label "Select All">\n\
+					<!ENTITY selectAllCmd.accesskey "a">\n\
+				]>\n\
+				<menupopup xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"\n\
+					id="linkPropsPlus-headers-context"\n\
+					onpopupshowing="linkPropsPlusSvc.headers.initMenu(this);"\n\
+					oncommand="linkPropsPlusSvc.headers.doMenuCommand(event);">\n\
+					<menuitem label="&copyCmd.label;" accesskey="&copyCmd.accesskey;" cmd="cmd_copy" />\n\
+					<menuseparator />\n\
+					<menuitem label="&selectAllCmd.label;" accesskey="&selectAllCmd.accesskey;" cmd="cmd_selectAll" />\n\
+				</menupopup>').replace(/>\s+</g, "><"),
+				"application/xml").documentElement;
+			if(cm.localName == "menupopup")
+				document.getElementById("linkPropsPlus-container").appendChild(cm);
+		},
+		initMenu: function(cm) {
+			var frame = this.frame;
+			var cd = document.commandDispatcher;
+			if(cd.focusedWindow != frame.contentWindow)
+				frame.contentWindow.focus();
+			Array.forEach(cm.getElementsByTagName("menuitem"), function(mi) {
+				var cmd = mi.getAttribute("cmd");
+				if(cmd) {
+					var controller = cd.getControllerForCommand(cmd);
+					if(controller.isCommandEnabled(cmd))
+						mi.removeAttribute("disabled");
+					else
+						mi.setAttribute("disabled", "true");
+				}
+			});
+		},
+		doMenuCommand: function(e) {
+			var cmd = e.originalTarget.getAttribute("cmd");
+			if(cmd) {
+				var controller = document.commandDispatcher.getControllerForCommand(cmd);
+				controller.doCommand(cmd);
+				e.stopPropagation();
+			}
 		}
 	},
 

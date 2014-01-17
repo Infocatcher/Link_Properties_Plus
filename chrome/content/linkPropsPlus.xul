@@ -55,7 +55,9 @@
 				<row id="linkPropsPlus-rowHeaders" hidden="true" flex="1">
 					<label value="&linkPropsPlus.labelHeaders;" control="linkPropsPlus-headers"
 						tooltiptext="&linkPropsPlus.labelOnlyHttpTip;" />
-					<textbox id="linkPropsPlus-headers" readonly="true" flex="1" multiline="true" wrap="off" />
+					<!-- We had to use <iframe> because formatting isn't copied from <html:div> :( -->
+					<iframe id="linkPropsPlus-headers" flex="1" type="content"
+						src="chrome://linkpropsplus/content/headers.html" />
 				</row>
 			</rows>
 		</grid>

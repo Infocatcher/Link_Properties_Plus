@@ -87,6 +87,7 @@ var linkPropsPlusSvc = {
 		window.removeEventListener("load", this, false);
 		window.addEventListener("unload", this, false);
 		window.addEventListener("keypress", this, false);
+		this.headers.parent = this;
 		this.pu.init();
 		this.showRows();
 		this.setKeysDescDelay();
@@ -127,6 +128,7 @@ var linkPropsPlusSvc = {
 	destroy: function() {
 		window.removeEventListener("unload", this, false);
 		window.removeEventListener("keypress", this, false);
+		this.headers.parent = null;
 		this.destroyAutoClose();
 		this.isOwnWindow && this.wnd.destroy();
 		this.cancelCheckChannelResumable();
@@ -340,6 +342,7 @@ var linkPropsPlusSvc = {
 			},
 			this
 		);
+		this.headers.clear();
 
 		var grid = document.getElementById("linkPropsPlus-grid");
 		grid.removeAttribute("lpp_canResumeDownload");
@@ -725,8 +728,10 @@ var linkPropsPlusSvc = {
 			if(ch instanceof Components.interfaces.nsIHttpChannel) {
 				ch.requestMethod = "HEAD";
 				if(this.pu.pref("showCaptionsInHttpHeaders"))
-					this.addHeaderLine(this.ut.getLocalized("request"));
+					this.headers.caption(this.ut.getLocalized("request"));
+				this.headers.beginSection();
 				ch.visitRequestHeaders(this);
+				this.headers.endSection();
 			}
 
 			try {
@@ -1048,14 +1053,82 @@ var linkPropsPlusSvc = {
 		return this._isPrivate = this.ut.isWindowPrivate(sourceWindow);
 	},
 
-	addHeaderLine: function(line) {
-		var fh = this.fullHeader;
-		fh.value += (fh.value ? "\n" : "") + line;
+	headers: {
+		parent: null,
+		get colon() {
+			delete this.colon;
+			return this.colon = this.parent.ut.getLocalized("colon").slice(1, -1) || ": ";
+		},
+		get field() {
+			delete this.field;
+			return this.field = document.getElementById("linkPropsPlus-headers")
+				.contentDocument
+				.body;
+		},
+		clear: function() {
+			this.field.textContent = "";
+		},
+		caption: function(s) {
+			var h = this._appendNode("h1", "caption", s);
+			var prev = h.previousSibling;
+			if(prev)
+				this.spacer(h);
+		},
+		spacer: function(insPos) {
+			var spacer = this._node("div", "spacer");
+			spacer.appendChild(this._node("br", "copyHack"));
+			if(insPos)
+				insPos.parentNode.insertBefore(spacer, insPos);
+			else {
+				var section = this._activeSection || this.field;
+				section.appendChild(spacer);
+			}
+			return spacer;
+		},
+		entry: function(name, value) {
+			this.beginSection("entry");
+			this._appendNode("strong", "name", name);
+			this._appendNode("span", "colon", this.colon);
+			this._appendNode("span", "value", value);
+			this.endSection();
+		},
+		rawData: function(s) {
+			//~ todo: split using <br>
+			this._appendNode("div", "rawData", s);
+		},
+		_sections: [],
+		_activeSection: null,
+		beginSection: function(nodeClass) {
+			this._sections.push(this._activeSection = this._appendNode("div", nodeClass || "block"));
+			var prev = this._activeSection.previousSibling;
+			if(prev && prev.className != "spacer")
+				prev.appendChild(this._node("br", "copyHack"));
+		},
+		endSection: function() {
+			var sections = this._sections;
+			sections.pop();
+			this._activeSection = sections[sections.length - 1] || null;
+		},
+		_appendNode: function(nodeName, nodeClass, nodeText) {
+			return this._append(this._node.apply(this, arguments));
+		},
+		_node: function(nodeName, nodeClass, nodeText, noAppend) {
+			var node = document.createElementNS("http://www.w3.org/1999/xhtml", nodeName);
+			node.className = nodeClass;
+			if(nodeText)
+				node.appendChild(document.createTextNode(nodeText));
+			return node;
+		},
+		_append: function(node) {
+			var section = this._activeSection || this.field;
+			return section.appendChild(node);
+		}
 	},
+
 	_responseHeaders: { __proto__: null },
 	// nsIHttpHeaderVisitor
 	visitHeader: function(header, value) {
-		this.addHeaderLine(header + ": " + value);
+		this.headers.entry(header, value);
 		this._responseHeaders[header] = value;
 		switch(header) {
 			case "Content-Length": this.formatSize(value); break;
@@ -1279,7 +1352,8 @@ var linkPropsPlusSvc = {
 			return;
 		this.realCount += count;
 		var maxLen = 2e3;
-		this.addHeaderLine("\n" + data.substr(0, maxLen) + (data.length > maxLen ? "\n[\u2026]" : ""));
+		//~ todo: add special caption ?
+		this.headers.rawData(data.substr(0, maxLen) + (data.length > maxLen ? "\n[\u2026]" : ""));
 	},
 	getStreamData: function(inputStream, count) {
 		try {
@@ -1301,13 +1375,15 @@ var linkPropsPlusSvc = {
 		try {
 			if(request instanceof Components.interfaces.nsIHttpChannel) {
 				if(this.pu.pref("showCaptionsInHttpHeaders"))
-					this.addHeaderLine("\n" + this.ut.getLocalized("response"));
+					this.headers.caption(this.ut.getLocalized("response"));
 				else
-					this.addHeaderLine("");
-				this.addHeaderLine("Status: " + request.responseStatus + " " + request.responseStatusText);
+					this.headers.spacer();
+				this.headers.beginSection();
+				this.headers.entry("Status", request.responseStatus + " " + request.responseStatusText);
 				var headers = this._responseHeaders = { __proto__: null };
 				request.visitResponseHeaders(this);
 				this._responseHeaders = { __proto__: null };
+				this.headers.endSection();
 				if(
 					"X-Archive-Orig-Last-Modified" in headers // Used on http://archive.org/
 					&& !("Last-Modified" in headers) // We prefer Last-Modified, if available
@@ -1399,8 +1475,10 @@ var linkPropsPlusSvc = {
 		ch.resumeAt(1, "");
 		var showHeaders = this.pu.pref("testDownloadResumability.showHttpHeaders");
 		if(showHeaders && ch instanceof Components.interfaces.nsIHttpChannel) try {
-			this.addHeaderLine("\n" + this.ut.getLocalized("testResumabilityRequest"));
+			this.headers.caption(this.ut.getLocalized("testResumabilityRequest"));
+			this.headers.beginSection();
 			ch.visitRequestHeaders(this);
+			this.headers.endSection();
 		}
 		catch(e) {
 			Components.utils.reportError(e);
@@ -1427,9 +1505,12 @@ var linkPropsPlusSvc = {
 			onStartRequest: function(request, ctxt) {},
 			onStopRequest: function(request, ctxt, status) {
 				if(!this.canceled && showHeaders && request instanceof Components.interfaces.nsIHttpChannel) try {
-					this.parent.addHeaderLine("\n" + this.parent.ut.getLocalized("testResumabilityResponse"));
-					this.parent.addHeaderLine("Status: " + request.responseStatus + " " + request.responseStatusText);
+					var headers = this.parent.headers;
+					headers.caption(this.parent.ut.getLocalized("testResumabilityResponse"));
+					headers.beginSection();
+					headers.entry("Status", request.responseStatus + " " + request.responseStatusText);
 					request.visitResponseHeaders(this.parent);
+					headers.endSection();
 				}
 				catch(e) {
 					Components.utils.reportError(e);

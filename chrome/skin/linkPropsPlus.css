@@ -9,6 +9,7 @@
 	-moz-appearance: none;
 }
 #linkPropsPlus-grid #linkPropsPlus-headers {
+	margin: 1px 4px 2px;
 	border: 2px solid;
 	-moz-border-top-colors: ThreeDShadow ThreeDLightShadow;
 	-moz-border-right-colors: ThreeDShadow ThreeDLightShadow;

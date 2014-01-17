@@ -96,6 +96,8 @@ var linkPropsPlusSvc = {
 
 	instantInit: function() {
 		window.addEventListener("load", this, false);
+		if(this.fxVersion <= 2)
+			document.documentElement.setAttribute("linkPropsPlus_collapseFrameHack", "true");
 		this.isOwnWindow && this.wnd.instantInit();
 	},
 	init: function() {

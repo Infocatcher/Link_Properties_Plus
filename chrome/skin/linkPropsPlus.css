@@ -104,6 +104,15 @@
 	-moz-margin-end: 0;
 }
 
+:root[linkPropsPlus_collapseFrameHack] #linkPropsPlus-container[hidden="true"] {
+	display: -moz-box;
+	visibility: collapse;
+}
+:root[linkPropsPlus_collapseFrameHack] #linkPropsPlus-rowHeaders[hidden="true"] {
+	display: -moz-grid-line;
+	visibility: collapse;
+}
+
 #linkPropsPlus-autocloseProgressBlock {
 	position: fixed !important;
 	right: 0 !important;

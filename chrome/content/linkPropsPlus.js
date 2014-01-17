@@ -70,9 +70,28 @@ var linkPropsPlusSvc = {
 			.getService(Components.interfaces.nsIXULAppInfo)
 			.QueryInterface(Components.interfaces.nsIXULRuntime);
 	},
-	get platformVersion() {
-		delete this.platformVersion;
-		return this.platformVersion = parseFloat(this.appInfo.platformVersion);
+	get fxVersion() {
+		var pv = this.appInfo.platformVersion;
+		// https://developer.mozilla.org/en-US/docs/Mozilla/Gecko/Versions
+		var v = parseFloat(pv);
+		if(v < 5) {
+			var vc = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
+				.getService(Components.interfaces.nsIVersionComparator);
+			if(vc.compare(pv, "2.0a1pre") >= 0)
+				v = 4.0;
+			else if(vc.compare(pv, "1.9.2a1pre") >= 0)
+				v = 3.6;
+			else if(vc.compare(pv, "1.9.1a1pre") >= 0)
+				v = 3.5;
+			else if(vc.compare(pv, "1.9a1pre") >= 0)
+				v = 3.0;
+			else if(vc.compare(pv, "1.8.1a1pre") >= 0)
+				v = 2.0;
+			else //if(vc.compare(pv, "1.8a1pre") >= 0)
+				v = 1.5;
+		}
+		delete this.fxVersion;
+		return this.fxVersion = v;
 	},
 
 	instantInit: function() {
@@ -780,7 +799,7 @@ var linkPropsPlusSvc = {
 		// Following works for me in some tests, but it is very bad hack.
 		if(
 			this.isDownloadDialog
-			&& (this.platformVersion < 2 || this.pu.pref("download.forceFakeURIHack")) //~ todo: test!
+			&& (this.fxVersion < 4 || this.pu.pref("download.forceFakeURIHack")) //~ todo: test!
 		)
 			uri += "?" + Math.random().toFixed(16).substr(2) + Math.random().toFixed(16).substr(2);
 		return uri;
@@ -1083,6 +1102,10 @@ var linkPropsPlusSvc = {
 			// We should do this here to avoid strange bugs with window autosizing
 			// after setRowHeight() in Firefox 3.6
 			this.frame.setAttribute("transparent", "true");
+			setTimeout(function(_this) {
+				if(_this.parent.fxVersion < 3.6)
+					_this.field.style.background = "-moz-Dialog";
+			}, 0, this);
 		},
 		destroy: function() {
 			this.parent = null;

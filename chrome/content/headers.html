@@ -2,4 +2,40 @@
 <meta charset="utf-8" />
 <title>Headers</title>
 <link rel="stylesheet" type="text/css" href="chrome://linkpropsplus/skin/headers.css" />
+<script type="text/javascript">
+if(!Object.create) { // Firefox 3.6 and older
+	// This workaround isn't optimal, but it's better than nothing (especially for too old browsers)
+	var updTimer = 0;
+	var forceDontCopyHiddenNodes = function() {
+		Array.forEach(document.body.childNodes, function(node) {
+			var hide = window.getComputedStyle(node, null).display == "none";
+			if(hide == "__childNodes" in node)
+				return;
+			if(hide) {
+				node.__childNodes = Array.slice(node.childNodes);
+				node.textContent = "";
+			}
+			else {
+				var df = document.createDocumentFragment();
+				node.__childNodes.forEach(function(child) {
+					df.appendChild(child);
+				});
+				delete node.__childNodes;
+				node.appendChild(df);
+			}
+		});
+	};
+	var updProxy = function() {
+		clearTimeout(updTimer);
+		updTimer = setTimeout(forceDontCopyHiddenNodes, 100);
+	};
+	document.addEventListener("DOMNodeInserted", updProxy, false);
+	document.addEventListener("DOMAttrModified", updProxy, false);
+	window.addEventListener("unload", function destroy(e) {
+		window.removeEventListener("unload", destroy, false);
+		document.removeEventListener("DOMNodeInserted", updProxy, false);
+		document.removeEventListener("DOMAttrModified", updProxy, false);
+	}, false);
+}
+</script>
 <body></body>

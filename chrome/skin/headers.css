@@ -1,7 +1,7 @@
 @namespace url("http://www.w3.org/1999/xhtml");
 
 body {
-	background-color: -moz-Dialog;
+	background: transparent;
 	color: -moz-DialogText;
 	font: message-box;
 	margin: 0 1px;

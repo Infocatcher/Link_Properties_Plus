@@ -31,10 +31,6 @@ var linkPropsPlusSvc = {
 		return this.ios = Components.classes["@mozilla.org/network/io-service;1"]
 			.getService(Components.interfaces.nsIIOService);
 	},
-	get fullHeader() {
-		delete this.fullHeader;
-		return this.fullHeader = document.getElementById("linkPropsPlus-headers");
-	},
 	get isOwnWindow() {
 		delete this.isOwnWindow;
 		return this.isOwnWindow = "linkPropsPlusWnd" in window;
@@ -87,7 +83,6 @@ var linkPropsPlusSvc = {
 		window.removeEventListener("load", this, false);
 		window.addEventListener("unload", this, false);
 		window.addEventListener("keypress", this, false);
-		this.headers.parent = this;
 		this.pu.init();
 		this.showRows();
 		this.setKeysDescDelay();
@@ -119,6 +114,7 @@ var linkPropsPlusSvc = {
 			}
 		}
 
+		this.headers.init(this);
 		this.initAutoClose();
 
 		this.isOwnWindow && this.wnd.init();
@@ -128,7 +124,7 @@ var linkPropsPlusSvc = {
 	destroy: function() {
 		window.removeEventListener("unload", this, false);
 		window.removeEventListener("keypress", this, false);
-		this.headers.parent = null;
+		this.headers.destroy();
 		this.destroyAutoClose();
 		this.isOwnWindow && this.wnd.destroy();
 		this.cancelCheckChannelResumable();
@@ -1055,15 +1051,26 @@ var linkPropsPlusSvc = {
 
 	headers: {
 		parent: null,
+		init: function(parent) {
+			this.parent = parent;
+			// We should do this here to avoid strange bugs with window autosizing
+			// after setRowHeight() in Firefox 3.6
+			this.frame.setAttribute("transparent", "true");
+		},
+		destroy: function() {
+			this.parent = null;
+		},
 		get colon() {
 			delete this.colon;
 			return this.colon = this.parent.ut.getLocalized("colon").slice(1, -1) || ": ";
 		},
+		get frame() {
+			delete this.frame;
+			return this.frame = document.getElementById("linkPropsPlus-headers");
+		},
 		get field() {
 			delete this.field;
-			return this.field = document.getElementById("linkPropsPlus-headers")
-				.contentDocument
-				.body;
+			return this.field = this.frame.contentDocument.body;
 		},
 		clear: function() {
 			this.field.textContent = "";

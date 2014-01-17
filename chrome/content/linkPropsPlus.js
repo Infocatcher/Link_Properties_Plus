@@ -407,7 +407,10 @@ var linkPropsPlusSvc = {
 	},
 	showContextMenu: function() {
 		this._allowOptions = true;
-		var fe = document.commandDispatcher.focusedElement;
+		var cd = document.commandDispatcher;
+		var fe = cd.focusedElement;
+		if(cd.focusedWindow && cd.focusedWindow.location.href == "chrome://linkpropsplus/content/headers.html")
+			fe = this.headers.frame;
 		var row = this.getRowFromChild(fe);
 		if(!row || row.parentNode.id != "linkPropsPlus-rows") {
 			var rows = document.getElementById("linkPropsPlus-rows").childNodes;

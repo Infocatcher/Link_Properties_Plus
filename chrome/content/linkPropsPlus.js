@@ -475,7 +475,26 @@ var linkPropsPlusSvc = {
 			|| row.getElementsByTagName("iframe")[0];
 	},
 	getFrameText: function(frame) {
-		return ""; //~ not implemented
+		var win = frame.contentWindow;
+		var doc = win.document;
+		// Note: doc.body.textContent doesn't contain newlines
+		var sel = win.getSelection();
+		var rng = doc.createRange();
+		rng.selectNodeContents(doc.body);
+		// Note: rng.toString() doesn't contain newlines
+		// Save original selection
+		var ranges = [];
+		for(var i = 0, l = sel.rangeCount; i < l; ++i)
+			ranges.push(sel.getRangeAt(i));
+		sel.removeAllRanges();
+		sel.addRange(rng);
+		var data = sel.toString();
+		// Restore original selection
+		sel.removeAllRanges();
+		ranges.forEach(function(rng) {
+			sel.addRange(rng);
+		});
+		return data;
 	},
 	getTip: function(row) {
 		return row && this.getField(row).tooltipText || "";

@@ -463,14 +463,22 @@ var linkPropsPlusSvc = {
 			);
 		}
 		var lines = rows.map(function(row) {
-			var data = row.getElementsByTagName("textbox")[0].value;
+			var field = this.getField(row);
+			var data = field.value || this.getFrameText(field);
 			return row.getElementsByTagName("label")[0].getAttribute("value")
 				+ (data.indexOf("\n") == -1 ? " " : "\n") + data;
-		});
+		}, this);
 		this.copyString(lines.join("\n"));
 	},
+	getField: function(row) {
+		return row.getElementsByTagName("textbox")[0]
+			|| row.getElementsByTagName("iframe")[0];
+	},
+	getFrameText: function(frame) {
+		return ""; //~ not implemented
+	},
 	getTip: function(row) {
-		return row && row.getElementsByTagName("textbox")[0].tooltipText || "";
+		return row && this.getField(row).tooltipText || "";
 	},
 	copyTip: function(node) {
 		var tip = (this.getTip(this.getRowFromChild(node)) || "")

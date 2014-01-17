@@ -66,6 +66,11 @@ var linkPropsPlusWnd = {
 		var type = e.type;
 		if(type == "resize") {
 			window.removeEventListener(type, this, false);
+			if(this.svc.fxVersion >= 17) {
+				var root = document.documentElement;
+				if(root.height > 0)
+					window.resizeTo(+root.width, +root.height);
+			}
 			this.fixWindowHeight();
 		}
 		else if(type == "PrivateTab:PrivateChanged") {

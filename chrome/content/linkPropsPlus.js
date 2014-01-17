@@ -257,6 +257,31 @@ var linkPropsPlusSvc = {
 		else
 			row.setAttribute("hidden", "true");
 	},
+	_rowsVisibilityChangedTimer: 0,
+	rowsVisibilityChanged: function() {
+		clearTimeout(this._rowsVisibilityChangedTimer);
+		this._rowsVisibilityChangedTimer = setTimeout(function(_this) {
+			_this._rowsVisibilityChanged();
+		}, 20, this);
+	},
+	_rowsVisibilityChanged: function() {
+		var rowHeaders = document.getElementById("linkPropsPlus-rowHeaders");
+		if(rowHeaders.getAttribute("hidden") != "true")
+			rowHeaders.setAttribute("minheight", rowHeaders.boxObject.height);
+		this.showRows();
+		if(this.isOwnWindow) {
+			// Unfortunately sizeToContent() works buggy with many flexible nodes
+			setTimeout(function(_this) { // Small delay to reduce flickers
+				window.resizeTo(window.outerWidth, 100); // This allows decrease height of window
+				_this.wnd.fixWindowHeight();
+				rowHeaders.removeAttribute("minheight");
+			}, 0, this);
+		}
+		else {
+			window.sizeToContent();
+			rowHeaders.removeAttribute("minheight");
+		}
+	},
 	setKeysDescDelay: function() {
 		setTimeout(function(_this) {
 			_this.setKeysDesc();
@@ -299,19 +324,8 @@ var linkPropsPlusSvc = {
 			pName == this.windowType + ".showResponseStatus"
 			|| pName == this.windowType + ".showDirectURI"
 			|| pName == this.windowType + ".showHttpHeaders"
-		) {
-			this.showRows();
-			if(this.isOwnWindow) {
-				// Unfortunately sizeToContent() works buggy with many flexible nodes
-				setTimeout(function(_this) { // Small delay to reduce flickers
-					window.resizeTo(window.outerWidth, 100); // This allows decrease height of window
-					_this.wnd.fixWindowHeight();
-				}, 0, this);
-			}
-			else {
-				window.sizeToContent();
-			}
-		}
+		)
+			this.rowsVisibilityChanged();
 		else if(pName == "sizePrecision" || pName == "useBinaryPrefixes")
 			this.convertSize();
 		else if(pName == "decodeURIs") {

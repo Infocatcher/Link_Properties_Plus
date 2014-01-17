@@ -303,8 +303,10 @@ var linkPropsPlusSvc = {
 			this.showRows();
 			if(this.isOwnWindow) {
 				// Unfortunately sizeToContent() works buggy with many flexible nodes
-				window.resizeTo(window.outerWidth, 100); // This allows decrease height of window
-				this.wnd.fixWindowHeight();
+				setTimeout(function(_this) { // Small delay to reduce flickers
+					window.resizeTo(window.outerWidth, 100); // This allows decrease height of window
+					_this.wnd.fixWindowHeight();
+				}, 0, this);
 			}
 			else {
 				window.sizeToContent();

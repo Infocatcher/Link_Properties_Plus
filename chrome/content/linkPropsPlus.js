@@ -1530,7 +1530,7 @@ var linkPropsPlusSvc = {
 		if(request.URI && request.URI.scheme == "data")
 			return;
 		this.realCount += count;
-		//~ todo: add special caption ?
+		this.headers.caption(this.ut.getLocalized("rawData"));
 		this.headers.rawData(data);
 	},
 	getStreamData: function(inputStream, count) {

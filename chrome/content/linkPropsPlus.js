@@ -1194,9 +1194,22 @@ var linkPropsPlusSvc = {
 			this._appendNode("span", "value", value);
 			this.endSection();
 		},
-		rawData: function(s) {
-			//~ todo: split using <br>
-			this._appendNode("div", "rawData", s);
+		rawData: function(data) {
+			// Note: here may be \0 symbol and we can't copy it
+			var maxLen = 2e3;
+			var huge = data.length > maxLen;
+			var fragment = data.substr(0, maxLen);
+			var raw = this._node("div", "rawData");
+			fragment.split(/\r\n?|\n\r?/).forEach(function(data, i) {
+				if(i != 0)
+					raw.appendChild(document.createElementNS("http://www.w3.org/1999/xhtml", "br"));
+				raw.appendChild(document.createTextNode(data));
+			});
+			if(huge) {
+				raw.appendChild(document.createElementNS("http://www.w3.org/1999/xhtml", "br"));
+				raw.appendChild(this._node("span", "rawDataLimit", "[\u2026]"));
+			}
+			this._append(raw);
 		},
 		_sections: [],
 		_activeSection: null,
@@ -1517,9 +1530,8 @@ var linkPropsPlusSvc = {
 		if(request.URI && request.URI.scheme == "data")
 			return;
 		this.realCount += count;
-		var maxLen = 2e3;
 		//~ todo: add special caption ?
-		this.headers.rawData(data.substr(0, maxLen) + (data.length > maxLen ? "\n[\u2026]" : ""));
+		this.headers.rawData(data);
 	},
 	getStreamData: function(inputStream, count) {
 		try {

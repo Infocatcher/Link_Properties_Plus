@@ -30,7 +30,7 @@ pref("extensions.linkPropertiesPlus.showCaptionsInHttpHeaders", true);
 pref("extensions.linkPropertiesPlus.testDownloadResumability", true);
 pref("extensions.linkPropertiesPlus.testDownloadResumability.download", false);
 pref("extensions.linkPropertiesPlus.testDownloadResumability.alwaysShowMenuItem", false);
-pref("extensions.linkPropertiesPlus.testDownloadResumability.showHttpHeaders", true);
+pref("extensions.linkPropertiesPlus.testDownloadResumability.showHttpHeaders", false);
 
 pref("extensions.linkPropertiesPlus.sizePrecision", 2);
 pref("extensions.linkPropertiesPlus.useBinaryPrefixes", true);

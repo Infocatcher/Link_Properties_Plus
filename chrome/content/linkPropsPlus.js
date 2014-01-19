@@ -1654,16 +1654,7 @@ var linkPropsPlusSvc = {
 		if(ch instanceof Components.interfaces.nsIHttpChannel)
 			ch.setRequestHeader("Range", "bytes=1-32", false);
 		ch.resumeAt(1, "");
-		if(ch instanceof Components.interfaces.nsIHttpChannel) try {
-			this.headers.caption(this.ut.getLocalized("testResumabilityRequest"), "caption testResume");
-			this.headers.beginSection("block testResume");
-			ch.visitRequestHeaders(this);
-			this.headers.endSection();
-		}
-		catch(e) {
-			Components.utils.reportError(e);
-		}
-		ch.asyncOpen({
+		var observer = {
 			parent: this,
 			done: false,
 			get canceled() {
@@ -1689,7 +1680,7 @@ var linkPropsPlusSvc = {
 					headers.caption(this.parent.ut.getLocalized("testResumabilityResponse"), "caption testResume");
 					headers.beginSection("block testResume");
 					headers.entry("Status", request.responseStatus + " " + request.responseStatusText);
-					request.visitResponseHeaders(this.parent);
+					request.visitResponseHeaders(this);
 					headers.endSection();
 				}
 				catch(e) {
@@ -1698,8 +1689,22 @@ var linkPropsPlusSvc = {
 				this.setCanResumeDownload(false);
 				testResume.disabled = false;
 				this.parent.checkResumableChannel = null;
+			},
+			// nsIHttpHeaderVisitor
+			visitHeader: function(header, value) {
+				this.parent.headers.entry(header, value);
 			}
-		}, null);
+		};
+		if(ch instanceof Components.interfaces.nsIHttpChannel) try {
+			this.headers.caption(this.ut.getLocalized("testResumabilityRequest"), "caption testResume");
+			this.headers.beginSection("block testResume");
+			ch.visitRequestHeaders(observer);
+			this.headers.endSection();
+		}
+		catch(e) {
+			Components.utils.reportError(e);
+		}
+		ch.asyncOpen(observer, null);
 	},
 	cancelCheckChannelResumable: function() {
 		var crCh = this.checkResumableChannel;

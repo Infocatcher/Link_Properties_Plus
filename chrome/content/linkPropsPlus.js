@@ -1166,7 +1166,13 @@ var linkPropsPlusSvc = {
 			this.field.textContent = "";
 		},
 		caption: function(s, nodeClass) {
-			var h = this._appendNode("h1", nodeClass || "caption", s);
+			var h = this._node("h1", nodeClass || "caption", s);
+			var twisty = document.createElement("button");
+			twisty.className = "twisty";
+			twisty.setAttribute("type", "disclosure");
+			twisty.setAttribute("open", "true");
+			h.insertBefore(twisty, h.firstChild);
+			this._append(h);
 			var prev = h.previousSibling;
 			if(prev) {
 				var spacerClass = (
@@ -1227,7 +1233,7 @@ var linkPropsPlusSvc = {
 		_appendNode: function(nodeName, nodeClass, nodeText) {
 			return this._append(this._node.apply(this, arguments));
 		},
-		_node: function(nodeName, nodeClass, nodeText, noAppend) {
+		_node: function(nodeName, nodeClass, nodeText) {
 			var node = document.createElementNS("http://www.w3.org/1999/xhtml", nodeName);
 			node.className = nodeClass;
 			if(nodeText)

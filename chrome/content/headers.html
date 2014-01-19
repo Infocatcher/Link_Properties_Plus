@@ -3,6 +3,34 @@
 <title>Headers</title>
 <link rel="stylesheet" type="text/css" href="chrome://linkpropsplus/skin/headers.css" />
 <script type="text/javascript">
+document.commandDispatcher = { // Prevent errors from binding for <button type="disclosure">
+	__noSuchMethod__: function() {}
+};
+window.addEventListener("command", function(e) {
+	var btn = e.target;
+	if(btn.className == "twisty") {
+		var show = btn.getAttribute("open") != "true";
+		var block = btn.parentNode.nextSibling;
+		var display = show ? "" : "none";
+		block.style.display = display;
+		var skipTestResume = document.body.hasAttribute("hideTestResume");
+		if(skipTestResume) {
+			var checkTestResume = function(node) {
+				return /(?:^|\s)testResume(?:\s|$)/.test(node.className);
+			};
+			var isTestResume = checkTestResume(block);
+		}
+		for(var spacer = block.nextSibling; spacer; spacer = spacer.nextSibling) {
+			if(skipTestResume && checkTestResume(spacer) != isTestResume)
+				continue;
+			if(/(?:^|\s)spacer(?:\s|$)/.test(spacer.className)) {
+				spacer.style.display = display;
+				break;
+			}
+		}
+		btn.setAttribute("open", show);
+	}
+}, true);
 if(!Object.create) { // Firefox 3.6 and older
 	// This workaround isn't optimal, but it's better than nothing (especially for too old browsers)
 	var updTimer = 0;
@@ -27,7 +55,7 @@ if(!Object.create) { // Firefox 3.6 and older
 	};
 	var updProxy = function() {
 		clearTimeout(updTimer);
-		updTimer = setTimeout(forceDontCopyHiddenNodes, 100);
+		updTimer = setTimeout(forceDontCopyHiddenNodes, 50);
 	};
 	document.addEventListener("DOMNodeInserted", updProxy, false);
 	document.addEventListener("DOMAttrModified", updProxy, false);

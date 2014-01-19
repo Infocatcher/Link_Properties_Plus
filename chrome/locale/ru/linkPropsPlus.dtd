@@ -71,5 +71,5 @@
 <!ENTITY linkPropsPlus.opts.onlyAfterRequest "Только после запроса свойств ссылки">
 
 <!ENTITY linkPropsPlus.opts.httpHeaders "Заголовки HTTP">
-<!ENTITY linkPropsPlus.opts.showTestResumabilityHeaders "Показывать заголовки от проверки возможности докачки">
 <!ENTITY linkPropsPlus.opts.showCaptionsInHeaders "Всегда показывать подписи перед блоками данных">
+<!ENTITY linkPropsPlus.opts.showTestResumabilityHeaders "Показывать заголовки от проверки возможности докачки">

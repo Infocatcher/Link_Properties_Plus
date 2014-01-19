@@ -33,6 +33,12 @@ body[hideCaptions] .caption:not(.testResume),
 body[hideTestResume] .testResume {
 	display: none;
 }
+/* Don't hide blocks, if captions are hidden */
+body[hideCaptions] .block:not(.testResume)[style],
+body[hideCaptions]:not([hideTestResume]) .block:not(.testResume)[style] + .spacer[style],
+body[hideCaptions] .spacer:not(.testResume)[style] {
+	display: block !important;
+}
 
 body[hideCaptions][hideTestResume] .spacer {
 	height: 1em;

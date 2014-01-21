@@ -813,6 +813,7 @@ var linkPropsPlusSvc = {
 			return false;
 		}
 		catch(e) {
+			this.headers.ensureSectionsEnded();
 			Components.utils.reportError(e);
 		}
 		this.onStopRequestCallback(false);
@@ -1163,6 +1164,8 @@ var linkPropsPlusSvc = {
 			return this.field = field;
 		},
 		clear: function() {
+			this._sections.length = 0;
+			this._activeSection = null;
 			this.field.textContent = "";
 		},
 		caption: function(s, nodeClass) {
@@ -1229,6 +1232,10 @@ var linkPropsPlusSvc = {
 			var sections = this._sections;
 			sections.pop();
 			this._activeSection = sections[sections.length - 1] || null;
+		},
+		ensureSectionsEnded: function() {
+			while(this._activeSection)
+				this.endSection();
 		},
 		_appendNode: function(nodeName, nodeClass, nodeText) {
 			return this._append(this._node.apply(this, arguments));
@@ -1558,9 +1565,10 @@ var linkPropsPlusSvc = {
 			return; // Window is closed
 		try {
 			if(request instanceof Components.interfaces.nsIHttpChannel) {
+				var status = request.responseStatus + " " + request.responseStatusText;
 				this.headers.caption(this.ut.getLocalized("response"));
 				this.headers.beginSection();
-				this.headers.entry("Status", request.responseStatus + " " + request.responseStatusText);
+				this.headers.entry("Status", status);
 				var headers = this._responseHeaders = { __proto__: null };
 				request.visitResponseHeaders(this);
 				this._responseHeaders = { __proto__: null };
@@ -1595,6 +1603,7 @@ var linkPropsPlusSvc = {
 			}
 		}
 		catch(err) {
+			this.headers.ensureSectionsEnded();
 			this.ut.error("Can't get information from request");
 			Components.utils.reportError(err);
 		}
@@ -1677,13 +1686,15 @@ var linkPropsPlusSvc = {
 			onStopRequest: function(request, ctxt, status) {
 				if(!this.canceled && request instanceof Components.interfaces.nsIHttpChannel) try {
 					var headers = this.parent.headers;
+					var status = request.responseStatus + " " + request.responseStatusText;
 					headers.caption(this.parent.ut.getLocalized("testResumabilityResponse"), "caption testResume");
 					headers.beginSection("block testResume");
-					headers.entry("Status", request.responseStatus + " " + request.responseStatusText);
+					headers.entry("Status", status);
 					request.visitResponseHeaders(this);
 					headers.endSection();
 				}
 				catch(e) {
+					this.headers.ensureSectionsEnded();
 					Components.utils.reportError(e);
 				}
 				this.setCanResumeDownload(false);
@@ -1702,6 +1713,7 @@ var linkPropsPlusSvc = {
 			this.headers.endSection();
 		}
 		catch(e) {
+			this.headers.ensureSectionsEnded();
 			Components.utils.reportError(e);
 		}
 		ch.asyncOpen(observer, null);

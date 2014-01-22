@@ -33,7 +33,7 @@
 :root[linkPropsPlus_darkBackground="true"] #linkPropsPlus-status[lpp_canResumeDownload="true"] {
 	color: #0b0;
 }
-#linkPropsPlus-status[lpp_resumeDownloadTested="true"] {
+#linkPropsPlus-status[lpp_resumeDownloadTested="true"]:not([lpp_canResumeDownload="false"]) {
 	font-weight: bold;
 }
 

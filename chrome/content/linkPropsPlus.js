@@ -1446,15 +1446,11 @@ var linkPropsPlusSvc = {
 		tb.setAttribute("lpp_canResumeDownload", canResumeDownload);
 		tb.setAttribute("lpp_resumeDownloadTested", !!isTested);
 		if(canResumeDownload == "probably")
-			tb.tooltipText = this.ut.getLocalized("probablyCanResumeDownload");
-		else if(canResumeDownload) {
-			tb.tooltipText = this.ut.getLocalized("canResumeDownload")
-				+ (isTested ? " \n" + this.ut.getLocalized("resumeSuccessfullyTested") : "");
-		}
-		else {
-			tb.tooltipText = this.ut.getLocalized("cantResumeDownload")
-				+ (isTested ? " \n" + this.ut.getLocalized("resumeTested") : "");
-		}
+			tb.tooltipText = this.ut.getLocalized("resumeDownloadMayBe");
+		else if(canResumeDownload)
+			tb.tooltipText = this.ut.getLocalized(isTested ? "resumeDownloadYes" : "resumeDownloadShouldBe");
+		else
+			tb.tooltipText = this.ut.getLocalized(isTested ? "resumeDownloadNo" : "resumeDownloadShouldNot");
 	},
 	formatURI: function(uri) {
 		var tb = document.getElementById("linkPropsPlus-directURI");

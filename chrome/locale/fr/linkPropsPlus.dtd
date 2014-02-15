@@ -26,7 +26,7 @@
 <!ENTITY linkPropsPlus.copyTipAccesskey "b">
 <!ENTITY linkPropsPlus.copyAll "Copier tout">
 <!ENTITY linkPropsPlus.copyAllAccesskey "t">
-<!ENTITY linkPropsPlus.testDownloadResumability "Test Resumability">
+<!ENTITY linkPropsPlus.testDownloadResumability "Tester la possibilité de reprise">
 <!ENTITY linkPropsPlus.testDownloadResumabilityAccesskey "e">
 
 <!-- Page info -->
@@ -50,13 +50,13 @@
 <!ENTITY linkPropsPlus.opts.precision "Arrondir la taille du fichier à :">
 <!ENTITY linkPropsPlus.opts.useBinaryPrefixes "Utiliser les préfixes binaires (1 Kio = 1024 octets)">
 <!ENTITY linkPropsPlus.opts.decodeURIs "Décoder les URIs">
-<!ENTITY linkPropsPlus.opts.testDownloadResumability "Automatically test download resumability">
-<!ENTITY linkPropsPlus.opts.testDownloadResumability.download "Also test in opening file dialog">
+<!ENTITY linkPropsPlus.opts.testDownloadResumability "Tester automatiquement la possibilité de reprise de téléchargement">
+<!ENTITY linkPropsPlus.opts.testDownloadResumability.download "Tester aussi dans la boîte de dialogue de l'ouverture de fichier">
 
 <!ENTITY linkPropsPlus.opts.paneIntegration "Intégration">
 <!ENTITY linkPropsPlus.opts.contextOnLinks "Ajouter au menu contextuel des liens">
 <!ENTITY linkPropsPlus.opts.contextOnSelection "Ajouter au menu contextuel des liens sélectionnés">
-<!ENTITY linkPropsPlus.opts.contextOnSelection.inInputFields "Also show in input fields">
+<!ENTITY linkPropsPlus.opts.contextOnSelection.inInputFields "Afficher aussi dans les champs de saisie">
 <!ENTITY linkPropsPlus.opts.showInToolsMenu "Ajouter au menu “Outils”">
 <!ENTITY linkPropsPlus.opts.showInToolsSubMenu "Ajouter au sous-menu “Développeur Web”">
 <!ENTITY linkPropsPlus.opts.showInAppMenu "Ajouter au menu “App”">
@@ -70,6 +70,6 @@
 <!ENTITY linkPropsPlus.opts.dontCloseUnderCursor "Ne pas fermer la fenêtre sous le curseur">
 <!ENTITY linkPropsPlus.opts.onlyAfterRequest "Seulement après la requête des propriétés du lien">
 
-<!ENTITY linkPropsPlus.opts.httpHeaders "HTTP headers">
-<!ENTITY linkPropsPlus.opts.showCaptionsInHeaders "Always show captions before data sections">
-<!ENTITY linkPropsPlus.opts.showTestResumabilityHeaders "Show headers from download resumability test">
+<!ENTITY linkPropsPlus.opts.httpHeaders "En-têtes HTTP">
+<!ENTITY linkPropsPlus.opts.showCaptionsInHeaders "Toujours afficher les légendes avant les sections de données">
+<!ENTITY linkPropsPlus.opts.showTestResumabilityHeaders "Afficher les en-têtes du test de possibilité de reprise de téléchargement">

@@ -47,6 +47,18 @@ var linkPropsPlusUtils = {
 			}
 		);
 	},
+	allowOpen: function(n) {
+		var max = this.pu.pref("openMultipleLimit") || 0;
+		if(n <= max)
+			return true;
+		return Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+			.getService(Components.interfaces.nsIPromptService)
+			.confirm(
+				window,
+				this.getLocalized("openMultipleLimitTitle"),
+				this.getLocalized("openMultipleLimitMessage", [n])
+			);
+	},
 	isWindowPrivate: function(win) {
 		if(!win)
 			return false;

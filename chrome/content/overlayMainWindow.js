@@ -197,23 +197,42 @@ var linkPropsPlus = {
 	},
 	buttonDrop: function(e) {
 		var data = this.getDropLink(e);
-		if(data)
-			this.openWindow(data.uri, data.referer);
+		if(!data)
+			return;
+		var links = data.links;
+		if(!this.ut.allowOpen(links.length))
+			return;
+		links.forEach(function(uri) {
+			this.openWindow(uri, data.referer);
+		}, this);
 	},
 	hasDropLink: function(e) {
 		return !!this.getDropLink(e);
 	},
 	getDropLink: function(e) {
-		var uri;
+		var links = [];
 		var dt = e.dataTransfer;
 		var types = dt.types;
-		if(types.contains("text/x-moz-url"))
-			uri = dt.getData("text/x-moz-url").split("\n")[0];
-		else if(types.contains("text/plain"))
-			uri = this.extractURI(dt.getData("text/plain"));
+		function getDataAt(type, i) {
+			return dt.getDataAt && dt.getDataAt(type, i)
+				|| dt.mozGetDataAt && dt.mozGetDataAt(type, i)
+				|| dt.getData && dt.getData(type) // Fallback
+				|| "";
+		}
+		for(var i = 0, c = dt.mozItemCount || dt.itemCount || 1; i < c; ++i) {
+			if(types.contains("text/uri-list"))
+				links.push.apply(links, getDataAt("text/uri-list", i).split("\n"));
+			else if(types.contains("text/x-moz-url"))
+				links.push(getDataAt("text/x-moz-url", i).split("\n")[0]);
+			else if(types.contains("text/plain"))
+				links.push(this.extractURI(getDataAt("text/plain", i)));
+		}
+		links = links.filter(function(uri, i) { // Remove empty strings and duplicates
+			return uri && links.indexOf(uri) == i;
+		});
 		var sourceNode = dt.mozSourceNode || dt.sourceNode || null;
-		return uri && {
-			uri: uri,
+		return links.length && {
+			links: links,
 			referer: sourceNode && sourceNode.ownerDocument && sourceNode.ownerDocument.documentURI || null
 		};
 	},

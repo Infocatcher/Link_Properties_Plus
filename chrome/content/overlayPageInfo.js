@@ -45,7 +45,7 @@ var linkPropsPlusPageInfo = {
 				++count;
 			}
 		}
-		if(!this.allowOpen(count))
+		if(!this.ut.allowOpen(count))
 			return;
 		var browserWindow = opener && "gBrowser" in opener && "browsers" in opener.gBrowser && opener;
 		for(var uri in links) {
@@ -59,18 +59,6 @@ var linkPropsPlusPageInfo = {
 				this.getSourceTab(browserWindow, win.top)
 			);
 		}
-	},
-	allowOpen: function(n) {
-		var max = this.pu.pref("openMultipleLimit") || 0;
-		if(n <= max)
-			return true;
-		return Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-			.getService(Components.interfaces.nsIPromptService)
-			.confirm(
-				window,
-				this.ut.getLocalized("openMultipleLimitTitle"),
-				this.ut.getLocalized("openMultipleLimitMessage", [n])
-			);
 	},
 	getSourceTab: function(browserWindow, contentWindow) {
 		// Based on gBrowser._getTabForContentWindow() (doesn't exist in SeaMonkey)

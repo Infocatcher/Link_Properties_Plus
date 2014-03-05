@@ -206,8 +206,34 @@ var linkPropsPlus = {
 		if(!this.ut.allowOpen(links.length))
 			return;
 		links.forEach(function(uri) {
-			this.openWindow(uri, data.referers[uri] || data.referer);
+			var sourceWindow = data.sourceWindows[uri] || data.sourceWindow;
+			this.ut.openWindow(
+				uri,
+				data.referers[uri] || data.referer,
+				sourceWindow,
+				false,
+				sourceWindow && window,
+				sourceWindow && this.getTabForContentWindow(sourceWindow)
+			);
 		}, this);
+	},
+	getTabForContentWindow: function(win) {
+		var top = win.top;
+		var browserWindow = top.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+			.getInterface(Components.interfaces.nsIWebNavigation)
+			.QueryInterface(Components.interfaces.nsIDocShellTreeItem)
+			.rootTreeItem
+			.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+			.getInterface(Components.interfaces.nsIDOMWindow);
+		if(!browserWindow || !("gBrowser" in browserWindow))
+			return null;
+		var gBrowser = browserWindow.gBrowser;
+		var browsers = gBrowser.browsers;
+		var tabs = gBrowser.tabs || gBrowser.tabContainer.childNodes;
+		for(var i = 0, l = browsers.length; i < l; ++i)
+			if(browsers[i].contentWindow == top)
+				return tabs[i];
+		return null;
 	},
 	hasDropLink: function(e) {
 		return !!this.getDropLink(e);
@@ -215,6 +241,7 @@ var linkPropsPlus = {
 	getDropLink: function(e) {
 		var links = [];
 		var referers = { __proto__: null };
+		var sourceWindows = { __proto__: null };
 		var dt = e.dataTransfer;
 		var types = dt.types;
 		function getDataAt(type, i) {
@@ -232,8 +259,11 @@ var linkPropsPlus = {
 				var tab = getDataAt("application/x-moz-tabbrowser-tab", i);
 				if(tab && tab.linkedBrowser) {
 					var uri = tab.linkedBrowser.currentURI.spec;
-					links.push(uri);
-					referers[uri] = uri;
+					if(!(uri in referers)) {
+						links.push(uri);
+						referers[uri] = uri;
+						sourceWindows[uri] = tab.linkedBrowser.contentWindow;
+					}
 				}
 			}
 			else if(types.contains("text/plain"))
@@ -242,11 +272,16 @@ var linkPropsPlus = {
 		links = links.filter(function(uri, i) { // Remove empty strings and duplicates
 			return uri && links.indexOf(uri) == i;
 		});
+		if(!links.length)
+			return null;
 		var sourceNode = dt.mozSourceNode || dt.sourceNode || null;
-		return links.length && {
+		var sourceDoc = sourceNode && sourceNode.ownerDocument;
+		return {
 			links: links,
-			referer: sourceNode && sourceNode.ownerDocument && sourceNode.ownerDocument.documentURI || null,
-			referers: referers
+			referer: sourceDoc && sourceDoc.documentURI || null,
+			referers: referers,
+			sourceWindow: sourceDoc && sourceDoc.defaultView,
+			sourceWindows: sourceWindows
 		};
 	},
 

@@ -13,7 +13,7 @@
 `+` Все сочетания клавиш теперь настраиваются (настройки <em>extensions.linkPropertiesPlus.key.</em>*) (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/6">#6</a>).<br>
 `*` Экспериментальное: добавлено блокирование клавиши Escape сразу после завершения запроса, чтобы случайно не закрыть диалог вместо отмены запроса (настройка <em>extensions.linkPropertiesPlus.blockEscapeKeyDelay</em>).<br>
 `*` Улучшено поле для заголовков HTTP: теперь используется форматирование и можно сворачивать разделы (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/8">#8</a>, <a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/9">#9</a>).<br>
-`*` Изменена иконка расширения (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/8">#8</a>, <a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/10">#10</a>).<br>
+`*` Изменена иконка расширения (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/10">#10</a>).<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Исправлено положение пункта контекстного меню в почтовике SeaMonkey.<br>

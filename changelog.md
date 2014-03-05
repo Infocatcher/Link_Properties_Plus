@@ -13,7 +13,7 @@
 `+` All keyboard shortcuts now configurable (<em>extensions.linkPropertiesPlus.key.</em>* preferences) (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/6">#6</a>).<br>
 `*` Experimental: block Escape key directly after request finished to not accidentally close dialog instead of canceling request (<em>extensions.linkPropertiesPlus.blockEscapeKeyDelay</em> preference).<br>
 `*` Improved HTTP headers field: now used formatting and sections are collapsable (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/8">#8</a>, <a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/9">#9</a>).<br>
-`*` Changed extension icon (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/8">#8</a>, <a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/10">#10</a>).<br>
+`*` Changed extension icon (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/10">#10</a>).<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Corrected position of context menu item in SeaMonkey's mail.<br>

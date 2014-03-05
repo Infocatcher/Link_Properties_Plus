@@ -199,6 +199,9 @@ var linkPropsPlus = {
 		var data = this.getDropLink(e);
 		if(!data)
 			return;
+		// Prevent legacy "dragdrop" event if received "drop" event (Firefox 3.6 and older)
+		e.preventDefault();
+		e.stopPropagation();
 		var links = data.links;
 		if(!this.ut.allowOpen(links.length))
 			return;

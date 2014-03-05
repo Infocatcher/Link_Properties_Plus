@@ -34,7 +34,8 @@
 			tooltiptext="&linkPropsPlus.toolbarTooltip;"
 			oncommand="linkPropsPlus.openWindow();"
 			ondragover="linkPropsPlus.buttonDragOver(event);"
-			ondragdrop="linkPropsPlus.buttonDrop(event);" />
+			ondragdrop="linkPropsPlus.buttonDrop(event);"
+			ondrop="linkPropsPlus.buttonDrop(event);" />
 	</toolbarpalette>
 
 	<!-- Firefox 4 -->
@@ -67,7 +68,8 @@
 			tooltiptext="&linkPropsPlus.toolbarTooltip;"
 			oncommand="linkPropsPlus.openWindow();"
 			ondragover="linkPropsPlus.buttonDragOver(event);"
-			ondragdrop="linkPropsPlus.buttonDrop(event);" />
+			ondragdrop="linkPropsPlus.buttonDrop(event);"
+			ondrop="linkPropsPlus.buttonDrop(event);" />
 	</toolbarpalette>
 
 	<!-- Thunderbird -->

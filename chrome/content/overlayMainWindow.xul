@@ -30,7 +30,9 @@
 	<toolbarpalette id="BrowserToolbarPalette">
 		<toolbarbutton id="linkPropsPlus-toolbarButton"
 			class="chromeclass-toolbar-additional toolbarbutton-1"
-			command="linkPropsPlus-cmd-openWindow" />
+			command="linkPropsPlus-cmd-openWindow"
+			ondragover="linkPropsPlus.buttonDragOver(event);"
+			ondragdrop="linkPropsPlus.buttonDrop(event);" />
 	</toolbarpalette>
 
 	<!-- Firefox 4 -->

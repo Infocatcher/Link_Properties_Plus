@@ -186,6 +186,38 @@ var linkPropsPlus = {
 		this.linkURL = this.referer = "";
 		this.sourceWindow = null;
 	},
+
+	buttonDragOver: function(e) {
+		if(this.hasDropLink(e)) {
+			var dt = e.dataTransfer;
+			dt.effectAllowed = dt.dropEffect = "link";
+			e.preventDefault();
+			e.stopPropagation();
+		}
+	},
+	buttonDrop: function(e) {
+		var data = this.getDropLink(e);
+		if(data)
+			this.openWindow(data.uri, data.referer);
+	},
+	hasDropLink: function(e) {
+		return !!this.getDropLink(e);
+	},
+	getDropLink: function(e) {
+		var uri;
+		var dt = e.dataTransfer;
+		var types = dt.types;
+		if(types.contains("text/x-moz-url"))
+			uri = dt.getData("text/x-moz-url").split("\n")[0];
+		else if(types.contains("text/plain"))
+			uri = this.extractURI(dt.getData("text/plain"));
+		var sourceNode = dt.mozSourceNode || dt.sourceNode || null;
+		return uri && {
+			uri: uri,
+			referer: sourceNode && sourceNode.ownerDocument && sourceNode.ownerDocument.documentURI || null
+		};
+	},
+
 	readFromClipboard: function() {
 		// See chrome://browser/content/browser.js
 		if("readFromClipboard" in window)

@@ -203,7 +203,7 @@ var linkPropsPlus = {
 		if(!this.ut.allowOpen(links.length))
 			return;
 		links.forEach(function(uri) {
-			this.openWindow(uri, data.referer);
+			this.openWindow(uri, data.referers[uri] || data.referer);
 		}, this);
 	},
 	hasDropLink: function(e) {
@@ -211,6 +211,7 @@ var linkPropsPlus = {
 	},
 	getDropLink: function(e) {
 		var links = [];
+		var referers = { __proto__: null };
 		var dt = e.dataTransfer;
 		var types = dt.types;
 		function getDataAt(type, i) {
@@ -224,6 +225,14 @@ var linkPropsPlus = {
 				links.push.apply(links, getDataAt("text/uri-list", i).split("\n"));
 			else if(types.contains("text/x-moz-url"))
 				links.push(getDataAt("text/x-moz-url", i).split("\n")[0]);
+			else if(types.contains("application/x-moz-tabbrowser-tab")) {
+				var tab = getDataAt("application/x-moz-tabbrowser-tab", i);
+				if(tab && tab.linkedBrowser) {
+					var uri = tab.linkedBrowser.currentURI.spec;
+					links.push(uri);
+					referers[uri] = uri;
+				}
+			}
 			else if(types.contains("text/plain"))
 				links.push(this.extractURI(getDataAt("text/plain", i)));
 		}
@@ -233,7 +242,8 @@ var linkPropsPlus = {
 		var sourceNode = dt.mozSourceNode || dt.sourceNode || null;
 		return links.length && {
 			links: links,
-			referer: sourceNode && sourceNode.ownerDocument && sourceNode.ownerDocument.documentURI || null
+			referer: sourceNode && sourceNode.ownerDocument && sourceNode.ownerDocument.documentURI || null,
+			referers: referers
 		};
 	},
 

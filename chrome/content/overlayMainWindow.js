@@ -261,7 +261,7 @@ var linkPropsPlus = {
 				var tab = getDataAt("application/x-moz-tabbrowser-tab", i);
 				if(tab && tab.linkedBrowser) {
 					var uri = tab.linkedBrowser.currentURI.spec;
-					if(!(uri in referers)) {
+					if(links.indexOf(uri) == -1) {
 						links.push(uri);
 						referers[uri] = uri;
 						sourceWindows[uri] = tab.linkedBrowser.contentWindow;

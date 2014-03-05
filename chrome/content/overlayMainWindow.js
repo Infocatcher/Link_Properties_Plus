@@ -211,7 +211,7 @@ var linkPropsPlus = {
 				uri,
 				data.referers[uri] || data.referer,
 				sourceWindow,
-				false,
+				true,
 				sourceWindow && window,
 				sourceWindow && this.getTabForContentWindow(sourceWindow)
 			);

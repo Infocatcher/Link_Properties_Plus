@@ -30,7 +30,9 @@
 	<toolbarpalette id="BrowserToolbarPalette">
 		<toolbarbutton id="linkPropsPlus-toolbarButton"
 			class="chromeclass-toolbar-additional toolbarbutton-1"
-			command="linkPropsPlus-cmd-openWindow"
+			label="&linkPropsPlus.toolbar;"
+			tooltiptext="&linkPropsPlus.toolbarTooltip;"
+			oncommand="linkPropsPlus.openWindow();"
 			ondragover="linkPropsPlus.buttonDragOver(event);"
 			ondragdrop="linkPropsPlus.buttonDrop(event);" />
 	</toolbarpalette>
@@ -61,7 +63,9 @@
 	<toolbarpalette id="MailToolbarPalette">
 		<toolbarbutton id="linkPropsPlus-toolbarButton"
 			class="chromeclass-toolbar-additional toolbarbutton-1"
-			command="linkPropsPlus-cmd-openWindow"
+			label="&linkPropsPlus.toolbar;"
+			tooltiptext="&linkPropsPlus.toolbarTooltip;"
+			oncommand="linkPropsPlus.openWindow();"
 			ondragover="linkPropsPlus.buttonDragOver(event);"
 			ondragdrop="linkPropsPlus.buttonDrop(event);" />
 	</toolbarpalette>

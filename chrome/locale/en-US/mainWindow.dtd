@@ -3,3 +3,5 @@
 <!ENTITY linkPropsPlus.contextAccesskey "r">
 <!ENTITY linkPropsPlus.tools "Link Properties…">
 <!ENTITY linkPropsPlus.toolsAccesskey "r">
+<!ENTITY linkPropsPlus.toolbar "Link Properties">
+<!ENTITY linkPropsPlus.toolbarTooltip "Open link properties window (you also can drop any link here)">

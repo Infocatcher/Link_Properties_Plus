@@ -127,8 +127,8 @@ var linkPropsPlusWnd = {
 		if(uri) {
 			var crop = this.pu.pref("ownWindow.cropFileNameInTitle");
 			if(crop > 0) {
-				var uri = this.ut.decodeURI(uri);
-				var fName = /[^\/\\]+$/.test(uri.replace(/#.*$/, ""))
+				var uri = this.ut.decodeURI(uri).replace(/#.*$/, "");
+				var fName = /([^\/\\]+|[^\/\\]+\/\?.*?)$/.test(uri)
 					? RegExp.lastMatch
 					: uri;
 				if(fName.length > crop) {

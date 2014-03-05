@@ -22,6 +22,8 @@ overlay chrome://messenger/content/messenger.xul chrome://linkpropsplus/content/
 skin linkpropsplus classic/1.0 chrome/skin/
 skin linkpropsplus-icon classic/1.0 ./
 
+style chrome://global/content/customizeToolbar.xul chrome://linkpropsplus/skin/overlayMainWindow.css
+
 locale linkpropsplus en-US chrome/locale/en-US/
 locale linkpropsplus ru    chrome/locale/ru/
 locale linkpropsplus fr    chrome/locale/fr/

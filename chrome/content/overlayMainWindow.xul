@@ -27,6 +27,11 @@
 			lpp_label_for="&linkPropsPlus.contextFor;"
 			accesskey="&linkPropsPlus.contextAccesskey;" />
 	</menupopup>
+	<toolbarpalette id="BrowserToolbarPalette">
+		<toolbarbutton id="linkPropsPlus-toolbarButton"
+			class="chromeclass-toolbar-additional toolbarbutton-1"
+			command="linkPropsPlus-cmd-openWindow" />
+	</toolbarpalette>
 
 	<!-- Firefox 4 -->
 	<menupopup id="appmenu_webDeveloper_popup">
@@ -51,6 +56,11 @@
 			insertafter="errorConsole,javascriptConsole"
 			command="linkPropsPlus-cmd-openWindow" key="linkPropsPlus-key-openWindow" />
 	</menupopup>
+	<toolbarpalette id="MailToolbarPalette">
+		<toolbarbutton id="linkPropsPlus-toolbarButton"
+			class="chromeclass-toolbar-additional toolbarbutton-1"
+			command="linkPropsPlus-cmd-openWindow" />
+	</toolbarpalette>
 
 	<!-- Thunderbird -->
 	<commandset id="mailCommands">

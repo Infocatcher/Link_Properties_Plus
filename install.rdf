@@ -11,6 +11,7 @@
 	<em:creator>Infocatcher</em:creator>
 	<em:developer>Torisugari (author of the original Extended Link Properties extension)</em:developer>
 	<em:contributor>Jane Ocean (Seamaiden)</em:contributor>
+	<em:contributor>Icons: Farm-fresh (http://fatcow.com/free-icons) and Gnome (https://gnome.org/)</em:contributor>
 	<em:optionsURL>chrome://linkpropsplus/content/options.xul</em:optionsURL>
 	<em:iconURL>chrome://linkpropsplus-icon/skin/icon.png</em:iconURL>
 	<em:updateURL>http://infocatcher.ucoz.net/ext/fx/ext_link_props/update.rdf</em:updateURL>
@@ -66,6 +67,7 @@
 			<em:creator>Infocatcher</em:creator>
 			<em:developer>Torisugari (автор оригинального расширения Extended Link Properties)</em:developer>
 			<em:contributor>Jane Ocean (Seamaiden)</em:contributor>
+			<em:contributor>Иконки: Farm-fresh (http://fatcow.com/free-icons) и Gnome (https://gnome.org/)</em:contributor>
 		</Description>
 	</em:localized>
 
@@ -78,6 +80,7 @@
 			<em:developer>Torisugari (auteur de l'extension originale Extended Link Properties)</em:developer>
 			<em:contributor>Jane Ocean (Seamaiden)</em:contributor>
 			<em:translator>calimero988</em:translator>
+			<em:contributor>Icons: Farm-fresh (http://fatcow.com/free-icons) and Gnome (https://gnome.org/)</em:contributor>
 		</Description>
 	</em:localized>
 

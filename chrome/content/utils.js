@@ -1,4 +1,7 @@
 var linkPropsPlusUtils = {
+	// We use following mask to not use internal or file:// links as referers
+	validReferer: /^(?:http|ftp)s?:\/\/\S+$/,
+
 	get pu() {
 		return window.linkPropsPlusPrefUtils;
 	},
@@ -6,6 +9,11 @@ var linkPropsPlusUtils = {
 		delete this.wm;
 		return this.wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
 			.getService(Components.interfaces.nsIWindowMediator);
+	},
+	get ios() {
+		delete this.ios;
+		return this.ios = Components.classes["@mozilla.org/network/io-service;1"]
+			.getService(Components.interfaces.nsIIOService);
 	},
 	get pbu() {
 		if(!("PrivateBrowsingUtils" in window)) try {
@@ -19,13 +27,15 @@ var linkPropsPlusUtils = {
 
 	openWindow: function(uri, referer, sourceWindow, autostart, browserWindow, sourceTab) {
 		var ws = this.wm.getEnumerator("linkPropsPlus:ownWindow");
+		var _uri = uri || "";
+		var _referer = this.checkReferer(referer, _uri) || "";
 		while(ws.hasMoreElements()) {
 			var w = ws.getNext();
 			var o = w.linkPropsPlusWnd;
 			if(
 				o
-				&& o.uri == uri
-				&& o.referer == referer
+				&& (o.uri || "") == _uri
+				&& (o.referer || "") == _referer
 				&& o.svc.isPrivate == this.isWindowPrivate(sourceWindow)
 			) {
 				w.focus();
@@ -64,6 +74,37 @@ var linkPropsPlusUtils = {
 			return false;
 		var pbu = this.pbu;
 		return pbu && pbu.isWindowPrivate(win);
+	},
+	get sendReferer() {
+		return this.pu.getPref("network.http.sendRefererHeader", 2) > 1;
+	},
+	isValidReferer: function(s) {
+		return s && this.validReferer.test(s);
+	},
+	checkReferer: function(referer, uri) {
+		if(!this.sendReferer) {
+			if(!this.pu.pref("useFakeReferer.force"))
+				return undefined;
+			referer = ""; // Make it "invalid"
+		}
+		if(this.isValidReferer(referer))
+			return referer;
+		switch(this.pu.pref("useFakeReferer")) {
+			case 1:
+				try {
+					var uriObj = this.ios.newURI(uri, null, null);
+					// Thanks to RefControl https://addons.mozilla.org/firefox/addon/refcontrol/
+					referer = uriObj.scheme + "://" + uriObj.hostPort + "/";
+					break;
+				}
+				catch(e) { // Will use "uri" as referer
+				}
+			case 2:
+				referer = uri;
+		}
+		if(this.isValidReferer(referer))
+			return referer;
+		return undefined;
 	},
 	decodeURI: function(uri) {
 		if(!this.pu.pref("decodeURIs"))

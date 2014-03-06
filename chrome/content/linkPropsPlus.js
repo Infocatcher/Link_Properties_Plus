@@ -13,9 +13,6 @@ var linkPropsPlusSvc = {
 		return this.pu.pref("blockEscapeKeyDelay");
 	},
 
-	// We use following mask to not use internal or file:// links as referers
-	validReferer: /^(?:http|ftp)s?:\/\/\S+$/,
-
 	get ut() {
 		return window.linkPropsPlusUtils;
 	},
@@ -28,8 +25,7 @@ var linkPropsPlusSvc = {
 
 	get ios() {
 		delete this.ios;
-		return this.ios = Components.classes["@mozilla.org/network/io-service;1"]
-			.getService(Components.interfaces.nsIIOService);
+		return this.ios = this.ut.ios;
 	},
 	get isOwnWindow() {
 		delete this.isOwnWindow;
@@ -1027,7 +1023,7 @@ var linkPropsPlusSvc = {
 		return this._uri;
 	},
 	get referer() {
-		return this.checkReferer(this.realReferer, this.uri);
+		return this.ut.checkReferer(this.realReferer, this.uri);
 	},
 	get refererURI() {
 		try {
@@ -1035,37 +1031,6 @@ var linkPropsPlusSvc = {
 		}
 		catch(e) {
 		}
-		return undefined;
-	},
-	get sendReferer() {
-		return this.pu.getPref("network.http.sendRefererHeader", 2) > 1;
-	},
-	isValidReferer: function(s) {
-		return s && this.validReferer.test(s);
-	},
-	checkReferer: function(referer, uri) {
-		if(!this.sendReferer) {
-			if(!this.pu.pref("useFakeReferer.force"))
-				return undefined;
-			referer = ""; // Make it "invalid"
-		}
-		if(this.isValidReferer(referer))
-			return referer;
-		switch(this.pu.pref("useFakeReferer")) {
-			case 1:
-				try {
-					var uriObj = this.ios.newURI(uri, null, null);
-					// Thanks to RefControl https://addons.mozilla.org/firefox/addon/refcontrol/
-					referer = uriObj.scheme + "://" + uriObj.hostPort + "/";
-					break;
-				}
-				catch(e) { // Will use "uri" as referer
-				}
-			case 2:
-				referer = uri;
-		}
-		if(this.isValidReferer(referer))
-			return referer;
 		return undefined;
 	},
 	compareURIs: function(uri, uri2) {

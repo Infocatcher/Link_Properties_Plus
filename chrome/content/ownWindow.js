@@ -27,7 +27,7 @@ var linkPropsPlusWnd = {
 			var options = window.arguments && window.arguments[0];
 			var uri = options.uri || "";
 			this.uri = uri;
-			this.referer = this.svc.checkReferer(options.referer || "", uri) || null;
+			this.referer = this.ut.checkReferer(options.referer || "", uri) || null;
 			this._sourceWindow = options.sourceWindow || null;
 			this.autostart = !!options.autostart;
 			if(this.autostart)

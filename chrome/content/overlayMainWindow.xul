@@ -35,6 +35,8 @@
 			oncommand="linkPropsPlus.openWindow();"
 			ondragover="linkPropsPlus.buttonDragOver(event);"
 			ondragdrop="linkPropsPlus.buttonDrop(event);"
+			ondragleave="linkPropsPlus.buttonDragLeave(event);"
+			ondragexit="linkPropsPlus.buttonDragLeave(event);"
 			ondrop="linkPropsPlus.buttonDrop(event);" />
 	</toolbarpalette>
 
@@ -69,6 +71,8 @@
 			oncommand="linkPropsPlus.openWindow();"
 			ondragover="linkPropsPlus.buttonDragOver(event);"
 			ondragdrop="linkPropsPlus.buttonDrop(event);"
+			ondragleave="linkPropsPlus.buttonDragLeave(event);"
+			ondragexit="linkPropsPlus.buttonDragLeave(event);"
 			ondrop="linkPropsPlus.buttonDrop(event);" />
 	</toolbarpalette>
 

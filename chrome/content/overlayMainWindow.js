@@ -187,15 +187,25 @@ var linkPropsPlus = {
 		this.sourceWindow = null;
 	},
 
+	get button() {
+		var btn = document.getElementById("linkPropsPlus-toolbarButton");
+		if(!btn)
+			return null;
+		delete this.button;
+		return this.button = btn;
+	},
 	buttonDragOver: function(e) {
 		if(this.hasDropLink(e)) {
 			var dt = e.dataTransfer;
 			dt.effectAllowed = dt.dropEffect = "link";
 			e.preventDefault();
 			e.stopPropagation();
+			if(!this.button.hasAttribute("checked"))
+				this.button.setAttribute("checked", "true");
 		}
 	},
 	buttonDrop: function(e) {
+		this.buttonDragLeave(e);
 		var data = this.getDropLink(e);
 		if(!data)
 			return;
@@ -216,6 +226,10 @@ var linkPropsPlus = {
 				sourceWindow && this.getTabForContentWindow(sourceWindow)
 			);
 		}, this);
+	},
+	buttonDragLeave: function(e) {
+		if(this.button.hasAttribute("checked"))
+			this.button.removeAttribute("checked");
 	},
 	getTabForContentWindow: function(win) {
 		var top = win.top;

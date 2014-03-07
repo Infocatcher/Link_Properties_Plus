@@ -18,6 +18,7 @@ overlay chrome://navigator/content/pageinfo/pageInfo.xul chrome://linkpropsplus/
 
 # Thunderbird
 overlay chrome://messenger/content/messenger.xul chrome://linkpropsplus/content/overlayMainWindow.xul
+overlay chrome://messenger/content/messageWindow.xul chrome://linkpropsplus/content/overlayMainWindow.xul
 
 skin linkpropsplus classic/1.0 chrome/skin/
 skin linkpropsplus-icon classic/1.0 ./

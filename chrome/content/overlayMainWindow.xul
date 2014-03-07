@@ -55,7 +55,7 @@
 	<!-- SeaMonkey and Thunderbird -->
 	<menupopup id="taskPopup">
 		<menuitem id="linkPropsPlus-toolsMenuitem" class="menuitem-iconic"
-			insertbefore="sanitizeSeparator,javascriptConsole,sep_switchprofile,sync-setup"
+			insertbefore="tasksDataman,sanitizeSeparator,javascriptConsole,sep_switchprofile,sync-setup"
 			command="linkPropsPlus-cmd-openWindow" key="linkPropsPlus-key-openWindow" />
 	</menupopup>
 	<menupopup id="toolsPopup">

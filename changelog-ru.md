@@ -15,6 +15,7 @@
 `*` Улучшено поле для заголовков HTTP: теперь используется форматирование и можно сворачивать разделы (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/8">#8</a>, <a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/9">#9</a>).<br>
 `*` Изменена иконка расширения (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/10">#10</a>).<br>
 `+` Добавлена кнопка для панелей инструментов (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/11">#11</a>).<br>
+`+` Добавлена поддержка для отдельного окна сообщений в Thunderbird и почте SeaMonkey (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/12">#12</a>).<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Исправлено положение пункта контекстного меню в почтовике SeaMonkey.<br>

@@ -1,5 +1,5 @@
 var linkPropsPlus = {
-	validURI: /^(?:(?:https?|ftps?|file|chrome|resource):\/\/|(?:view-source|jar):[\w-]+:|about:)\S+$/,
+	validURI: /^(?:(?:(?:https?|ftps?|file|chrome|resource):\/\/+|(?:view-source|jar):[\w-]+:\/*)[^\/]\S*|about:(?:[^\/]\S*)?)$/,
 	get validURIExtract() {
 		delete this.validURIExtract;
 		return this.validURIExtract = new RegExp(

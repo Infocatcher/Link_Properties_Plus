@@ -1526,10 +1526,10 @@ var linkPropsPlusSvc = {
 			return; // Window is closed
 		try {
 			if(request instanceof Components.interfaces.nsIHttpChannel) {
-				var status = request.responseStatus + " " + request.responseStatusText;
+				var statusStr = request.responseStatus + " " + request.responseStatusText;
 				this.headers.caption(this.ut.getLocalized("response"));
 				this.headers.beginSection();
-				this.headers.entry("Status", status);
+				this.headers.entry("Status", statusStr);
 				var headers = this._responseHeaders = { __proto__: null };
 				request.visitResponseHeaders(this);
 				this._responseHeaders = { __proto__: null };
@@ -1647,10 +1647,10 @@ var linkPropsPlusSvc = {
 			onStopRequest: function(request, ctxt, status) {
 				if(!this.canceled && request instanceof Components.interfaces.nsIHttpChannel) try {
 					var headers = this.parent.headers;
-					var status = request.responseStatus + " " + request.responseStatusText;
+					var statusStr = request.responseStatus + " " + request.responseStatusText;
 					headers.caption(this.parent.ut.getLocalized("testResumabilityResponse"), "caption testResume");
 					headers.beginSection("block testResume");
-					headers.entry("Status", status);
+					headers.entry("Status", statusStr);
 					request.visitResponseHeaders(this);
 					headers.endSection();
 				}

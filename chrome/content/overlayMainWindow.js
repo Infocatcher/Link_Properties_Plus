@@ -267,12 +267,13 @@ var linkPropsPlus = {
 				|| "";
 		}
 		for(var i = 0, c = dt.mozItemCount || dt.itemCount || 1; i < c; ++i) {
+			var data = null;
 			if(types.contains("text/uri-list"))
-				links.push.apply(links, getDataAt("text/uri-list", i).split("\n"));
-			else if(types.contains("text/x-moz-url"))
-				links.push(getDataAt("text/x-moz-url", i).split("\n")[0]);
-			else if(types.contains("application/x-moz-tabbrowser-tab")) {
-				var tab = getDataAt("application/x-moz-tabbrowser-tab", i);
+				links.push.apply(links, (data = getDataAt("text/uri-list", i)).split("\n"));
+			if(!data && types.contains("text/x-moz-url"))
+				links.push((data = getDataAt("text/x-moz-url", i)).split("\n")[0]);
+			if(!data && types.contains("application/x-moz-tabbrowser-tab")) {
+				var tab = data = getDataAt("application/x-moz-tabbrowser-tab", i);
 				if(tab && tab.linkedBrowser) {
 					var uri = tab.linkedBrowser.currentURI.spec;
 					if(links.indexOf(uri) == -1) {
@@ -282,7 +283,7 @@ var linkPropsPlus = {
 					}
 				}
 			}
-			else if(types.contains("text/plain"))
+			if(!data && types.contains("text/plain"))
 				links.push.apply(links, getDataAt("text/plain", i).split(/\s+/).map(this.extractURI, this));
 		}
 		links = links.filter(function(uri, i) { // Remove empty strings and duplicates

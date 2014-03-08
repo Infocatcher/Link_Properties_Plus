@@ -157,14 +157,13 @@ var linkPropsPlusUtils = {
 			return readFromClipboard() || "";
 
 		// Fallback implementation for Thunderbird
-		// Based on code from Firefox 20.0a1 (2013-01-06)
+		// Based on code from Firefox 30.0a1 (2014-03-08)
 		var str = "";
 		try {
 			var cb = Components.classes["@mozilla.org/widget/clipboard;1"]
 				.getService(Components.interfaces.nsIClipboard);
 			var trans = Components.classes["@mozilla.org/widget/transferable;1"]
 				.createInstance(Components.interfaces.nsITransferable);
-			trans.addDataFlavor("text/unicode");
 			if("init" in trans) {
 				trans.init(
 					window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
@@ -172,6 +171,7 @@ var linkPropsPlusUtils = {
 						.QueryInterface(Components.interfaces.nsILoadContext)
 				);
 			}
+			trans.addDataFlavor("text/unicode");
 			var cbId = cb.supportsSelectionClipboard() ? cb.kSelectionClipboard : cb.kGlobalClipboard;
 			cb.getData(trans, cbId);
 			var data = {};

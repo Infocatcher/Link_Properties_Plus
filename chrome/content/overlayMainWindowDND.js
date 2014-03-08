@@ -71,11 +71,13 @@ var linkPropsPlusDND = {
 		return !!this.getDropLink(e);
 	},
 	getDropLink: function(e) {
+		var dt = e.dataTransfer;
+		if(!dt)
+			return null;
+		var types = dt.types;
 		var links = [];
 		var referers = { __proto__: null };
 		var sourceWindows = { __proto__: null };
-		var dt = e.dataTransfer;
-		var types = dt.types;
 		function getDataAt(type, i) {
 			return dt.getDataAt && dt.getDataAt(type, i)
 				|| dt.mozGetDataAt && dt.mozGetDataAt(type, i)

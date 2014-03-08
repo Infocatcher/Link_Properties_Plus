@@ -283,7 +283,7 @@ var linkPropsPlus = {
 				}
 			}
 			else if(types.contains("text/plain"))
-				links.push(this.extractURI(getDataAt("text/plain", i)));
+				links.push.apply(links, getDataAt("text/plain", i).split(/\s+/).map(this.extractURI, this));
 		}
 		links = links.filter(function(uri, i) { // Remove empty strings and duplicates
 			return uri && links.indexOf(uri) == i;

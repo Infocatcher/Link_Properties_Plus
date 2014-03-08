@@ -151,6 +151,41 @@ var linkPropsPlusUtils = {
 		);
 		return uri;
 	},
+	readFromClipboard: function() {
+		// See chrome://browser/content/browser.js
+		if("readFromClipboard" in window)
+			return readFromClipboard() || "";
+
+		// Fallback implementation for Thunderbird
+		// Based on code from Firefox 20.0a1 (2013-01-06)
+		var str = "";
+		try {
+			var cb = Components.classes["@mozilla.org/widget/clipboard;1"]
+				.getService(Components.interfaces.nsIClipboard);
+			var trans = Components.classes["@mozilla.org/widget/transferable;1"]
+				.createInstance(Components.interfaces.nsITransferable);
+			trans.addDataFlavor("text/unicode");
+			if("init" in trans) {
+				trans.init(
+					window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+						.getInterface(Components.interfaces.nsIWebNavigation)
+						.QueryInterface(Components.interfaces.nsILoadContext)
+				);
+			}
+			var cbId = cb.supportsSelectionClipboard() ? cb.kSelectionClipboard : cb.kGlobalClipboard;
+			cb.getData(trans, cbId);
+			var data = {};
+			var dataLen = {};
+			trans.getTransferData("text/unicode", data, dataLen);
+			if(data) {
+				data = data.value.QueryInterface(Components.interfaces.nsISupportsString);
+				str = data.data.substring(0, dataLen.value/2);
+			}
+		}
+		catch(e) {
+		}
+		return str;
+	},
 	get strings() {
 		delete this.strings;
 		return this.strings = Components.classes["@mozilla.org/intl/stringbundle;1"]

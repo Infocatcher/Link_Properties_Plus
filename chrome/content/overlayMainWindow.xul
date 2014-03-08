@@ -33,11 +33,11 @@
 			label="&linkPropsPlus.toolbar;"
 			tooltiptext="&linkPropsPlus.toolbarTooltip;"
 			oncommand="linkPropsPlus.openWindow();"
-			ondragover="linkPropsPlus.buttonDragOver(event);"
-			ondragdrop="linkPropsPlus.buttonDrop(event);"
-			ondragleave="linkPropsPlus.buttonDragLeave(event);"
-			ondragexit="linkPropsPlus.buttonDragLeave(event);"
-			ondrop="linkPropsPlus.buttonDrop(event);" />
+			ondragover="linkPropsPlus.dnd.buttonDragOver(event);"
+			ondragdrop="linkPropsPlus.dnd.buttonDrop(event);"
+			ondragleave="linkPropsPlus.dnd.buttonDragLeave(event);"
+			ondragexit="linkPropsPlus.dnd.buttonDragLeave(event);"
+			ondrop="linkPropsPlus.dnd.buttonDrop(event);" />
 	</toolbarpalette>
 
 	<!-- Firefox 4 -->
@@ -69,11 +69,11 @@
 			label="&linkPropsPlus.toolbar;"
 			tooltiptext="&linkPropsPlus.toolbarTooltip;"
 			oncommand="linkPropsPlus.openWindow();"
-			ondragover="linkPropsPlus.buttonDragOver(event);"
-			ondragdrop="linkPropsPlus.buttonDrop(event);"
-			ondragleave="linkPropsPlus.buttonDragLeave(event);"
-			ondragexit="linkPropsPlus.buttonDragLeave(event);"
-			ondrop="linkPropsPlus.buttonDrop(event);" />
+			ondragover="linkPropsPlus.dnd.buttonDragOver(event);"
+			ondragdrop="linkPropsPlus.dnd.buttonDrop(event);"
+			ondragleave="linkPropsPlus.dnd.buttonDragLeave(event);"
+			ondragexit="linkPropsPlus.dnd.buttonDragLeave(event);"
+			ondrop="linkPropsPlus.dnd.buttonDrop(event);" />
 	</toolbarpalette>
 
 	<!-- Thunderbird -->

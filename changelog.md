@@ -17,6 +17,7 @@
 `+` Added toolbar button (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/11">#11</a>).<br>
 `+` Added support for separate message window in Thunderbird and SeaMonkey's mail (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/12">#12</a>).<br>
 `x` Correctly focus already opened link properties window with the same URI and referer, if URI is empty.<br>
+`+` Added ability to not use selection clipboard on Linux to prefill link in properties window (<em>extensions.linkPropertiesPlus.preferSelectionClipboard</em> preference).<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Corrected position of context menu item in SeaMonkey's mail.<br>

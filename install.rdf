@@ -61,13 +61,13 @@
 
 	<em:localized>
 		<Description>
-			<em:locale>ru</em:locale>
+			<em:locale>en-US</em:locale>
 			<em:name>Link Properties Plus</em:name>
-			<em:description>Предоставляет расширенные свойства для ссылок: размер файла по ссылке, дату последнего изменения и т.п.</em:description>
+			<em:description>Provides extended link properties: size of linked file, last modified time, etc.</em:description>
 			<em:creator>Infocatcher</em:creator>
-			<em:developer>Torisugari (автор оригинального расширения Extended Link Properties)</em:developer>
+			<em:developer>Torisugari (author of the original Extended Link Properties extension)</em:developer>
 			<em:contributor>Jane Ocean (Seamaiden)</em:contributor>
-			<em:contributor>Иконки: Farm-fresh (http://fatcow.com/free-icons) и Gnome (https://gnome.org/)</em:contributor>
+			<em:contributor>Icons: Farm-fresh (http://fatcow.com/free-icons) and Gnome (https://gnome.org/)</em:contributor>
 		</Description>
 	</em:localized>
 
@@ -79,8 +79,20 @@
 			<em:creator>Infocatcher</em:creator>
 			<em:developer>Torisugari (auteur de l'extension originale Extended Link Properties)</em:developer>
 			<em:contributor>Jane Ocean (Seamaiden)</em:contributor>
-			<em:translator>calimero988</em:translator>
 			<em:contributor>Icons: Farm-fresh (http://fatcow.com/free-icons) and Gnome (https://gnome.org/)</em:contributor>
+			<em:translator>calimero988</em:translator>
+		</Description>
+	</em:localized>
+
+	<em:localized>
+		<Description>
+			<em:locale>ru</em:locale>
+			<em:name>Link Properties Plus</em:name>
+			<em:description>Предоставляет расширенные свойства для ссылок: размер файла по ссылке, дату последнего изменения и т.п.</em:description>
+			<em:creator>Infocatcher</em:creator>
+			<em:developer>Torisugari (автор оригинального расширения Extended Link Properties)</em:developer>
+			<em:contributor>Jane Ocean (Seamaiden)</em:contributor>
+			<em:contributor>Иконки: Farm-fresh (http://fatcow.com/free-icons) и Gnome (https://gnome.org/)</em:contributor>
 		</Description>
 	</em:localized>
 

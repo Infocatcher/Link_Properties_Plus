@@ -151,29 +151,33 @@ var linkPropsPlusUtils = {
 		);
 		return uri;
 	},
-	readFromClipboard: function() {
-		// See chrome://browser/content/browser.js
-		if("readFromClipboard" in window)
-			return readFromClipboard() || "";
-
-		// Fallback implementation for Thunderbird
-		// Based on code from Firefox 30.0a1 (2014-03-08)
+	get clipboard() {
+		delete this.clipboard;
+		return this.clipboard = Components.classes["@mozilla.org/widget/clipboard;1"]
+			.getService(Components.interfaces.nsIClipboard);
+	},
+	readFromClipboard: function(useSelection) {
+		// Based on readFromClipboard() function from
+		// chrome://browser/content/browser.js in Firefox 30.0a1 (2014-03-08)
 		var str = "";
 		try {
-			var cb = Components.classes["@mozilla.org/widget/clipboard;1"]
-				.getService(Components.interfaces.nsIClipboard);
+			var cb = this.clipboard;
+			if(useSelection && !cb.supportsSelectionClipboard())
+				return "";
 			var trans = Components.classes["@mozilla.org/widget/transferable;1"]
 				.createInstance(Components.interfaces.nsITransferable);
-			if("init" in trans) {
+			if("init" in trans) try {
 				trans.init(
 					window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
 						.getInterface(Components.interfaces.nsIWebNavigation)
 						.QueryInterface(Components.interfaces.nsILoadContext)
 				);
 			}
+			catch(e2) {
+				Components.utils.reportError(e2);
+			}
 			trans.addDataFlavor("text/unicode");
-			var cbId = cb.supportsSelectionClipboard() ? cb.kSelectionClipboard : cb.kGlobalClipboard;
-			cb.getData(trans, cbId);
+			cb.getData(trans, useSelection ? cb.kSelectionClipboard : cb.kGlobalClipboard);
 			var data = {};
 			var dataLen = {};
 			trans.getTransferData("text/unicode", data, dataLen);

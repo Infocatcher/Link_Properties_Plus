@@ -195,6 +195,11 @@ var linkPropsPlus = {
 	},
 
 	openWindow: function(uri, referer, sourceWindow, browserWindow, sourceTab) {
+		if(!uri && this.pu.pref("preferSelectionClipboard")) {
+			var clipUriSel = this.ut.readFromClipboard(true);
+			if(this.isValidURI(clipUriSel))
+				uri = clipUriSel;
+		}
 		if(!uri) {
 			var clipUri = this.ut.readFromClipboard();
 			if(this.isValidURI(clipUri))

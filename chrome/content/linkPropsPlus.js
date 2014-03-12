@@ -145,6 +145,7 @@ var linkPropsPlusSvc = {
 		this.destroyAutoClose();
 		this.isOwnWindow && this.wnd.destroy();
 		this.cancelCheckChannelResumable();
+		this._requestSection = null;
 		if(!this.channel)
 			return;
 		this.channel.cancel(Components.results.NS_BINDING_ABORTED);
@@ -376,6 +377,7 @@ var linkPropsPlusSvc = {
 			},
 			this
 		);
+		this._requestSection = null;
 		this.headers.clear();
 
 		var grid = document.getElementById("linkPropsPlus-grid");
@@ -793,7 +795,7 @@ var linkPropsPlusSvc = {
 			if(ch instanceof Components.interfaces.nsIHttpChannel) {
 				ch.requestMethod = "HEAD";
 				this.headers.caption(this.ut.getLocalized("request"));
-				this.headers.beginSection();
+				this._requestSection = this.headers.beginSection();
 				ch.visitRequestHeaders(this);
 				this.headers.endSection();
 			}
@@ -1173,12 +1175,46 @@ var linkPropsPlusSvc = {
 			}
 			return spacer;
 		},
-		entry: function(name, value) {
-			this.beginSection("entry");
+		entry: function(name, value, specialClass) {
+			var section = this.beginSection("entry" + (specialClass ? " " + specialClass : ""));
 			this._appendNode("strong", "name", name);
 			this._appendNode("span", "colon", this.colon);
 			this._appendNode("span", "value", value);
 			this.endSection();
+			return section;
+		},
+		getEntry: function(section, name) {
+			var entries = section.getElementsByTagName("strong");
+			for(var i = 0, l = entries.length; i < l; ++i) {
+				var entry = entries[i];
+				if(
+					/(?:^|\s)name(?:\s|$)/.test(entry.className)
+					&& entry.textContent == name
+				)
+					return entry.parentNode;
+			}
+			return null;
+		},
+		changeEntry: function(section, name, value) {
+			// Note: we should use inline styles to copy/paste with formatting
+			var oldEntry = this.getEntry(section, name);
+			if(oldEntry) {
+				var spans = oldEntry.getElementsByTagName("span");
+				var valNode = spans[spans.length - 1];
+				if(valNode.textContent == value)
+					return;
+				oldEntry.className += " replaced";
+				oldEntry.style.textDecoration = "line-through";
+				oldEntry.style.display = "none";
+			}
+			var activeSection = this._activeSection;
+			this._activeSection = section;
+			var section = this.entry(name, value, oldEntry ? "changed" : "added");
+			if(oldEntry)
+				section.style.fontStyle = "italic";
+			else
+				section.style.textDecoration = "underline";
+			this._activeSection = activeSection;
 		},
 		rawData: function(data) {
 			// Note: here may be \0 symbol and we can't copy it
@@ -1200,10 +1236,12 @@ var linkPropsPlusSvc = {
 		_sections: [],
 		_activeSection: null,
 		beginSection: function(nodeClass) {
-			this._sections.push(this._activeSection = this._appendNode("div", nodeClass || "block"));
+			var section = this._activeSection = this._appendNode("div", nodeClass || "block");
+			this._sections.push(section);
 			var prev = this._activeSection.previousSibling;
 			if(prev && prev.className != "spacer")
 				prev.appendChild(this._node("br", "copyHack"));
+			return section;
 		},
 		endSection: function() {
 			var sections = this._sections;
@@ -1538,6 +1576,20 @@ var linkPropsPlusSvc = {
 			return; // Window is closed
 		try {
 			if(request instanceof Components.interfaces.nsIHttpChannel) {
+				var requestSection = this._requestSection;
+				if(requestSection) try {
+					request.visitRequestHeaders({
+						headers: this.headers,
+						// nsIHttpHeaderVisitor
+						visitHeader: function(header, value) {
+							this.headers.changeEntry(requestSection, header, value);
+						}
+					});
+				}
+				catch(e2) {
+					Components.utils.reportError(e2);
+				}
+
 				var statusStr = request.responseStatus + " " + request.responseStatusText;
 				this.headers.caption(this.ut.getLocalized("response"));
 				this.headers.beginSection();

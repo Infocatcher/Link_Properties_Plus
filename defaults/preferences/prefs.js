@@ -28,6 +28,7 @@ pref("extensions.linkPropertiesPlus.preferSelectionClipboard", true);
 pref("extensions.linkPropertiesPlus.showCaptionsInHttpHeaders", true);
 // true  - always show captions like "Request:" and "Response:"
 // false - show only captions about resumability tests
+pref("extensions.linkPropertiesPlus.showRequestHeadersDiff", false);
 
 pref("extensions.linkPropertiesPlus.testDownloadResumability", true);
 pref("extensions.linkPropertiesPlus.testDownloadResumability.download", false);

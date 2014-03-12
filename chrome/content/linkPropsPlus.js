@@ -341,6 +341,7 @@ var linkPropsPlusSvc = {
 		else if(
 			pName == "showCaptionsInHttpHeaders"
 			|| pName == "testDownloadResumability.showHttpHeaders"
+			|| pName == "showRequestHeadersDiff"
 		)
 			this.headers.initStyles();
 		else if(pName == "showLinkButtons")
@@ -1103,6 +1104,7 @@ var linkPropsPlusSvc = {
 
 	headers: {
 		parent: null,
+		showDiff: false,
 		init: function(parent) {
 			this.parent = parent;
 			// We should do this here to avoid strange bugs with window autosizing
@@ -1125,6 +1127,20 @@ var linkPropsPlusSvc = {
 			}
 			attr("hideCaptions",   !this.parent.pu.pref("showCaptionsInHttpHeaders"));
 			attr("hideTestResume", !this.parent.pu.pref("testDownloadResumability.showHttpHeaders"));
+			var showDiff = this.showDiff = this.parent.pu.pref("showRequestHeadersDiff");
+			attr("hideDiff", !showDiff);
+			Array.forEach(
+				field.getElementsByTagName("div"),
+				function(node) {
+					var cn = node.className;
+					if(/(?:^|\s)entry(?:\s|$)/.test(cn)) {
+						if(/(?:^|\s)changed(?:\s|$)/.test(cn))
+							node.style.fontStyle = showDiff ? "italic" : "";
+						if(/(?:^|\s)added(?:\s|$)/.test(cn))
+							node.style.textDecoration = showDiff ? "underline" : "";
+					}
+				}
+			);
 		},
 		destroy: function() {
 			this.parent = null;
@@ -1205,25 +1221,30 @@ var linkPropsPlusSvc = {
 				if(valNode.textContent == value)
 					return;
 				oldEntry.className += " replaced";
+				//if(this.showDiff)
 				oldEntry.style.textDecoration = "line-through";
-				oldEntry.style.display = "none";
+				//oldEntry.style.display = "none";
 			}
 			var activeSection = this._activeSection;
 			this._activeSection = section;
 			var section = this.entry(name, value, oldEntry ? "changed" : "added");
-			if(oldEntry)
-				section.style.fontStyle = "italic";
-			else
-				section.style.textDecoration = "underline";
+			if(this.showDiff) {
+				if(oldEntry)
+					section.style.fontStyle = "italic";
+				else
+					section.style.textDecoration = "underline";
+			}
 			this._activeSection = activeSection;
 		},
 		removeEntry: function(section, name) {
+			// Note: we should use inline styles to copy/paste with formatting
 			var entry = this.getEntry(section, name);
 			if(!entry)
 				return;
 			entry.className += " removed";
+			//if(this.showDiff)
 			entry.style.textDecoration = "line-through";
-			entry.style.display = "none";
+			//entry.style.display = "none";
 		},
 		rawData: function(data) {
 			// Note: here may be \0 symbol and we can't copy it

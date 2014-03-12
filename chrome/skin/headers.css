@@ -19,6 +19,11 @@ body {
 	max-height: 0.6em;
 }
 
+body[hideDiff] .entry.replaced,
+body[hideDiff] .entry.removed {
+	display: none;
+}
+
 xul|*.twisty {
 	vertical-align: middle;
 }

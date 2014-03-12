@@ -1755,7 +1755,7 @@ var linkPropsPlusSvc = {
 					headers.endSection();
 				}
 				catch(e) {
-					this.headers.ensureSectionsEnded();
+					headers.ensureSectionsEnded();
 					Components.utils.reportError(e);
 				}
 				this.setCanResumeDownload(false);

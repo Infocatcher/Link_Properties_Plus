@@ -1223,6 +1223,7 @@ var linkPropsPlusSvc = {
 				oldEntry.className += " replaced";
 				//if(this.showDiff)
 				oldEntry.style.textDecoration = "line-through";
+				oldEntry.style.fontStyle = "italic";
 				//oldEntry.style.display = "none";
 			}
 			var activeSection = this._activeSection;

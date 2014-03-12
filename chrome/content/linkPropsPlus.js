@@ -359,9 +359,9 @@ var linkPropsPlusSvc = {
 				"lpp_notAvailable",
 				!(this.channel instanceof Components.interfaces.nsIHttpChannel)
 			);
-			if(forceTestResumability || this.testResumability) setTimeout(function(_this) {
-				_this.checkChannelResumable(_this.channel);
-			}, 0, this);
+			if(forceTestResumability || this.testResumability) setTimeout(function(_this, channel) {
+				_this.checkChannelResumable(channel);
+			}, 0, this, this.channel);
 		}
 	},
 	clearResults: function() {

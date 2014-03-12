@@ -377,6 +377,7 @@ var linkPropsPlusSvc = {
 			},
 			this
 		);
+		this._headers = { __proto__: null };
 		this._requestSection = null;
 		this.headers.clear();
 
@@ -1216,6 +1217,14 @@ var linkPropsPlusSvc = {
 				section.style.textDecoration = "underline";
 			this._activeSection = activeSection;
 		},
+		removeEntry: function(section, name) {
+			var entry = this.getEntry(section, name);
+			if(!entry)
+				return;
+			entry.className += " removed";
+			entry.style.textDecoration = "line-through";
+			entry.style.display = "none";
+		},
 		rawData: function(data) {
 			// Note: here may be \0 symbol and we can't copy it
 			var maxLen = 2e3;
@@ -1332,11 +1341,11 @@ var linkPropsPlusSvc = {
 		}
 	},
 
-	_responseHeaders: { __proto__: null },
+	_headers: { __proto__: null },
 	// nsIHttpHeaderVisitor
 	visitHeader: function(header, value) {
 		this.headers.entry(header, value);
-		this._responseHeaders[header] = value;
+		this._headers[header] = value;
 		switch(header) {
 			case "Content-Length": this.formatSize(value); break;
 			case "Last-Modified":  this.formatDate(value); break;
@@ -1578,13 +1587,19 @@ var linkPropsPlusSvc = {
 			if(request instanceof Components.interfaces.nsIHttpChannel) {
 				var requestSection = this._requestSection;
 				if(requestSection) try {
+					var oldHeaders = this._headers;
+					var newHeaders = { __proto__: null };
 					request.visitRequestHeaders({
 						headers: this.headers,
 						// nsIHttpHeaderVisitor
 						visitHeader: function(header, value) {
+							newHeaders[header] = value;
 							this.headers.changeEntry(requestSection, header, value);
 						}
 					});
+					for(var header in oldHeaders)
+						if(!(header in newHeaders))
+							this.headers.removeEntry(requestSection, header);
 				}
 				catch(e2) {
 					Components.utils.reportError(e2);
@@ -1594,9 +1609,8 @@ var linkPropsPlusSvc = {
 				this.headers.caption(this.ut.getLocalized("response"));
 				this.headers.beginSection();
 				this.headers.entry("Status", statusStr);
-				var headers = this._responseHeaders = { __proto__: null };
+				var headers = this._headers = { __proto__: null };
 				request.visitResponseHeaders(this);
-				this._responseHeaders = { __proto__: null };
 				this.headers.endSection();
 				if(
 					"X-Archive-Orig-Last-Modified" in headers // Used on http://archive.org/

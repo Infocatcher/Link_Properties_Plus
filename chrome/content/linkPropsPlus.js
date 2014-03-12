@@ -1229,13 +1229,13 @@ var linkPropsPlusSvc = {
 			var activeSection = this._activeSection;
 			this._activeSection = section;
 			var section = this.entry(name, value, oldEntry ? "changed" : "added");
+			this._activeSection = activeSection;
 			if(this.showDiff) {
 				if(oldEntry)
 					section.style.fontStyle = "italic";
 				else
 					section.style.textDecoration = "underline";
 			}
-			this._activeSection = activeSection;
 		},
 		removeEntry: function(section, name) {
 			// Note: we should use inline styles to copy/paste with formatting

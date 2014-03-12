@@ -1192,8 +1192,8 @@ var linkPropsPlusSvc = {
 			}
 			return spacer;
 		},
-		entry: function(name, value, specialClass) {
-			var section = this.beginSection("entry" + (specialClass ? " " + specialClass : ""));
+		entry: function(name, value) {
+			var section = this.beginSection("entry");
 			this._appendNode("strong", "name", name);
 			this._appendNode("span", "colon", this.colon);
 			this._appendNode("span", "value", value);
@@ -1228,8 +1228,18 @@ var linkPropsPlusSvc = {
 			}
 			var activeSection = this._activeSection;
 			this._activeSection = section;
-			var section = this.entry(name, value, oldEntry ? "changed" : "added");
+			var section = this.entry(name, value);
 			this._activeSection = activeSection;
+			section.className += " " + (oldEntry ? "changed" : "added");
+			// Place new entry directly after old one
+			if(oldEntry && section.previousSibling != oldEntry) { // Oh...
+				var copyHack = section.previousSibling && section.previousSibling.lastChild;
+				if(copyHack && copyHack.localName.toLowerCase() == "br")
+					copyHack.parentNode.removeChild(copyHack);
+				var insPos = oldEntry.nextSibling;
+				oldEntry.parentNode.insertBefore(section, insPos);
+				insPos && section.appendChild(this._node("br", "copyHack"));
+			}
 			if(this.showDiff) {
 				if(oldEntry)
 					section.style.fontStyle = "italic";

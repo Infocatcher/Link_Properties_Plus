@@ -1615,28 +1615,28 @@ var linkPropsPlusSvc = {
 		var ch = this.channel;
 		if(!ch)
 			return; // Window is closed
+		// Extract final request headers from _original_ channel ("http-on-modify-request" and so on)
+		var requestSection = this._requestSection;
+		if(requestSection && ch instanceof Components.interfaces.nsIHttpChannel) try {
+			var oldHeaders = this._headers;
+			var newHeaders = { __proto__: null };
+			ch.visitRequestHeaders({
+				headers: this.headers,
+				// nsIHttpHeaderVisitor
+				visitHeader: function(header, value) {
+					newHeaders[header] = value;
+					this.headers.changeEntry(requestSection, header, value);
+				}
+			});
+			for(var header in oldHeaders)
+				if(!(header in newHeaders))
+					this.headers.removeEntry(requestSection, header);
+		}
+		catch(e) {
+			Components.utils.reportError(e);
+		}
 		try {
 			if(request instanceof Components.interfaces.nsIHttpChannel) {
-				var requestSection = this._requestSection;
-				if(requestSection) try {
-					var oldHeaders = this._headers;
-					var newHeaders = { __proto__: null };
-					request.visitRequestHeaders({
-						headers: this.headers,
-						// nsIHttpHeaderVisitor
-						visitHeader: function(header, value) {
-							newHeaders[header] = value;
-							this.headers.changeEntry(requestSection, header, value);
-						}
-					});
-					for(var header in oldHeaders)
-						if(!(header in newHeaders))
-							this.headers.removeEntry(requestSection, header);
-				}
-				catch(e2) {
-					Components.utils.reportError(e2);
-				}
-
 				var statusStr = request.responseStatus + " " + request.responseStatusText;
 				this.headers.caption(this.ut.getLocalized("response"));
 				this.headers.beginSection();

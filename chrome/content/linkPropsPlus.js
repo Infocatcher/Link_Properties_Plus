@@ -776,6 +776,7 @@ var linkPropsPlusSvc = {
 				var flags = this.ios.getProtocolFlags(schm);
 				if(flags & ph.URI_DOES_NOT_RETURN_DATA) {
 					this.ut.warning('URI_DOES_NOT_RETURN_DATA (scheme: "' + schm + '")');
+					this.requestFailed("noDataProtocol");
 					this.onStopRequestCallback(false);
 					return false;
 				}
@@ -804,6 +805,7 @@ var linkPropsPlusSvc = {
 			}
 			catch(e2) {
 				Components.utils.reportError(e2);
+				this.requestFailed("cantOpen");
 			}
 			this.onStopRequestCallback(false);
 			return false;
@@ -811,9 +813,19 @@ var linkPropsPlusSvc = {
 		catch(e) {
 			this.headers.ensureSectionsEnded();
 			Components.utils.reportError(e);
+			this.requestFailed("badURI");
 		}
 		this.onStopRequestCallback(false);
 		return false;
+	},
+	_errorTimer: 0,
+	requestFailed: function(reason) {
+		var root = document.documentElement;
+		clearTimeout(this._errorTimer);
+		root.setAttribute("linkPropsPlus_error", reason);
+		this._errorTimer = setTimeout(function() {
+			root.removeAttribute("linkPropsPlus_error");
+		}, 700);
 	},
 	checkFakeURINeeded: function(uri) {
 		// Ugly workaround...

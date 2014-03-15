@@ -19,6 +19,7 @@
 `x` Correctly focus already opened link properties window with the same URI and referer, if URI is empty.<br>
 `+` Added ability to not use selection clipboard on Linux to prefill link in properties window (<em>extensions.linkPropertiesPlus.preferSelectionClipboard</em> preference).<br>
 `+` Added basic indication of request errors (only in link properties window): invalid URI or request error – red “Get properties” button, protocol with URI_DOES_NOT_RETURN_DATA flag or unknown protocol – gray “Get properties” button.<br>
+`*` Show request headers modifications from browser or other extensions.<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Corrected position of context menu item in SeaMonkey's mail.<br>

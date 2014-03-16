@@ -1754,7 +1754,9 @@ var linkPropsPlusSvc = {
 				this.setCanResumeDownload(!!data);
 			},
 			// nsIRequestObserver
-			onStartRequest: function(request, ctxt) {},
+			onStartRequest: function(request, ctxt) {
+				this.parent.checkHeadersChanges(ch, requestSection, this._headers);
+			},
 			onStopRequest: function(request, ctxt, status) {
 				if(!this.canceled && request instanceof Components.interfaces.nsIHttpChannel) try {
 					var headers = this.parent.headers;
@@ -1773,14 +1775,16 @@ var linkPropsPlusSvc = {
 				testResume.disabled = false;
 				this.parent.checkResumableChannel = null;
 			},
+			_headers: { __proto__: null },
 			// nsIHttpHeaderVisitor
 			visitHeader: function(header, value) {
 				this.parent.headers.entry(header, value);
+				this._headers[header] = value;
 			}
 		};
 		if(ch instanceof Components.interfaces.nsIHttpChannel) try {
 			this.headers.caption(this.ut.getLocalized("testResumabilityRequest"), "caption testResume");
-			this.headers.beginSection("block testResume");
+			var requestSection = this.headers.beginSection("block testResume");
 			ch.visitRequestHeaders(observer);
 			this.headers.endSection();
 		}

@@ -1616,25 +1616,7 @@ var linkPropsPlusSvc = {
 		if(!ch)
 			return; // Window is closed
 		// Extract final request headers from _original_ channel ("http-on-modify-request" and so on)
-		var requestSection = this._requestSection;
-		if(requestSection && ch instanceof Components.interfaces.nsIHttpChannel) try {
-			var oldHeaders = this._headers;
-			var newHeaders = { __proto__: null };
-			ch.visitRequestHeaders({
-				headers: this.headers,
-				// nsIHttpHeaderVisitor
-				visitHeader: function(header, value) {
-					newHeaders[header] = value;
-					this.headers.changeEntry(requestSection, header, value);
-				}
-			});
-			for(var header in oldHeaders)
-				if(!(header in newHeaders))
-					this.headers.removeEntry(requestSection, header);
-		}
-		catch(e) {
-			Components.utils.reportError(e);
-		}
+		this.checkHeadersChanges(ch, this._requestSection, this._headers);
 		try {
 			if(request instanceof Components.interfaces.nsIHttpChannel) {
 				var statusStr = request.responseStatus + " " + request.responseStatusText;
@@ -1703,6 +1685,25 @@ var linkPropsPlusSvc = {
 		//	this.checkChannelResumable(request);
 
 		this.onStopRequestCallback(true);
+	},
+	checkHeadersChanges: function(ch, section, oldHeaders) {
+		if(ch && section && oldHeaders && ch instanceof Components.interfaces.nsIHttpChannel) try {
+			var newHeaders = { __proto__: null };
+			ch.visitRequestHeaders({
+				headers: this.headers,
+				// nsIHttpHeaderVisitor
+				visitHeader: function(header, value) {
+					newHeaders[header] = value;
+					this.headers.changeEntry(section, header, value);
+				}
+			});
+			for(var header in oldHeaders)
+				if(!(header in newHeaders))
+					this.headers.removeEntry(section, header);
+		}
+		catch(e) {
+			Components.utils.reportError(e);
+		}
 	},
 
 	checkResumableChannel: null,

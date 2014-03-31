@@ -8,16 +8,18 @@
 	<script type="application/javascript" src="chrome://linkpropsplus/content/overlayMainWindow.js" />
 
 	<commandset id="mainCommandSet">
-		<command id="linkPropsPlus-cmd-openWindow" oncommand="linkPropsPlus.openWindow();"
+		<command id="linkPropsPlus-cmd-openWindow" oncommand="linkPropsPlus.openWindow(event.sourceEvent);"
 			label="&linkPropsPlus.tools;" accesskey="&linkPropsPlus.toolsAccesskey;" />
 	</commandset>
 	<keyset id="mainKeyset">
-		<key id="linkPropsPlus-key-openWindow" command="linkPropsPlus-cmd-openWindow" disabled="true" />
+		<key id="linkPropsPlus-key-openWindow" oncommand="linkPropsPlus.openWindow();" disabled="true" />
 	</keyset>
 	<menupopup id="menu_ToolsPopup">
 		<menuitem id="linkPropsPlus-toolsMenuitem" class="menuitem-iconic"
 			insertafter="menu_pageInfo,menu_inspector,javascriptConsole"
-			command="linkPropsPlus-cmd-openWindow" key="linkPropsPlus-key-openWindow" />
+			command="linkPropsPlus-cmd-openWindow"
+			onclick="if(event.button == 1) linkPropsPlus.openWindow(event);"
+			key="linkPropsPlus-key-openWindow" />
 	</menupopup>
 	<menupopup id="contentAreaContextMenu">
 		<menuitem id="linkPropsPlus-contextMenuitem" class="menuitem-iconic"
@@ -45,24 +47,32 @@
 	<menupopup id="appmenu_webDeveloper_popup">
 		<menuitem id="linkPropsPlus-appMenuitem" class="menuitem-iconic"
 			insertafter="appmenu_webConsole,appmenu_pageInspect,appmenu_pageSource"
-			command="linkPropsPlus-cmd-openWindow" key="linkPropsPlus-key-openWindow" />
+			command="linkPropsPlus-cmd-openWindow"
+			onclick="if(event.button == 1) linkPropsPlus.openWindow(event);"
+			key="linkPropsPlus-key-openWindow" />
 	</menupopup>
 	<menupopup id="menuWebDeveloperPopup">
 		<menuitem id="linkPropsPlus-toolsMenuitemSub" class="menuitem-iconic"
 			insertafter="webConsole,javascriptConsole"
-			command="linkPropsPlus-cmd-openWindow" key="linkPropsPlus-key-openWindow" />
+			command="linkPropsPlus-cmd-openWindow"
+			onclick="if(event.button == 1) linkPropsPlus.openWindow(event);"
+			key="linkPropsPlus-key-openWindow" />
 	</menupopup>
 
 	<!-- SeaMonkey and Thunderbird -->
 	<menupopup id="taskPopup">
 		<menuitem id="linkPropsPlus-toolsMenuitem" class="menuitem-iconic"
 			insertbefore="tasksDataman,sanitizeSeparator,javascriptConsole,sep_switchprofile,sync-setup"
-			command="linkPropsPlus-cmd-openWindow" key="linkPropsPlus-key-openWindow" />
+			command="linkPropsPlus-cmd-openWindow"
+			onclick="if(event.button == 1) linkPropsPlus.openWindow(event);"
+			key="linkPropsPlus-key-openWindow" />
 	</menupopup>
 	<menupopup id="toolsPopup">
 		<menuitem id="linkPropsPlus-toolsMenuitemSub" class="menuitem-iconic"
 			insertafter="errorConsole,javascriptConsole"
-			command="linkPropsPlus-cmd-openWindow" key="linkPropsPlus-key-openWindow" />
+			command="linkPropsPlus-cmd-openWindow"
+			onclick="if(event.button == 1) linkPropsPlus.openWindow(event);"
+			key="linkPropsPlus-key-openWindow" />
 	</menupopup>
 	<toolbarpalette id="MailToolbarPalette">
 		<toolbarbutton id="linkPropsPlus-toolbarButton"
@@ -80,11 +90,11 @@
 
 	<!-- Thunderbird -->
 	<commandset id="mailCommands">
-		<command id="linkPropsPlus-cmd-openWindow" oncommand="linkPropsPlus.openWindow();"
+		<command id="linkPropsPlus-cmd-openWindow" oncommand="linkPropsPlus.openWindow(event.sourceEvent);"
 			label="&linkPropsPlus.tools;" accesskey="&linkPropsPlus.toolsAccesskey;" />
 	</commandset>
 	<keyset id="mailKeys">
-		<key id="linkPropsPlus-key-openWindow" command="linkPropsPlus-cmd-openWindow" disabled="true" />
+		<key id="linkPropsPlus-key-openWindow" oncommand="linkPropsPlus.openWindow();" disabled="true" />
 	</keyset>
 	<menupopup id="mailContext">
 		<menuitem id="linkPropsPlus-contextMenuitem" class="menuitem-iconic"

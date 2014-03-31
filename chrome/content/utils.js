@@ -40,6 +40,8 @@ var linkPropsPlusUtils = {
 			) {
 				w.focus();
 				o.svc.restartAutoClose();
+				if(autostart && !o.autostart && !o.svc.activeRequest && !o.svc.requestFinished)
+					o.getHeaders();
 				return;
 			}
 		}

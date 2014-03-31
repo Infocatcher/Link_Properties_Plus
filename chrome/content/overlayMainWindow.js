@@ -200,7 +200,10 @@ var linkPropsPlus = {
 		this.sourceWindow = null;
 	},
 
-	openWindow: function(uri, referer, sourceWindow, browserWindow, sourceTab) {
+	openWindow: function(e, uri, referer, sourceWindow, browserWindow, sourceTab) {
+		var autostart = e
+			? e.type == "click" || e.ctrlKey || e.altKey || e.shiftKey || e.metaKey
+			: !!uri;
 		if(!uri && this.pu.pref("preferSelectionClipboard")) {
 			var clipUriSel = this.ut.readFromClipboard(true);
 			if(this.isValidURI(clipUriSel))
@@ -215,13 +218,14 @@ var linkPropsPlus = {
 			referer = content.location.href;
 		if(!sourceWindow)
 			sourceWindow = content;
-		this.ut.openWindow(uri, referer, sourceWindow, arguments.length > 0, browserWindow, sourceTab);
+		this.ut.openWindow(uri, referer, sourceWindow, autostart, browserWindow, sourceTab);
 	},
 	openWindowContext: function() {
-		this.openWindow(
+		this.ut.openWindow(
 			this.linkURL,
 			this.referer,
-			this.sourceWindow,
+			this.sourceWindow || content,
+			true,
 			window,
 			"gBrowser" in window && gBrowser.selectedTab
 		);

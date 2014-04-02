@@ -163,7 +163,7 @@ var linkPropsPlus = {
 			}
 			uri = this.extractURI(sel);
 			if(
-				!sel // Fallback for Electrolysis
+				!uri // Fallback for Electrolysis + easy way to detect strings like "example.com"
 				&& gContextMenu && gContextMenu.onPlainTextLink
 				&& typeof gContextMenu.linkURL == "string"
 			)

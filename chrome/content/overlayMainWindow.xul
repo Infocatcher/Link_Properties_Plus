@@ -43,7 +43,7 @@
 			ondrop="linkPropsPlus.dnd.buttonDrop(event);" />
 	</toolbarpalette>
 
-	<!-- Firefox 4 -->
+	<!-- Firefox 4+ -->
 	<menupopup id="appmenu_webDeveloper_popup">
 		<menuitem id="linkPropsPlus-appMenuitem" class="menuitem-iconic"
 			insertafter="appmenu_webConsole,appmenu_pageInspect,appmenu_pageSource"
@@ -54,6 +54,14 @@
 	<menupopup id="menuWebDeveloperPopup">
 		<menuitem id="linkPropsPlus-toolsMenuitemSub" class="menuitem-iconic"
 			insertafter="webConsole,javascriptConsole"
+			command="linkPropsPlus-cmd-openWindow"
+			onclick="if(event.button == 1) linkPropsPlus.openWindow(event);"
+			key="linkPropsPlus-key-openWindow" />
+	</menupopup>
+	<!-- Firefox 29+ with Classic Theme Restorer extension -->
+	<menupopup id="newmenuWebDeveloperPopup">
+		<menuitem id="linkPropsPlus-appMenuitem" class="menuitem-iconic"
+			insertafter="menu_pageSource"
 			command="linkPropsPlus-cmd-openWindow"
 			onclick="if(event.button == 1) linkPropsPlus.openWindow(event);"
 			key="linkPropsPlus-key-openWindow" />

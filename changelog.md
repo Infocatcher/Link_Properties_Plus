@@ -21,6 +21,7 @@
 `+` Added basic indication of request errors (only in link properties window): invalid URI or request error – red “Get properties” button, protocol with URI_DOES_NOT_RETURN_DATA flag or unknown protocol – gray “Get properties” button.<br>
 `*` Show request headers modifications from browser or other extensions.<br>
 `+` Added support for App button from <a href="https://addons.mozilla.org/addon/classicthemerestorer/">Classic Theme Restorer</a> extension in Firefox 29+ (Australis).<br>
+`*` Double click on “Referer:” label (or on empty referer field) to get fake referer from link.<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Corrected position of context menu item in SeaMonkey's mail.<br>

@@ -53,7 +53,8 @@
 				<label id="linkPropsPlus-referer-label"
 					value="&linkPropsPlus.labelReferer;" accesskey="&linkPropsPlus.labelRefererAccesskey;"
 					tooltiptext="&linkPropsPlus.labelOnlyHttpTip;"
-					control="linkPropsPlus-referer" />
+					control="linkPropsPlus-referer"
+					ondblclick="linkPropsPlusWnd.setFakeReferer(event);" />
 				<textbox id="linkPropsPlus-referer" flex="1" />
 				<button oncommand="linkPropsPlusSvc.openOptions();"
 					label="&linkPropsPlus.buttonOptions;" accesskey="&linkPropsPlus.buttonOptionsAccesskey;" />

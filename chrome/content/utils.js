@@ -91,22 +91,27 @@ var linkPropsPlusUtils = {
 		}
 		if(this.isValidReferer(referer))
 			return referer;
-		switch(this.pu.pref("useFakeReferer")) {
+		referer = this.getFakeReferer(uri);
+		if(this.isValidReferer(referer))
+			return referer;
+		return undefined;
+	},
+	getFakeReferer: function(uri, type) {
+		if(type === undefined)
+			type = this.pu.pref("useFakeReferer");
+		switch(type) {
 			case 1:
 				try {
 					var uriObj = this.ios.newURI(uri, null, null);
 					// Thanks to RefControl https://addons.mozilla.org/firefox/addon/refcontrol/
-					referer = uriObj.scheme + "://" + uriObj.hostPort + "/";
-					break;
+					return uriObj.scheme + "://" + uriObj.hostPort + "/";
 				}
 				catch(e) { // Will use "uri" as referer
 				}
 			case 2:
-				referer = uri;
+				return uri;
 		}
-		if(this.isValidReferer(referer))
-			return referer;
-		return undefined;
+		return "";
 	},
 	decodeURI: function(uri) {
 		if(!this.pu.pref("decodeURIs"))

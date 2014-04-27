@@ -165,6 +165,12 @@ var linkPropsPlusWnd = {
 		this.setTitle();
 		this.fixWindowHeight();
 	},
+	setFakeReferer: function(e) {
+		var type = this.pu.pref("useFakeReferer") || 2;
+		if(e.button > 0 || e.ctrlKey || e.altKey || e.shiftKey || e.metaKey)
+			type = type == 2 ? 1 : 2;
+		this.refererField.value = this.ut.getFakeReferer(this.uri, type);
+	},
 	onStopRequest: function(ok) {
 		this.cantGet = !this.uri;
 	},

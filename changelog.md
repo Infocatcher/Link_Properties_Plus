@@ -22,6 +22,7 @@
 `*` Show request headers modifications from browser or other extensions.<br>
 `+` Added support for App button from <a href="https://addons.mozilla.org/addon/classicthemerestorer/">Classic Theme Restorer</a> extension in Firefox 29+ (Australis).<br>
 `*` Double click on “Referer:” label (or on empty referer field) to get fake referer from link.<br>
+`*` Improved startup performance: now used lazy loading for prefUtils.js.<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Corrected position of context menu item in SeaMonkey's mail.<br>

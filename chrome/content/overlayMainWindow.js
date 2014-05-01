@@ -41,6 +41,7 @@ var linkPropsPlus = {
 		this.cm.addEventListener("popuphidden", this, false);
 		//this.pu.init();
 		setTimeout(function(_this) {
+			_this.pu; // => registerHotkeys()
 			_this.showMenuitems();
 			_this.showIcons();
 		}, 50, this);

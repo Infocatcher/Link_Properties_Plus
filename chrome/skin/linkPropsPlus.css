@@ -113,10 +113,13 @@
 	visibility: collapse;
 }
 
+:root[linkPropsPlus_error="noDataProtocol"] #linkPropsPlus-uri,
 :root[linkPropsPlus_error="noDataProtocol"] #linkPropsPlus-getHeaders {
 	color: grayText;
 }
+:root[linkPropsPlus_error="badURI"] #linkPropsPlus-uri,
 :root[linkPropsPlus_error="badURI"] #linkPropsPlus-getHeaders,
+:root[linkPropsPlus_error="cantOpen"] #linkPropsPlus-uri,
 :root[linkPropsPlus_error="cantOpen"] #linkPropsPlus-getHeaders {
 	color: #e00;
 }

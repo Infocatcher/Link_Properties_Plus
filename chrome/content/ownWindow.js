@@ -128,9 +128,33 @@ var linkPropsPlusWnd = {
 			var crop = this.pu.pref("ownWindow.cropFileNameInTitle");
 			if(crop > 0) {
 				var uri = this.ut.decodeURI(uri).replace(/#.*$/, "");
-				var fName = /([^\/\\]+|[^\/\\]+\/\?.*?)$/.test(uri)
+				var fName = /([^\/\\]+\/?|[^\/\\]+\/\?.*?)$/.test(uri)
 					? RegExp.lastMatch
 					: uri;
+				if(
+					fName.length < crop*0.4
+					&& /^[^.\/?&:]+\/?$/.test(fName) // Looks like "directory": dir or dir/
+				) {
+					var lastSlash = uri.substr(-1) == "/" ? "/" : "";
+					var path = [];
+					var maxLen = crop*0.6;
+					var curLen = 0;
+					var dirs = uri
+						.replace(/\/$/, "")
+						.replace(/^[^:]+:\/*[^\/]+\//, "") // Remove host: http://example.com/dir/ -> dir/
+						.split("/");
+					var last = dirs.length - 1;
+					if(last >= 0 && dirs[last] + lastSlash == fName) {
+						for(var i = last; i >= 0; --i) {
+							var dir = dirs[i];
+							curLen += dir.length + 1;
+							if(curLen > maxLen)
+								break;
+							path.push(dir);
+						}
+						fName = path.reverse().join("/") + lastSlash; // Example: dir1/dir2/dir3/
+					}
+				}
 				if(fName.length > crop) {
 					var half = Math.floor(crop/2);
 					fName = fName.substr(0, half) + "…" + fName.substr(half - crop);

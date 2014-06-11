@@ -577,6 +577,12 @@ var linkPropsPlusSvc = {
 			return tab;
 		return null;
 	},
+	get isOldAddTab() {
+		delete this.isOldAddTab;
+		return this.isOldAddTab = this.appInfo.name == "SeaMonkey"
+			? this.fxVersion < 4
+			: this.fxVersion < 3.6;
+	},
 	goToURI: function(textboxId, invertCloseBehavior) {
 		var tb = document.getElementById("linkPropsPlus-" + textboxId);
 		var uri = tb
@@ -614,11 +620,14 @@ var linkPropsPlusSvc = {
 			browserWin.focus();
 			var gBrowser = browserWin.gBrowser;
 
+			var openAsChild = this.pu.pref("openInChildTab");
 			if(
-				browserWin == this.parentWindow
+				openAsChild
+				&& browserWin == this.parentWindow
 				&& this.parentTab
-				&& this.pu.pref("openInChildTab")
 			) {
+				gBrowser.selectedTab = this.parentTab;
+
 				// Open a new tab as a child of the current tab (Tree Style Tab)
 				// http://piro.sakura.ne.jp/xul/_treestyletab.html.en#api
 				if("TreeStyleTabService" in browserWin)
@@ -634,7 +643,14 @@ var linkPropsPlusSvc = {
 
 			if("privateTab" in browserWin)
 				browserWin.privateTab.readyToOpenTab(this.isPrivate);
-			gBrowser.selectedTab = gBrowser.addTab(uri, this.refererURI || undefined);
+			if(this.isOldAddTab)
+				gBrowser.selectedTab = gBrowser.addTab(uri, this.refererURI || undefined);
+			else {
+				gBrowser.selectedTab = gBrowser.addTab(uri, {
+					referrerURI: this.refererURI || undefined,
+					relatedToCurrent: openAsChild
+				});
+			}
 
 			hasTabKit && browserWin.tabkit.addingTabOver();
 		}

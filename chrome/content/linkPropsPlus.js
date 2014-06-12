@@ -620,18 +620,17 @@ var linkPropsPlusSvc = {
 			browserWin.focus();
 			var gBrowser = browserWin.gBrowser;
 
-			var openAsChild = this.pu.pref("openInChildTab");
-			if(
-				openAsChild
-				&& browserWin == this.parentWindow
-				&& this.parentTab
-			) {
-				gBrowser.selectedTab = this.parentTab;
+			var parentTab = this.parentTab;
+			var openAsChild = parentTab
+				&& browserWin == parentWindow
+				&& this.pu.pref("openInChildTab");
+			if(openAsChild) {
+				gBrowser.selectedTab = parentTab;
 
 				// Open a new tab as a child of the current tab (Tree Style Tab)
 				// http://piro.sakura.ne.jp/xul/_treestyletab.html.en#api
 				if("TreeStyleTabService" in browserWin)
-					browserWin.TreeStyleTabService.readyToOpenChildTab(this.parentTab);
+					browserWin.TreeStyleTabService.readyToOpenChildTab(parentTab);
 
 				// Tab Kit https://addons.mozilla.org/firefox/addon/tab-kit/
 				// TabKit 2nd Edition https://addons.mozilla.org/firefox/addon/tabkit-2nd-edition/
@@ -649,7 +648,7 @@ var linkPropsPlusSvc = {
 			else {
 				gBrowser.selectedTab = gBrowser.addTab(uri, {
 					referrerURI: this.refererURI || undefined,
-					relatedToCurrent: openAsChild
+					relatedToCurrent: !!openAsChild
 				});
 			}
 

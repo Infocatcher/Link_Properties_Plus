@@ -1134,7 +1134,8 @@ var linkPropsPlusSvc = {
 			this.frame.setAttribute("transparent", "true");
 			setTimeout(function(_this) {
 				_this.createMenu();
-				if(_this.parent.fxVersion < 3.6)
+				// Note: in Firefox 3.6 we have wrong background only for empty frame
+				if(_this.parent.fxVersion <= 3.6)
 					_this.field.style.background = "-moz-Dialog";
 			}, 0, this);
 		},

@@ -23,6 +23,7 @@
 `+` Добавлена поддержка кнопки-меню приложения от расширения <a href="https://addons.mozilla.org/addon/classicthemerestorer/">Classic Theme Restorer</a> в Firefox 29+ (Australis).<br>
 `*` Двойной клик по метке “Referer:” (или по пустому полю для ввода referer'а) для получения поддельного referer'а из ссылки.<br>
 `*` Улучшена производительность при запуске: теперь используется ленивая загрузка для prefUtils.js.<br>
+`*` Теперь ссылки открываются после текущей вкладки только если установлено <em>extensions.linkPropertiesPlus.openInChildTab</em> = true, также добавлена настройка <em>extensions.linkPropertiesPlus.openInChildTab.onlyIfSelected</em> для открытия в соседней вкладке только если вкладка-источник по-прежнему активна.<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Исправлено положение пункта контекстного меню в почтовике SeaMonkey.<br>

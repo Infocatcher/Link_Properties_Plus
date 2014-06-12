@@ -41,6 +41,7 @@ pref("extensions.linkPropertiesPlus.decodeURIs", true);
 pref("extensions.linkPropertiesPlus.closeAfterOpen", true);
 pref("extensions.linkPropertiesPlus.showLinkButtons", 1); // 0 - don't show, 1 - hide, if direct link are the same, 2 - always show
 pref("extensions.linkPropertiesPlus.openInChildTab", true);
+pref("extensions.linkPropertiesPlus.openInChildTab.onlyIfSelected", false);
 pref("extensions.linkPropertiesPlus.openMultipleLimit", 5);
 pref("extensions.linkPropertiesPlus.blockEscapeKeyDelay", 450);
 // Block Escape key directly after request finished (time in milliseconds) to don't close window instead of request cancellation

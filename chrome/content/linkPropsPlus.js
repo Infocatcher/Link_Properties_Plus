@@ -623,7 +623,11 @@ var linkPropsPlusSvc = {
 			var parentTab = this.parentTab;
 			var openAsChild = parentTab
 				&& browserWin == parentWindow
-				&& this.pu.pref("openInChildTab");
+				&& this.pu.pref("openInChildTab")
+				&& (
+					!this.pu.pref("openInChildTab.onlyIfSelected")
+					|| parentTab.hasAttribute("selected")
+				);
 			if(openAsChild) {
 				gBrowser.selectedTab = parentTab;
 

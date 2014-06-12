@@ -641,6 +641,7 @@ var linkPropsPlusSvc = {
 				}
 			}
 
+			// https://github.com/Infocatcher/Private_Tab#privatetabreadytoopentab
 			if("privateTab" in browserWin)
 				browserWin.privateTab.readyToOpenTab(this.isPrivate);
 			if(this.isOldAddTab)

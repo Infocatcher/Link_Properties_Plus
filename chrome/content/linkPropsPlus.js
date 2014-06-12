@@ -732,13 +732,19 @@ var linkPropsPlusSvc = {
 		}
 		browserDoc.popupNode = null;
 	},
+	get browserURL() {
+		var browserURL = this.pu.getPref("browser.chromeURL");
+		if(!browserURL) switch(this.appInfo.name) {
+			case "Thunderbird": browserURL = "chrome://messenger/content/"; break;
+			case "SeaMonkey":   browserURL = "chrome://navigator/content/"; break;
+			default:            browserURL = "chrome://browser/content/";
+		}
+		delete this.browserURL;
+		return this.browserURL = browserURL;
+	},
 	openInWindow: function(uri) {
 		return window.openDialog(
-			this.pu.getPref("browser.chromeURL") || (
-				this.appInfo.name == "Thunderbird"
-					? "chrome://messenger/content/"
-					: "chrome://browser/content/"
-			),
+			this.browserURL,
 			"_blank",
 			"chrome,all,dialog=no",
 			uri,

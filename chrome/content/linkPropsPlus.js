@@ -932,8 +932,12 @@ var linkPropsPlusSvc = {
 		if(dur < 1000 || !this.pu.pref("autoClose.enabled"))
 			return;
 		this.delayedClose();
-		if(this.pu.pref("autoClose.dontCloseUnderCursor"))
+		if(this.pu.pref("autoClose.dontCloseUnderCursor")) {
 			this.setDontClose(true);
+			// Note: works only if mouse was moved after window opening
+			if(document.querySelector && document.querySelector(":hover"))
+				this.windowOver();
+		}
 	},
 	destroyAutoClose: function(restart) {
 		if(!this.autoCloseInitialized)

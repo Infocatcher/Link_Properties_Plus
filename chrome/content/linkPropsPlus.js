@@ -177,7 +177,10 @@ var linkPropsPlusSvc = {
 			break;
 			case "mouseover":
 			case "mouseout":
-				if(!e.relatedTarget)
+				if(
+					!e.relatedTarget
+					&& e.view == window // Ignore headers frame
+				)
 					this[e.type == "mouseover" ? "windowOver" : "windowOut"]();
 			break;
 			case "mousemove":

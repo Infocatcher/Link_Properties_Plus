@@ -1262,23 +1262,23 @@ var linkPropsPlusSvc = {
 			}
 			var activeSection = this._activeSection;
 			this._activeSection = section;
-			var section = this.entry(name, value);
+			var newSection = this.entry(name, value);
 			this._activeSection = activeSection;
-			section.className += " " + (oldEntry ? "changed" : "added");
+			newSection.className += " " + (oldEntry ? "changed" : "added");
 			// Place new entry directly after old one
-			if(oldEntry && section.previousSibling != oldEntry) { // Oh...
-				var copyHack = section.previousSibling && section.previousSibling.lastChild;
+			if(oldEntry && newSection.previousSibling != oldEntry) { // Oh...
+				var copyHack = newSection.previousSibling && newSection.previousSibling.lastChild;
 				if(copyHack && copyHack.localName.toLowerCase() == "br")
 					copyHack.parentNode.removeChild(copyHack);
 				var insPos = oldEntry.nextSibling;
-				oldEntry.parentNode.insertBefore(section, insPos);
-				insPos && section.appendChild(this._node("br", "copyHack"));
+				oldEntry.parentNode.insertBefore(newSection, insPos);
+				insPos && newSection.appendChild(this._node("br", "copyHack"));
 			}
 			if(this.showDiff) {
 				if(oldEntry)
-					section.style.fontStyle = "italic";
+					newSection.style.fontStyle = "italic";
 				else
-					section.style.textDecoration = "underline";
+					newSection.style.textDecoration = "underline";
 			}
 		},
 		removeEntry: function(section, name) {

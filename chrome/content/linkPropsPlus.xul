@@ -55,8 +55,8 @@
 				<row id="linkPropsPlus-rowHeaders" hidden="true" flex="1">
 					<label value="&linkPropsPlus.labelHeaders;" control="linkPropsPlus-headers"
 						tooltiptext="&linkPropsPlus.labelOnlyHttpTip;" />
-					<!-- We had to use <iframe> because formatting isn't copied from <html:div> :( -->
-					<iframe id="linkPropsPlus-headers" flex="1" type="content" showcaret="true"
+					<browser id="linkPropsPlus-headers" flex="1" type="content" showcaret="true"
+						autoscroll="true" disablehistory="true"
 						context="linkPropsPlus-headers-context"
 						src="chrome://linkpropsplus/content/headers.html" />
 				</row>

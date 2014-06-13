@@ -520,7 +520,7 @@ var linkPropsPlusSvc = {
 	},
 	getField: function(row) {
 		return row.getElementsByTagName("textbox")[0]
-			|| row.getElementsByTagName("iframe")[0];
+			|| row.getElementsByTagName("browser")[0];
 	},
 	getFrameText: function(frame) {
 		var win = frame.contentWindow;

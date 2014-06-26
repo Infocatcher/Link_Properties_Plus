@@ -46,6 +46,13 @@ pref("extensions.linkPropertiesPlus.openMultipleLimit", 5);
 pref("extensions.linkPropertiesPlus.blockEscapeKeyDelay", 450);
 // Block Escape key directly after request finished (time in milliseconds) to don't close window instead of request cancellation
 
+pref("extensions.linkPropertiesPlus.localeNumbers", "");
+pref("extensions.linkPropertiesPlus.localeDates", "");
+// Locales for numbers and dates (Firefox 29+):
+// ""          - use OS locale
+// "<browser>" - use browser locale (navigator.language)
+// See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation
+
 pref("extensions.linkPropertiesPlus.context.onLinks", true);
 pref("extensions.linkPropertiesPlus.context.onSelection", true);
 pref("extensions.linkPropertiesPlus.context.onSelection.inInputFields", true);

@@ -326,8 +326,14 @@ var linkPropsPlusSvc = {
 			|| pName == this.windowType + ".showHttpHeaders"
 		)
 			this.rowsVisibilityChanged();
-		else if(pName == "sizePrecision" || pName == "useBinaryPrefixes")
+		else if(
+			pName == "sizePrecision"
+			|| pName == "useBinaryPrefixes"
+			|| pName == "localeNumbers"
+		)
 			this.convertSize();
+		else if(pName == "localeDates")
+			this.formatDate();
 		else if(pName == "decodeURIs") {
 			this.formatURI();
 			if(this.isOwnWindow)
@@ -394,6 +400,7 @@ var linkPropsPlusSvc = {
 
 		this.realCount = 0;
 		this._lastSize = this._lastSizeTip = null;
+		this._lastDate = null;
 		this.redirects.length = 0;
 	},
 	_contextNode: null,
@@ -778,6 +785,7 @@ var linkPropsPlusSvc = {
 			return false;
 
 		this._lastSize = this._lastSizeTip = null;
+		this._lastDate = null;
 		this._hasSize = this._hasType = false;
 		delete this._isPrivateOverrided;
 
@@ -1507,7 +1515,10 @@ var linkPropsPlusSvc = {
 					.replace(/\./, this.localeDelimiter)
 			);
 		}
-		return n.toLocaleString(undefined, {
+		var locale = this.pu.pref("localeNumbers") || undefined;
+		if(locale == "<browser>")
+			locale = navigator.language;
+		return n.toLocaleString(locale, {
 			minimumFractionDigits: precision,
 			maximumFractionDigits: precision
 		});
@@ -1516,13 +1527,20 @@ var linkPropsPlusSvc = {
 		return s.replace(/(\d)(?=(?:\d{3})+(?:\D|$))/g, "$1" + this.localeSeparator); // 12345678 -> 12 345 678
 	},
 	formatDate: function(str) {
+		if(!arguments.length)
+			str = this._lastDate;
+		else
+			this._lastDate = str;
 		var target = document.getElementById("linkPropsPlus-lastModified");
 		var date = new Date(str);
 		var isInvalid = !str || !isFinite(date.getTime());
 		this.setMissingStyle(target, isInvalid);
 		if(str && isInvalid)
 			target.tooltipText = str;
-		target.value = date.toLocaleString();
+		var locale = this.pu.pref("localeDates") || undefined;
+		if(locale == "<browser>")
+			locale = navigator.language;
+		target.value = date.toLocaleString(locale);
 	},
 	formatType: function(str) {
 		var target = document.getElementById("linkPropsPlus-contentType");

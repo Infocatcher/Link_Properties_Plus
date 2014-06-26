@@ -1450,7 +1450,7 @@ var linkPropsPlusSvc = {
 		var intSize = parseInt(rawSize);
 		if(intSize < 0) // We get -1 for FTP directories
 			return "";
-		var size = this.formatNumStr(String(rawSize));
+		var size = this.formatNum(intSize, 0);
 
 		var useBinaryPrefixes = this.pu.pref("useBinaryPrefixes");
 		var k = useBinaryPrefixes ? 1024 : 1000;
@@ -1466,6 +1466,17 @@ var linkPropsPlusSvc = {
 		return type
 			? this.ut.getLocalized(type, [this.formatNum(intSize/g), size])
 			: this.ut.getLocalized("bytes", [size]);
+	},
+	get nativeLocaleNumbers() {
+		var hasNative = false;
+		try {
+			(0).toLocaleString("invalid language");
+		}
+		catch(e) {
+			hasNative = e.name == "RangeError"; // Firefox 29+
+		}
+		delete this.nativeLocaleNumbers;
+		return this.nativeLocaleNumbers = hasNative;
 	},
 	initLocaleNumbers: function() {
 		// Detect locale delimiter (e.g. 0.1 -> 0,1)
@@ -1487,11 +1498,19 @@ var linkPropsPlusSvc = {
 		this.initLocaleNumbers();
 		return this.localeSeparator;
 	},
-	formatNum: function(n) {
-		return this.formatNumStr(
-			n.toFixed(this.pu.pref("sizePrecision") || 0)
-				.replace(/\./, this.localeDelimiter)
-		);
+	formatNum: function(n, precision) {
+		if(precision === undefined)
+			precision = this.pu.pref("sizePrecision") || 0;
+		if(!this.nativeLocaleNumbers) {
+			return this.formatNumStr(
+				n.toFixed(precision)
+					.replace(/\./, this.localeDelimiter)
+			);
+		}
+		return n.toLocaleString(undefined, {
+			minimumFractionDigits: precision,
+			maximumFractionDigits: precision
+		});
 	},
 	formatNumStr: function(s) {
 		return s.replace(/(\d)(?=(?:\d{3})+(?:\D|$))/g, "$1" + this.localeSeparator); // 12345678 -> 12 345 678

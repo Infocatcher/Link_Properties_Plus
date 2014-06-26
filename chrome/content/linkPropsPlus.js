@@ -1518,10 +1518,16 @@ var linkPropsPlusSvc = {
 		var locale = this.pu.pref("localeNumbers") || undefined;
 		if(locale == "<browser>")
 			locale = navigator.language;
-		return n.toLocaleString(locale, {
-			minimumFractionDigits: precision,
-			maximumFractionDigits: precision
-		});
+		try {
+			return n.toLocaleString(locale, {
+				minimumFractionDigits: precision,
+				maximumFractionDigits: precision
+			});
+		}
+		catch(e) {
+			Components.utils.reportError(e);
+		}
+		return n.toLocaleString(); // Fallback for "invalid language tag" error
 	},
 	formatNumStr: function(s) {
 		return s.replace(/(\d)(?=(?:\d{3})+(?:\D|$))/g, "$1" + this.localeSeparator); // 12345678 -> 12 345 678
@@ -1540,7 +1546,13 @@ var linkPropsPlusSvc = {
 		var locale = this.pu.pref("localeDates") || undefined;
 		if(locale == "<browser>")
 			locale = navigator.language;
-		target.value = date.toLocaleString(locale);
+		try {
+			target.value = date.toLocaleString(locale);
+		}
+		catch(e) {
+			Components.utils.reportError(e);
+			target.value = date.toLocaleString(); // Fallback for "invalid language tag" error
+		}
 	},
 	formatType: function(str) {
 		var target = document.getElementById("linkPropsPlus-contentType");

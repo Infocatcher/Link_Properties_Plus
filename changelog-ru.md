@@ -15,6 +15,7 @@
 `*` Улучшено поле для заголовков HTTP: теперь используется форматирование и можно сворачивать разделы (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/8">#8</a>, <a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/9">#9</a>).<br>
 `*` Изменена иконка расширения (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/10">#10</a>).<br>
 `+` Добавлена кнопка для панелей инструментов (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/11">#11</a>).<br>
+`*` Улучшено обнаружение ссылок в выделенном тексте: теперь определяет `about:`, но игнорирует `http:`, `http://` и `file:///`.<br>
 `+` Добавлена поддержка для отдельного окна сообщений в Thunderbird и почте SeaMonkey (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/12">#12</a>).<br>
 `x` Исправлен перевод фокуса на уже открытое окно для получения свойств ссылки с таким же URI и referer'ом, если URI не задан.<br>
 `+` Добавлена возможность не использовать мышиный буфера обмена в Linux при заполнении поля для ссылки в окне свойств (настройка <em>extensions.linkPropertiesPlus.preferSelectionClipboard</em>).<br>

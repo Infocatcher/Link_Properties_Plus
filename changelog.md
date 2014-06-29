@@ -15,6 +15,7 @@
 `*` Improved HTTP headers field: now used formatting and sections are collapsable (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/8">#8</a>, <a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/9">#9</a>).<br>
 `*` Changed extension icon (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/10">#10</a>).<br>
 `+` Added toolbar button (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/11">#11</a>).<br>
+`*` Improved URLs detection is selection: now detects `about:`, but ignores `http:`, `http://` and `file:///`.<br>
 `+` Added support for separate message window in Thunderbird and SeaMonkey's mail (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/12">#12</a>).<br>
 `x` Correctly focus already opened link properties window with the same URI and referer, if URI is empty.<br>
 `+` Added ability to not use selection clipboard on Linux to prefill link in properties window (<em>extensions.linkPropertiesPlus.preferSelectionClipboard</em> preference).<br>

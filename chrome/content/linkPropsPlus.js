@@ -1153,12 +1153,13 @@ var linkPropsPlusSvc = {
 			this.frame.setAttribute("transparent", "true");
 			setTimeout(function(_this) {
 				_this.createMenu();
-				// Note: in Firefox 3.6 we have wrong background only for empty frame
-				if(_this.parent.fxVersion <= 3.6)
-					_this.field.style.background = "-moz-Dialog";
 				var cs = getComputedStyle(document.documentElement, null);
+				var fs = _this.field.style;
 				// For dark themes with non-system colors like NASA Night Launch
-				_this.field.style.color = cs.color;
+				fs.color = cs.color;
+				// Note: in Firefox 3.6 we have wrong background only for empty frame
+				if(_this.parent.fxVersion <= 3.6) // transparent="true" doesn't work
+					fs.backgroundColor = cs.backgroundColor; // "-moz-Dialog"
 			}, 0, this);
 		},
 		initStyles: function(field) {

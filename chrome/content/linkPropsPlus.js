@@ -1016,7 +1016,8 @@ var linkPropsPlusSvc = {
 	get progress() {
 		var progressBlock = document.getElementById("linkPropsPlus-autocloseProgressBlock");
 		var root = document.documentElement;
-		progressBlock.setAttribute("chromedir", window.getComputedStyle(root, null).direction);
+		var cs = window.getComputedStyle(root, null); // May be null in closing window
+		cs && progressBlock.setAttribute("chromedir", cs.direction);
 		root.appendChild(progressBlock); // #linkPropsPlus-container can be hidden!
 		var progress = document.getElementById("linkPropsPlus-autocloseProgress");
 		if(!("max" in progress)) { // Firefox < 3.5

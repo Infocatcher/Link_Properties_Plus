@@ -953,7 +953,8 @@ var linkPropsPlusSvc = {
 		this.autoCloseInitialized = false;
 
 		this.setDontClose(false);
-		this.progress.hidden = true;
+		if(this.progressInitialized)
+			this.progress.hidden = true;
 		if(restart)
 			this.cancelDelayedClose();
 	},
@@ -1013,7 +1014,9 @@ var linkPropsPlusSvc = {
 		this.progress.value = 0;
 		//this.progress.hidden = true;
 	},
+	progressInitialized: false,
 	get progress() {
+		this.progressInitialized = true;
 		var progressBlock = document.getElementById("linkPropsPlus-autocloseProgressBlock");
 		var root = document.documentElement;
 		var cs = window.getComputedStyle(root, null); // May be null in closing window

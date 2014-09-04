@@ -3,9 +3,20 @@
 <title>Headers</title>
 <link rel="stylesheet" type="text/css" href="chrome://linkpropsplus/skin/headers.css" />
 <script type="text/javascript">
-document.commandDispatcher = { // Prevent errors from binding for <button type="disclosure">
-	__noSuchMethod__: function() {}
-};
+try {
+	// Binding for <button type="disclosure"> uses document.commandDispatcher.advanceFocus()/rewindFocus()
+	var topWin = window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+		.getInterface(Components.interfaces.nsIWebNavigation)
+		.QueryInterface(Components.interfaces.nsIDocShellTreeItem)
+		.rootTreeItem
+		.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+		.getInterface(Components.interfaces.nsIDOMWindow);
+	if(topWin && topWin.document.commandDispatcher)
+		document.commandDispatcher = topWin.document.commandDispatcher;
+}
+catch(e) {
+	Components.utils.reportError(e);
+}
 window.addEventListener("command", function(e) {
 	var btn = e.target;
 	if(btn.className == "twisty") {

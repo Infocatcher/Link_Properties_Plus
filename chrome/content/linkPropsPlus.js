@@ -1193,7 +1193,10 @@ var linkPropsPlusSvc = {
 			);
 		},
 		destroy: function() {
-			this.parent = null;
+			//this.clear();
+			this._sections.length = 0;
+			this._activeSection = null;
+			this.parent = this.field = null;
 		},
 		get colon() {
 			delete this.colon;

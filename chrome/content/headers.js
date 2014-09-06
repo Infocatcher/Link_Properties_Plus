@@ -12,7 +12,8 @@ try {
 catch(e) {
 	Components.utils.reportError(e);
 }
-window.addEventListener("command", function(e) {
+var commandHandler;
+window.addEventListener("command", commandHandler = function(e) {
 	var btn = e.target;
 	if(btn.className == "twisty") {
 		var show = btn.getAttribute("open") != "true";
@@ -37,6 +38,12 @@ window.addEventListener("command", function(e) {
 		btn.setAttribute("open", show);
 	}
 }, true);
+window.addEventListener("unload", function destroy(e) {
+	window.removeEventListener("unload", destroy, false);
+	window.removeEventListener("command", commandHandler, true);
+	document.commandDispatcher = null;
+}, false);
+
 if(!Object.create) { // Firefox 3.6 and older
 	// This workaround isn't optimal, but it's better than nothing (especially for too old browsers)
 	var updTimer = 0;

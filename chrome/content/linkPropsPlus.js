@@ -1147,6 +1147,7 @@ var linkPropsPlusSvc = {
 		return this._isPrivate = this.ut.isWindowPrivate(sourceWindow);
 	},
 
+	_requestSection: null,
 	headers: {
 		parent: null,
 		showDiff: false,

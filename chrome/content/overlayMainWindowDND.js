@@ -60,6 +60,12 @@ var linkPropsPlusDND = {
 		var gBrowser = browserWindow.gBrowser;
 		if(!gBrowser || !("browsers" in gBrowser)) // View source window?
 			return null;
+		if("_getTabForContentWindow" in gBrowser) try {
+			return gBrowser._getTabForContentWindow(top);
+		}
+		catch(e) {
+			Components.utils.reportError(e);
+		}
 		var browsers = gBrowser.browsers;
 		var tabs = gBrowser.tabs || gBrowser.tabContainer.childNodes;
 		for(var i = 0, l = browsers.length; i < l; ++i)

@@ -58,7 +58,7 @@ var linkPropsPlusDND = {
 		if(!browserWindow || !("gBrowser" in browserWindow))
 			return null;
 		var gBrowser = browserWindow.gBrowser;
-		if(!gBrowser || !(browsers in gBrowser)) // View source window?
+		if(!gBrowser || !("browsers" in gBrowser)) // View source window?
 			return null;
 		var browsers = gBrowser.browsers;
 		var tabs = gBrowser.tabs || gBrowser.tabContainer.childNodes;

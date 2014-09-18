@@ -86,6 +86,11 @@ var linkPropsPlusPrefUtils = {
 		}
 		return this.prefSvc.PREF_STRING;
 	},
+	resetPref: function(pName) {
+		var ps = this.prefSvc;
+		if(ps.prefHasUserValue(pName))
+			ps.clearUserPref(pName);
+	},
 
 	prefsMigration: function(v) {
 		var ps = this.prefSvc;
@@ -96,14 +101,14 @@ var linkPropsPlusPrefUtils = {
 			this.set("properties.showHttpHeaders", pVal);
 			this.set("download.showHttpHeaders", pVal);
 			this.set("ownWindow.showHttpHeaders", pVal);
-			ps.deleteBranch(pName);
+			this.resetPref(pName);
 
 			pName = "extensions.extendedlink.sizePrecision";
 			pVal = this.getPref(pName, 2);
 			if(typeof pVal != "number")
 				pVal = 2;
 			this.set("sizePrecision", pVal);
-			ps.deleteBranch(pName);
+			this.resetPref(pName);
 		}
 		if(v < 2) {
 			// Inherit preferences of modified Extended Link Properties
@@ -114,7 +119,7 @@ var linkPropsPlusPrefUtils = {
 				.forEach(function(pName) {
 					var oldName = oldBranch + pName;
 					this.set(pName, this.getPref(oldName));
-					ps.clearUserPref(oldName);
+					this.resetPref(oldName);
 				}, this);
 		}
 		this.set("prefsVersion", this.prefVer);

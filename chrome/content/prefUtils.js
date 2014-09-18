@@ -11,7 +11,9 @@ var linkPropsPlusPrefUtils = {
 
 	init: function() {
 		window.addEventListener("unload", this, false);
-		this.prefsMigration();
+		var v = this.pref("prefsVersion") || 0;
+		if(v < this.prefVer)
+			this.prefsMigration(v);
 		this.registerHotkeys();
 		this.prefSvc.addObserver(this.prefNS, this, false);
 	},
@@ -74,11 +76,7 @@ var linkPropsPlusPrefUtils = {
 		return pVal;
 	},
 
-	prefsMigration: function() {
-		const v = this.pref("prefsVersion") || 0;
-		if(v >= this.prefVer)
-			return false;
-
+	prefsMigration: function(v) {
 		var ps = this.prefSvc;
 		if(v < 1) {
 			// Inherit preferences of original Extended Link Properties
@@ -112,7 +110,6 @@ var linkPropsPlusPrefUtils = {
 		setTimeout(function() { // Try don't block main thread
 			ps.savePrefFile(null);
 		}, 0);
-		return true;
 	},
 
 	// Hotkeys:

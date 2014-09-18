@@ -30,50 +30,67 @@ var linkPropsPlusPrefUtils = {
 	observe: function(subject, topic, pName) {
 		if(topic != "nsPref:changed")
 			return;
-		pName = pName.substr(this.prefNS.length);
+
+		var shortName = pName.substr(this.prefNS.length);
+		var val = this._prefs[shortName] = this.getPref(pName);
 		["linkPropsPlusSvc", "linkPropsPlus", "linkPropsPlusWnd", "linkPropsPlusOpts"].forEach(
 			function(p) {
 				if(!(p in window))
 					return;
 				var o = window[p];
 				if(o.hasOwnProperty("prefsChanged"))
-					o.prefsChanged(pName);
+					o.prefsChanged(shortName, val);
 			}
 		);
 	},
 
-	pref: function(pName, pVal) {
+	_prefs: { __proto__: null },
+	get: function(pName, defaultVal) {
+		var cache = this._prefs;
+		return pName in cache
+			? cache[pName]
+			: (cache[pName] = this.getPref(this.prefNS + pName, defaultVal));
+	},
+	set: function(pName, val) {
+		return this.setPref(this.prefNS + pName, val);
+	},
+	pref: function(pName, pVal) { // Deprecated
 		pName = this.prefNS + pName;
 		if(arguments.length == 1)
 			return this.getPref(pName);
 		return this.setPref(pName, pVal);
 	},
-	getPref: function(pName, defaultVal) {
-		var ps = this.prefSvc;
+	getPref: function(pName, defaultVal, prefBranch) {
+		var ps = prefBranch || this.prefSvc;
 		switch(ps.getPrefType(pName)) {
-			case ps.PREF_STRING: return ps.getComplexValue(pName, Components.interfaces.nsISupportsString).data;
-			case ps.PREF_INT:    return ps.getIntPref(pName);
 			case ps.PREF_BOOL:   return ps.getBoolPref(pName);
-			default:             return defaultVal;
+			case ps.PREF_INT:    return ps.getIntPref(pName);
+			case ps.PREF_STRING: return ps.getComplexValue(pName, Components.interfaces.nsISupportsString).data;
+		}
+		return defaultVal;
+	},
+	setPref: function(pName, val, prefBranch) {
+		var ps = prefBranch || this.prefSvc;
+		var pType = ps.getPrefType(pName);
+		if(pType == ps.PREF_INVALID)
+			pType = this.getValueType(val);
+		switch(pType) {
+			case ps.PREF_BOOL:   ps.setBoolPref(pName, val); break;
+			case ps.PREF_INT:    ps.setIntPref(pName, val);  break;
+			case ps.PREF_STRING:
+				var ss = Components.interfaces.nsISupportsString;
+				var str = Components.classes["@mozilla.org/supports-string;1"]
+					.createInstance(ss);
+				str.data = val;
+				ps.setComplexValue(pName, ss, str);
 		}
 	},
-	setPref: function(pName, pVal) {
-		var ps = this.prefSvc;
-		var pType = ps.getPrefType(pName);
-		var isNew = pType == ps.PREF_INVALID;
-		var vType = typeof pVal;
-		if(pType == ps.PREF_BOOL || (isNew && vType == "boolean"))
-			ps.setBoolPref(pName, pVal);
-		else if(pType == ps.PREF_INT || (isNew && vType == "number"))
-			ps.setIntPref(pName, pVal);
-		else if(pType == ps.PREF_STRING || isNew) {
-			var ss = Components.interfaces.nsISupportsString;
-			var str = Components.classes["@mozilla.org/supports-string;1"]
-				.createInstance(ss);
-			str.data = pVal;
-			ps.setComplexValue(pName, ss, str);
+	getValueType: function(val) {
+		switch(typeof val) {
+			case "boolean": return this.prefSvc.PREF_BOOL;
+			case "number":  return this.prefSvc.PREF_INT;
 		}
-		return pVal;
+		return this.prefSvc.PREF_STRING;
 	},
 
 	prefsMigration: function(v) {

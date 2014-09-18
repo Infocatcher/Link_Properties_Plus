@@ -11,7 +11,7 @@ var linkPropsPlusPrefUtils = {
 
 	init: function() {
 		window.addEventListener("unload", this, false);
-		var v = this.pref("prefsVersion") || 0;
+		var v = this.get("prefsVersion") || 0;
 		if(v < this.prefVer)
 			this.prefsMigration(v);
 		this.registerHotkeys();
@@ -54,12 +54,6 @@ var linkPropsPlusPrefUtils = {
 	set: function(pName, val) {
 		return this.setPref(this.prefNS + pName, val);
 	},
-	pref: function(pName, pVal) { // Deprecated
-		pName = this.prefNS + pName;
-		if(arguments.length == 1)
-			return this.getPref(pName);
-		return this.setPref(pName, pVal);
-	},
 	getPref: function(pName, defaultVal, prefBranch) {
 		var ps = prefBranch || this.prefSvc;
 		switch(ps.getPrefType(pName)) {
@@ -99,16 +93,16 @@ var linkPropsPlusPrefUtils = {
 			// Inherit preferences of original Extended Link Properties
 			var pName = "extensions.extendedlink.showhttpheader";
 			var pVal = this.getPref(pName, false);
-			this.pref("properties.showHttpHeaders", pVal);
-			this.pref("download.showHttpHeaders", pVal);
-			this.pref("ownWindow.showHttpHeaders", pVal);
+			this.set("properties.showHttpHeaders", pVal);
+			this.set("download.showHttpHeaders", pVal);
+			this.set("ownWindow.showHttpHeaders", pVal);
 			ps.deleteBranch(pName);
 
 			pName = "extensions.extendedlink.sizePrecision";
 			pVal = this.getPref(pName, 2);
 			if(typeof pVal != "number")
 				pVal = 2;
-			this.pref("sizePrecision", pVal);
+			this.set("sizePrecision", pVal);
 			ps.deleteBranch(pName);
 		}
 		if(v < 2) {
@@ -119,11 +113,11 @@ var linkPropsPlusPrefUtils = {
 				.getChildList("", {})
 				.forEach(function(pName) {
 					var oldName = oldBranch + pName;
-					this.pref(pName, this.getPref(oldName));
+					this.set(pName, this.getPref(oldName));
 					ps.clearUserPref(oldName);
 				}, this);
 		}
-		this.pref("prefsVersion", this.prefVer);
+		this.set("prefsVersion", this.prefVer);
 		setTimeout(function() { // Try don't block main thread
 			ps.savePrefFile(null);
 		}, 0);
@@ -139,7 +133,7 @@ var linkPropsPlusPrefUtils = {
 		var kElt = document.getElementById("linkPropsPlus-key-" + kId);
 		if(!kElt)
 			return;
-		var keyStr = this.pref("key." + kId);
+		var keyStr = this.get("key." + kId);
 		if(!keyStr) { // Key is disabled
 			// Strange things may happens without this for <key command="..." />
 			kElt.parentNode.removeChild(kElt);

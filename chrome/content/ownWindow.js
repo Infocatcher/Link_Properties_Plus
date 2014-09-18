@@ -43,7 +43,7 @@ var linkPropsPlusWnd = {
 			}
 		}
 		this.uriChanged(this.autostart);
-		this.prefsChanged("ownWindow.clickSelectsAll");
+		this.setClickSelectsAll();
 		window.addEventListener("resize", this, false);
 	},
 	init: function() {
@@ -85,15 +85,11 @@ var linkPropsPlusWnd = {
 			this.destroyTabWatcher();
 		}
 	},
-	prefsChanged: function(pName) {
-		if(pName == "ownWindow.clickSelectsAll") {
-			var csa = this.pu.pref("ownWindow.clickSelectsAll");
-			this.uriField.setAttribute("clickSelectsAll", csa);
-			this.refererField.setAttribute("clickSelectsAll", csa);
-		}
-		else if(pName == "ownWindow.cropFileNameInTitle") {
+	prefsChanged: function(pName, pVal) {
+		if(pName == "ownWindow.clickSelectsAll")
+			this.setClickSelectsAll();
+		else if(pName == "ownWindow.cropFileNameInTitle")
 			this.setTitle();
-		}
 	},
 
 	get uriField() {
@@ -125,7 +121,7 @@ var linkPropsPlusWnd = {
 		var ttl = this.baseTitle;
 		var uri = this.svc.requestURI || this.uri;
 		if(uri) {
-			var crop = this.pu.pref("ownWindow.cropFileNameInTitle");
+			var crop = this.pu.get("ownWindow.cropFileNameInTitle");
 			if(crop > 0) {
 				var uri = this.ut.decodeURI(uri).replace(/#.*$/, "");
 				var fName = /([^\/\\]+\/?|[^\/\\]+\/\?.*?)$/.test(uri)
@@ -190,7 +186,7 @@ var linkPropsPlusWnd = {
 		this.fixWindowHeight();
 	},
 	setFakeReferer: function(e) {
-		var type = this.pu.pref("useFakeReferer") || 2;
+		var type = this.pu.get("useFakeReferer") || 2;
 		if(e.button > 0 || e.ctrlKey || e.altKey || e.shiftKey || e.metaKey)
 			type = type == 2 ? 1 : 2;
 		this.refererField.value = this.ut.getFakeReferer(this.uri, type);
@@ -219,6 +215,11 @@ var linkPropsPlusWnd = {
 			_this.uriChanged();
 		}, 0, this);
 	},
+	setClickSelectsAll: function() {
+		var csa = this.pu.get("ownWindow.clickSelectsAll");
+		this.uriField.setAttribute("clickSelectsAll", csa);
+		this.refererField.setAttribute("clickSelectsAll", csa);
+	},
 	closeOther: function() {
 		var ws = this.ut.wm.getEnumerator("linkPropsPlus:ownWindow");
 		while(ws.hasMoreElements()) {
@@ -237,7 +238,7 @@ var linkPropsPlusWnd = {
 				contentHeight += this.getHeight(a);
 		}
 		var containerHeight = this.getHeight(de, true);
-		if(contentHeight > containerHeight || !this.pu.pref("ownWindow.showHttpHeaders"))
+		if(contentHeight > containerHeight || !this.pu.get("ownWindow.showHttpHeaders"))
 			window.resizeBy(0, contentHeight - containerHeight);
 	},
 	getNumProperty: function(elt, pName) {

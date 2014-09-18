@@ -105,28 +105,28 @@ var linkPropsPlus = {
 				uri = uri.replace(new RegExp("\\" + brackets[b] + ".*$"), "");
 		return uri.replace(/[.,;]$/, "");
 	},
-	prefsChanged: function(pName) {
+	prefsChanged: function(pName, pVal) {
 		if(pName.indexOf("showIn") == 0)
 			this.showMenuitems();
 		else if(pName.indexOf("icon.") == 0)
 			this.showIcons();
 	},
 	showMenuitems: function() {
-		var showTools = this.pu.pref("showInToolsMenu");
+		var showTools = this.pu.get("showInToolsMenu");
 		var showToolsSub = showTools
 			&& this.toolsMiSub
-			&& this.pu.pref("showInToolsMenuSub");
+			&& this.pu.get("showInToolsMenuSub");
 		this.toolsMi    && this.toolsMi   .setAttribute("hidden", !(showTools && !showToolsSub));
 		this.toolsMiSub && this.toolsMiSub.setAttribute("hidden", !showToolsSub);
-		this.appMi      && this.appMi     .setAttribute("hidden", !this.pu.pref("showInAppMenu"));
+		this.appMi      && this.appMi     .setAttribute("hidden", !this.pu.get("showInAppMenu"));
 	},
 	showIcons: function() {
 		const attr = "lpp_iconized";
-		this.mi.setAttribute(attr, this.pu.pref("icon.contextMenu"));
-		var iconTools = this.pu.pref("icon.toolsMenu");
+		this.mi.setAttribute(attr, this.pu.get("icon.contextMenu"));
+		var iconTools = this.pu.get("icon.toolsMenu");
 		this.toolsMi    && this.toolsMi   .setAttribute(attr, iconTools);
 		this.toolsMiSub && this.toolsMiSub.setAttribute(attr, iconTools);
-		this.appMi      && this.appMi     .setAttribute(attr, this.pu.pref("icon.appMenu"));
+		this.appMi      && this.appMi     .setAttribute(attr, this.pu.get("icon.appMenu"));
 	},
 	setContextMenu: function() {
 		this.destroyContextMenu();
@@ -135,7 +135,7 @@ var linkPropsPlus = {
 		if(
 			gContextMenu
 			&& gContextMenu.onSaveableLink
-			&& this.pu.pref("context.onLinks")
+			&& this.pu.get("context.onLinks")
 		) {
 			uri = typeof gContextMenu.linkURL == "function" // SeaMonkey
 				? gContextMenu.linkURL()
@@ -148,13 +148,13 @@ var linkPropsPlus = {
 				hide = false;
 			}
 		}
-		else if(this.pu.pref("context.onSelection")) {
+		else if(this.pu.get("context.onSelection")) {
 			var selObj = document.commandDispatcher.focusedWindow.getSelection();
 			var sel = selObj.toString();
 			if(
 				!sel
 				&& gContextMenu && gContextMenu.target
-				&& this.pu.pref("context.onSelection.inInputFields")
+				&& this.pu.get("context.onSelection.inInputFields")
 			) {
 				var trg = gContextMenu.target;
 				if(
@@ -177,7 +177,7 @@ var linkPropsPlus = {
 				var sourceDoc = gContextMenu && gContextMenu.target && gContextMenu.target.ownerDocument
 					|| selObj.getRangeAt(0).commonAncestorContainer.ownerDocument; // For SeaMonkey
 				this.linkURL = uri;
-				this.referer = this.pu.pref("useRealRefererForTextLinks")
+				this.referer = this.pu.get("useRealRefererForTextLinks")
 					? sourceDoc.location.href
 					: null;
 				this.sourceWindow = sourceDoc.defaultView;
@@ -189,7 +189,7 @@ var linkPropsPlus = {
 		if(!hide) {
 			var decoded = this.ut.decodeURI(uri);
 			mi.setAttribute("tooltiptext", decoded);
-			var crop = this.pu.pref("context.onSelection.cropLinkInLabel") || 0;
+			var crop = this.pu.get("context.onSelection.cropLinkInLabel") || 0;
 			if(!("_lppLabel" in mi))
 				mi._lppLabel = mi.getAttribute("label");
 			var label = sel && crop > 0
@@ -209,7 +209,7 @@ var linkPropsPlus = {
 		var autostart = e
 			? e.type == "click" || e.ctrlKey || e.altKey || e.shiftKey || e.metaKey
 			: !!uri;
-		if(!uri && this.pu.pref("preferSelectionClipboard")) {
+		if(!uri && this.pu.get("preferSelectionClipboard")) {
 			var clipUriSel = this.ut.readFromClipboard(true);
 			if(this.isValidURI(clipUriSel))
 				uri = clipUriSel;

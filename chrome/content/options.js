@@ -83,7 +83,7 @@ var linkPropsPlusOpts = {
 		this.setDisabled();
 		this.highlight();
 	},
-	prefsChanged: function(pName) {
+	prefsChanged: function(pName, pVal) {
 		setTimeout(function(_this) {
 			_this.setDisabled();
 		}, 0, this);

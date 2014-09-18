@@ -60,7 +60,7 @@ var linkPropsPlusUtils = {
 		);
 	},
 	allowOpen: function(n) {
-		var max = this.pu.pref("openMultipleLimit") || 0;
+		var max = this.pu.get("openMultipleLimit") || 0;
 		if(n <= max)
 			return true;
 		return Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
@@ -85,7 +85,7 @@ var linkPropsPlusUtils = {
 	},
 	checkReferer: function(referer, uri) {
 		if(!this.sendReferer) {
-			if(!this.pu.pref("useFakeReferer.force"))
+			if(!this.pu.get("useFakeReferer.force"))
 				return undefined;
 			referer = ""; // Make it "invalid"
 		}
@@ -98,7 +98,7 @@ var linkPropsPlusUtils = {
 	},
 	getFakeReferer: function(uri, type) {
 		if(type === undefined)
-			type = this.pu.pref("useFakeReferer");
+			type = this.pu.get("useFakeReferer");
 		switch(type) {
 			case 1:
 				try {
@@ -114,7 +114,7 @@ var linkPropsPlusUtils = {
 		return "";
 	},
 	decodeURI: function(uri) {
-		if(!this.pu.pref("decodeURIs"))
+		if(!this.pu.get("decodeURIs"))
 			return uri;
 
 		var win = this.wm.getMostRecentWindow("navigator:browser");

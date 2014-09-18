@@ -10,7 +10,7 @@ var linkPropsPlusSvc = {
 	blockEscapeKey: false,
 	blockEscapeKeyTimer: 0,
 	get blockEscapeKeyDelay() {
-		return this.pu.pref("blockEscapeKeyDelay");
+		return this.pu.get("blockEscapeKeyDelay");
 	},
 
 	get ut() {
@@ -51,9 +51,9 @@ var linkPropsPlusSvc = {
 		return this.windowType = wt;
 	},
 	get testResumability() {
-		return this.pu.pref("testDownloadResumability") && (
+		return this.pu.get("testDownloadResumability") && (
 			!this.isDownloadDialog
-			|| this.pu.pref("testDownloadResumability.download")
+			|| this.pu.get("testDownloadResumability.download")
 		);
 	},
 	get canAutoClose() {
@@ -227,7 +227,7 @@ var linkPropsPlusSvc = {
 	},
 	initStyles: function() {
 		var root = document.documentElement;
-		var showButtons = this.isDownloadDialog ? 0 : this.pu.pref("showLinkButtons");
+		var showButtons = this.isDownloadDialog ? 0 : this.pu.get("showLinkButtons");
 		root.setAttribute("linkPropsPlus_showButtons",       showButtons > 0);
 		root.setAttribute("linkPropsPlus_showButtonsAlways", showButtons > 1);
 		setTimeout(function() {
@@ -249,9 +249,9 @@ var linkPropsPlusSvc = {
 	showRow: function(rowId, pName) {
 		var row = document.getElementById("linkPropsPlus-row" + rowId);
 		if(
-			this.isPropsDialog && this.pu.pref("properties." + pName)
-			|| this.isDownloadDialog && this.pu.pref("download." + pName)
-			|| this.isOwnWindow && this.pu.pref("ownWindow." + pName)
+			this.isPropsDialog && this.pu.get("properties." + pName)
+			|| this.isDownloadDialog && this.pu.get("download." + pName)
+			|| this.isOwnWindow && this.pu.get("ownWindow." + pName)
 		)
 			row.removeAttribute("hidden");
 		else
@@ -319,7 +319,7 @@ var linkPropsPlusSvc = {
 		mp.setAttribute("onpopupshown", "this._onpopupshown();");
 		mp["openPopup" in mp ? "openPopup" : "showPopup"]();
 	},
-	prefsChanged: function(pName) {
+	prefsChanged: function(pName, pVal) {
 		if(
 			pName == this.windowType + ".showResponseStatus"
 			|| pName == this.windowType + ".showDirectURI"
@@ -427,7 +427,7 @@ var linkPropsPlusSvc = {
 		var testResume = document.getElementById("linkPropsPlus-context-testDownloadResumability");
 		var testResumeSep = document.getElementById("linkPropsPlus-context-testDownloadResumabilitySeparator");
 		var hideTestResume = testResume.hidden = testResumeSep.hidden =
-			!this.pu.pref("testDownloadResumability.alwaysShowMenuItem")
+			!this.pu.get("testDownloadResumability.alwaysShowMenuItem")
 			&& (this.testResumability || rowStatus.boxObject.height <= 0);
 		if(!hideTestResume)
 			testResume.disabled = !this.uri || this.checkResumableChannel;
@@ -633,9 +633,9 @@ var linkPropsPlusSvc = {
 			var parentTab = this.parentTab;
 			var openAsChild = parentTab
 				&& browserWin == parentWindow
-				&& this.pu.pref("openInChildTab")
+				&& this.pu.get("openInChildTab")
 				&& (
-					!this.pu.pref("openInChildTab.onlyIfSelected")
+					!this.pu.get("openInChildTab.onlyIfSelected")
 					|| parentTab.hasAttribute("selected")
 				);
 			if(openAsChild) {
@@ -769,7 +769,7 @@ var linkPropsPlusSvc = {
 		);
 	},
 	closeWindow: function(invertCloseBehavior) {
-		var close = this.pu.pref("closeAfterOpen");
+		var close = this.pu.get("closeAfterOpen");
 		if(typeof invertCloseBehavior == "object") {
 			var e = invertCloseBehavior;
 			invertCloseBehavior = e.ctrlKey || e.shiftKey || e.altKey || e.metaKey;
@@ -874,7 +874,7 @@ var linkPropsPlusSvc = {
 		// Following works for me in some tests, but it is very bad hack.
 		if(
 			this.isDownloadDialog
-			&& (this.fxVersion < 4 || this.pu.pref("download.forceFakeURIHack")) //~ todo: test!
+			&& (this.fxVersion < 4 || this.pu.get("download.forceFakeURIHack")) //~ todo: test!
 		)
 			uri += "?" + Math.random().toFixed(16).substr(2) + Math.random().toFixed(16).substr(2);
 		return uri;
@@ -929,18 +929,18 @@ var linkPropsPlusSvc = {
 	initAutoClose: function() {
 		if(!this.canAutoClose)
 			return;
-		if(!this.requestFinished && this.pu.pref("autoClose.onlyAfterRequest"))
+		if(!this.requestFinished && this.pu.get("autoClose.onlyAfterRequest"))
 			return;
 
 		if(this.autoCloseInitialized)
 			return;
 		this.autoCloseInitialized = true;
 
-		var dur = this._acDelay = this.pu.pref("autoClose.delay") || 0;
-		if(dur < 1000 || !this.pu.pref("autoClose.enabled"))
+		var dur = this._acDelay = this.pu.get("autoClose.delay") || 0;
+		if(dur < 1000 || !this.pu.get("autoClose.enabled"))
 			return;
 		this.delayedClose();
-		if(this.pu.pref("autoClose.dontCloseUnderCursor")) {
+		if(this.pu.get("autoClose.dontCloseUnderCursor")) {
 			this.setDontClose(true);
 			// Note: works only if mouse was moved after window opening
 			if(document.querySelector && document.querySelector(":hover"))
@@ -1176,9 +1176,9 @@ var linkPropsPlusSvc = {
 				else
 					field.removeAttribute(name);
 			}
-			attr("hideCaptions",   !this.parent.pu.pref("showCaptionsInHttpHeaders"));
-			attr("hideTestResume", !this.parent.pu.pref("testDownloadResumability.showHttpHeaders"));
-			var showDiff = this.showDiff = this.parent.pu.pref("showRequestHeadersDiff");
+			attr("hideCaptions",   !this.parent.pu.get("showCaptionsInHttpHeaders"));
+			attr("hideTestResume", !this.parent.pu.get("testDownloadResumability.showHttpHeaders"));
+			var showDiff = this.showDiff = this.parent.pu.get("showRequestHeadersDiff");
 			attr("hideDiff", !showDiff);
 			Array.forEach(
 				field.getElementsByTagName("div"),
@@ -1472,7 +1472,7 @@ var linkPropsPlusSvc = {
 			return "";
 		var size = this.formatNum(intSize, 0);
 
-		var useBinaryPrefixes = this.pu.pref("useBinaryPrefixes");
+		var useBinaryPrefixes = this.pu.get("useBinaryPrefixes");
 		var k = useBinaryPrefixes ? 1024 : 1000;
 		var type, g;
 		if     (intSize > k*k*k*k) type = "terabytes", g = k*k*k*k;
@@ -1520,14 +1520,14 @@ var linkPropsPlusSvc = {
 	},
 	formatNum: function(n, precision) {
 		if(precision === undefined)
-			precision = this.pu.pref("sizePrecision") || 0;
+			precision = this.pu.get("sizePrecision") || 0;
 		if(!this.nativeLocaleNumbers) {
 			return this.formatNumStr(
 				n.toFixed(precision)
 					.replace(/\./, this.localeDelimiter)
 			);
 		}
-		var locale = this.pu.pref("localeNumbers") || undefined;
+		var locale = this.pu.get("localeNumbers") || undefined;
 		if(locale == "<browser>")
 			locale = navigator.language;
 		try {
@@ -1555,7 +1555,7 @@ var linkPropsPlusSvc = {
 		this.setMissingStyle(target, isInvalid);
 		if(str && isInvalid)
 			target.tooltipText = str;
-		var locale = this.pu.pref("localeDates") || undefined;
+		var locale = this.pu.get("localeDates") || undefined;
 		if(locale == "<browser>")
 			locale = navigator.language;
 		try {

@@ -3,7 +3,13 @@ var linkPropsPlusUtils = {
 	validReferer: /^(?:http|ftp)s?:\/\/\S+$/,
 
 	get pu() {
-		return window.linkPropsPlusPrefUtils;
+		if(!("linkPropsPlusPrefUtils" in window)) {
+			Components.classes["@mozilla.org/moz/jssubscript-loader;1"]
+				.getService(Components.interfaces.mozIJSSubScriptLoader)
+				.loadSubScript("chrome://linkpropsplus/content/prefUtils.js");
+		}
+		delete this.pu;
+		return this.pu = linkPropsPlusPrefUtils;
 	},
 	get wm() {
 		delete this.wm;

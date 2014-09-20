@@ -1,13 +1,14 @@
 var linkPropsPlusPageInfo = {
 	get ut() {
-		return window.linkPropsPlusUtils;
+		Components.classes["@mozilla.org/moz/jssubscript-loader;1"]
+			.getService(Components.interfaces.mozIJSSubScriptLoader)
+			.loadSubScript("chrome://linkpropsplus/content/utils.js");
+		delete this.ut;
+		return this.ut = linkPropsPlusUtils;
 	},
-	get pu() {
-		return window.linkPropsPlusPrefUtils;
-	},
+
 	init: function() {
 		window.removeEventListener("load", this, false);
-		//this.pu.init();
 		var btn1 = document.getElementById("linkPropsPlus-getLinkProperties");
 		var trg1 = document.getElementById("imagesaveasbutton");
 		if(btn1 && trg1)

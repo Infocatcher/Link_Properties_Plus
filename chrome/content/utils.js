@@ -7,6 +7,7 @@ var linkPropsPlusUtils = {
 			Components.classes["@mozilla.org/moz/jssubscript-loader;1"]
 				.getService(Components.interfaces.mozIJSSubScriptLoader)
 				.loadSubScript("chrome://linkpropsplus/content/prefUtils.js");
+			linkPropsPlusPrefUtils.init();
 		}
 		delete this.pu;
 		return this.pu = linkPropsPlusPrefUtils;

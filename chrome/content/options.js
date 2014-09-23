@@ -47,7 +47,7 @@ var linkPropsPlusOpts = {
 		// Show settings for Properties dialog, if available
 		var propsBox = document.getElementById("propertiesBox");
 		if(
-			appInfo.name == "Firefox"
+			(appInfo.name == "Firefox" || appInfo.name == "Pale Moon")
 			&& parseFloat(appInfo.version) >= 3.6
 		) {
 			var guid = "properties@darktrojan.net";

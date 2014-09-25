@@ -996,9 +996,10 @@ var linkPropsPlusSvc = {
 		this.autoCloseActive = true;
 		this._acTimeout = setTimeout(window.close, this._acDelay);
 		this._acStartTime = Date.now();
-		this.progress.value = 0;
-		this.progress.hidden = false;
-		this.progress.max = this._acPrecision = this.progress.boxObject.width * 4 || 500;
+		var progress = this.progress;
+		progress.value = 0;
+		progress.hidden = false;
+		progress.max = this._acPrecision = progress.boxObject.width * 4 || 500;
 		var _this = this;
 		this._acProgressInterval = setInterval(
 			function() {

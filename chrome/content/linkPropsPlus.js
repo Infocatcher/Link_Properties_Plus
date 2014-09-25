@@ -1065,7 +1065,7 @@ var linkPropsPlusSvc = {
 	},
 	get realReferer() {
 		if(this.isPropsDialog)
-			return window.arguments[0].ownerDocument.defaultView.location.href;
+			return window.arguments[0].ownerDocument.documentURI;
 		if(this.isOwnWindow)
 			return this.wnd.referer;
 		var err;

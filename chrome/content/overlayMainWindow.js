@@ -28,10 +28,8 @@ var linkPropsPlus = {
 	},
 	get pu() {
 		this.scriptLoader.loadSubScript("chrome://linkpropsplus/content/prefUtils.js");
-		var pu = linkPropsPlusPrefUtils;
-		pu.init(); // We don't need to monitor changes, if prefs aren't applied yet
 		delete this.pu;
-		return this.pu = pu;
+		return this.pu = linkPropsPlusPrefUtils;
 	},
 
 	init: function() {
@@ -39,9 +37,8 @@ var linkPropsPlus = {
 		window.addEventListener("unload", this, false);
 		this.cm.addEventListener("popupshowing", this, false);
 		this.cm.addEventListener("popuphidden", this, false);
-		//this.pu.init();
+		this.pu.init();
 		setTimeout(function(_this) {
-			_this.pu; // => registerHotkeys()
 			_this.showMenuitems();
 			_this.showIcons();
 		}, 50, this);

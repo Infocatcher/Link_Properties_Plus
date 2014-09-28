@@ -23,7 +23,6 @@
 `*` Добавлено отображение изменений в заголовках запроса, сделанных браузером или другими расширениями (скрытая настройка <em>extensions.linkPropertiesPlus.showRequestHeadersDiff</em> для подсветки измененных заголовков) (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/13">#13</a>).<br>
 `*` Клик средней кнопкой мыши по любому пункту меню (и по кнопке на панели инструментов) автоматически запускает запрос для ссылки из буфера обмена.<br>
 `*` Двойной клик по метке “Referer:” (или по пустому полю для ввода referer'а) для получения поддельного referer'а из ссылки.<br>
-`*` Улучшена производительность при запуске: теперь используется ленивая загрузка для prefUtils.js.<br>
 `*` Теперь ссылки открываются после текущей вкладки только если установлено <em>extensions.linkPropertiesPlus.openInChildTab</em> = true, также добавлена настройка <em>extensions.linkPropertiesPlus.openInChildTab.onlyIfSelected</em> для открытия в соседней вкладке только если вкладка-источник по-прежнему активна.<br>
 `x` Подкорректирована локализация чисел и дат (<em>extensions.linkPropertiesPlus.localeNumbers</em> and <em>extensions.linkPropertiesPlus.localeDates</em> preferences) (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/15">#15</a>).<br>
 

@@ -11,25 +11,18 @@ var linkPropsPlus = {
 	referer: "",
 	sourceWindow: null,
 
+	get ut()  { return this.lazy("ut",  "linkPropsPlusUtils",     "utils.js");                },
+	get pu()  { return this.lazy("pu",  "linkPropsPlusPrefUtils", "prefUtils.js");            },
+	get dnd() { return this.lazy("dnd", "linkPropsPlusDND",       "overlayMainWindowDND.js"); },
 	get scriptLoader() {
 		delete this.scriptLoader;
 		return this.scriptLoader = Components.classes["@mozilla.org/moz/jssubscript-loader;1"]
 			.getService(Components.interfaces.mozIJSSubScriptLoader);
 	},
-	get ut() {
-		this.scriptLoader.loadSubScript("chrome://linkpropsplus/content/utils.js");
-		delete this.ut;
-		return this.ut = linkPropsPlusUtils;
-	},
-	get dnd() {
-		this.scriptLoader.loadSubScript("chrome://linkpropsplus/content/overlayMainWindowDND.js");
-		delete this.dnd;
-		return this.dnd = linkPropsPlusDND;
-	},
-	get pu() {
-		this.scriptLoader.loadSubScript("chrome://linkpropsplus/content/prefUtils.js");
-		delete this.pu;
-		return this.pu = linkPropsPlusPrefUtils;
+	lazy: function(s, p, file) {
+		this.scriptLoader.loadSubScript("chrome://linkpropsplus/content/" + file, window, "UTF-8");
+		delete this[s];
+		return this[s] = window[p];
 	},
 
 	init: function() {

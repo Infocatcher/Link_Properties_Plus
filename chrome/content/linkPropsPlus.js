@@ -89,6 +89,9 @@ var linkPropsPlusSvc = {
 		delete this.fxVersion;
 		return this.fxVersion = v;
 	},
+	$: function(id) {
+		return document.getElementById(id);
+	},
 
 	instantInit: function() {
 		window.addEventListener("load", this, false);
@@ -111,7 +114,7 @@ var linkPropsPlusSvc = {
 		if(this.isPropsDialog) {
 			var showSep = false;
 			for(
-				var node = document.getElementById("linkPropsPlus-container").parentNode.nextSibling;
+				var node = this.$("linkPropsPlus-container").parentNode.nextSibling;
 				node && node.nodeType == node.ELEMENT_NODE;
 				node = node.nextSibling
 			) {
@@ -121,13 +124,13 @@ var linkPropsPlusSvc = {
 					break;
 				}
 			}
-			document.getElementById("linkPropsPlus-separator").setAttribute("hidden", !showSep);
+			this.$("linkPropsPlus-separator").setAttribute("hidden", !showSep);
 
-			var linkUrl = document.getElementById("link-url");
+			var linkUrl = this.$("link-url");
 			if(linkUrl) {
 				var sep = linkUrl.firstChild;
 				if(sep && sep.localName == "separator")
-					document.getElementById("linkPropsPlus-grid").style.marginLeft = sep.boxObject.width + "px";
+					this.$("linkPropsPlus-grid").style.marginLeft = sep.boxObject.width + "px";
 			}
 		}
 
@@ -200,11 +203,11 @@ var linkPropsPlusSvc = {
 		e.stopPropagation();
 	},
 	setRowHeight: function() {
-		var container = document.getElementById("linkPropsPlus-container");
-		var tb = document.getElementById("linkPropsPlus-directURI");
-		var btnSt1 = document.getElementById("linkPropsPlus-goToDirectURI").style;
-		var btnSt2 = document.getElementById("linkPropsPlus-downloadDirectURI").style;
-		var rowDirectURI = document.getElementById("linkPropsPlus-rowDirectURI");
+		var container = this.$("linkPropsPlus-container");
+		var tb = this.$("linkPropsPlus-directURI");
+		var btnSt1 = this.$("linkPropsPlus-goToDirectURI").style;
+		var btnSt2 = this.$("linkPropsPlus-downloadDirectURI").style;
+		var rowDirectURI = this.$("linkPropsPlus-rowDirectURI");
 
 		var hidden = container.getAttribute("hidden") == "true";
 		hidden && container.removeAttribute("hidden");
@@ -214,8 +217,8 @@ var linkPropsPlusSvc = {
 		tb.removeAttribute("lpp_empty");
 		tb.parentNode.removeAttribute("lpp_empty");
 
-		var margin = document.getElementById("linkPropsPlus-rowSize").boxObject.height
-			- document.getElementById("linkPropsPlus-rowDirectURI").boxObject.height;
+		var margin = this.$("linkPropsPlus-rowSize").boxObject.height
+			- this.$("linkPropsPlus-rowDirectURI").boxObject.height;
 		btnSt1.marginTop = btnSt2.marginTop = margin + "px";
 		btnSt1.marginBottom = btnSt2.marginBottom = "-1px";
 
@@ -247,7 +250,7 @@ var linkPropsPlusSvc = {
 		this.showRow("Headers", "showHttpHeaders");
 	},
 	showRow: function(rowId, pName) {
-		var row = document.getElementById("linkPropsPlus-row" + rowId);
+		var row = this.$("linkPropsPlus-row" + rowId);
 		if(
 			this.isPropsDialog && this.pu.get("properties." + pName)
 			|| this.isDownloadDialog && this.pu.get("download." + pName)
@@ -265,7 +268,7 @@ var linkPropsPlusSvc = {
 		}, 20, this);
 	},
 	_rowsVisibilityChanged: function() {
-		var rowHeaders = document.getElementById("linkPropsPlus-rowHeaders");
+		var rowHeaders = this.$("linkPropsPlus-rowHeaders");
 		if(rowHeaders.getAttribute("hidden") != "true")
 			rowHeaders.setAttribute("minheight", rowHeaders.boxObject.height);
 		this.showRows();
@@ -362,9 +365,9 @@ var linkPropsPlusSvc = {
 		if(clear)
 			this.clearResults();
 		if(this.request(bypassCache)) {
-			document.getElementById("linkPropsPlus-container").removeAttribute("hidden");
+			this.$("linkPropsPlus-container").removeAttribute("hidden");
 			this.restartAutoClose();
-			document.getElementById("linkPropsPlus-rowHeaders").setAttribute(
+			this.$("linkPropsPlus-rowHeaders").setAttribute(
 				"lpp_notAvailable",
 				!(this.channel instanceof Components.interfaces.nsIHttpChannel)
 			);
@@ -375,7 +378,7 @@ var linkPropsPlusSvc = {
 	},
 	clearResults: function() {
 		Array.forEach(
-			document.getElementById("linkPropsPlus-container").getElementsByTagName("textbox"),
+			this.$("linkPropsPlus-container").getElementsByTagName("textbox"),
 			function(tb) {
 				if(!tb.readOnly)
 					return;
@@ -391,10 +394,10 @@ var linkPropsPlusSvc = {
 		this._requestSection = null;
 		this.headers.clear();
 
-		var grid = document.getElementById("linkPropsPlus-grid");
+		var grid = this.$("linkPropsPlus-grid");
 		grid.removeAttribute("lpp_canResumeDownload");
 		grid.removeAttribute("lpp_resumeDownloadTested");
-		var status = document.getElementById("linkPropsPlus-status");
+		var status = this.$("linkPropsPlus-status");
 		status.removeAttribute("lpp_canResumeDownload");
 		status.removeAttribute("lpp_resumeDownloadTested");
 
@@ -406,7 +409,7 @@ var linkPropsPlusSvc = {
 	_contextNode: null,
 	get contextNode() {
 		return this._contextNode
-			|| document.getElementById("linkPropsPlus-context").triggerNode
+			|| this.$("linkPropsPlus-context").triggerNode
 			|| document.popupNode;
 	},
 	initContextMenu: function(e) {
@@ -416,16 +419,16 @@ var linkPropsPlusSvc = {
 		var trg = this.contextNode;
 		var row = this.getRowFromChild(trg);
 		var tip = this.getTip(row);
-		var copyTip = document.getElementById("linkPropsPlus-context-copyTip");
+		var copyTip = this.$("linkPropsPlus-context-copyTip");
 		copyTip.hidden = !tip;
 		if(tip)
 			copyTip.tooltipText = tip;
 		else
 			copyTip.removeAttribute("tooltiptext");
 
-		var rowStatus = document.getElementById("linkPropsPlus-rowStatus");
-		var testResume = document.getElementById("linkPropsPlus-context-testDownloadResumability");
-		var testResumeSep = document.getElementById("linkPropsPlus-context-testDownloadResumabilitySeparator");
+		var rowStatus = this.$("linkPropsPlus-rowStatus");
+		var testResume = this.$("linkPropsPlus-context-testDownloadResumability");
+		var testResumeSep = this.$("linkPropsPlus-context-testDownloadResumabilitySeparator");
 		var hideTestResume = testResume.hidden = testResumeSep.hidden =
 			!this.pu.get("testDownloadResumability.alwaysShowMenuItem")
 			&& (this.testResumability || rowStatus.boxObject.height <= 0);
@@ -442,7 +445,7 @@ var linkPropsPlusSvc = {
 			fe = this.headers.frame;
 		var row = this.getRowFromChild(fe);
 		if(!row || row.parentNode.id != "linkPropsPlus-rows") {
-			var rows = document.getElementById("linkPropsPlus-rows").childNodes;
+			var rows = this.$("linkPropsPlus-rows").childNodes;
 			for(var i = 0, l = rows.length; i < l; ++i) {
 				var r = rows[i];
 				if(r.boxObject.height > 0) {
@@ -452,7 +455,7 @@ var linkPropsPlusSvc = {
 			}
 		}
 		this._contextNode = row;
-		var cm = document.getElementById("linkPropsPlus-context");
+		var cm = this.$("linkPropsPlus-context");
 		if("openPopup" in cm)
 			cm.openPopup(row, "after_start");
 		else
@@ -490,7 +493,7 @@ var linkPropsPlusSvc = {
 			this.openOptions();
 	},
 	isClickOnLeftCol: function(e) {
-		var col = document.getElementById("linkPropsPlus-columnLabels");
+		var col = this.$("linkPropsPlus-columnLabels");
 		var bo = col.boxObject;
 		return e.screenX >= bo.screenX && e.screenX <= bo.screenX + bo.width
 		    && e.screenY >= bo.screenY && e.screenY <= bo.screenY + bo.height;
@@ -510,7 +513,7 @@ var linkPropsPlusSvc = {
 		}
 		else {
 			rows = Array.filter(
-				document.getElementById("linkPropsPlus-rows").childNodes,
+				this.$("linkPropsPlus-rows").childNodes,
 				function(row) {
 					var bo = row.boxObject;
 					return bo.width > 0 && bo.height > 0;
@@ -594,7 +597,7 @@ var linkPropsPlusSvc = {
 			: this.fxVersion < 3.6;
 	},
 	goToURI: function(textboxId, invertCloseBehavior) {
-		var tb = document.getElementById("linkPropsPlus-" + textboxId);
+		var tb = this.$("linkPropsPlus-" + textboxId);
 		var uri = tb
 			? tb.getAttribute("lpp_rawURI") || tb.value
 			: this.uri;
@@ -673,7 +676,7 @@ var linkPropsPlusSvc = {
 		}
 	},
 	saveLink: function(textboxId, invertCloseBehavior) {
-		var tb = document.getElementById("linkPropsPlus-" + textboxId);
+		var tb = this.$("linkPropsPlus-" + textboxId);
 		var uri = tb
 			? tb.getAttribute("lpp_rawURI") || tb.value
 			: this.uri;
@@ -1018,12 +1021,12 @@ var linkPropsPlusSvc = {
 	progressInitialized: false,
 	get progress() {
 		this.progressInitialized = true;
-		var progressBlock = document.getElementById("linkPropsPlus-autocloseProgressBlock");
+		var progressBlock = this.$("linkPropsPlus-autocloseProgressBlock");
 		var root = document.documentElement;
 		var cs = window.getComputedStyle(root, null); // May be null in closing window
 		cs && progressBlock.setAttribute("chromedir", cs.direction);
 		root.appendChild(progressBlock); // #linkPropsPlus-container can be hidden!
-		var progress = document.getElementById("linkPropsPlus-autocloseProgress");
+		var progress = this.$("linkPropsPlus-autocloseProgress");
 		if(!("max" in progress)) { // Firefox < 3.5
 			progress._gain = 1;
 			progress.__defineGetter__("max", function() {
@@ -1055,9 +1058,9 @@ var linkPropsPlusSvc = {
 	_uri: null,
 	get uri() {
 		if(this.isOwnWindow)
-			return document.getElementById("linkPropsPlus-uri").value;
+			return this.$("linkPropsPlus-uri").value;
 		if(this.isPropsDialog)
-			return document.getElementById("link-url-text").value;
+			return this.$("link-url-text").value;
 
 		// Based on code of FlashGot extension https://addons.mozilla.org/addon/flashgot/
 		// chrome://flashgot/content/flashgotDMOverlay.js
@@ -1206,7 +1209,7 @@ var linkPropsPlusSvc = {
 		},
 		get frame() {
 			delete this.frame;
-			return this.frame = document.getElementById("linkPropsPlus-headers");
+			return this.frame = this.parent.$("linkPropsPlus-headers");
 		},
 		get field() {
 			var field = this.frame.contentDocument.body
@@ -1400,7 +1403,7 @@ var linkPropsPlusSvc = {
 				</menupopup>').replace(/>\s+</g, "><"),
 				"application/xml").documentElement;
 			if(cm.localName == "menupopup")
-				document.getElementById("linkPropsPlus-container").appendChild(cm);
+				this.parent.$("linkPropsPlus-container").appendChild(cm);
 		},
 		initMenu: function(cm) {
 			var frame = this.frame;
@@ -1444,7 +1447,7 @@ var linkPropsPlusSvc = {
 		var textSize = this.getSizeStr(rawSize);
 		if(!textSize)
 			return;
-		var target = document.getElementById("linkPropsPlus-size");
+		var target = this.$("linkPropsPlus-size");
 		if(this._hasSize) {
 			if(textSize != target.value) {
 				this._lastSizeTip = rawSize;
@@ -1461,7 +1464,7 @@ var linkPropsPlusSvc = {
 		}
 	},
 	convertSize: function() {
-		var target = document.getElementById("linkPropsPlus-size");
+		var target = this.$("linkPropsPlus-size");
 		if(this._lastSize !== null)
 			target.value = this.getSizeStr(this._lastSize);
 		if(this._lastSizeTip !== null)
@@ -1550,7 +1553,7 @@ var linkPropsPlusSvc = {
 			str = this._lastDate;
 		else
 			this._lastDate = str;
-		var target = document.getElementById("linkPropsPlus-lastModified");
+		var target = this.$("linkPropsPlus-lastModified");
 		var date = new Date(str);
 		var isInvalid = !str || !isFinite(date.getTime());
 		this.setMissingStyle(target, isInvalid);
@@ -1568,7 +1571,7 @@ var linkPropsPlusSvc = {
 		}
 	},
 	formatType: function(str) {
-		var target = document.getElementById("linkPropsPlus-contentType");
+		var target = this.$("linkPropsPlus-contentType");
 		if(this._hasType) {
 			if(str != target.value)
 				target.setAttribute("tooltiptext", str);
@@ -1581,18 +1584,18 @@ var linkPropsPlusSvc = {
 		}
 	},
 	formatStatus: function(status, statusText, canResumeDownload, isTested) {
-		var tb = document.getElementById("linkPropsPlus-status");
+		var tb = this.$("linkPropsPlus-status");
 		tb.value = status + (statusText ? " " + statusText : "");
 		this.setMissingStyle(tb, status >= 400 && status < 600);
 		this.formatCanResumeDownload(canResumeDownload, isTested, tb);
 	},
 	formatCanResumeDownload: function(canResumeDownload, isTested, tb) {
 		if(!tb)
-			tb = document.getElementById("linkPropsPlus-status");
+			tb = this.$("linkPropsPlus-status");
 		// We use clearResults() and may receive "tested" value before "non-tested"
 		if(!isTested && tb.getAttribute("lpp_resumeDownloadTested") == "true")
 			return;
-		var grid = document.getElementById("linkPropsPlus-grid"); // May be used in userChrome.css
+		var grid = this.$("linkPropsPlus-grid"); // May be used in userChrome.css
 		grid.setAttribute("lpp_canResumeDownload", canResumeDownload);
 		grid.setAttribute("lpp_resumeDownloadTested", !!isTested);
 		tb.setAttribute("lpp_canResumeDownload", canResumeDownload);
@@ -1605,7 +1608,7 @@ var linkPropsPlusSvc = {
 			tb.tooltipText = this.ut.getLocalized(isTested ? "resumeDownloadNo" : "resumeDownloadShouldNot");
 	},
 	formatURI: function(uri) {
-		var tb = document.getElementById("linkPropsPlus-directURI");
+		var tb = this.$("linkPropsPlus-directURI");
 		if(uri == this.requestedURI) // Hide ?ramdom hack
 			uri = this.requestURI;
 		if(arguments.length == 0)
@@ -1646,7 +1649,7 @@ var linkPropsPlusSvc = {
 	},
 
 	fillInBlank: function() {
-		var target = document.getElementById("linkPropsPlus-size");
+		var target = this.$("linkPropsPlus-size");
 		var missing = this.ut.getLocalized("missing");
 		if(!target.value) {
 		/*
@@ -1659,15 +1662,15 @@ var linkPropsPlusSvc = {
 			this.setMissingStatus(target, missing);
 		}
 
-		target = document.getElementById("linkPropsPlus-contentType");
+		target = this.$("linkPropsPlus-contentType");
 		if(!target.value)
 			this.setMissingStatus(target, missing);
 
-		target = document.getElementById("linkPropsPlus-lastModified");
+		target = this.$("linkPropsPlus-lastModified");
 		if(!target.value)
 			this.setMissingStatus(target, missing);
 
-		target = document.getElementById("linkPropsPlus-status");
+		target = this.$("linkPropsPlus-status");
 		if(!target.value)
 			this.setMissingStatus(target, missing);
 	},
@@ -1825,7 +1828,7 @@ var linkPropsPlusSvc = {
 			this.formatCanResumeDownload(false, true);
 			return;
 		}
-		var testResume = document.getElementById("linkPropsPlus-context-testDownloadResumability");
+		var testResume = this.$("linkPropsPlus-context-testDownloadResumability");
 		testResume.disabled = true;
 		this.checkResumableChannel = ch;
 		if(ch instanceof Components.interfaces.nsIHttpChannel)

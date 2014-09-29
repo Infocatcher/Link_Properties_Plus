@@ -1868,8 +1868,10 @@ var linkPropsPlusSvc = {
 					Components.utils.reportError(e);
 				}
 				this.setCanResumeDownload(false);
-				testResume.disabled = false;
 				this.parent.checkResumableChannel = null;
+				setTimeout(function() {
+					testResume.disabled = false;
+				}, 200);
 			},
 			_headers: { __proto__: null },
 			// nsIHttpHeaderVisitor

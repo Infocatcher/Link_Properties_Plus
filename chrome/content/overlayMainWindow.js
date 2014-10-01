@@ -195,35 +195,37 @@ var linkPropsPlus = {
 		this.sourceWindow = null;
 	},
 
-	openWindow: function(e, uri, referer, sourceWindow, browserWindow, sourceTab) {
-		var autostart = e
+	openWindow: function(e, options) {
+		if(!options)
+			options = {};
+		options.autostart = e
 			? e.type == "click" || e.ctrlKey || e.altKey || e.shiftKey || e.metaKey
-			: !!uri;
-		if(!uri && this.pu.get("preferSelectionClipboard")) {
+			: !!options.uri;
+		if(!options.uri && this.pu.get("preferSelectionClipboard")) {
 			var clipUriSel = this.ut.readFromClipboard(true);
 			if(this.isValidURI(clipUriSel))
-				uri = clipUriSel;
+				options.uri = clipUriSel;
 		}
-		if(!uri) {
+		if(!options.uri) {
 			var clipUri = this.ut.readFromClipboard();
 			if(this.isValidURI(clipUri))
-				uri = clipUri;
+				options.uri = clipUri;
 		}
-		if(!referer && referer !== null)
-			referer = content.location.href;
-		if(!sourceWindow)
-			sourceWindow = content;
-		this.ut.openWindow(uri, referer, sourceWindow, autostart, browserWindow, sourceTab);
+		if(!options.referer && options.referer !== null)
+			options.referer = content.location.href;
+		if(!options.sourceWindow)
+			options.sourceWindow = content;
+		this.ut.openWindow(options);
 	},
 	openWindowContext: function() {
-		this.ut.openWindow(
-			this.linkURL,
-			this.referer,
-			this.sourceWindow || content,
-			true,
-			window,
-			"gBrowser" in window && gBrowser.selectedTab
-		);
+		this.ut.openWindow({
+			uri:          this.linkURL,
+			referer:      this.referer,
+			sourceWindow: this.sourceWindow || content,
+			autostart:    true,
+			parentWindow: window,
+			sourceTab:    "gBrowser" in window && gBrowser.selectedTab
+		});
 	}
 };
 window.addEventListener("load", linkPropsPlus, false);

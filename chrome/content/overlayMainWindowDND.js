@@ -33,14 +33,14 @@ var linkPropsPlusDND = {
 			return;
 		links.forEach(function(uri) {
 			var sourceWindow = data.sourceWindows[uri] || data.sourceWindow;
-			this.lpp.ut.openWindow(
-				uri,
-				data.referers[uri] || data.referer,
-				sourceWindow,
-				true,
-				sourceWindow && window,
-				sourceWindow && this.getTabForContentWindow(sourceWindow)
-			);
+			this.lpp.ut.openWindow({
+				uri:          uri,
+				referer:      data.referers[uri] || data.referer,
+				sourceWindow: sourceWindow,
+				autostart:    true,
+				parentWindow: sourceWindow && window,
+				sourceTab:    sourceWindow && this.getTabForContentWindow(sourceWindow)
+			});
 		}, this);
 	},
 	buttonDragLeave: function(e) {

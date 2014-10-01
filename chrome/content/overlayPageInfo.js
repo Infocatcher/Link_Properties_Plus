@@ -52,12 +52,12 @@ var linkPropsPlusPageInfo = {
 		for(var uri in links) {
 			var win = wins[uri];
 			this.ut.openWindow(
-				uri,
-				links[uri],
-				win,
-				true,
-				browserWindow,
-				this.getSourceTab(browserWindow, win.top)
+				uri:          uri,
+				referer:      links[uri],
+				sourceWindow: win,
+				autostart:    true,
+				parentWindow: browserWindow,
+				sourceTab:    this.getSourceTab(browserWindow, win.top)
 			);
 		}
 	},

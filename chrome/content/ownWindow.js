@@ -24,6 +24,7 @@ var linkPropsPlusWnd = {
 
 	instantInit: function() {
 		if("arguments" in window) {
+			// { uri, referer, sourceWindow, autostart, parentWindow, sourceTab }
 			var options = window.arguments && window.arguments[0];
 			var uri = options.uri || "";
 			this.uri = uri;

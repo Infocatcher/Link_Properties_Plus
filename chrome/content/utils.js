@@ -32,10 +32,11 @@ var linkPropsPlusUtils = {
 		return this.pbu = "PrivateBrowsingUtils" in window ? PrivateBrowsingUtils : null;
 	},
 
-	openWindow: function(uri, referer, sourceWindow, autostart, browserWindow, sourceTab) {
+	openWindow: function(options) {
+		// { uri, referer, sourceWindow, autostart, parentWindow, sourceTab }
 		var ws = this.wm.getEnumerator("linkPropsPlus:ownWindow");
-		var _uri = uri || "";
-		var _referer = this.checkReferer(referer, _uri) || "";
+		var _uri = options.uri || "";
+		var _referer = this.checkReferer(options.referer || "", _uri) || "";
 		while(ws.hasMoreElements()) {
 			var w = ws.getNext();
 			var o = w.linkPropsPlusWnd;
@@ -43,27 +44,20 @@ var linkPropsPlusUtils = {
 				o
 				&& (o.uri || "") == _uri
 				&& (o.referer || "") == _referer
-				&& o.svc.isPrivate == this.isWindowPrivate(sourceWindow)
+				&& o.svc.isPrivate == this.isWindowPrivate(options.sourceWindow || null)
 			) {
 				w.focus();
 				o.svc.restartAutoClose();
-				if(autostart && !o.autostart && !o.svc.activeRequest && !o.svc.requestFinished)
+				if(options.autostart && !o.autostart && !o.svc.activeRequest && !o.svc.requestFinished)
 					o.getHeaders();
-				return;
+				return w;
 			}
 		}
-		window.openDialog(
+		return window.openDialog(
 			"chrome://linkpropsplus/content/ownWindow.xul",
 			"_blank",
 			"chrome,resizable,centerscreen,dialog=0",
-			{
-				uri: uri,
-				referer: referer,
-				sourceWindow: sourceWindow,
-				autostart: autostart,
-				parentWindow: browserWindow,
-				sourceTab: sourceTab
-			}
+			options
 		);
 	},
 	allowOpen: function(n) {

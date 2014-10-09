@@ -105,7 +105,9 @@ var linkPropsPlusSvc = {
 		window.addEventListener("keypress", this, false);
 		this.pu.init();
 		this.showRows();
-		this.setKeysDescDelay();
+		setTimeout(function(_this) {
+			_this.setKeysDesc();
+		}, 0, this);
 
 		this.initStyles();
 		if(!this.isDownloadDialog)
@@ -285,11 +287,6 @@ var linkPropsPlusSvc = {
 			window.sizeToContent();
 			rowHeaders.removeAttribute("minheight");
 		}
-	},
-	setKeysDescDelay: function() {
-		setTimeout(function(_this) {
-			_this.setKeysDesc();
-		}, 0, this);
 	},
 	setKeysDesc: function() {
 		var nodes = Array.slice(document.getElementsByAttribute("lpp_key", "*"));

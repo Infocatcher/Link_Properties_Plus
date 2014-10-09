@@ -158,26 +158,7 @@ var linkPropsPlusSvc = {
 		switch(e.type) {
 			case "load":   this.init();    break;
 			case "unload": this.destroy(); break;
-			case "keypress":
-				if("defaultPrevented" in e ? e.defaultPrevented : e.getPreventDefault())
-					break;
-				this.restartAutoClose();
-				if(e.altKey || e.metaKey)
-					break;
-				if(e.keyCode == e.DOM_VK_RETURN && this.isOwnWindow) { // Enter, Ctrl+Enter or Shift+Enter pressed
-					this.stopEvent(e);
-					this.wnd.getHeaders(e);
-				}
-				else if(!e.shiftKey && !e.ctrlKey && e.keyCode == e.DOM_VK_ESCAPE) { // Escape pressed
-					if(this.cancel())
-						this.stopEvent(e);
-					else if(this.blockEscapeKey) {
-						this.blockEscapeKey = false; // Second press will close window anyway
-						clearTimeout(this.blockEscapeKeyTimer);
-						this.stopEvent(e);
-					}
-				}
-			break;
+			case "keypress": this.handleHotkey(e); break;
 			case "mouseover":
 			case "mouseout":
 				if(
@@ -196,6 +177,26 @@ var linkPropsPlusSvc = {
 				// -> move mouse => wrong mouseover => windowOver()
 				if(e.target == document)
 					this.windowOut();
+		}
+	},
+	handleHotkey: function(e) {
+		if("defaultPrevented" in e ? e.defaultPrevented : e.getPreventDefault())
+			return;
+		this.restartAutoClose();
+		if(e.altKey || e.metaKey)
+			return;
+		if(e.keyCode == e.DOM_VK_RETURN && this.isOwnWindow) { // Enter, Ctrl+Enter or Shift+Enter pressed
+			this.stopEvent(e);
+			this.wnd.getHeaders(e);
+		}
+		else if(!e.shiftKey && !e.ctrlKey && e.keyCode == e.DOM_VK_ESCAPE) { // Escape pressed
+			if(this.cancel())
+				this.stopEvent(e);
+			else if(this.blockEscapeKey) {
+				this.blockEscapeKey = false; // Second press will close window anyway
+				clearTimeout(this.blockEscapeKeyTimer);
+				this.stopEvent(e);
+			}
 		}
 	},
 	stopEvent: function(e) {

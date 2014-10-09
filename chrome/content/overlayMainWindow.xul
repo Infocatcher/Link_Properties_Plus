@@ -25,6 +25,7 @@
 			insertafter="context-copylink"
 			oncommand="linkPropsPlus.openWindowContext();"
 			label="&linkPropsPlus.context;"
+			lpp_label="&linkPropsPlus.context;"
 			lpp_label_for="&linkPropsPlus.contextFor;"
 			accesskey="&linkPropsPlus.contextAccesskey;" />
 	</menupopup>
@@ -108,6 +109,7 @@
 			insertafter="mailContext-copylink,context-copylink"
 			oncommand="linkPropsPlus.openWindowContext();"
 			label="&linkPropsPlus.context;"
+			lpp_label="&linkPropsPlus.context;"
 			lpp_label_for="&linkPropsPlus.contextFor;"
 			accesskey="&linkPropsPlus.contextAccesskey;" />
 	</menupopup>

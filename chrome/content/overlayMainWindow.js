@@ -179,13 +179,11 @@ var linkPropsPlus = {
 		if(!hide) {
 			var decoded = this.ut.decodeURI(uri);
 			mi.setAttribute("tooltiptext", decoded);
-			var crop = this.pu.get("context.onSelection.cropLinkInLabel") || 0;
-			if(!("_lppLabel" in mi))
-				mi._lppLabel = mi.getAttribute("label");
+			var crop = this.pu.get("context.onSelection.cropLinkInLabel");
 			var label = sel && crop > 0
 				? mi.getAttribute("lpp_label_for")
 					.replace("$S", decoded.length > crop ? decoded.substr(0, crop) + "…" : decoded)
-				: mi._lppLabel;
+				: mi.getAttribute("lpp_label");
 			if(mi.getAttribute("label") != label)
 				mi.setAttribute("label", label);
 		}

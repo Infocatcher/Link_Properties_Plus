@@ -156,8 +156,8 @@ var linkPropsPlusSvc = {
 	},
 	handleEvent: function(e) {
 		switch(e.type) {
-			case "load":   this.init();    break;
-			case "unload": this.destroy(); break;
+			case "load":     this.init();          break;
+			case "unload":   this.destroy();       break;
 			case "keypress": this.handleHotkey(e); break;
 			case "mouseover":
 			case "mouseout":

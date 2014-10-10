@@ -1945,7 +1945,10 @@ var linkPropsPlusSvc = {
 	cancelling: false,
 	cancellingTimer: 0,
 	cancel: function() {
-		if(this.activeRequest && this.channel) {
+		var ch = this.channel;
+		if(ch && this.activeRequest) {
+			this.channel = null;
+
 			// Allow press Escape twice to cancel request and close window
 			this.cancelling = true;
 			clearTimeout(this.cancellingTimer);
@@ -1953,11 +1956,10 @@ var linkPropsPlusSvc = {
 				_this.cancelling = false;
 			}, this.blockEscapeKeyDelay, this);
 
-			this.channel.cancel(Components.results.NS_BINDING_ABORTED);
+			ch.cancel(Components.results.NS_BINDING_ABORTED);
 			this.fillInBlank();
 			//if(this.channel instanceof Components.interfaces.nsIFTPChannel)
-			this.onStopRequest(this.channel);
-			this.channel = null;
+			this.onStopRequest(ch);
 			return true;
 		}
 		this.cancelCheckChannelResumable();

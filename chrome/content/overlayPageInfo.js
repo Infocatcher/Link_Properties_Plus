@@ -51,14 +51,14 @@ var linkPropsPlusPageInfo = {
 		var browserWindow = opener && "gBrowser" in opener && "browsers" in opener.gBrowser && opener;
 		for(var uri in links) {
 			var win = wins[uri];
-			this.ut.openWindow(
+			this.ut.openWindow({
 				uri:          uri,
 				referer:      links[uri],
 				sourceWindow: win,
 				autostart:    true,
 				parentWindow: browserWindow,
 				sourceTab:    this.getSourceTab(browserWindow, win.top)
-			);
+			});
 		}
 	},
 	getSourceTab: function(browserWindow, contentWindow) {

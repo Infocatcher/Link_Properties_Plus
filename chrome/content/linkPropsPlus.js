@@ -805,7 +805,6 @@ var linkPropsPlusSvc = {
 
 		try {
 			_uri = this.checkFakeURINeeded(_uri);
-			this.requestedURI = _uri;
 
 			//var uri = Components.classes["@mozilla.org/network/standard-url;1"]
 			//	.createInstance(Components.interfaces.nsIURI);
@@ -1615,8 +1614,7 @@ var linkPropsPlusSvc = {
 	},
 	formatURI: function(uri) {
 		var tb = this.$("linkPropsPlus-directURI");
-		if(uri == this.requestedURI) // Hide ?ramdom hack
-			uri = this.requestURI;
+		uri = this.getRealURI(uri);
 		if(arguments.length == 0)
 			uri = tb.getAttribute("lpp_rawURI") || "";
 		else
@@ -1635,8 +1633,7 @@ var linkPropsPlusSvc = {
 			tb.tooltipText = header + redirects.map(function(redirect, i) {
 				var uri = redirect.uri;
 				if(i == 0) {
-					if(uri == this.requestedURI) // Hide ?ramdom hack
-						uri = this.requestURI;
+					uri = this.getRealURI(uri);
 					return this.ut.decodeURI(uri);
 				}
 				var types = [];

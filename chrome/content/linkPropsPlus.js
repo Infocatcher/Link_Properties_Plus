@@ -869,6 +869,7 @@ var linkPropsPlusSvc = {
 			root.removeAttribute("linkPropsPlus_error");
 		}, 700);
 	},
+	_fakeURIs: { __proto__: null },
 	checkFakeURINeeded: function(uri) {
 		// Ugly workaround...
 		// Request will be sended after downloading file from "_uri" to %temp%.
@@ -876,9 +877,16 @@ var linkPropsPlusSvc = {
 		if(
 			this.isDownloadDialog
 			&& (this.fxVersion < 4 || this.pu.get("download.forceFakeURIHack")) //~ todo: test!
-		)
+		) {
 			uri += "?" + Math.random().toFixed(16).substr(2) + Math.random().toFixed(16).substr(2);
+			this._fakeURIs[uri] = true;
+		}
 		return uri;
+	},
+	getRealURI: function(fakeURI) {
+		if(fakeURI in this._fakeURIs)
+			return fakeURI.replace(/\?\d+$/, "");
+		return fakeURI;
 	},
 	newChannelFromURI: function(uri, bypassCache) {
 		var ch = uri.scheme == "about" && "nsIAboutModule" in Components.interfaces
@@ -913,7 +921,7 @@ var linkPropsPlusSvc = {
 		return ch;
 	},
 	getRequestHash: function(ch) {
-		var hash = ch.originalURI.spec;
+		var hash = this.getRealURI(ch.originalURI.spec);
 		if(ch instanceof Components.interfaces.nsIHttpChannel) try {
 			hash += "\n" + ch.getRequestHeader("Referer");
 		}

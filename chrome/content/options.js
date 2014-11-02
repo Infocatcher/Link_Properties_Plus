@@ -57,7 +57,7 @@ var linkPropsPlusOpts = {
 					.loadSubScript("chrome://linkpropsplus/content/extsHelper.js");
 				linkPropsPlusExtensionsHelper.isAvailable(guid) && this.hide(propsBox, false);
 			}
-			else if("Application" in window && "getExtensions" in Application) { // Firefox 3.7a
+			else if("Application" in window && "getExtensions" in Application) { // Firefox 4+
 				var _this = this;
 				Application.getExtensions(function(exts) {
 					if(exts.has(guid) && exts.get(guid).enabled) {

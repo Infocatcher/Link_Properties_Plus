@@ -813,7 +813,7 @@ var linkPropsPlusSvc = {
 			var schm = uri.scheme && uri.scheme.toLowerCase();
 
 			var ph = Components.interfaces.nsIProtocolHandler;
-			if("URI_DOES_NOT_RETURN_DATA" in ph) { // Firefox 3
+			if("URI_DOES_NOT_RETURN_DATA" in ph) { // Firefox 3+
 				var flags = this.ios.getProtocolFlags(schm);
 				if(flags & ph.URI_DOES_NOT_RETURN_DATA) {
 					this.ut.warning('URI_DOES_NOT_RETURN_DATA (scheme: "' + schm + '")');
@@ -1032,7 +1032,7 @@ var linkPropsPlusSvc = {
 		cs && progressBlock.setAttribute("chromedir", cs.direction);
 		root.appendChild(progressBlock); // #linkPropsPlus-container can be hidden!
 		var progress = this.$("linkPropsPlus-autocloseProgress");
-		if(!("max" in progress)) { // Firefox < 3.5
+		if(!("max" in progress)) { // Firefox 3.0 and older
 			progress._gain = 1;
 			progress.__defineGetter__("max", function() {
 				return Math.round(this.getAttribute("max") * this._gain);
@@ -1687,7 +1687,7 @@ var linkPropsPlusSvc = {
 	},
 
 	Components: Components, // We can receive nsIChannel notifications after window will be closed
-	// And in Firefox <= 3.6 garbage collector may already remove Components from scope
+	// And in Firefox 3.6 and older garbage collector may already remove Components from scope
 	// nsIStreamListener
 	onDataAvailable: function(request, ctxt, input, offset, count) {
 		var data = this.getStreamData(input, count);
@@ -1751,7 +1751,7 @@ var linkPropsPlusSvc = {
 					this.formatType(ch.contentType);
 				if("contentLength" in ch)
 					this.formatSize(ch.contentLength);
-				if("lastModifiedTime" in request && request.lastModifiedTime) { // Firefox 4
+				if("lastModifiedTime" in request && request.lastModifiedTime) { // Firefox 4+
 					var t = request.lastModifiedTime;
 					this.formatDate(t > 1e14 ? t/1000 : t);
 				}

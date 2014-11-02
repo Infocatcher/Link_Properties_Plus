@@ -733,7 +733,7 @@ var linkPropsPlusSvc = {
 			).saveLink();
 		}
 		catch(e) {
-			this.ut.error("new nsContextMenu( ... ).saveLink() failed");
+			this.ut.error("new nsContextMenu( ... ).saveLink() failed, will try saveURL()");
 			Components.utils.reportError(e);
 			try {
 				// See chrome://global/content/contentAreaUtils.js

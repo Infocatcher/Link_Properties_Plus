@@ -217,6 +217,11 @@ var linkPropsPlusUtils = {
 		}
 		return id;
 	},
+	get console() {
+		delete this.console;
+		return this.console = Components.classes["@mozilla.org/consoleservice;1"]
+			.getService(Components.interfaces.nsIConsoleService);
+	},
 	error: function(msg, caller, isWarning) {
 		if(!caller)
 			caller = Components.stack.caller;
@@ -231,9 +236,7 @@ var linkPropsPlusUtils = {
 			isWarning ? err.warningFlag : err.errorFlag,
 			null
 		);
-		Components.classes["@mozilla.org/consoleservice;1"]
-			.getService(Components.interfaces.nsIConsoleService)
-			.logMessage(err);
+		this.console.logMessage(err);
 	},
 	warning: function(msg) {
 		this.error(msg, Components.stack.caller, true);

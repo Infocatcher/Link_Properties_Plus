@@ -25,6 +25,7 @@
 `*` Double click on “Referer:” label (or on empty referer field) to get fake referer from link.<br>
 `*` Open links after source tab only if <em>extensions.linkPropertiesPlus.openInChildTab</em> = true, also added <em>extensions.linkPropertiesPlus.openInChildTab.onlyIfSelected</em> preference to open in sibling tab only if source tab is still selected.<br>
 `x` Corrected localization for numbers and dates (<em>extensions.linkPropertiesPlus.localeNumbers</em> and <em>extensions.linkPropertiesPlus.localeDates</em> preferences) (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/15">#15</a>).<br>
+`+` Added ability to save maximized state of properties window.<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Corrected position of context menu item in SeaMonkey's mail.<br>

@@ -25,6 +25,7 @@
 `*` Двойной клик по метке “Referer:” (или по пустому полю для ввода referer'а) для получения поддельного referer'а из ссылки.<br>
 `*` Теперь ссылки открываются после текущей вкладки только если установлено <em>extensions.linkPropertiesPlus.openInChildTab</em> = true, также добавлена настройка <em>extensions.linkPropertiesPlus.openInChildTab.onlyIfSelected</em> для открытия в соседней вкладке только если вкладка-источник по-прежнему активна.<br>
 `x` Подкорректирована локализация чисел и дат (<em>extensions.linkPropertiesPlus.localeNumbers</em> and <em>extensions.linkPropertiesPlus.localeDates</em> preferences) (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/15">#15</a>).<br>
+`+` Добавлена возможность сохранения развернутого состояния окна свойств.<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Исправлено положение пункта контекстного меню в почтовике SeaMonkey.<br>

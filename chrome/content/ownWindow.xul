@@ -76,5 +76,7 @@
 	<vbox id="linkPropsPlus-container" flex="1" />
 	<keyset id="linkPropsPlus-keyset">
 		<key id="linkPropsPlus-key-closeOtherWindows" oncommand="linkPropsPlusWnd.closeOther();" disabled="true" />
+		<key id="linkPropsPlus-key-fullScreen" keycode="VK_F11"
+			oncommand="if('fullScreen' in window) fullScreen = !fullScreen; // Firefox 3.0+" />
 	</keyset>
 </dialog>

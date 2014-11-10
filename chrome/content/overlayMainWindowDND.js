@@ -3,12 +3,17 @@ var linkPropsPlusDND = {
 		return window.linkPropsPlus;
 	},
 
+	buttonId: "linkPropsPlus-toolbarButton",
 	get button() {
-		var btn = document.getElementById("linkPropsPlus-toolbarButton");
+		var btn = document.getElementById(this.buttonId);
 		if(!btn)
 			return null;
 		delete this.button;
 		return this.button = btn;
+	},
+	get panelPopup() {
+		delete this.panelPopup;
+		return this.panelPopup = document.getElementById("PanelUI-popup");
 	},
 	buttonDragOver: function(e) {
 		if(this.hasDropLink(e)) {
@@ -18,6 +23,24 @@ var linkPropsPlusDND = {
 			e.stopPropagation();
 			if(!this.button.hasAttribute("checked"))
 				this.button.setAttribute("checked", "true");
+		}
+	},
+	panelButtonDragOver: function(e) {
+		if(e.target != e.currentTarget)
+			return;
+		if(this.panelPopup && this.panelPopup.state != "closed")
+			return;
+		var placement = CustomizableUI.getPlacementOfWidget(this.buttonId);
+		var area = placement && placement.area;
+		if(area != CustomizableUI.AREA_PANEL)
+			return;
+		if(this.hasDropLink(e)) {
+			var panelBtn = e.currentTarget;
+			var dt = e.dataTransfer;
+			dt.effectAllowed = dt.dropEffect = "link";
+			e.preventDefault();
+			e.stopPropagation();
+			panelBtn.click();
 		}
 	},
 	buttonDrop: function(e) {
@@ -46,6 +69,8 @@ var linkPropsPlusDND = {
 	buttonDragLeave: function(e) {
 		if(this.button.hasAttribute("checked"))
 			this.button.removeAttribute("checked");
+	},
+	panelButtonDragLeave: function(e) {
 	},
 	getTabForContentWindow: function(win) {
 		var top = win.top;

@@ -34,19 +34,37 @@ var linkPropsPlus = {
 		setTimeout(function(_this) {
 			_this.showMenuitems();
 			_this.showIcons();
+			_this.initPanelButton();
 		}, 50, this);
 	},
 	destroy: function() {
 		window.removeEventListener("unload", this, false);
 		this.cm.removeEventListener("popupshowing", this, false);
 		this.cm.removeEventListener("popuphidden", this, false);
+		this.destroyPanelButton();
+	},
+	initPanelButton: function() {
+		var panelBtn = this.panelBtn;
+		if(panelBtn) {
+			panelBtn.addEventListener("dragover", this, false);
+			panelBtn.addEventListener("dragleave", this, false);
+		}
+	},
+	destroyPanelButton: function() {
+		var panelBtn = this.panelBtn;
+		if(panelBtn) {
+			panelBtn.removeEventListener("dragover", this, false);
+			panelBtn.removeEventListener("dragleave", this, false);
+		}
 	},
 	handleEvent: function(e) {
 		switch(e.type) {
 			case "load":         this.init();                                              break;
 			case "unload":       this.destroy();                                           break;
 			case "popupshowing": e.target == e.currentTarget && this.setContextMenu();     break;
-			case "popuphidden":  e.target == e.currentTarget && this.destroyContextMenu();
+			case "popuphidden":  e.target == e.currentTarget && this.destroyContextMenu(); break;
+			case "dragover":     this.dnd.panelButtonDragOver(e);                          break;
+			case "dragleave":    this.dnd.panelButtonDragLeave(e);
 		}
 	},
 
@@ -70,6 +88,11 @@ var linkPropsPlus = {
 	get appMi() {
 		delete this.appMi;
 		return this.appMi = document.getElementById("linkPropsPlus-appMenuitem");
+	},
+	get panelBtn() {
+		delete this.panelBtn;
+		return this.panelBtn = "CustomizableUI" in window
+			&& document.getElementById("PanelUI-menu-button");
 	},
 	isValidURI: function(s) {
 		return s && this.validURI.test(s);

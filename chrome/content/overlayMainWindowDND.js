@@ -17,10 +17,7 @@ var linkPropsPlusDND = {
 	},
 	buttonDragOver: function(e) {
 		if(this.hasDropLink(e)) {
-			var dt = e.dataTransfer;
-			dt.effectAllowed = dt.dropEffect = "link";
-			e.preventDefault();
-			e.stopPropagation();
+			this.allowDrop(e);
 			if(!this.button.hasAttribute("checked"))
 				this.button.setAttribute("checked", "true");
 		}
@@ -35,13 +32,16 @@ var linkPropsPlusDND = {
 		if(area != CustomizableUI.AREA_PANEL)
 			return;
 		if(this.hasDropLink(e)) {
+			this.allowDrop(e);
 			var panelBtn = e.currentTarget;
-			var dt = e.dataTransfer;
-			dt.effectAllowed = dt.dropEffect = "link";
-			e.preventDefault();
-			e.stopPropagation();
 			panelBtn.click();
 		}
+	},
+	allowDrop: function(e) {
+		var dt = e.dataTransfer;
+		dt.effectAllowed = dt.dropEffect = "link";
+		e.preventDefault();
+		e.stopPropagation();
 	},
 	buttonDrop: function(e) {
 		this.buttonDragLeave(e);

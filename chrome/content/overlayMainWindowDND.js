@@ -22,6 +22,7 @@ var linkPropsPlusDND = {
 				this.button.setAttribute("checked", "true");
 		}
 	},
+	_firstPanelDragOver: 0,
 	panelButtonDragOver: function(e) {
 		if(e.target != e.currentTarget)
 			return;
@@ -31,11 +32,18 @@ var linkPropsPlusDND = {
 		var area = placement && placement.area;
 		if(area != CustomizableUI.AREA_PANEL)
 			return;
-		if(this.hasDropLink(e)) {
-			this.allowDrop(e);
-			var panelBtn = e.currentTarget;
-			panelBtn.click();
+		if(!this.hasDropLink(e))
+			return;
+		this.allowDrop(e);
+		if(!this._firstPanelDragOver) {
+			this._firstPanelDragOver = Date.now();
+			return;
 		}
+		if(Date.now() - this._firstPanelDragOver < 350)
+			return;
+		this._firstPanelDragOver = 0;
+		var panelBtn = e.currentTarget;
+		panelBtn.click();
 	},
 	allowDrop: function(e) {
 		var dt = e.dataTransfer;
@@ -71,6 +79,7 @@ var linkPropsPlusDND = {
 			this.button.removeAttribute("checked");
 	},
 	panelButtonDragLeave: function(e) {
+		this._firstPanelDragOver = 0;
 	},
 	getTabForContentWindow: function(win) {
 		var top = win.top;

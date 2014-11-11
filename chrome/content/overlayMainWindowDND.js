@@ -26,7 +26,8 @@ var linkPropsPlusDND = {
 	panelButtonDragOver: function(e) {
 		if(e.target != e.currentTarget)
 			return;
-		if(this.panelPopup && this.panelPopup.state != "closed")
+		var panelPopup = this.panelPopup;
+		if(panelPopup && panelPopup.state != "closed")
 			return;
 		var placement = CustomizableUI.getPlacementOfWidget(this.buttonId);
 		var area = placement && placement.area;
@@ -44,6 +45,38 @@ var linkPropsPlusDND = {
 		this._firstPanelDragOver = 0;
 		var panelBtn = e.currentTarget;
 		panelBtn.click();
+
+		var window = panelPopup.ownerDocument.defaultView;
+		panelPopup.addEventListener("popuphiding", function destroy(e) {
+			panelPopup.removeEventListener(e.type, destroy, false);
+			window.removeEventListener("dragover", handleDragOver, false);
+			destroyAutoClose();
+		}, false);
+		var closeTimer = 0;
+		var initAutoClose = function() {
+			if(closeTimer)
+				return;
+			closeTimer = window.setTimeout(function() {
+				panelPopup.hidePopup();
+			}, 600);
+		};
+		var destroyAutoClose = function() {
+			if(!closeTimer)
+				return;
+			window.clearTimeout(closeTimer);
+			closeTimer = 0;
+		};
+		var handleDragOver = function(e) {
+			var trg = e.originalTarget || e.target;
+			for(var node = trg; node; node = node.parentNode) {
+				if(node == panelPopup || node == panelBtn) {
+					destroyAutoClose();
+					return;
+				}
+			}
+			initAutoClose();
+		};
+		window.addEventListener("dragover", handleDragOver, false);
 	},
 	allowDrop: function(e) {
 		var dt = e.dataTransfer;

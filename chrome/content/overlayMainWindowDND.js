@@ -40,7 +40,7 @@ var linkPropsPlusDND = {
 			this._firstPanelDragOver = Date.now();
 			return;
 		}
-		if(Date.now() - this._firstPanelDragOver < 350)
+		if(Date.now() - this._firstPanelDragOver < this.lpp.pu.get("dnd.openPanelDelay"))
 			return;
 		this._firstPanelDragOver = 0;
 		var panelBtn = e.currentTarget;
@@ -53,12 +53,13 @@ var linkPropsPlusDND = {
 			destroyAutoClose();
 		}, false);
 		var closeTimer = 0;
+		var closeDelay = this.lpp.pu.get("dnd.closePanelDelay");
 		var initAutoClose = function() {
 			if(closeTimer)
 				return;
 			closeTimer = window.setTimeout(function() {
 				panelPopup.hidePopup();
-			}, 600);
+			}, closeDelay);
 		};
 		var destroyAutoClose = function() {
 			if(!closeTimer)

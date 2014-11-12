@@ -51,7 +51,7 @@ var linkPropsPlusDND = {
 		var window = panelPopup.ownerDocument.defaultView;
 		panelPopup.addEventListener("popuphiding", function destroy(e) {
 			panelPopup.removeEventListener(e.type, destroy, false);
-			window.removeEventListener("dragover", handleDragOver, false);
+			window.removeEventListener("dragover", handleDragOver, true);
 			destroyAutoClose();
 		}, false);
 		var closeTimer = 0;
@@ -79,7 +79,7 @@ var linkPropsPlusDND = {
 			}
 			initAutoClose();
 		};
-		window.addEventListener("dragover", handleDragOver, false);
+		window.addEventListener("dragover", handleDragOver, true);
 	},
 	allowDrop: function(e) {
 		var dt = e.dataTransfer;

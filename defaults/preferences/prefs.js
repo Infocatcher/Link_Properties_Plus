@@ -66,6 +66,7 @@ pref("extensions.linkPropertiesPlus.icon.toolsMenu", true);
 pref("extensions.linkPropertiesPlus.showInAppMenu", true);
 pref("extensions.linkPropertiesPlus.icon.appMenu", true);
 
+pref("extensions.linkPropertiesPlus.dnd.autoOpenPanel", true);
 pref("extensions.linkPropertiesPlus.dnd.openPanelDelay", 350);
 pref("extensions.linkPropertiesPlus.dnd.closePanelDelay", 600);
 

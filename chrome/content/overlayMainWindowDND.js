@@ -26,6 +26,8 @@ var linkPropsPlusDND = {
 	panelButtonDragOver: function(e) {
 		if(e.target != e.currentTarget)
 			return;
+		if(!this.lpp.pu.get("dnd.autoOpenPanel"))
+			return;
 		var panelPopup = this.panelPopup;
 		if(panelPopup && panelPopup.state != "closed")
 			return;

@@ -24,7 +24,8 @@ var linkPropsPlusDND = {
 	},
 	_firstPanelDragOver: 0,
 	panelButtonDragOver: function(e) {
-		if(e.target != e.currentTarget)
+		var panelBtn = e.currentTarget;
+		if(e.target != panelBtn)
 			return;
 		if(!this.lpp.pu.get("dnd.autoOpenPanel"))
 			return;
@@ -45,7 +46,6 @@ var linkPropsPlusDND = {
 		if(Date.now() - this._firstPanelDragOver < this.lpp.pu.get("dnd.openPanelDelay"))
 			return;
 		this._firstPanelDragOver = 0;
-		var panelBtn = e.currentTarget;
 		panelBtn.click();
 
 		var window = panelPopup.ownerDocument.defaultView;

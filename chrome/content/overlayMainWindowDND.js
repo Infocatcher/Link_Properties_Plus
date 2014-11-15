@@ -17,7 +17,10 @@ var linkPropsPlusDND = {
 	},
 	buttonDragOver: function(e) {
 		if(this.hasDropLink(e)) {
-			this.allowDrop(e);
+			var dt = e.dataTransfer;
+			dt.effectAllowed = dt.dropEffect = "link";
+			e.preventDefault();
+			e.stopPropagation();
 			if(!this.button.hasAttribute("checked"))
 				this.button.setAttribute("checked", "true");
 		}
@@ -38,7 +41,10 @@ var linkPropsPlusDND = {
 			return;
 		if(!this.hasDropLink(e))
 			return;
-		this.allowDrop(e);
+		var dt = e.dataTransfer;
+		dt.effectAllowed = dt.dropEffect = "link";
+		e.preventDefault();
+		e.stopPropagation();
 		if(!this._firstPanelDragOver) {
 			this._firstPanelDragOver = Date.now();
 			return;
@@ -80,12 +86,6 @@ var linkPropsPlusDND = {
 			initAutoClose();
 		};
 		window.addEventListener("dragover", handleDragOver, true);
-	},
-	allowDrop: function(e) {
-		var dt = e.dataTransfer;
-		dt.effectAllowed = dt.dropEffect = "link";
-		e.preventDefault();
-		e.stopPropagation();
 	},
 	buttonDrop: function(e) {
 		this.buttonDragLeave(e);

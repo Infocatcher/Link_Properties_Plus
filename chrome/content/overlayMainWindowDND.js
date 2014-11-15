@@ -41,10 +41,6 @@ var linkPropsPlusDND = {
 			return;
 		if(!this.hasDropLink(e))
 			return;
-		var dt = e.dataTransfer;
-		dt.effectAllowed = dt.dropEffect = "link";
-		e.preventDefault();
-		e.stopPropagation();
 		if(!this._firstPanelDragOver) {
 			this._firstPanelDragOver = Date.now();
 			return;

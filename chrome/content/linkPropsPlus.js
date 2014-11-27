@@ -709,9 +709,13 @@ var linkPropsPlusSvc = {
 		// Hack: we use nsContextMenu.saveLink() from chrome://browser/content/nsContextMenu.js
 		// to get correct name (see http://kb.mozillazine.org/Browser.download.saveLinkAsFilenameTimeout)
 		var browserDoc = browserWin.document;
+		//~ todo: content is null with Electrolysis w/o compatibility shims
 		var content = this.sourceWindow || browserWin.content;
 		var contentDoc = content.document;
-		var link = contentDoc.createElementNS("http://www.w3.org/1999/xhtml", "a");
+		var linkDoc = "gMultiProcessBrowser" in browserWin && browserWin.gMultiProcessBrowser
+			? browserDoc
+			: contentDoc;
+		var link = linkDoc.createElementNS("http://www.w3.org/1999/xhtml", "a");
 		link.href = uri;
 		var fakeDoc = {
 			nodePrincipal: contentDoc.nodePrincipal,

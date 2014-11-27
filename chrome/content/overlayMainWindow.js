@@ -232,8 +232,11 @@ var linkPropsPlus = {
 			if(this.isValidURI(clipUri))
 				options.uri = clipUri;
 		}
-		if(!options.referer && options.referer !== null)
-			options.referer = content.location.href;
+		if(!options.referer && options.referer !== null) {
+			options.referer = content // null with Electrolysis w/o compatibility shims
+				? content.location.href
+				: gBrowser.currentURI.spec;
+		}
 		if(!options.sourceWindow)
 			options.sourceWindow = content;
 		this.ut.openWindow(options);

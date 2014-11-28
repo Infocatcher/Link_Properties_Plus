@@ -895,7 +895,7 @@ var linkPropsPlusSvc = {
 		var ch = uri.scheme == "about" && "nsIAboutModule" in Components.interfaces
 			? Components.classes["@mozilla.org/network/protocol/about;1?what=" + uri.path.replace(/[?&#].*$/, "")]
 				.getService(Components.interfaces.nsIAboutModule)
-				.newChannel(uri)
+				.newChannel(uri, null /* nsILoadInfo since Firefox 36 */)
 			: this.ios.newChannelFromURI(uri);
 
 		if(ch instanceof Components.interfaces.nsIRequest) try {

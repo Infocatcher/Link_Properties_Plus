@@ -34,27 +34,21 @@ var linkPropsPlus = {
 		setTimeout(function(_this) {
 			_this.showMenuitems();
 			_this.showIcons();
-			_this.initPanelButton();
+			_this.setupPanelButton(true);
 		}, 50, this);
 	},
 	destroy: function() {
 		window.removeEventListener("unload", this, false);
 		this.cm.removeEventListener("popupshowing", this, false);
 		this.cm.removeEventListener("popuphidden", this, false);
-		this.destroyPanelButton();
+		this.setupPanelButton(false);
 	},
-	initPanelButton: function() {
+	setupPanelButton: function(setup) {
 		var panelBtn = this.panelBtn;
 		if(panelBtn) {
-			panelBtn.addEventListener("dragover", this, false);
-			panelBtn.addEventListener("dragleave", this, false);
-		}
-	},
-	destroyPanelButton: function() {
-		var panelBtn = this.panelBtn;
-		if(panelBtn) {
-			panelBtn.removeEventListener("dragover", this, false);
-			panelBtn.removeEventListener("dragleave", this, false);
+			var fn = setup ? panelBtn.addEventListener : panelBtn.removeEventListener;
+			fn.call(panelBtn, "dragover", this, false);
+			fn.call(panelBtn, "dragleave", this, false);
 		}
 	},
 	handleEvent: function(e) {

@@ -226,7 +226,7 @@ var linkPropsPlus = {
 			if(this.isValidURI(clipUri))
 				options.uri = clipUri;
 		}
-		if(!options.referer && options.referer !== null) {
+		if(!("referer" in options) || !options.referer && options.referer !== null) {
 			options.referer = content // null with Electrolysis w/o compatibility shims
 				? content.location.href
 				: gBrowser.currentURI.spec;

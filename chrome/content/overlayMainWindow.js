@@ -62,31 +62,34 @@ var linkPropsPlus = {
 		}
 	},
 
+	$: function(id) {
+		return document.getElementById(id);
+	},
 	get cm() {
 		delete this.cm;
-		return this.cm = document.getElementById("contentAreaContextMenu")
-			|| document.getElementById("mailContext");
+		return this.cm = this.$("contentAreaContextMenu")
+			|| this.$("mailContext");
 	},
 	get mi() {
 		delete this.mi;
-		return this.mi = document.getElementById("linkPropsPlus-contextMenuitem");
+		return this.mi = this.$("linkPropsPlus-contextMenuitem");
 	},
 	get toolsMi() {
 		delete this.toolsMi;
-		return this.toolsMi = document.getElementById("linkPropsPlus-toolsMenuitem");
+		return this.toolsMi = this.$("linkPropsPlus-toolsMenuitem");
 	},
 	get toolsMiSub() {
 		delete this.toolsMiSub;
-		return this.toolsMiSub = document.getElementById("linkPropsPlus-toolsMenuitemSub");
+		return this.toolsMiSub = this.$("linkPropsPlus-toolsMenuitemSub");
 	},
 	get appMi() {
 		delete this.appMi;
-		return this.appMi = document.getElementById("linkPropsPlus-appMenuitem");
+		return this.appMi = this.$("linkPropsPlus-appMenuitem");
 	},
 	get panelBtn() {
 		delete this.panelBtn;
 		return this.panelBtn = "CustomizableUI" in window
-			&& document.getElementById("PanelUI-menu-button");
+			&& this.$("PanelUI-menu-button");
 	},
 	isValidURI: function(s) {
 		return s && this.validURI.test(s);

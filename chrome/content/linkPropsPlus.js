@@ -1331,11 +1331,11 @@ var linkPropsPlusSvc = {
 			var fragment = data.substr(0, maxLen);
 			var raw = this._node("div", "rawData");
 			fragment.split(/\r\n?|\n\r?/).forEach(function(data, i) {
-				i && raw.appendChild(document.createElementNS("http://www.w3.org/1999/xhtml", "br"));
+				i && raw.appendChild(this._elt("br"));
 				raw.appendChild(document.createTextNode(data));
 			});
 			if(huge) {
-				raw.appendChild(document.createElementNS("http://www.w3.org/1999/xhtml", "br"));
+				raw.appendChild(this._elt("br"));
 				raw.appendChild(this._node("span", "rawDataLimit", "[\u2026]"));
 			}
 			this._append(raw);
@@ -1359,11 +1359,14 @@ var linkPropsPlusSvc = {
 			while(this._activeSection)
 				this.endSection();
 		},
+		_elt: function(nodeName) {
+			return document.createElementNS("http://www.w3.org/1999/xhtml", nodeName);
+		},
 		_appendNode: function(nodeName, nodeClass, nodeText) {
 			return this._append(this._node.apply(this, arguments));
 		},
 		_node: function(nodeName, nodeClass, nodeText) {
-			var node = document.createElementNS("http://www.w3.org/1999/xhtml", nodeName);
+			var node = this._elt(nodeName);
 			node.className = nodeClass;
 			if(nodeText)
 				node.appendChild(document.createTextNode(nodeText));

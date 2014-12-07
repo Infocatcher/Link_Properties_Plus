@@ -1331,8 +1331,7 @@ var linkPropsPlusSvc = {
 			var fragment = data.substr(0, maxLen);
 			var raw = this._node("div", "rawData");
 			fragment.split(/\r\n?|\n\r?/).forEach(function(data, i) {
-				if(i != 0)
-					raw.appendChild(document.createElementNS("http://www.w3.org/1999/xhtml", "br"));
+				i && raw.appendChild(document.createElementNS("http://www.w3.org/1999/xhtml", "br"));
 				raw.appendChild(document.createTextNode(data));
 			});
 			if(huge) {

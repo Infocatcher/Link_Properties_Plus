@@ -151,10 +151,18 @@ var linkPropsPlus = {
 				? gContextMenu.linkURL()
 				: gContextMenu.linkURL;
 			if(this.isValidURI(uri)) {
-				var sourceDoc = gContextMenu.link.ownerDocument;
 				this.linkURL = uri;
-				this.referer = sourceDoc.location.href;
-				this.sourceWindow = sourceDoc.defaultView;
+				//var sourceDoc = gContextMenu.link.ownerDocument;
+				//this.referer = sourceDoc.location.href;
+				//this.sourceWindow = sourceDoc.defaultView;
+				this.__defineGetter__("referer", function() {
+					var sourceDoc = gContextMenu.link.ownerDocument;
+					return sourceDoc.location.href;
+				});
+				this.__defineGetter__("sourceWindow", function() {
+					var sourceDoc = gContextMenu.link.ownerDocument;
+					return sourceDoc.defaultView;
+				});
 				hide = false;
 			}
 		}
@@ -184,13 +192,29 @@ var linkPropsPlus = {
 			)
 				uri = gContextMenu.linkURL;
 			if(uri) {
-				var sourceDoc = gContextMenu && gContextMenu.target && gContextMenu.target.ownerDocument
-					|| selObj.getRangeAt(0).commonAncestorContainer.ownerDocument; // For SeaMonkey
 				this.linkURL = uri;
-				this.referer = this.pu.get("useRealRefererForTextLinks")
-					? sourceDoc.location.href
-					: null;
-				this.sourceWindow = sourceDoc.defaultView;
+				//var sourceDoc = gContextMenu && gContextMenu.target && gContextMenu.target.ownerDocument
+				//	|| selObj.getRangeAt(0).commonAncestorContainer.ownerDocument; // For SeaMonkey
+				//this.referer = this.pu.get("useRealRefererForTextLinks")
+				//	? sourceDoc.location.href
+				//	: null;
+				//this.sourceWindow = sourceDoc.defaultView;
+				var getSourceDoc = function() {
+					var sourceDoc = gContextMenu && gContextMenu.target && gContextMenu.target.ownerDocument
+						|| selObj.getRangeAt(0).commonAncestorContainer.ownerDocument; // For SeaMonkey
+					getSourceDoc = function() {
+						return sourceDoc;
+					};
+					return sourceDoc;
+				};
+				this.__defineGetter__("referer", function() {
+					return this.pu.get("useRealRefererForTextLinks")
+						? getSourceDoc().location.href
+						: null;
+				});
+				this.__defineGetter__("sourceWindow", function() {
+					return getSourceDoc().defaultView;
+				});
 				hide = false;
 			}
 		}
@@ -209,6 +233,8 @@ var linkPropsPlus = {
 		}
 	},
 	destroyContextMenu: function() {
+		delete this.referer;
+		delete this.sourceWindow;
 		this.linkURL = this.referer = "";
 		this.sourceWindow = null;
 	},

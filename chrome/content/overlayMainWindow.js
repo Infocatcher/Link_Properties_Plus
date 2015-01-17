@@ -96,10 +96,12 @@ var linkPropsPlus = {
 	},
 
 	extractURI: function(s) {
+		if(!this.validURIExtract.test(s))
+			return "";
+		var threshold = this.pu.get("context.onSelection.detectionThreshold");
 		if(
-			!this.validURIExtract.test(s)
-			|| RegExp.leftContext.length > 200
-			|| RegExp.rightContext.length > 200
+			RegExp.leftContext.length > threshold
+			|| RegExp.rightContext.length > threshold
 		)
 			return "";
 		var uri = RegExp.lastMatch.replace(/".*$/, "");

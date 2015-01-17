@@ -103,8 +103,8 @@ var linkPropsPlus = {
 		var after = RegExp.rightContext;
 		var threshold = this.pu.get("context.onSelection.detectionThreshold");
 		if(
-			before.length > threshold
-			|| after.length > threshold
+			before.replace(/\s+$/, "").length > threshold
+			|| after.replace(/^\s+/, "").length > threshold
 		)
 			return "";
 		uri = uri.replace(/".*$/, "");

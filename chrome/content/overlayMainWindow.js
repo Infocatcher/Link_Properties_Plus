@@ -98,13 +98,16 @@ var linkPropsPlus = {
 	extractURI: function(s) {
 		if(!this.validURIExtract.test(s))
 			return "";
+		var uri = RegExp.lastMatch;
+		var before = RegExp.leftContext;
+		var after = RegExp.rightContext;
 		var threshold = this.pu.get("context.onSelection.detectionThreshold");
 		if(
-			RegExp.leftContext.length > threshold
-			|| RegExp.rightContext.length > threshold
+			before.length > threshold
+			|| after.length > threshold
 		)
 			return "";
-		var uri = RegExp.lastMatch.replace(/".*$/, "");
+		uri = uri.replace(/".*$/, "");
 		var brackets = {
 			"(": ")",
 			"[": "]",

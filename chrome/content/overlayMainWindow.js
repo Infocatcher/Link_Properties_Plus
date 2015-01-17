@@ -101,10 +101,14 @@ var linkPropsPlus = {
 		var uri = RegExp.lastMatch;
 		var before = RegExp.leftContext;
 		var after = RegExp.rightContext;
+		if(this.pu.get("context.onSelection.ignoreSpaces")) {
+			before = before.replace(/\s+$/, "");
+			after = after.replace(/^\s+/, "");
+		}
 		var threshold = this.pu.get("context.onSelection.detectionThreshold");
 		if(
-			before.replace(/\s+$/, "").length > threshold
-			|| after.replace(/^\s+/, "").length > threshold
+			before.length > threshold
+			|| after.length > threshold
 		)
 			return "";
 		uri = uri.replace(/".*$/, "");

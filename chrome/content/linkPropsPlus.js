@@ -1333,7 +1333,7 @@ var linkPropsPlusSvc = {
 			fragment.split(/\r\n?|\n\r?/).forEach(function(data, i) {
 				i && raw.appendChild(this._elt("br"));
 				raw.appendChild(document.createTextNode(data));
-			});
+			}, this);
 			if(huge) {
 				raw.appendChild(this._elt("br"));
 				raw.appendChild(this._node("span", "rawDataLimit", "[\u2026]"));

@@ -27,6 +27,7 @@
 `x` Corrected localization for numbers and dates (<em>extensions.linkPropertiesPlus.localeNumbers</em> and <em>extensions.linkPropertiesPlus.localeDates</em> preferences) (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/15">#15</a>).<br>
 `+` Added ability to save maximized state of properties window.<br>
 `+` Properties window: added hotkey to toggle full screen mode (F11).<br>
+`*` Improved detection of selected text links (preferences: <em>extensions.linkPropertiesPlus.context.onSelection.ignoreSpaces</em>, <em>extensions.linkPropertiesPlus.context.onSelection.detectionThreshold</em>).<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Corrected position of context menu item in SeaMonkey's mail.<br>

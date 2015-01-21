@@ -27,6 +27,7 @@
 `x` Подкорректирована локализация чисел и дат (<em>extensions.linkPropertiesPlus.localeNumbers</em> and <em>extensions.linkPropertiesPlus.localeDates</em> preferences) (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/15">#15</a>).<br>
 `+` Добавлена возможность сохранения развернутого состояния окна свойств.<br>
 `+` Окно свойств: добавлено сочетание клавиш для переключения полноэкранного режима (F11).<br>
+`*` Улучшено обнаружение выделенных текстовых ссылок (настройки: <em>extensions.linkPropertiesPlus.context.onSelection.ignoreSpaces</em>, <em>extensions.linkPropertiesPlus.context.onSelection.detectionThreshold</em>).<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Исправлено положение пункта контекстного меню в почтовике SeaMonkey.<br>

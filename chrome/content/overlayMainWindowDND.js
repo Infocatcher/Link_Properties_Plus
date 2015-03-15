@@ -94,6 +94,9 @@ var linkPropsPlusDND = {
 		var links = data.links;
 		if(!this.lpp.ut.allowOpen(links.length))
 			return;
+		var panelPopup = this.panelPopup;
+		if(panelPopup && panelPopup.state != "closed")
+			panelPopup.hidePopup();
 		links.forEach(function(uri) {
 			var sourceWindow = data.sourceWindows[uri] || data.sourceWindow;
 			this.lpp.ut.openWindow({

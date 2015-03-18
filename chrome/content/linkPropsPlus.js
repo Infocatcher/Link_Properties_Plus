@@ -730,6 +730,7 @@ var linkPropsPlusSvc = {
 			Object.__defineGetter__.call(link, "ownerDocument", function() {
 				return fakeDoc;
 			});
+			//~ todo: doesn't work with Electrolysis
 			new browserWin.nsContextMenu(
 				browserDoc.getElementById("contentAreaContextMenu")
 					|| browserDoc.getElementById("mailContext"),

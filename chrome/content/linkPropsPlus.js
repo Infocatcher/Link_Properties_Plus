@@ -443,8 +443,7 @@ var linkPropsPlusSvc = {
 
 		var rowStatus = this.$("linkPropsPlus-rowStatus");
 		var testResume = this.$("linkPropsPlus-context-testDownloadResumability");
-		var testResumeSep = this.$("linkPropsPlus-context-testDownloadResumabilitySeparator");
-		var hideTestResume = testResume.hidden = testResumeSep.hidden =
+		var hideTestResume = testResume.hidden =
 			!this.pu.get("testDownloadResumability.alwaysShowMenuItem")
 			&& (this.testResumability || rowStatus.boxObject.height <= 0);
 		if(!hideTestResume)

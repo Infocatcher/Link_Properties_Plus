@@ -58,6 +58,7 @@
 				<button id="linkPropsPlus-getHeaders"
 					oncommand="linkPropsPlusWnd.getHeaders(event);"
 					onclick="if(event.button == 1) linkPropsPlusWnd.getHeaders(event);"
+					context="linkPropsPlus-getHeadersContext"
 					label="&linkPropsPlus.buttonGetProps;" accesskey="&linkPropsPlus.buttonGetPropsAccesskey;" />
 			</row>
 			<row align="center">
@@ -79,4 +80,12 @@
 		<key id="linkPropsPlus-key-fullScreen" keycode="VK_F11"
 			oncommand="if('fullScreen' in window) fullScreen = !fullScreen; // Firefox 3.0+" />
 	</keyset>
+	<popupset id="linkPropsPlus-popupset">
+		<menupopup id="linkPropsPlus-getHeadersContext">
+			<menuitem id="linkPropsPlus-context-sendGetRequest2"
+				oncommand="linkPropsPlusSvc.getHeaders({ requestMethod: 'GET' });"
+				label="Send GET Request"
+				accesskey="G" />
+		</menupopup>
+	</popupset>
 </dialog>

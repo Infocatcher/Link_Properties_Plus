@@ -83,7 +83,7 @@
 	<popupset id="linkPropsPlus-popupset">
 		<menupopup id="linkPropsPlus-getHeadersContext">
 			<menuitem id="linkPropsPlus-context-sendGetRequest2"
-				oncommand="linkPropsPlusSvc.getHeaders({ requestMethod: 'GET' });"
+				oncommand="linkPropsPlusWnd.getHeaders({ requestMethod: 'GET' });"
 				label="Send GET Request"
 				accesskey="G" />
 		</menupopup>

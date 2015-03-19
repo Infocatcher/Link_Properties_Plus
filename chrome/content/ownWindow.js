@@ -171,21 +171,26 @@ var linkPropsPlusWnd = {
 		return this.getHeadersBtn.disabled;
 	},
 	set cantGet(val) {
-		this.getHeadersBtn.disabled = val;
+		this.getHeadersBtn.disabled =
+			document.getElementById("linkPropsPlus-context-sendGetRequest2").disabled = val;
 	},
 	getHeaders: function(e) {
-		var bypassCache = e && (
-			e.shiftKey
-			|| e.type == "click" && e.button > 0
-		);
+		var opts = e;
+		if(!e || !("type" in e)) {
+			var bypassCache = e && (
+				e.shiftKey
+				|| e.type == "click" && e.button > 0
+			);
+			opts = {
+				clear: true,
+				bypassCache: bypassCache
+			};
+		}
 		var uri = this.uri;
 		if(!uri || this.cantGet)
 			return;
 		this.cantGet = true;
-		this.svc.getHeaders({
-			clear: true,
-			bypassCache: bypassCache
-		});
+		this.svc.getHeaders(opts);
 		this.setTitle();
 		this.fixWindowHeight();
 	},

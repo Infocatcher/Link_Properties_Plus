@@ -182,7 +182,10 @@ var linkPropsPlusWnd = {
 		if(!uri || this.cantGet)
 			return;
 		this.cantGet = true;
-		this.svc.getHeaders(true, bypassCache);
+		this.svc.getHeaders({
+			clear: true,
+			bypassCache: bypassCache
+		});
 		this.setTitle();
 		this.fixWindowHeight();
 	},

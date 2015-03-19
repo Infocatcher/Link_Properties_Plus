@@ -359,7 +359,17 @@ var linkPropsPlusSvc = {
 		else if(pName.substr(0, 10) == "autoClose.")
 			this.reinitAutoClose();
 	},
-	getHeaders: function(clear, bypassCache, forceTestResumability) {
+	getHeaders: function(opts, bypassCache, forceTestResumability) {
+		var clear = opts;
+		if(
+			opts
+			&& typeof opts == "object"
+			&& arguments.length == 1
+		) {
+			clear                 = opts.clear                 || undefined;
+			bypassCache           = opts.bypassCache           || undefined;
+			forceTestResumability = opts.forceTestResumability || undefined;
+		}
 		if(clear)
 			this.clearResults();
 		if(this.request(bypassCache)) {
@@ -1831,7 +1841,10 @@ var linkPropsPlusSvc = {
 		}
 		var ch = this.newChannelFromURI(uri);
 		if(!origChannel && this.getRequestHash(ch) != this.requestHash) {
-			this.getHeaders(true, false, true);
+			this.getHeaders({
+				clear: true,
+				forceTestResumability: true
+			});
 			return;
 		}
 		if(!(ch instanceof Components.interfaces.nsIResumableChannel)) {

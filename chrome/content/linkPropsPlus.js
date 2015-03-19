@@ -423,6 +423,10 @@ var linkPropsPlusSvc = {
 			|| this.$("linkPropsPlus-context").triggerNode
 			|| document.popupNode;
 	},
+	get sendGetItem() {
+		delete this.sendGetItem;
+		return this.sendGetItem = this.$("linkPropsPlus-context-sendGetRequest");
+	},
 	initContextMenu: function(e) {
 		if(!this._allowOptions)
 			return false;
@@ -439,14 +443,13 @@ var linkPropsPlusSvc = {
 
 		var rowStatus = this.$("linkPropsPlus-rowStatus");
 		var testResume = this.$("linkPropsPlus-context-testDownloadResumability");
-		var sendGet = this.$("linkPropsPlus-context-sendGetRequest");
 		var testResumeSep = this.$("linkPropsPlus-context-testDownloadResumabilitySeparator");
 		var hideTestResume = testResume.hidden = testResumeSep.hidden =
 			!this.pu.get("testDownloadResumability.alwaysShowMenuItem")
 			&& (this.testResumability || rowStatus.boxObject.height <= 0);
 		if(!hideTestResume)
 			testResume.disabled = !this.uri || this.checkResumableChannel;
-		sendGet.disabled = this.activeRequest || !this.isHttp;
+		this.sendGetItem.disabled = this.activeRequest || !this.isHttp;
 
 		return true;
 	},
@@ -1945,6 +1948,7 @@ var linkPropsPlusSvc = {
 		this.requestFinished = true;
 		if(this.isOwnWindow)
 			this.wnd.onStopRequest(ok);
+		this.sendGetItem.disabled = /*this.activeRequest ||*/ !this.isHttp;
 		this.initAutoClose();
 	},
 

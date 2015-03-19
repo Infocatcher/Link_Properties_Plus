@@ -359,7 +359,7 @@ var linkPropsPlusSvc = {
 		else if(pName.substr(0, 10) == "autoClose.")
 			this.reinitAutoClose();
 	},
-	getHeaders: function(opts, bypassCache, forceTestResumability) {
+	getHeaders: function(opts, bypassCache, forceTestResumability, requestMethod) {
 		var clear = opts;
 		if(
 			opts
@@ -369,10 +369,11 @@ var linkPropsPlusSvc = {
 			clear                 = opts.clear                 || undefined;
 			bypassCache           = opts.bypassCache           || undefined;
 			forceTestResumability = opts.forceTestResumability || undefined;
+			requestMethod         = opts.requestMethod         || undefined;
 		}
 		if(clear)
 			this.clearResults();
-		if(this.request(bypassCache)) {
+		if(this.request(bypassCache, requestMethod)) {
 			this.$("linkPropsPlus-container").removeAttribute("hidden");
 			this.restartAutoClose();
 			this.$("linkPropsPlus-rowHeaders").setAttribute(
@@ -795,7 +796,7 @@ var linkPropsPlusSvc = {
 		return close;
 	},
 
-	request: function(bypassCache) {
+	request: function(bypassCache, requestMethod) {
 		var _uri = this.requestURI = this.uri;
 		if(!_uri)
 			return false;
@@ -847,7 +848,7 @@ var linkPropsPlusSvc = {
 			// => getInterface() => asyncOnChannelRedirect()
 
 			if(ch instanceof Components.interfaces.nsIHttpChannel) {
-				ch.requestMethod = "HEAD";
+				ch.requestMethod = requestMethod || "HEAD";
 				this.headers.caption(this.ut.getLocalized("request"));
 				this._requestSection = this.headers.beginSection();
 				ch.visitRequestHeaders(this);

@@ -81,7 +81,11 @@
 			oncommand="if('fullScreen' in window) fullScreen = !fullScreen; // Firefox 3.0+" />
 	</keyset>
 	<popupset id="linkPropsPlus-popupset">
-		<menupopup id="linkPropsPlus-getHeadersContext">
+		<menupopup id="linkPropsPlus-getHeadersContext"
+			onpopupshowing='
+				var svc = linkPropsPlusSvc;
+				var sendGet = this.firstChild;
+				sendGet.disabled = svc.activeRequest || !svc.isHttp;'>
 			<menuitem id="linkPropsPlus-context-sendGetRequest2"
 				oncommand="linkPropsPlusWnd.getHeaders({ requestMethod: 'GET' });"
 				label="Send GET Request"

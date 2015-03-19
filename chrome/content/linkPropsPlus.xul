@@ -78,6 +78,10 @@
 				label="&linkPropsPlus.copyAll;"
 				accesskey="&linkPropsPlus.copyAllAccesskey;" />
 			<menuseparator id="linkPropsPlus-context-testDownloadResumabilitySeparator" />
+			<menuitem id="linkPropsPlus-context-sendGetRequest"
+				oncommand="linkPropsPlusSvc.getHeaders({ requestMethod: 'GET' });"
+				label="Send GET Request"
+				accesskey="G" />
 			<menuitem id="linkPropsPlus-context-testDownloadResumability"
 				oncommand="linkPropsPlusSvc.checkChannelResumable();"
 				label="&linkPropsPlus.testDownloadResumability;"

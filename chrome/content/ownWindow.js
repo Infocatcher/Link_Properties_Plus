@@ -175,21 +175,17 @@ var linkPropsPlusWnd = {
 			document.getElementById("linkPropsPlus-context-sendGetRequest2").disabled = val;
 	},
 	getHeaders: function(e) {
-		var opts = e;
-		if(!e || e instanceof Event) {
-			var bypassCache = e && (
-				e.shiftKey
-				|| e.type == "click" && e.button > 0
-			);
-			opts = {
-				clear: true,
-				bypassCache: bypassCache
-			};
-		}
 		var uri = this.uri;
 		if(!uri || this.cantGet)
 			return;
 		this.cantGet = true;
+		var opts = e && !(e instanceof Event) ? e : {
+			clear: true,
+			bypassCache: e && (
+				e.shiftKey
+				|| e.type == "click" && e.button > 0
+			)
+		};
 		this.svc.getHeaders(opts);
 		this.setTitle();
 		this.fixWindowHeight();

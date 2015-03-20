@@ -176,7 +176,7 @@ var linkPropsPlusWnd = {
 	},
 	getHeaders: function(e) {
 		var opts = e;
-		if(!e || "type" in e) {
+		if(!e || e instanceof Event) {
 			var bypassCache = e && (
 				e.shiftKey
 				|| e.type == "click" && e.button > 0

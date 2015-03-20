@@ -387,6 +387,10 @@ var linkPropsPlusSvc = {
 			}
 		}
 	},
+	sendGetRequest: function() {
+		var svc = window.linkPropsPlusWnd || this;
+		svc.getHeaders({ requestMethod: "GET" });
+	},
 	clearResults: function() {
 		Array.forEach(
 			this.$("linkPropsPlus-container").getElementsByTagName("textbox"),

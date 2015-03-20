@@ -79,9 +79,7 @@
 				accesskey="&linkPropsPlus.copyAllAccesskey;" />
 			<menuseparator id="linkPropsPlus-context-altRequestSeparator" />
 			<menuitem id="linkPropsPlus-context-sendGetRequest"
-				oncommand='
-					var svc = window.linkPropsPlusWnd || linkPropsPlusSvc;
-					svc.getHeaders({ requestMethod: "GET" });'
+				oncommand="linkPropsPlusSvc.sendGetRequest();"
 				label="Send GET Request"
 				accesskey="G" />
 			<menuitem id="linkPropsPlus-context-testDownloadResumability"

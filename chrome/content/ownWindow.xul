@@ -87,7 +87,7 @@
 				var sendGet = this.firstChild;
 				sendGet.disabled = svc.activeRequest || !svc.isHttp;'>
 			<menuitem id="linkPropsPlus-context-sendGetRequest2"
-				oncommand="linkPropsPlusWnd.getHeaders({ requestMethod: 'GET' });"
+				oncommand="linkPropsPlusSvc.sendGetRequest();"
 				label="Send GET Request"
 				accesskey="G" />
 		</menupopup>

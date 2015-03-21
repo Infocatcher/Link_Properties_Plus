@@ -387,9 +387,19 @@ var linkPropsPlusSvc = {
 			}
 		}
 	},
-	sendGetRequest: function() {
+	sendGetRequest: function(e) {
 		var svc = window.linkPropsPlusWnd || this;
-		svc.getHeaders({ requestMethod: "GET" });
+		svc.getHeaders({
+			clear: !e || !(
+				e.shiftKey
+				|| e.type == "click" && e.button > 0
+			),
+			requestMethod: "GET"
+		});
+		if(e) {
+			var menu = e.target.parentNode;
+			menu.hidePopup && menu.hidePopup();
+		}
 	},
 	clearResults: function() {
 		Array.forEach(

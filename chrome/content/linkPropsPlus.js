@@ -381,7 +381,13 @@ var linkPropsPlusSvc = {
 				!(this.channel instanceof Components.interfaces.nsIHttpChannel)
 			);
 			if(forceTestResumability || this.testResumability) setTimeout(function(_this, channel) {
-				_this.checkChannelResumable(channel);
+				if(!requestMethod)
+					_this.checkChannelResumable(channel);
+				else if("_lastCanResume" in _this) {
+					var lcr = _this._lastCanResume;
+					if(lcr.uri == _this.requestURI)
+						_this.formatCanResumeDownload(lcr.canResume, lcr.isTested);
+				}
 			}, 0, this, this.channel);
 		}
 	},
@@ -1647,6 +1653,11 @@ var linkPropsPlusSvc = {
 		// We use clearResults() and may receive "tested" value before "non-tested"
 		if(!isTested && tb.getAttribute("lpp_resumeDownloadTested") == "true")
 			return;
+		this._lastCanResume = {
+			uri: this.requestURI,
+			canResume: canResumeDownload,
+			isTested: isTested
+		};
 		var grid = this.$("linkPropsPlus-grid"); // May be used in userChrome.css
 		grid.setAttribute("lpp_canResumeDownload", canResumeDownload);
 		grid.setAttribute("lpp_resumeDownloadTested", !!isTested);

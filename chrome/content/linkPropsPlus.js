@@ -380,11 +380,9 @@ var linkPropsPlusSvc = {
 				"lpp_notAvailable",
 				!(this.channel instanceof Components.interfaces.nsIHttpChannel)
 			);
-			if((forceTestResumability || this.testResumability) && !requestMethod) {
-				setTimeout(function(_this, channel) {
-					_this.checkChannelResumable(channel);
-				}, 0, this, this.channel);
-			}
+			if(forceTestResumability || this.testResumability) setTimeout(function(_this, channel) {
+				_this.checkChannelResumable(channel);
+			}, 0, this, this.channel);
 		}
 	},
 	sendGetRequest: function(e) {

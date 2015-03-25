@@ -12,32 +12,35 @@ try {
 catch(e) {
 	Components.utils.reportError(e);
 }
-var commandHandler;
-window.addEventListener("command", commandHandler = function(e) {
+function commandHandler(e) {
 	var btn = e.target;
 	if(btn.className == "twisty") {
 		var show = btn.getAttribute("open") != "true";
-		var block = btn.parentNode.nextSibling;
-		var display = show ? "" : "none";
-		block.style.display = display;
-		var skipTestResume = document.body.hasAttribute("hideTestResume");
-		if(skipTestResume) {
-			var checkTestResume = function(node) {
-				return /(?:^|\s)testResume(?:\s|$)/.test(node.className);
-			};
-			var isTestResume = checkTestResume(block);
-		}
-		for(var spacer = block.nextSibling; spacer; spacer = spacer.nextSibling) {
-			if(skipTestResume && checkTestResume(spacer) != isTestResume)
-				continue;
-			if(/(?:^|\s)spacer(?:\s|$)/.test(spacer.className)) {
-				spacer.style.display = display;
-				break;
-			}
-		}
-		btn.setAttribute("open", show);
+		toggleTwisty(btn, show);
 	}
-}, true);
+}
+function toggleTwisty(btn, show) {
+	var block = btn.parentNode.nextSibling;
+	var display = show ? "" : "none";
+	block.style.display = display;
+	var skipTestResume = document.body.hasAttribute("hideTestResume");
+	if(skipTestResume) {
+		var checkTestResume = function(node) {
+			return /(?:^|\s)testResume(?:\s|$)/.test(node.className);
+		};
+		var isTestResume = checkTestResume(block);
+	}
+	for(var spacer = block.nextSibling; spacer; spacer = spacer.nextSibling) {
+		if(skipTestResume && checkTestResume(spacer) != isTestResume)
+			continue;
+		if(/(?:^|\s)spacer(?:\s|$)/.test(spacer.className)) {
+			spacer.style.display = display;
+			break;
+		}
+	}
+	btn.setAttribute("open", show);
+}
+window.addEventListener("command", commandHandler, true);
 window.addEventListener("unload", function destroy(e) {
 	window.removeEventListener("unload", destroy, false);
 	window.removeEventListener("command", commandHandler, true);

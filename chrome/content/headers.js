@@ -17,6 +17,14 @@ function commandHandler(e) {
 	if(btn.className == "twisty") {
 		var show = btn.getAttribute("open") != "true";
 		toggleTwisty(btn, show);
+		if(e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) {
+			var twisties = document.getElementsByTagName("button");
+			for(var i = 0, l = twisties.length; i < l; ++i) {
+				var twisty = twisties[i];
+				if(twisty.className == "twisty" && twisty != btn)
+					toggleTwisty(twisty, show);
+			}
+		}
 	}
 }
 function toggleTwisty(btn, show) {

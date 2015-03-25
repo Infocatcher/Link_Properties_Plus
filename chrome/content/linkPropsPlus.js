@@ -1292,7 +1292,15 @@ var linkPropsPlusSvc = {
 					"spacer "
 					+ (nodeClass || "").replace(/(?:^|\s+)caption(?:\s+|$)/, "")
 				).replace(/ $/, "");
-				this.spacer(h, spacerClass);
+				var spacer = this.spacer(h, spacerClass);
+				var block = spacer.previousSibling;
+				if(
+					block
+					&& /(?:^|\s)block(?:\s|$)/.test(block.className)
+					&& block.style.display == "none"
+				) {
+					spacer.style.display = "none";
+				}
 			}
 		},
 		spacer: function(insPos, nodeClass) {

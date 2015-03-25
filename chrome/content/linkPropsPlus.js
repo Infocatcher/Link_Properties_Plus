@@ -1290,8 +1290,8 @@ var linkPropsPlusSvc = {
 			if(prev) {
 				var spacerClass = (
 					"spacer "
-					+ (nodeClass || "").replace(/(?:^|\s+)caption(?:\s+|$)/, "")
-				).replace(/ $/, "");
+					+ (nodeClass || "").replace(/(?:^|\s+)caption(?:\s+|$)/, " ")
+				).replace(/\s+/g, " ").replace(/\s+$/, "");
 				var spacer = this.spacer(h, spacerClass);
 				var block = spacer.previousSibling;
 				if(

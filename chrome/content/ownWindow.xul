@@ -89,8 +89,8 @@
 			<menuitem id="linkPropsPlus-context-sendGetRequest2"
 				oncommand="linkPropsPlusSvc.sendGetRequest(event);"
 				onclick="if(event.button == 1) linkPropsPlusSvc.sendGetRequest(event);"
-				label="Send GET Request"
-				accesskey="G" />
+				label="&linkPropsPlus.sendGetRequest;"
+				accesskey="&linkPropsPlus.sendGetRequestAccesskey;" />
 		</menupopup>
 	</popupset>
 </dialog>

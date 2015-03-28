@@ -4,7 +4,7 @@
 <!ENTITY linkPropsPlus.labelReferer "Referer:">
 <!ENTITY linkPropsPlus.labelRefererAccesskey "R">
 <!ENTITY linkPropsPlus.labelOnlyHttpTip "Only for HTTP-links">
-<!ENTITY linkPropsPlus.buttonGetProps "Get properties">
+<!ENTITY linkPropsPlus.buttonGetProps "Get Properties">
 <!ENTITY linkPropsPlus.buttonGetPropsAccesskey "G">
 <!ENTITY linkPropsPlus.buttonOptions "Options">
 <!ENTITY linkPropsPlus.buttonOptionsAccesskey "O">

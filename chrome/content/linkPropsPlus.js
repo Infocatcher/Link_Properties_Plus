@@ -92,6 +92,9 @@ var linkPropsPlusSvc = {
 	$: function(id) {
 		return document.getElementById(id);
 	},
+	makeURI: function(spec, originCharset, baseURI) {
+		return this.ios.newURI(spec, originCharset || null, baseURI || null);
+	},
 
 	instantInit: function() {
 		window.addEventListener("load", this, false);
@@ -849,7 +852,7 @@ var linkPropsPlusSvc = {
 			//var uri = Components.classes["@mozilla.org/network/standard-url;1"]
 			//	.createInstance(Components.interfaces.nsIURI);
 			//uri.spec = _uri;
-			var uri = this.ios.newURI(_uri, null, null); //~ todo: specify charset ?
+			var uri = this.makeURI(_uri); //~ todo: specify charset ?
 			var schm = uri.scheme && uri.scheme.toLowerCase();
 
 			var ph = Components.interfaces.nsIProtocolHandler;
@@ -1137,7 +1140,7 @@ var linkPropsPlusSvc = {
 	},
 	get refererURI() {
 		try {
-			return this.ios.newURI(this.referer, null, null);
+			return this.makeURI(this.referer);
 		}
 		catch(e) {
 		}
@@ -1145,10 +1148,7 @@ var linkPropsPlusSvc = {
 	},
 	get isHttp() {
 		try {
-			return /^https?:?$/i.test(
-				this.ios.newURI(this.uri, null, null)
-					.scheme
-			);
+			return /^https?:?$/i.test(this.makeURI(this.uri).scheme);
 		}
 		catch(e) {
 		}
@@ -1156,8 +1156,7 @@ var linkPropsPlusSvc = {
 	},
 	compareURIs: function(uri, uri2) {
 		try {
-			return this.ios.newURI(uri, null, null)
-				.equals(this.ios.newURI(uri2, null, null));
+			return this.makeURI(uri).equals(this.makeURI(uri2));
 		}
 		catch(e) {
 		}
@@ -1886,7 +1885,7 @@ var linkPropsPlusSvc = {
 		}
 		else {
 			var _uri = this.checkFakeURINeeded(this.uri);
-			var uri = this.ios.newURI(_uri, null, null);
+			var uri = this.makeURI(_uri);
 		}
 		var ch = this.newChannelFromURI(uri);
 		if(!origChannel && this.getRequestHash(ch) != this.requestHash) {

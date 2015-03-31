@@ -27,7 +27,11 @@
 `x` Corrected localization for numbers and dates (<em>extensions.linkPropertiesPlus.localeNumbers</em> and <em>extensions.linkPropertiesPlus.localeDates</em> preferences) (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/15">#15</a>).<br>
 `+` Added ability to save maximized state of properties window.<br>
 `+` Properties window: added hotkey to toggle full screen mode (F11).<br>
+`*` Implemented ability to drag link into button, that placed inside Australis menu-button (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/16">#16</a>).<br>
+`x` Correctly handle about:* URIs in Firefox 36+.<br>
+`*` Improved support of Electrolysis (multi-process mode).<br>
 `*` Improved detection of selected text links (preferences: <em>extensions.linkPropertiesPlus.context.onSelection.ignoreSpaces</em>, <em>extensions.linkPropertiesPlus.context.onSelection.detectionThreshold</em>).<br>
+`+` Added ability to send GET request instead of HEAD (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/14">#14</a>).<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Corrected position of context menu item in SeaMonkey's mail.<br>

@@ -27,7 +27,11 @@
 `x` Подкорректирована локализация чисел и дат (<em>extensions.linkPropertiesPlus.localeNumbers</em> and <em>extensions.linkPropertiesPlus.localeDates</em> preferences) (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/15">#15</a>).<br>
 `+` Добавлена возможность сохранения развернутого состояния окна свойств.<br>
 `+` Окно свойств: добавлено сочетание клавиш для переключения полноэкранного режима (F11).<br>
+`*` Реализована возможность перетаскивания ссылки на кнопку, находящуюся внутри кнопки-меню от Australis'а (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/16">#16</a>).<br>
+`x` Исправлена обработка about:* ссылок в Firefox 36+.<br>
+`*` Улучшена поддержка Electrolysis'а (мультипроцессного режима).<br>
 `*` Улучшено обнаружение выделенных текстовых ссылок (настройки: <em>extensions.linkPropertiesPlus.context.onSelection.ignoreSpaces</em>, <em>extensions.linkPropertiesPlus.context.onSelection.detectionThreshold</em>).<br>
+`+` Добавлена возможность отправить GET запрос вместо HEAD (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/14">#14</a>).<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Исправлено положение пункта контекстного меню в почтовике SeaMonkey.<br>

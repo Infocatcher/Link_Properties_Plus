@@ -40,15 +40,16 @@ var linkPropsPlusUtils = {
 		while(ws.hasMoreElements()) {
 			var w = ws.getNext();
 			var o = w.linkPropsPlusWnd;
+			var svc = o && o.svc;
 			if(
-				o
+				svc
 				&& (o.uri || "") == _uri
 				&& (o.referer || "") == _referer
-				&& o.svc.isPrivate == this.isWindowPrivate(options.sourceWindow || null)
+				&& svc.isPrivate == this.isWindowPrivate(options.sourceWindow || null)
 			) {
 				w.focus();
-				o.svc.restartAutoClose();
-				if(options.autostart && !o.autostart && !o.svc.activeRequest && !o.svc.requestFinished)
+				svc.restartAutoClose();
+				if(options.autostart && !o.autostart && !svc.activeRequest && !svc.requestFinished)
 					o.getHeaders();
 				return w;
 			}

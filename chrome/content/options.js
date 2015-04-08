@@ -31,6 +31,7 @@ var linkPropsPlusOpts = {
 
 		var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
 			.getService(Components.interfaces.nsIXULAppInfo);
+		var app = appInfo.name;
 
 		// Hide options for item in App menu and Wab Developer menu for applications without them
 		var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
@@ -40,14 +41,14 @@ var linkPropsPlusOpts = {
 		if(browserWin && "linkPropsPlus" in browserWin) {
 			if(!browserWin.linkPropsPlus.appMi)
 				this.hide(document.getElementById("appMenuOptions"), true);
-			if(!browserWin.linkPropsPlus.toolsMiSub || appInfo.name == "Thunderbird")
+			if(!browserWin.linkPropsPlus.toolsMiSub || app == "Thunderbird")
 				this.hide(this.e("showInToolsMenuSub"), true);
 		}
 
 		// Show settings for Properties dialog, if available
 		var propsBox = document.getElementById("propertiesBox");
 		if(
-			(appInfo.name == "Firefox" || appInfo.name == "Pale Moon")
+			(app == "Firefox" || app == "Pale Moon")
 			&& parseFloat(appInfo.version) >= 3.6
 		) {
 			var guid = "properties@darktrojan.net";
@@ -69,11 +70,11 @@ var linkPropsPlusOpts = {
 				});
 			}
 		}
-		else if(appInfo.name != "Thunderbird") {
+		else if(app != "Thunderbird") {
 			this.hide(propsBox, false);
 		}
 
-		if(appInfo.name == "Thunderbird") {
+		if(app == "Thunderbird") {
 			this.hide(document.getElementById("downloadBox"), true);
 			this.highlight = function() {}; // Useless, only own window available
 		}

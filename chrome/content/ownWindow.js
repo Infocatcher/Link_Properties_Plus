@@ -206,7 +206,7 @@ var linkPropsPlusWnd = {
 		var type = this.pu.get("useFakeReferer") || 2;
 		if(e.button > 0 || e.ctrlKey || e.altKey || e.shiftKey || e.metaKey)
 			type = type == 2 ? 1 : 2;
-		this.refererField.value = this.ut.getFakeReferer(this.uri, type);
+		this.referer = this.ut.getFakeReferer(this.uri, type);
 	},
 	onStopRequest: function(ok) {
 		this.cantGet = !this.uri;

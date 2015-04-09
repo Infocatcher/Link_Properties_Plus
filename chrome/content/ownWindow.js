@@ -200,6 +200,7 @@ var linkPropsPlusWnd = {
 			this.uriChangedDelay();
 		}
 		catch(e) {
+			this.svc.requestFailed("badURI");
 		}
 	},
 	setFakeReferer: function(e) {

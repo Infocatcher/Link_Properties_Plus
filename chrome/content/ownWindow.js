@@ -190,6 +190,18 @@ var linkPropsPlusWnd = {
 		this.setTitle();
 		this.fixWindowHeight();
 	},
+	setURI: function(e) {
+		if(e.button != 0)
+			return;
+		var uri = this.ut.readFromClipboard();
+		try {
+			this.ut.ios.newURI(uri, null, null); // Will throw for invalid URIs
+			this.uri = uri;
+			this.uriChangedDelay();
+		}
+		catch(e) {
+		}
+	},
 	setFakeReferer: function(e) {
 		var type = this.pu.get("useFakeReferer") || 2;
 		if(e.button > 0 || e.ctrlKey || e.altKey || e.shiftKey || e.metaKey)

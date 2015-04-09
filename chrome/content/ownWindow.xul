@@ -35,7 +35,8 @@
 		<rows>
 			<row align="center">
 				<label value="&linkPropsPlus.labelLink;" accesskey="&linkPropsPlus.labelLinkAccesskey;"
-					control="linkPropsPlus-uri" />
+					control="linkPropsPlus-uri"
+					ondblclick="linkPropsPlusWnd.setURI(event);" />
 				<hbox flex="1">
 					<textbox id="linkPropsPlus-uri" flex="1"
 						oninput="linkPropsPlusWnd.uriChangedDelay();"

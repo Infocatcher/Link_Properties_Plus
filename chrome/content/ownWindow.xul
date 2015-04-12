@@ -42,7 +42,8 @@
 						oninput="linkPropsPlusWnd.uriChangedDelay();"
 						ondragexit="linkPropsPlusWnd.uriChangedDelay();"
 						ondrop="linkPropsPlusWnd.uriChangedDelay();"
-						oncut="linkPropsPlusWnd.uriChangedDelay();" />
+						oncut="linkPropsPlusWnd.uriChangedDelay();"
+						ondblclick="if(!this.value) linkPropsPlusWnd.setURI(event);" />
 					<toolbarbutton id="linkPropsPlus-goToURI"
 						class="linkPropsPlus-toolbarbutton linkPropsPlus-go"
 						oncommand="linkPropsPlusSvc.goToURI('uri', event);"

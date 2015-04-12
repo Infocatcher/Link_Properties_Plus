@@ -22,7 +22,7 @@
 `+` Added basic indication of request errors (only in link properties window): invalid URI or request error – red “Get properties” button, protocol with URI_DOES_NOT_RETURN_DATA flag or unknown protocol – gray “Get properties” button.<br>
 `*` Show request headers modifications from browser or other extensions (hidden preference <em>extensions.linkPropertiesPlus.showRequestHeadersDiff</em> to highlight changed headers) (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/13">#13</a>).<br>
 `*` Middle-click on any menu item (and on toolbar button) to automatically start request with URL from clipboard.<br>
-`*` Double click on “Referer:” label (or on empty referer field) to get fake referer from link.<br>
+`*` Double-click on “Referer:” label (or on empty referer field) to get fake referer from link.<br>
 `*` Open links after source tab only if <em>extensions.linkPropertiesPlus.openInChildTab</em> = true, also added <em>extensions.linkPropertiesPlus.openInChildTab.onlyIfSelected</em> preference to open in sibling tab only if source tab is still selected.<br>
 `x` Corrected localization for numbers and dates (<em>extensions.linkPropertiesPlus.localeNumbers</em> and <em>extensions.linkPropertiesPlus.localeDates</em> preferences) (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/15">#15</a>).<br>
 `+` Added ability to save maximized state of properties window.<br>
@@ -32,6 +32,7 @@
 `*` Improved support of Electrolysis (multi-process mode).<br>
 `*` Improved detection of selected text links (preferences: <em>extensions.linkPropertiesPlus.context.onSelection.ignoreSpaces</em>, <em>extensions.linkPropertiesPlus.context.onSelection.detectionThreshold</em>).<br>
 `+` Added ability to send GET request instead of HEAD (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/14">#14</a>).<br>
+`*` Double-click on “Link:” label (or on empty link field) to paste URI from clipboard.<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Corrected position of context menu item in SeaMonkey's mail.<br>

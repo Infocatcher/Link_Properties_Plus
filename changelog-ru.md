@@ -32,6 +32,7 @@
 `*` Улучшена поддержка Electrolysis'а (мультипроцессного режима).<br>
 `*` Улучшено обнаружение выделенных текстовых ссылок (настройки: <em>extensions.linkPropertiesPlus.context.onSelection.ignoreSpaces</em>, <em>extensions.linkPropertiesPlus.context.onSelection.detectionThreshold</em>).<br>
 `+` Добавлена возможность отправить GET запрос вместо HEAD (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/14">#14</a>).<br>
+`*` Двойной клик по метке “Ссылка:” (или по пустому полю для ввода ссылки) для вставки ссылки из буфера обмена.<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Исправлено положение пункта контекстного меню в почтовике SeaMonkey.<br>

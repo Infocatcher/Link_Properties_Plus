@@ -62,8 +62,9 @@ var linkPropsPlusPageInfo = {
 		}
 	},
 	getSourceTab: function(browserWindow, contentWindow) {
-		// Based on gBrowser._getTabForContentWindow() (doesn't exist in SeaMonkey)
 		var gBrowser = browserWindow.gBrowser;
+		if("_getTabForContentWindow" in gBrowser)
+			return gBrowser._getTabForContentWindow(contentWindow);
 		var browsers = gBrowser.browsers;
 		var tabs = gBrowser.tabs || gBrowser.tabContainer.childNodes;
 		for(var i = 0, l = browsers.length; i < l; ++i)

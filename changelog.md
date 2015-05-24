@@ -33,6 +33,7 @@
 `*` Improved detection of selected text links (preferences: <em>extensions.linkPropertiesPlus.context.onSelection.ignoreSpaces</em>, <em>extensions.linkPropertiesPlus.context.onSelection.detectionThreshold</em>).<br>
 `+` Added ability to send GET request instead of HEAD (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/14">#14</a>).<br>
 `*` Double-click on “Link:” label (or on empty link field) to paste URI from clipboard.<br>
+`x` Fixed compatibility with future Firefox versions (bug <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1090880">1090880</a>, <a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/18">#18</a>).<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Corrected position of context menu item in SeaMonkey's mail.<br>

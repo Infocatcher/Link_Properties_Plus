@@ -58,16 +58,20 @@ var linkPropsPlusOpts = {
 					.loadSubScript("chrome://linkpropsplus/content/extsHelper.js");
 				linkPropsPlusExtensionsHelper.isAvailable(guid) && this.hide(propsBox, false);
 			}
-			else if("Application" in window && "getExtensions" in Application) { // Firefox 4+
+			else try { // Firefox 4+
+				Components.utils["import"]("resource://gre/modules/AddonManager.jsm");
 				var _this = this;
-				Application.getExtensions(function(exts) {
-					if(exts.has(guid) && exts.get(guid).enabled) {
+				AddonManager.getAddonByID(guid, function(addon) {
+					if(addon && addon.isActive) {
 						_this.hide(propsBox, false)
 						_this.disableDecodeCheckbox();
 						_this.disableHeadersOptions();
 						_this._sizeChanged && window.sizeToContent();
 					}
 				});
+			}
+			catch(e) {
+				Components.utils.reportError(e);
 			}
 		}
 		else if(app != "Thunderbird") {

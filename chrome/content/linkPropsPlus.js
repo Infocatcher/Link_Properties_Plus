@@ -1044,6 +1044,8 @@ var linkPropsPlusSvc = {
 		this.delayedClose();
 	},
 	delayedClose: function() {
+		if(this.autoCloseActive)
+			return;
 		this.autoCloseActive = true;
 		this._acTimeout = setTimeout(window.close, this._acDelay);
 		this._acStartTime = Date.now();
@@ -1060,6 +1062,8 @@ var linkPropsPlusSvc = {
 		);
 	},
 	cancelDelayedClose: function() {
+		if(!this.autoCloseActive)
+			return;
 		this.autoCloseActive = false;
 		clearTimeout(this._acTimeout);
 		clearInterval(this._acProgressInterval);

@@ -1053,13 +1053,10 @@ var linkPropsPlusSvc = {
 		progress.value = 0;
 		progress.hidden = false;
 		progress.max = this._acPrecision = progress.boxObject.width * 4 || 500;
-		var _this = this;
-		this._acProgressInterval = setInterval(
-			function() {
-				_this.setProgress();
-			},
-			Math.round(this._acDelay/this._acPrecision) + 4
-		);
+		var delay = Math.round(this._acDelay/this._acPrecision) + 4;
+		this._acProgressInterval = setInterval(function(_this) {
+			_this.setProgress();
+		}, delay, this);
 	},
 	cancelDelayedClose: function() {
 		if(!this.autoCloseActive)

@@ -95,7 +95,7 @@ var linkPropsPlusWnd = {
 
 	get uriField() {
 		delete this.uriField;
-		return this.uriField = document.getElementById("linkPropsPlus-uri");
+		return this.uriField = this.$("linkPropsPlus-uri");
 	},
 	get uri() {
 		return this.uriField.value;
@@ -105,13 +105,16 @@ var linkPropsPlusWnd = {
 	},
 	get refererField() {
 		delete this.refererField;
-		return this.refererField = document.getElementById("linkPropsPlus-referer");
+		return this.refererField = this.$("linkPropsPlus-referer");
 	},
 	get referer() {
 		return this.refererField.value || null;
 	},
 	set referer(val) {
 		this.refererField.value = val || "";
+	},
+	$: function(id) {
+		return document.getElementById(id);
 	},
 
 	get baseTitle() {
@@ -165,14 +168,13 @@ var linkPropsPlusWnd = {
 	},
 	get getHeadersBtn() {
 		delete this.getHeadersBtn;
-		return this.getHeadersBtn = document.getElementById("linkPropsPlus-getHeaders");
+		return this.getHeadersBtn = this.$("linkPropsPlus-getHeaders");
 	},
 	get cantGet() {
 		return this.getHeadersBtn.disabled;
 	},
 	set cantGet(val) {
-		this.getHeadersBtn.disabled =
-			document.getElementById("linkPropsPlus-context-sendGetRequest2").disabled = val;
+		this.getHeadersBtn.disabled = this.$("linkPropsPlus-context-sendGetRequest2").disabled = val;
 	},
 	getHeaders: function(e) {
 		var uri = this.uri;

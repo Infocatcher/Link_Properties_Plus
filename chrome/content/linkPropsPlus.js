@@ -1753,8 +1753,6 @@ var linkPropsPlusSvc = {
 		target.parentNode.setAttribute("lpp_missing", isMissing);
 	},
 
-	Components: Components, // We can receive nsIChannel notifications after window will be closed
-	// And in Firefox 3.6 and older garbage collector may already remove Components from scope
 	// nsIStreamListener
 	onDataAvailable: function(request, ctxt, input, offset, count) {
 		var data = this.getStreamData(input, count);

@@ -2,6 +2,7 @@ var linkPropsPlusSvc = {
 	activeRequest: false,
 	requestFinished: false,
 	channel: null,
+	abortReason: Components.results.NS_BINDING_ABORTED || Components.results.NS_ERROR_ABORT,
 	realCount: 0,
 	redirects: [],
 	requestHash: "",
@@ -156,7 +157,7 @@ var linkPropsPlusSvc = {
 		this._requestSection = null;
 		if(!this.channel)
 			return;
-		this.channel.cancel(Components.results.NS_BINDING_ABORTED);
+		this.channel.cancel(this.abortReason);
 		this.channel = null;
 	},
 	handleEvent: function(e) {
@@ -867,7 +868,7 @@ var linkPropsPlusSvc = {
 			}
 
 			if(this.channel)
-				this.channel.cancel(Components.results.NS_BINDING_ABORTED);
+				this.channel.cancel(this.abortReason);
 			this.cancelCheckChannelResumable();
 
 			var ch = this.channel = this.newChannelFromURI(uri, bypassCache);
@@ -1757,7 +1758,7 @@ var linkPropsPlusSvc = {
 	// nsIStreamListener
 	onDataAvailable: function(request, ctxt, input, offset, count) {
 		var data = this.getStreamData(input, count);
-		request.cancel(this.Components.results.NS_BINDING_ABORTED);
+		request.cancel(this.abortReason);
 		if(window.closed)
 			return;
 		if(request.URI && request.URI.scheme == "data")
@@ -1829,7 +1830,7 @@ var linkPropsPlusSvc = {
 			Components.utils.reportError(err);
 		}
 		finally {
-			request.cancel(Components.results.NS_BINDING_ABORTED);
+			request.cancel(this.abortReason);
 			this.fillInBlank();
 			this.channel = null;
 		}
@@ -1921,7 +1922,7 @@ var linkPropsPlusSvc = {
 			// nsIStreamListener
 			onDataAvailable: function(request, ctxt, input, offset, count) {
 				var data = this.parent.getStreamData(input, count);
-				request.cancel(this.parent.Components.results.NS_BINDING_ABORTED);
+				request.cancel(this.parent.abortReason);
 				this.setCanResumeDownload(!!data);
 			},
 			// nsIRequestObserver
@@ -1971,7 +1972,7 @@ var linkPropsPlusSvc = {
 		var crCh = this.checkResumableChannel;
 		if(crCh) {
 			this.checkResumableChannel = null;
-			crCh.cancel(Components.results.NS_BINDING_ABORTED);
+			crCh.cancel(this.abortReason);
 		}
 	},
 	onStopRequestCallback: function(ok) {
@@ -2031,7 +2032,7 @@ var linkPropsPlusSvc = {
 				_this.cancelling = false;
 			}, this.blockEscapeKeyDelay, this);
 
-			ch.cancel(Components.results.NS_BINDING_ABORTED);
+			ch.cancel(this.abortReason);
 			this.fillInBlank();
 			//if(this.channel instanceof Components.interfaces.nsIFTPChannel)
 			this.onStopRequest(ch);

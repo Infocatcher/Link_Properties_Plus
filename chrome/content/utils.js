@@ -120,8 +120,8 @@ var linkPropsPlusUtils = {
 			return uri;
 
 		var win = this.wm.getMostRecentWindow("navigator:browser");
-		if(win && "losslessDecodeURI" in win) try {
-			return win.losslessDecodeURI({ spec: uri });
+		if(win && uri && "losslessDecodeURI" in win) try {
+			return win.losslessDecodeURI(win.makeURI(uri));
 		}
 		catch(e) {
 			Components.utils.reportError(e);

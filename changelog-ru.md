@@ -34,6 +34,7 @@
 `+` Добавлена возможность отправить GET запрос вместо HEAD (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/14">#14</a>).<br>
 `*` Двойной клик по метке “Ссылка:” (или по пустому полю для ввода ссылки) для вставки ссылки из буфера обмена.<br>
 `x` Исправлена совместимость с будущими версиями Firefox (баг <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1090880">1090880</a>, <a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/18">#18</a>).<br>
+`x` Исправлено декодирование ссылок в Firefox 40+.<br>
 
 ##### 1.5.2 (2013-04-06)
 `x` Исправлено положение пункта контекстного меню в почтовике SeaMonkey.<br>

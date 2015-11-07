@@ -769,6 +769,17 @@ var linkPropsPlusSvc = {
 			Object.__defineGetter__.call(link, "ownerDocument", function() {
 				return fakeDoc;
 			});
+			if(
+				"gContextMenuContentData" in browserWin
+				&& !browserWin.gContextMenuContentData
+			) { // Hack for Firefox 40+
+				browserWin.gContextMenuContentData = {
+					documentURIObject: fakeDoc.documentURIObject
+				};
+				browserWin.setTimeout(function() {
+					browserWin.gContextMenuContentData = null;
+				}, 0);
+			}
 			//~ todo: doesn't work with Electrolysis
 			new browserWin.nsContextMenu(
 				browserDoc.getElementById("contentAreaContextMenu")

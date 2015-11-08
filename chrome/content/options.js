@@ -78,11 +78,6 @@ var linkPropsPlusOpts = {
 			this.hide(propsBox, false);
 		}
 
-		if(app == "Thunderbird") {
-			this.hide(document.getElementById("downloadBox"), true);
-			this.highlight = function() {}; // Useless, only own window available
-		}
-
 		this._sizeChanged && window.sizeToContent();
 
 		this.setDisabled();

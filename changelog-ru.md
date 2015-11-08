@@ -6,6 +6,7 @@
 `*` - улучшено<br>
 
 ##### master/HEAD
+##### 1.6.0 (2015-11-08)
 `+` Добавлена поддержка заголовка “X-Archive-Orig-Last-Modified” (используется на <a href="http://archive.org/">archive.org</a>).<br>
 `x` Подкорректирована обработка ссылок вида `private:///#http://example.com/` от расширения <a href="https://addons.mozilla.org/addon/private-tab/">Private Tab</a>.<br>
 `+` Добавлено отображение возможности докачки (в поле статуса) (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/4">#4</a>).<br>

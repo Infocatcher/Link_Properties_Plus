@@ -6,6 +6,7 @@
 `*` - improved<br>
 
 ##### master/HEAD
+##### 1.6.0 (2015-11-08)
 `+` Added support for “X-Archive-Orig-Last-Modified” header (used on <a href="http://archive.org/">archive.org</a>).<br>
 `x` Corrected handling of links like `private:///#http://example.com/` from <a href="https://addons.mozilla.org/addon/private-tab/">Private Tab</a> extension.<br>
 `+` Added displaying of resume download ability (in status field) (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/4">#4</a>).<br>

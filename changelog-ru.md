@@ -6,6 +6,8 @@
 `*` - улучшено<br>
 
 ##### master/HEAD
+`x` Исправлено пустое окно свойств при включенном <a href="https://addons.mozilla.org/addon/adblock-plus/">Adblock Plus</a> 2.7 (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/19">#19</a>).<br>
+
 ##### 1.6.0 (2015-11-08)
 `+` Добавлена поддержка заголовка “X-Archive-Orig-Last-Modified” (используется на <a href="http://archive.org/">archive.org</a>).<br>
 `x` Подкорректирована обработка ссылок вида `private:///#http://example.com/` от расширения <a href="https://addons.mozilla.org/addon/private-tab/">Private Tab</a>.<br>

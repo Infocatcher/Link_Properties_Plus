@@ -12,20 +12,6 @@
 	width="620"
 	height="80"
 	persist="screenX screenY width height sizemode">
-
-	<script type="application/javascript" src="chrome://linkpropsplus/content/ownWindow.js" />
-	<script type="application/javascript">
-	<![CDATA[
-		// Hack for persist="sizemode"
-		var _resizeTo = resizeTo;
-		resizeTo = function() {
-			if(document.documentElement.getAttribute("sizemode") == "normal")
-				return _resizeTo.apply(this, arguments);
-			return undefined;
-		};
-	]]>
-	</script>
-
 	<grid>
 		<columns>
 			<column />
@@ -95,4 +81,18 @@
 				accesskey="&linkPropsPlus.sendGetRequestAccesskey;" />
 		</menupopup>
 	</popupset>
+
+	<!-- Scripts should be placed here, workaround for https://github.com/Infocatcher/Link_Properties_Plus/issues/19 -->
+	<script type="application/javascript" src="chrome://linkpropsplus/content/ownWindow.js" />
+	<script type="application/javascript">
+	<![CDATA[
+		// Hack for persist="sizemode"
+		var _resizeTo = resizeTo;
+		resizeTo = function() {
+			if(document.documentElement.getAttribute("sizemode") == "normal")
+				return _resizeTo.apply(this, arguments);
+			return undefined;
+		};
+	]]>
+	</script>
 </dialog>

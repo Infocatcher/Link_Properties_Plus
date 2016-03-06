@@ -45,7 +45,7 @@ var linkPropsPlusUtils = {
 				svc
 				&& (o.uri || "") == _uri
 				&& (o.referer || "") == _referer
-				&& svc.isPrivate == this.isWindowPrivate(options.sourceWindow || null)
+				&& svc.isPrivate == this.isTabPrivate(options.parentWindow || null, options.sourceTab || null)
 			) {
 				w.focus();
 				svc.restartAutoClose();
@@ -78,6 +78,35 @@ var linkPropsPlusUtils = {
 			return false;
 		var pbu = this.pbu;
 		return pbu && pbu.isWindowPrivate(win);
+	},
+	isTabPrivate: function(win, tab) {
+		var pbu = this.pbu;
+		if(!pbu || !win || !tab)
+			return false;
+		if("privateTab" in win) try {
+			return win.privateTab.isTabPrivate(tab);
+		}
+		catch(e) { // Old version without full e10s support or something went wrong?
+			Components.utils.reportError(e);
+		}
+		try { // Without e10s?
+			var contentWindow = tab.linkedBrowser.contentWindow;
+			return pbu.isWindowPrivate(contentWindow);
+		}
+		catch(e) {
+			if(contentWindow) {
+				this.error("Failed to get private state of content window");
+				Components.utils.reportError(e);
+			}
+		}
+		try { // Fallback to use state of browser window itself
+			return pbu.isWindowPrivate(win);
+		}
+		catch(e) {
+			this.error("Failed to get private state of browser window");
+			Components.utils.reportError(e);
+		}
+		return false;
 	},
 	get sendReferer() {
 		return this.pu.getPref("network.http.sendRefererHeader", 2) > 1;

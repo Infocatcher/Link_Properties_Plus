@@ -1213,6 +1213,12 @@ var linkPropsPlusSvc = {
 	get isPrivate() {
 		if("_isPrivateOverrided" in this)
 			return this._isPrivateOverrided;
+
+		var parentWindow = this.parentWindow;
+		var parentTab = this.parentTab;
+		if(parentTab && parentWindow)
+			return this._isPrivate = this.ut.isTabPrivate(parentWindow, parentTab);
+
 		var sourceWindow = this.sourceWindow;
 		if(!sourceWindow) // Already closed? Will use cached value
 			return this._isPrivate;

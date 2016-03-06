@@ -89,7 +89,7 @@ var linkPropsPlusUtils = {
 		catch(e) { // Old version without full e10s support or something went wrong?
 			Components.utils.reportError(e);
 		}
-		try { // Without e10s?
+		if(!this.isRemoteTab(tab)) try { // Without e10s?
 			var contentWindow = tab.linkedBrowser.contentWindow;
 			return pbu.isWindowPrivate(contentWindow);
 		}
@@ -107,6 +107,10 @@ var linkPropsPlusUtils = {
 			Components.utils.reportError(e);
 		}
 		return false;
+	},
+	isRemoteTab: function(tab) {
+		var browser = tab.linkedBrowser;
+		return browser && browser.getAttribute("remote") == "true";
 	},
 	get sendReferer() {
 		return this.pu.getPref("network.http.sendRefererHeader", 2) > 1;

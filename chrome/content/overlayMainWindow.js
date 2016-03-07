@@ -171,10 +171,10 @@ var linkPropsPlus = {
 			}
 		}
 		else if(this.pu.get("context.onSelection")) {
-			var focusedWindow = gContextMenu && gContextMenu.focusedWindow // Special things for e10s
-				|| document.commandDispatcher.focusedWindow;
-			var selObj = focusedWindow.getSelection();
+			var selObj = document.commandDispatcher.focusedWindow.getSelection();
 			var sel = selObj.toString();
+			if(!sel && gContextMenu && "selectionInfo" in gContextMenu) // e10s-compatible
+				sel = gContextMenu.selectionInfo.text;
 			if(
 				!sel
 				&& gContextMenu && gContextMenu.target

@@ -230,6 +230,11 @@ var linkPropsPlus = {
 		this.sourceWindow = null;
 	},
 
+	get contentWindow() {
+		return window.gBrowser && gBrowser.contentWindow
+			|| window.content
+			|| null;
+	},
 	openWindow: function(e, options) {
 		if(!options)
 			options = {};
@@ -247,19 +252,19 @@ var linkPropsPlus = {
 				options.uri = clipUri;
 		}
 		if(!("referer" in options) || !options.referer && options.referer !== null) {
-			options.referer = content // null with Electrolysis w/o compatibility shims
-				? content.location.href
-				: gBrowser.currentURI.spec;
+			options.referer = window.gBrowser && gBrowser.currentURI.spec
+				|| window.content && content.location.href
+				|| "";
 		}
 		if(!options.sourceWindow)
-			options.sourceWindow = content;
+			options.sourceWindow = this.contentWindow;
 		this.ut.openWindow(options);
 	},
 	openWindowContext: function() {
 		this.ut.openWindow({
 			uri:          this.linkURL,
 			referer:      this.referer,
-			sourceWindow: this.sourceWindow || content,
+			sourceWindow: this.sourceWindow || this.contentWindow,
 			autostart:    true,
 			parentWindow: window,
 			sourceTab:    "gBrowser" in window && gBrowser.selectedTab

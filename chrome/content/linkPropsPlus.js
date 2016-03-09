@@ -747,8 +747,37 @@ var linkPropsPlusSvc = {
 	save: function(browserWin, uri) {
 		// Hack: we use nsContextMenu.saveLink() from chrome://browser/content/nsContextMenu.js
 		// to get correct name (see http://kb.mozillazine.org/Browser.download.saveLinkAsFilenameTimeout)
+
+		// Let's try call nsContextMenu.prototype.saveHelper() directly
+		var parentWindow = this.parentWindow;
+		var parentTab = this.parentTab;
+		if(parentWindow && parentTab) {
+			var gBrowser = parentWindow.gBrowser;
+			var origTab = gBrowser.selectedTab;
+			gBrowser.selectedTab = parentTab;
+			try {
+				parentWindow.nsContextMenu.prototype.saveHelper(
+					uri,
+					"" /*linkTextStr*/,
+					null,
+					true,
+					origTab.contentDocument,
+					this.refererURI || null,
+					parentWindow.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+						.getInterface(Components.interfaces.nsIDOMWindowUtils)
+						.outerWindowID,
+					"" /*linkDownload*/
+				);
+				return;
+			}
+			catch(e) {
+				Components.utils.reportError(e);
+			}
+			gBrowser.selectedTab = origTab;
+		}
+
 		var browserDoc = browserWin.document;
-		//~ todo: content is null with Electrolysis w/o compatibility shims
+		// Note: tricks around new nsContextMenu().saveLink() doesn't work with enabled e10s
 		var content = this.sourceWindow || browserWin.content;
 		var contentDoc = content.document;
 		var linkDoc = "gMultiProcessBrowser" in browserWin && browserWin.gMultiProcessBrowser
@@ -780,7 +809,6 @@ var linkPropsPlusSvc = {
 					browserWin.gContextMenuContentData = null;
 				}, 0);
 			}
-			//~ todo: doesn't work with Electrolysis
 			new browserWin.nsContextMenu(
 				browserDoc.getElementById("contentAreaContextMenu")
 					|| browserDoc.getElementById("mailContext"),
@@ -788,7 +816,7 @@ var linkPropsPlusSvc = {
 			).saveLink();
 		}
 		catch(e) {
-			this.ut.error("new nsContextMenu( ... ).saveLink() failed, will try saveURL()");
+			this.ut.error("new nsContextMenu().saveLink() failed, will try saveURL()");
 			Components.utils.reportError(e);
 			try {
 				// See chrome://global/content/contentAreaUtils.js

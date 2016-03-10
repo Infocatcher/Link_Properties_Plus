@@ -622,7 +622,9 @@ var linkPropsPlusSvc = {
 	},
 	_parentTab: null,
 	get parentTab() {
-		var tab = this.isOwnWindow ? this.wnd.parentTab : this._parentTab;
+		var tab = this.isOwnWindow
+			? this.wnd.parentTab
+			: this._parentTab || this.parentWindow && this._parentTab;
 		if(tab && tab.parentNode && !tab.hidden && !tab.collapsed && !tab.closing)
 			return tab;
 		return null;

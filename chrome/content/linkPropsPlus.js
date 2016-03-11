@@ -775,7 +775,9 @@ var linkPropsPlusSvc = {
 			catch(e) {
 				Components.utils.reportError(e);
 			}
-			gBrowser.selectedTab = origTab;
+			finally {
+				gBrowser.selectedTab = origTab;
+			}
 		}
 
 		var browserDoc = browserWin.document;

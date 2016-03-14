@@ -797,9 +797,8 @@ var linkPropsPlusSvc = {
 		// Note: tricks around new nsContextMenu().saveLink() doesn't work with enabled e10s
 		var content = this.sourceWindow || browserWin.content;
 		var contentDoc = content.document;
-		var linkDoc = "gMultiProcessBrowser" in browserWin && browserWin.gMultiProcessBrowser
-			? browserDoc
-			: contentDoc;
+		var isMultiProcess = "gMultiProcessBrowser" in browserWin && browserWin.gMultiProcessBrowser;
+		var linkDoc = isMultiProcess ? browserDoc : contentDoc;
 		var link = linkDoc.createElementNS("http://www.w3.org/1999/xhtml", "a");
 		link.href = uri;
 		var fakeDoc = {
@@ -816,7 +815,8 @@ var linkPropsPlusSvc = {
 				return fakeDoc;
 			});
 			if(
-				"gContextMenuContentData" in browserWin
+				isMultiProcess
+				&& "gContextMenuContentData" in browserWin
 				&& !browserWin.gContextMenuContentData
 			) { // Hack for Firefox 40+
 				browserWin.gContextMenuContentData = {

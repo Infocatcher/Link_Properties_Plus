@@ -992,9 +992,9 @@ var linkPropsPlusSvc = {
 			? Components.classes["@mozilla.org/network/protocol/about;1?what=" + uri.path.replace(/[?&#].*$/, "")]
 				.getService(Components.interfaces.nsIAboutModule)
 				.newChannel(uri, null /* nsILoadInfo since Firefox 36 */)
-			: "newChannelFromURIWithLoadInfo" in this.ios // Firefox 37+
-				? this.ios.newChannelFromURIWithLoadInfo(uri, null)
-				: this.ios.newChannelFromURI(uri); // Removed in Firefox 48+
+			: "newChannelFromURI" in this.ios
+				? this.ios.newChannelFromURI(uri) // Removed in Firefox 48+
+				: this.ios.newChannelFromURIWithLoadInfo(uri, null); // Firefox 37+, accepts null in Firefox 44+
 
 		if(ch instanceof Components.interfaces.nsIRequest) try {
 			ch.loadFlags |= ch.LOAD_BACKGROUND | ch.INHIBIT_CACHING;

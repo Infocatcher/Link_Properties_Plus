@@ -753,6 +753,19 @@ var linkPropsPlusSvc = {
 		// Let's try call nsContextMenu.prototype.saveHelper() directly
 		var parentWindow = this.parentWindow;
 		var parentTab = this.parentTab;
+		if(!("nsContextMenu" in parentWindow)) {
+			parentWindow = browserWin;
+			parentTab = null;
+		}
+		if(parentWindow && !parentTab) {
+			// https://github.com/Infocatcher/Private_Tab#privatetabreadytoopentab
+			if("privateTab" in parentWindow)
+				parentWindow.privateTab.readyToOpenTab(this.isPrivate);
+			var tmpTab = parentTab = parentWindow.gBrowser.addTab();
+			parentWindow.setTimeout(function() {
+				parentWindow.gBrowser.removeTab(tmpTab);
+			}, 0);
+		}
 		if(parentWindow && parentTab) {
 			var gBrowser = parentWindow.gBrowser;
 			var origTab = gBrowser.selectedTab;

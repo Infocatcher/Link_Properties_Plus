@@ -771,18 +771,27 @@ var linkPropsPlusSvc = {
 			var origTab = gBrowser.selectedTab;
 			gBrowser.selectedTab = parentTab;
 			try {
-				parentWindow.nsContextMenu.prototype.saveHelper(
+				var nscmp = parentWindow.nsContextMenu.prototype;
+				// Firefox 40+ (http://hg.mozilla.org/mozilla-central/rev/bdde7ee3b6fa):
+				// linkURL, linkText, dialogTitle, bypassCache, doc, docURI, windowID, linkDownload
+				// Older:
+				// linkURL, linkText, dialogTitle, bypassCache, doc, windowID, linkDownload
+				// linkURL, linkText, dialogTitle, bypassCache, doc
+				var args = [
 					uri,
-					"" /*linkTextStr*/,
-					null,
-					true,
+					"",   // linkText
+					null, // dialogTitle
+					true, // bypassCache
 					origTab.linkedBrowser.contentDocument,
 					this.refererURI || null,
 					parentWindow.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
 						.getInterface(Components.interfaces.nsIDOMWindowUtils)
 						.outerWindowID,
-					"" /*linkDownload*/
-				);
+					"" // linkDownload
+				];
+				if(nscmp.saveHelper.length == 7)
+					args.splice(5, 1); // remove referer argument
+				nscmp.saveHelper.apply(nscmp, args);
 				return;
 			}
 			catch(e) {

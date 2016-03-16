@@ -776,7 +776,7 @@ var linkPropsPlusSvc = {
 					"" /*linkTextStr*/,
 					null,
 					true,
-					origTab.contentDocument,
+					origTab.linkedBrowser.contentDocument,
 					this.refererURI || null,
 					parentWindow.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
 						.getInterface(Components.interfaces.nsIDOMWindowUtils)

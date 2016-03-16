@@ -766,7 +766,7 @@ var linkPropsPlusSvc = {
 				parentWindow.gBrowser.removeTab(tmpTab);
 			}, 0);
 		}
-		if(parentWindow && parentTab) {
+		if(parentWindow && parentTab && "saveHelper" in parentWindow.nsContextMenu.prototype) {
 			var gBrowser = parentWindow.gBrowser;
 			var origTab = gBrowser.selectedTab;
 			gBrowser.selectedTab = parentTab;

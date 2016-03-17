@@ -258,6 +258,10 @@ var linkPropsPlus = {
 		}
 		if(!options.sourceWindow)
 			options.sourceWindow = this.contentWindow;
+		if(!options.parentWindow)
+			options.parentWindow = window;
+		if(!options.sourceTab)
+			options.sourceTab = "gBrowser" in window && gBrowser.selectedTab;
 		this.ut.openWindow(options);
 	},
 	openWindowContext: function() {

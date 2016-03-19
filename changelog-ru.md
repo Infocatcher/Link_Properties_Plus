@@ -6,6 +6,9 @@
 `*` - улучшено<br>
 
 ##### master/HEAD
+`x` Подкорректирована совместимость с Electrolysis (мультипроцессном режимом) в Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>
+`x` Исправлена совместимость с Firefox 48+ (из-за изменений в nsIIOService, см. <a href="bug 1254752">https://bugzilla.mozilla.org/show_bug.cgi?id=1254752</a>).<br>
+
 ##### 1.6.0.1 (2015-12-21)
 `x` Исправлено пустое окно свойств при включенном <a href="https://addons.mozilla.org/addon/adblock-plus/">Adblock Plus</a> 2.7 (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/19">#19</a>).<br>
 

@@ -6,6 +6,9 @@
 `*` - improved<br>
 
 ##### master/HEAD
+`x` Corrected compatibility with Electrolysis (multi-process mode) in Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>
+`x` Fixed compatibility with Firefox 48+ (due to changes in nsIIOService, see <a href="bug 1254752">https://bugzilla.mozilla.org/show_bug.cgi?id=1254752</a>).<br>
+
 ##### 1.6.0.1 (2015-12-21)
 `x` Workaround for empty properties window with enabled <a href="https://addons.mozilla.org/addon/adblock-plus/">Adblock Plus</a> 2.7 (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/19">#19</a>).<br>
 

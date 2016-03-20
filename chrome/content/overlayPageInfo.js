@@ -16,10 +16,22 @@ var linkPropsPlusPageInfo = {
 		var btn2 = document.getElementById("linkPropsPlus-getLinksProperties");
 		if(btn2)
 			btn2.parentNode.insertBefore(btn2, btn2.previousSibling);
+		this.sourceTab; // Initialize
 	},
 	handleEvent: function(e) {
 		if(e.type == "load")
 			this.init();
+	},
+
+	get browserWindow() {
+		delete this.browserWindow;
+		return this.browserWindow = opener && "gBrowser" in opener && "browsers" in opener.gBrowser && opener;
+	},
+	get sourceTab() {
+		// See chrome://browser/content/pageinfo/pageInfo.js
+		// Like loadPageInfo() -> window.opener.gBrowser.selectedBrowser.messageManager
+		delete this.sourceTab;
+		return this.sourceTab = this.browserWindow && this.browserWindow.gBrowser.selectedTab || null;
 	},
 	showLinksProperties: function() {
 		// See chrome://browser/content/pageinfo/pageInfo.js
@@ -41,16 +53,17 @@ var linkPropsPlusPageInfo = {
 				if(uri in links) //~ todo: what to do for the same URIs from different documents?
 					continue;
 				var item = data[COL_IMAGE_NODE];
-				var doc = item.ownerDocument;
-				var referer = doc.location.href;
+				var referer = item.ownerDocument && item.ownerDocument.documentURI
+					|| item.baseURI
+					|| "";
 				links[uri] = referer;
-				wins[uri] = doc.defaultView;
+				wins[uri] = item.ownerDocument && item.ownerDocument.defaultView || null;
 				++count;
 			}
 		}
 		if(!this.ut.allowOpen(count))
 			return;
-		var browserWindow = opener && "gBrowser" in opener && "browsers" in opener.gBrowser && opener;
+		var browserWindow = this.browserWindow;
 		for(var uri in links) {
 			var win = wins[uri];
 			this.ut.openWindow({
@@ -59,11 +72,13 @@ var linkPropsPlusPageInfo = {
 				sourceWindow: win,
 				autostart:    true,
 				parentWindow: browserWindow,
-				sourceTab:    this.getSourceTab(browserWindow, win.top)
+				sourceTab:    this.getSourceTab(browserWindow, win && win.top)
 			});
 		}
 	},
 	getSourceTab: function(browserWindow, contentWindow) {
+		if(!contentWindow) // Fallback for multi-process mode
+			return this.sourceTab;
 		var gBrowser = browserWindow.gBrowser;
 		if("_getTabForContentWindow" in gBrowser)
 			return gBrowser._getTabForContentWindow(contentWindow);

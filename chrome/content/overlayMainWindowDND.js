@@ -176,8 +176,14 @@ var linkPropsPlusDND = {
 					}
 				}
 			}
-			if(!data && types.contains("text/plain"))
-				links.push.apply(links, getDataAt("text/plain", i).split(/\s+/).map(this.lpp.extractURI, this.lpp));
+			if(!data && types.contains("text/plain")) {
+				links.push.apply(
+					links,
+					getDataAt("text/plain", i)
+						.split(/\s+/)
+						.map(this.lpp.cmd.extractURI, this.lpp.cmd)
+				);
+			}
 		}
 		links = links.filter(function(uri, i) { // Remove empty strings and duplicates
 			return uri && links.indexOf(uri) == i;

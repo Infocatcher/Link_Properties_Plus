@@ -7,23 +7,23 @@
 	<script type="application/javascript" src="chrome://linkpropsplus/content/overlayMainWindow.js" />
 
 	<commandset id="mainCommandSet">
-		<command id="linkPropsPlus-cmd-openWindow" oncommand="linkPropsPlus.openWindow(event.sourceEvent);"
+		<command id="linkPropsPlus-cmd-openWindow" oncommand="linkPropsPlus.cmd.openWindow(event.sourceEvent);"
 			label="&linkPropsPlus.tools;" accesskey="&linkPropsPlus.toolsAccesskey;" />
 	</commandset>
 	<keyset id="mainKeyset">
-		<key id="linkPropsPlus-key-openWindow" oncommand="linkPropsPlus.openWindow();" disabled="true" />
+		<key id="linkPropsPlus-key-openWindow" oncommand="linkPropsPlus.cmd.openWindow();" disabled="true" />
 	</keyset>
 	<menupopup id="menu_ToolsPopup">
 		<menuitem id="linkPropsPlus-toolsMenuitem" class="menuitem-iconic"
 			insertafter="menu_pageInfo,menu_inspector,javascriptConsole"
 			command="linkPropsPlus-cmd-openWindow"
-			onclick="if(event.button == 1) linkPropsPlus.openWindow(event);"
+			onclick="if(event.button == 1) linkPropsPlus.cmd.openWindow(event);"
 			key="linkPropsPlus-key-openWindow" />
 	</menupopup>
 	<menupopup id="contentAreaContextMenu">
 		<menuitem id="linkPropsPlus-contextMenuitem" class="menuitem-iconic"
 			insertafter="context-copylink"
-			oncommand="linkPropsPlus.openWindowContext();"
+			oncommand="linkPropsPlus.cmd.openWindowContext();"
 			label="&linkPropsPlus.context;"
 			lpp_label="&linkPropsPlus.context;"
 			lpp_label_for="&linkPropsPlus.contextFor;"
@@ -34,8 +34,8 @@
 			class="chromeclass-toolbar-additional toolbarbutton-1"
 			label="&linkPropsPlus.toolbar;"
 			tooltiptext="&linkPropsPlus.toolbarTooltip;"
-			oncommand="linkPropsPlus.openWindow(event);"
-			onclick="if(event.button == 1) linkPropsPlus.openWindow(event);"
+			oncommand="linkPropsPlus.cmd.openWindow(event);"
+			onclick="if(event.button == 1) linkPropsPlus.cmd.openWindow(event);"
 			ondragover="linkPropsPlus.dnd.buttonDragOver(event);"
 			ondragdrop="linkPropsPlus.dnd.buttonDrop(event);"
 			ondragleave="linkPropsPlus.dnd.buttonDragLeave(event);"
@@ -48,14 +48,14 @@
 		<menuitem id="linkPropsPlus-appMenuitem" class="menuitem-iconic"
 			insertafter="appmenu_webConsole,appmenu_pageInspect,appmenu_pageSource"
 			command="linkPropsPlus-cmd-openWindow"
-			onclick="if(event.button == 1) linkPropsPlus.openWindow(event);"
+			onclick="if(event.button == 1) linkPropsPlus.cmd.openWindow(event);"
 			key="linkPropsPlus-key-openWindow" />
 	</menupopup>
 	<menupopup id="menuWebDeveloperPopup">
 		<menuitem id="linkPropsPlus-toolsMenuitemSub" class="menuitem-iconic"
 			insertafter="webConsole,javascriptConsole"
 			command="linkPropsPlus-cmd-openWindow"
-			onclick="if(event.button == 1) linkPropsPlus.openWindow(event);"
+			onclick="if(event.button == 1) linkPropsPlus.cmd.openWindow(event);"
 			key="linkPropsPlus-key-openWindow" />
 	</menupopup>
 	<!-- Firefox 29+ with Classic Theme Restorer extension -->
@@ -63,7 +63,7 @@
 		<menuitem id="linkPropsPlus-appMenuitem" class="menuitem-iconic"
 			insertafter="menu_pageSource"
 			command="linkPropsPlus-cmd-openWindow"
-			onclick="if(event.button == 1) linkPropsPlus.openWindow(event);"
+			onclick="if(event.button == 1) linkPropsPlus.cmd.openWindow(event);"
 			key="linkPropsPlus-key-openWindow" />
 	</menupopup>
 
@@ -72,14 +72,14 @@
 		<menuitem id="linkPropsPlus-toolsMenuitem" class="menuitem-iconic"
 			insertbefore="tasksDataman,sanitizeSeparator,javascriptConsole,sep_switchprofile,sync-setup"
 			command="linkPropsPlus-cmd-openWindow"
-			onclick="if(event.button == 1) linkPropsPlus.openWindow(event);"
+			onclick="if(event.button == 1) linkPropsPlus.cmd.openWindow(event);"
 			key="linkPropsPlus-key-openWindow" />
 	</menupopup>
 	<menupopup id="toolsPopup">
 		<menuitem id="linkPropsPlus-toolsMenuitemSub" class="menuitem-iconic"
 			insertafter="errorConsole,javascriptConsole"
 			command="linkPropsPlus-cmd-openWindow"
-			onclick="if(event.button == 1) linkPropsPlus.openWindow(event);"
+			onclick="if(event.button == 1) linkPropsPlus.cmd.openWindow(event);"
 			key="linkPropsPlus-key-openWindow" />
 	</menupopup>
 	<toolbarpalette id="MailToolbarPalette">
@@ -87,8 +87,8 @@
 			class="chromeclass-toolbar-additional toolbarbutton-1"
 			label="&linkPropsPlus.toolbar;"
 			tooltiptext="&linkPropsPlus.toolbarTooltip;"
-			oncommand="linkPropsPlus.openWindow(event);"
-			onclick="if(event.button == 1) linkPropsPlus.openWindow(event);"
+			oncommand="linkPropsPlus.cmd.openWindow(event);"
+			onclick="if(event.button == 1) linkPropsPlus.cmd.openWindow(event);"
 			ondragover="linkPropsPlus.dnd.buttonDragOver(event);"
 			ondragdrop="linkPropsPlus.dnd.buttonDrop(event);"
 			ondragleave="linkPropsPlus.dnd.buttonDragLeave(event);"
@@ -98,16 +98,16 @@
 
 	<!-- Thunderbird -->
 	<commandset id="mailCommands">
-		<command id="linkPropsPlus-cmd-openWindow" oncommand="linkPropsPlus.openWindow(event.sourceEvent);"
+		<command id="linkPropsPlus-cmd-openWindow" oncommand="linkPropsPlus.cmd.openWindow(event.sourceEvent);"
 			label="&linkPropsPlus.tools;" accesskey="&linkPropsPlus.toolsAccesskey;" />
 	</commandset>
 	<keyset id="mailKeys">
-		<key id="linkPropsPlus-key-openWindow" oncommand="linkPropsPlus.openWindow();" disabled="true" />
+		<key id="linkPropsPlus-key-openWindow" oncommand="linkPropsPlus.cmd.openWindow();" disabled="true" />
 	</keyset>
 	<menupopup id="mailContext">
 		<menuitem id="linkPropsPlus-contextMenuitem" class="menuitem-iconic"
 			insertafter="mailContext-copylink,context-copylink"
-			oncommand="linkPropsPlus.openWindowContext();"
+			oncommand="linkPropsPlus.cmd.openWindowContext();"
 			label="&linkPropsPlus.context;"
 			lpp_label="&linkPropsPlus.context;"
 			lpp_label_for="&linkPropsPlus.contextFor;"

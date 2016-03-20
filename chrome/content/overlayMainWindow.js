@@ -1,18 +1,7 @@
 var linkPropsPlus = {
-	validURI: /^(?:(?:(?:https?|ftps?|file|chrome|resource):\/\/+|(?:view-source|jar):[\w-]+:\/*)[^\/]\S*|about:(?:[^\/]\S*)?)$/,
-	get validURIExtract() {
-		delete this.validURIExtract;
-		return this.validURIExtract = new RegExp(
-			String(this.validURI).slice(2, -2) // Remove /^ and $/
-		);
-	},
-
-	linkURL: "",
-	referer: "",
-	sourceWindow: null,
-
 	get ut()  { return this.lazy("ut",  "linkPropsPlusUtils",     "utils.js");                },
 	get pu()  { return this.lazy("pu",  "linkPropsPlusPrefUtils", "prefUtils.js");            },
+	get cmd() { return this.lazy("cmd", "linkPropsPlusCmd",       "overlayMainWindowCmd.js"); },
 	get dnd() { return this.lazy("dnd", "linkPropsPlusDND",       "overlayMainWindowDND.js"); },
 	get scriptLoader() {
 		delete this.scriptLoader;
@@ -55,8 +44,8 @@ var linkPropsPlus = {
 		switch(e.type) {
 			case "load":         this.init();                                              break;
 			case "unload":       this.destroy();                                           break;
-			case "popupshowing": e.target == e.currentTarget && this.setContextMenu();     break;
-			case "popuphidden":  e.target == e.currentTarget && this.destroyContextMenu(); break;
+			case "popupshowing": e.target == e.currentTarget && this.cmd.setContextMenu();     break;
+			case "popuphidden":  e.target == e.currentTarget && this.cmd.destroyContextMenu(); break;
 			case "dragover":     this.dnd.panelButtonDragOver(e);                          break;
 			case "dragleave":    this.dnd.panelButtonDragLeave(e);
 		}
@@ -91,39 +80,7 @@ var linkPropsPlus = {
 		return this.panelBtn = "CustomizableUI" in window
 			&& this.$("PanelUI-menu-button");
 	},
-	isValidURI: function(s) {
-		return s && this.validURI.test(s);
-	},
 
-	extractURI: function(s) {
-		if(!this.validURIExtract.test(s))
-			return "";
-		var uri = RegExp.lastMatch;
-		var before = RegExp.leftContext;
-		var after = RegExp.rightContext;
-		if(this.pu.get("context.onSelection.ignoreSpaces")) {
-			before = before.replace(/\s+$/, "");
-			after = after.replace(/^\s+/, "");
-		}
-		var threshold = this.pu.get("context.onSelection.detectionThreshold");
-		if(
-			before.length > threshold
-			|| after.length > threshold
-		)
-			return "";
-		uri = uri.replace(/".*$/, "");
-		var brackets = {
-			"(": ")",
-			"[": "]",
-			"{": "}",
-			"<": ">",
-			__proto__: null
-		};
-		for(var b in brackets)
-			if(uri.indexOf(b) == -1)
-				uri = uri.replace(new RegExp("\\" + brackets[b] + ".*$"), "");
-		return uri.replace(/[.,;]$/, "");
-	},
 	prefsChanged: function(pName, pVal) {
 		if(pName.indexOf("showIn") == 0)
 			this.showMenuitems();
@@ -146,133 +103,6 @@ var linkPropsPlus = {
 		this.toolsMi    && this.toolsMi   .setAttribute(attr, iconTools);
 		this.toolsMiSub && this.toolsMiSub.setAttribute(attr, iconTools);
 		this.appMi      && this.appMi     .setAttribute(attr, this.pu.get("icon.appMenu"));
-	},
-	setContextMenu: function() {
-		this.destroyContextMenu();
-		var hide = true;
-		var uri = "";
-		if(
-			gContextMenu
-			&& gContextMenu.onSaveableLink
-			&& this.pu.get("context.onLinks")
-		) {
-			uri = typeof gContextMenu.linkURL == "function" // SeaMonkey
-				? gContextMenu.linkURL()
-				: gContextMenu.linkURL;
-			if(this.isValidURI(uri)) {
-				var sourceDoc = gContextMenu.ownerDoc
-					|| gContextMenu.link.ownerDocument;
-				this.linkURL = uri;
-				this.referer = "gContextMenuContentData" in window && gContextMenuContentData
-					? gContextMenuContentData.documentURIObject.spec
-					: sourceDoc.documentURI;
-				this.sourceWindow = sourceDoc.defaultView;
-				hide = false;
-			}
-		}
-		else if(this.pu.get("context.onSelection")) {
-			var selObj = document.commandDispatcher.focusedWindow.getSelection();
-			var sel = selObj.toString();
-			if(!sel && gContextMenu && "selectionInfo" in gContextMenu) // e10s-compatible
-				sel = gContextMenu.selectionInfo.text;
-			if(
-				!sel
-				&& gContextMenu && gContextMenu.target
-				&& this.pu.get("context.onSelection.inInputFields")
-			) {
-				var trg = gContextMenu.target;
-				if(
-					trg instanceof HTMLTextAreaElement
-					|| trg instanceof HTMLInputElement && trg.type != "password"
-				) try {
-					sel = trg.value.substring(trg.selectionStart, trg.selectionEnd);
-				}
-				catch(e) { // Non-text HTMLInputElement
-				}
-			}
-			uri = this.extractURI(sel);
-			if(
-				!uri // Fallback for Electrolysis + easy way to detect strings like "example.com"
-				&& gContextMenu && gContextMenu.onPlainTextLink
-				&& typeof gContextMenu.linkURL == "string"
-			)
-				uri = sel = gContextMenu.linkURL;
-			if(uri) {
-				var sourceDoc = gContextMenu
-					&& (gContextMenu.ownerDoc || gContextMenu.target && gContextMenu.target.ownerDocument)
-					|| selObj.getRangeAt(0).commonAncestorContainer.ownerDocument; // For SeaMonkey
-				this.linkURL = uri;
-				this.referer = this.pu.get("useRealRefererForTextLinks")
-					? "gContextMenuContentData" in window && gContextMenuContentData
-						? gContextMenuContentData.documentURIObject.spec
-						: sourceDoc.documentURI
-					: null;
-				this.sourceWindow = sourceDoc.defaultView;
-				hide = false;
-			}
-		}
-		var mi = this.mi;
-		mi.hidden = hide;
-		if(!hide) {
-			var decoded = this.ut.decodeURI(uri);
-			mi.setAttribute("tooltiptext", decoded);
-			var crop = this.pu.get("context.onSelection.cropLinkInLabel");
-			var label = sel && crop > 0
-				? mi.getAttribute("lpp_label_for")
-					.replace("$S", decoded.length > crop ? decoded.substr(0, crop) + "…" : decoded)
-				: mi.getAttribute("lpp_label");
-			if(mi.getAttribute("label") != label)
-				mi.setAttribute("label", label);
-		}
-	},
-	destroyContextMenu: function() {
-		this.linkURL = this.referer = "";
-		this.sourceWindow = null;
-	},
-
-	get contentWindow() {
-		return window.gBrowser && gBrowser.contentWindow
-			|| window.content
-			|| null;
-	},
-	openWindow: function(e, options) {
-		if(!options)
-			options = {};
-		options.autostart = e
-			? e.type == "click" || e.ctrlKey || e.altKey || e.shiftKey || e.metaKey
-			: !!options.uri;
-		if(!options.uri && this.pu.get("preferSelectionClipboard")) {
-			var clipUriSel = this.ut.readFromClipboard(true);
-			if(this.isValidURI(clipUriSel))
-				options.uri = clipUriSel;
-		}
-		if(!options.uri) {
-			var clipUri = this.ut.readFromClipboard();
-			if(this.isValidURI(clipUri))
-				options.uri = clipUri;
-		}
-		if(!("referer" in options) || !options.referer && options.referer !== null) {
-			options.referer = window.gBrowser && gBrowser.currentURI.spec
-				|| window.content && content.location.href
-				|| "";
-		}
-		if(!options.sourceWindow)
-			options.sourceWindow = this.contentWindow;
-		if(!options.parentWindow)
-			options.parentWindow = window;
-		if(!options.sourceTab)
-			options.sourceTab = "gBrowser" in window && gBrowser.selectedTab;
-		this.ut.openWindow(options);
-	},
-	openWindowContext: function() {
-		this.ut.openWindow({
-			uri:          this.linkURL,
-			referer:      this.referer,
-			sourceWindow: this.sourceWindow || this.contentWindow,
-			autostart:    true,
-			parentWindow: window,
-			sourceTab:    "gBrowser" in window && gBrowser.selectedTab
-		});
 	}
 };
 window.addEventListener("load", linkPropsPlus, false);

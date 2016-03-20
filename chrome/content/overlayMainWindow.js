@@ -42,11 +42,11 @@ var linkPropsPlus = {
 	},
 	handleEvent: function(e) {
 		switch(e.type) {
-			case "load":         this.init();                                              break;
-			case "unload":       this.destroy();                                           break;
+			case "load":         this.init();                                                  break;
+			case "unload":       this.destroy();                                               break;
 			case "popupshowing": e.target == e.currentTarget && this.cmd.setContextMenu();     break;
 			case "popuphidden":  e.target == e.currentTarget && this.cmd.destroyContextMenu(); break;
-			case "dragover":     this.dnd.panelButtonDragOver(e);                          break;
+			case "dragover":     this.dnd.panelButtonDragOver(e);                              break;
 			case "dragleave":    this.dnd.panelButtonDragLeave(e);
 		}
 	},

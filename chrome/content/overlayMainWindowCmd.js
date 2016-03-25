@@ -65,6 +65,7 @@ var linkPropsPlusCmd = {
 					|| gContextMenu.link.ownerDocument;
 				this.linkURL = uri;
 				this.referer = "gContextMenuContentData" in window && gContextMenuContentData
+					&& "documentURIObject" in gContextMenuContentData
 					? gContextMenuContentData.documentURIObject.spec
 					: sourceDoc.documentURI;
 				this.sourceWindow = sourceDoc.defaultView;
@@ -105,6 +106,7 @@ var linkPropsPlusCmd = {
 				this.linkURL = uri;
 				this.referer = this.lpp.pu.get("useRealRefererForTextLinks")
 					? "gContextMenuContentData" in window && gContextMenuContentData
+						&& "documentURIObject" in gContextMenuContentData
 						? gContextMenuContentData.documentURIObject.spec
 						: sourceDoc.documentURI
 					: null;

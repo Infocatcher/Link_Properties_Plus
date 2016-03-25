@@ -64,10 +64,7 @@ var linkPropsPlusCmd = {
 				var sourceDoc = gContextMenu.ownerDoc
 					|| gContextMenu.link.ownerDocument;
 				this.linkURL = uri;
-				this.referer = "gContextMenuContentData" in window && gContextMenuContentData
-					&& "documentURIObject" in gContextMenuContentData
-					? gContextMenuContentData.documentURIObject.spec
-					: sourceDoc.documentURI;
+				this.referer = this._getContextReferer(sourceDoc);
 				this.sourceWindow = sourceDoc.defaultView;
 				hide = false;
 			}
@@ -105,10 +102,7 @@ var linkPropsPlusCmd = {
 					|| selObj.getRangeAt(0).commonAncestorContainer.ownerDocument; // For SeaMonkey
 				this.linkURL = uri;
 				this.referer = this.lpp.pu.get("useRealRefererForTextLinks")
-					? "gContextMenuContentData" in window && gContextMenuContentData
-						&& "documentURIObject" in gContextMenuContentData
-						? gContextMenuContentData.documentURIObject.spec
-						: sourceDoc.documentURI
+					? this._getContextReferer(sourceDoc)
 					: null;
 				this.sourceWindow = sourceDoc.defaultView;
 				hide = false;
@@ -131,6 +125,12 @@ var linkPropsPlusCmd = {
 	destroyContextMenu: function() {
 		this.linkURL = this.referer = "";
 		this.sourceWindow = null;
+	},
+	_getContextReferer: function(doc) {
+		return "gContextMenuContentData" in window && gContextMenuContentData
+			&& "documentURIObject" in gContextMenuContentData
+			? gContextMenuContentData.documentURIObject.spec
+			: doc.documentURI;
 	},
 
 	get contentWindow() {

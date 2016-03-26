@@ -1001,9 +1001,16 @@ var linkPropsPlusSvc = {
 			? Components.classes["@mozilla.org/network/protocol/about;1?what=" + uri.path.replace(/[?&#].*$/, "")]
 				.getService(Components.interfaces.nsIAboutModule)
 				.newChannel(uri, null /* nsILoadInfo since Firefox 36 */)
-			: "newChannelFromURI" in this.ios
-				? this.ios.newChannelFromURI(uri) // Removed in Firefox 48+
-				: this.ios.newChannelFromURIWithLoadInfo(uri, null); // Firefox 37+, accepts null in Firefox 44+
+			: "newChannelFromURI2" in this.ios
+				? this.ios.newChannelFromURI2( // Firefox 36+
+					uri,
+					document /*aLoadingNode*/,
+					null /*aLoadingPrincipal*/,
+					null /*aTriggeringPrincipal*/,
+					Components.interfaces.nsILoadInfo.SEC_NORMAL /*aSecurityFlags*/,
+					Components.interfaces.nsIContentPolicy.TYPE_OTHER /*aContentPolicyType*/
+				)
+				: this.ios.newChannelFromURI(uri);
 
 		if(ch instanceof Components.interfaces.nsIRequest) try {
 			ch.loadFlags |= ch.LOAD_BACKGROUND | ch.INHIBIT_CACHING;

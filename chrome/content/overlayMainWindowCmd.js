@@ -72,8 +72,15 @@ var linkPropsPlusCmd = {
 		else if(this.lpp.pu.get("context.onSelection")) {
 			var selObj = document.commandDispatcher.focusedWindow.getSelection();
 			var sel = selObj.toString();
-			if(!sel && gContextMenu && "selectionInfo" in gContextMenu) // e10s-compatible
+			if(
+				!sel && gContextMenu && "selectionInfo" in gContextMenu // e10s-compatible
+				&& (
+					!gContextMenu.selectionInfo.docSelectionIsCollapsed // Document selection
+					|| this.lpp.pu.get("context.onSelection.inInputFields") // Or looks like input field
+				)
+			) {
 				sel = gContextMenu.selectionInfo.text;
+			}
 			if(
 				!sel
 				&& gContextMenu && gContextMenu.target

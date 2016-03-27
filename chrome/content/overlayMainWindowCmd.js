@@ -62,7 +62,7 @@ var linkPropsPlusCmd = {
 				: gContextMenu.linkURL;
 			if(this.isValidURI(uri)) {
 				var sourceDoc = gContextMenu.ownerDoc
-					|| gContextMenu.link.ownerDocument;
+					|| gContextMenu.target && gContextMenu.target.ownerDocument;
 				this.linkURL = uri;
 				this.referer = this._getContextReferer(sourceDoc);
 				this.sourceWindow = sourceDoc.defaultView;
@@ -104,8 +104,10 @@ var linkPropsPlusCmd = {
 			)
 				uri = sel = gContextMenu.linkURL;
 			if(uri) {
-				var sourceDoc = gContextMenu
-					&& (gContextMenu.ownerDoc || gContextMenu.target && gContextMenu.target.ownerDocument)
+				var sourceDoc = gContextMenu && (
+						gContextMenu.ownerDoc
+						|| gContextMenu.target && gContextMenu.target.ownerDocument
+					)
 					|| selObj.getRangeAt(0).commonAncestorContainer.ownerDocument; // For SeaMonkey
 				this.linkURL = uri;
 				this.referer = this.lpp.pu.get("useRealRefererForTextLinks")

@@ -104,7 +104,7 @@ var linkPropsPlusDND = {
 				referer:      data.referers[uri] || data.referer,
 				sourceWindow: sourceWindow,
 				autostart:    true,
-				parentWindow: sourceWindow && window,
+				parentWindow: window,
 				sourceTab:    sourceWindow && this.getTabForContentWindow(sourceWindow)
 			});
 		}, this);

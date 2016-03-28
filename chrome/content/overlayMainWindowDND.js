@@ -98,14 +98,16 @@ var linkPropsPlusDND = {
 		if(panelPopup && panelPopup.state != "closed")
 			panelPopup.hidePopup();
 		links.forEach(function(uri) {
-			var sourceWindow = data.sourceWindows[uri] || data.sourceWindow;
+			// Note: source window is null in multi-process mode
+			var sourceWindow = uri in data.sourceWindows ? data.sourceWindows[uri] : data.sourceWindow;
+			var sourceTab = data.sourceTabs[uri] || data.sourceTab;
 			this.lpp.ut.openWindow({
 				uri:          uri,
 				referer:      data.referers[uri] || data.referer,
 				sourceWindow: sourceWindow,
 				autostart:    true,
 				parentWindow: window,
-				sourceTab:    sourceWindow && this.getTabForContentWindow(sourceWindow)
+				sourceTab:    sourceWindow && this.getTabForContentWindow(sourceWindow) || sourceTab
 			});
 		}, this);
 	},
@@ -153,6 +155,7 @@ var linkPropsPlusDND = {
 		var links = [];
 		var referers = { __proto__: null };
 		var sourceWindows = { __proto__: null };
+		var sourceTabs = { __proto__: null };
 		function getDataAt(type, i) {
 			return dt.getDataAt && dt.getDataAt(type, i)
 				|| dt.mozGetDataAt && dt.mozGetDataAt(type, i)
@@ -167,12 +170,16 @@ var linkPropsPlusDND = {
 				links.push((data = getDataAt("text/x-moz-url", i)).split("\n")[0]);
 			if(!data && types.contains("application/x-moz-tabbrowser-tab")) {
 				var tab = data = getDataAt("application/x-moz-tabbrowser-tab", i);
-				if(tab && tab.linkedBrowser) {
-					var uri = tab.linkedBrowser.currentURI.spec;
+				var browser = tab && tab.linkedBrowser;
+				if(browser) {
+					var uri = browser.currentURI.spec;
 					if(links.indexOf(uri) == -1) {
 						links.push(uri);
 						referers[uri] = uri;
-						sourceWindows[uri] = tab.linkedBrowser.contentWindow;
+						var contentWindow = browser.contentWindow;
+						sourceWindows[uri] = contentWindow;
+						if(!contentWindow) // Looks like multi-process mode
+							sourceTabs[uri] = tab;
 					}
 				}
 			}
@@ -192,12 +199,30 @@ var linkPropsPlusDND = {
 			return null;
 		var sourceNode = dt.mozSourceNode || dt.sourceNode || null;
 		var sourceDoc = sourceNode && sourceNode.ownerDocument;
+		var sourceWindow = sourceDoc && sourceDoc.defaultView;
+		var referer = sourceDoc && sourceDoc.documentURI || null;
+		var sourceTab = null;
+		if(
+			sourceNode
+			&& sourceNode instanceof XULElement
+			&& sourceNode.localName == "browser"
+			&& sourceNode.getAttribute("remote") == "true"
+		) {
+			// Looks like multi-process mode
+			sourceTab = "gBrowser" in sourceWindow
+				&& "getTabForBrowser" in sourceWindow.gBrowser
+				&& sourceWindow.gBrowser.getTabForBrowser(sourceNode);
+			referer = sourceNode.currentURI.spec;
+			sourceWindow = null;
+		}
 		return {
 			links: links,
-			referer: sourceDoc && sourceDoc.documentURI || null,
+			referer: referer,
 			referers: referers,
-			sourceWindow: sourceDoc && sourceDoc.defaultView,
-			sourceWindows: sourceWindows
+			sourceWindow: sourceWindow,
+			sourceWindows: sourceWindows,
+			sourceTab: sourceTab,
+			sourceTabs: sourceTabs
 		};
 	}
 };

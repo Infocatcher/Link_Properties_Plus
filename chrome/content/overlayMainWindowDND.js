@@ -145,9 +145,9 @@ var linkPropsPlusDND = {
 		return null;
 	},
 	hasDropLink: function(e) {
-		return !!this.getDropLink(e);
+		return !!this.getDropLink(e, true);
 	},
-	getDropLink: function(e) {
+	getDropLink: function(e, _onlyCheck) {
 		var dt = e.dataTransfer;
 		if(!dt)
 			return null;
@@ -190,6 +190,11 @@ var linkPropsPlusDND = {
 						.split(/\s+/)
 						.map(this.lpp.cmd.extractURI, this.lpp.cmd)
 				);
+			}
+			if(_onlyCheck && links.length) {
+				if(links[0])
+					return true;
+				_onlyCheck = false; // Will use full check, if found empty string
 			}
 		}
 		links = links.filter(function(uri, i) { // Remove empty strings and duplicates

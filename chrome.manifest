@@ -28,3 +28,4 @@ style chrome://global/content/customizeToolbar.xul chrome://linkpropsplus/skin/o
 locale linkpropsplus en-US chrome/locale/en-US/
 locale linkpropsplus fr    chrome/locale/fr/
 locale linkpropsplus ru    chrome/locale/ru/
+locale linkpropsplus zh-CN chrome/locale/zh-CN/

@@ -1,0 +1,7 @@
+<!ENTITY linkPropsPlus.context "链接属性">
+<!ENTITY linkPropsPlus.contextFor "$S 的链接属性">
+<!ENTITY linkPropsPlus.contextAccesskey "r">
+<!ENTITY linkPropsPlus.tools "链接属性…">
+<!ENTITY linkPropsPlus.toolsAccesskey "r">
+<!ENTITY linkPropsPlus.toolbar "链接属性">
+<!ENTITY linkPropsPlus.toolbarTooltip "打开链接属性窗口 (您也可以拖放任意链接到这里)">

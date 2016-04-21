@@ -1,0 +1,77 @@
+<!ENTITY linkPropsPlus.ownWindowTitle "链接属性">
+<!ENTITY linkPropsPlus.labelLink "链接:">
+<!ENTITY linkPropsPlus.labelLinkAccesskey "L">
+<!ENTITY linkPropsPlus.labelReferer "引用页:">
+<!ENTITY linkPropsPlus.labelRefererAccesskey "R">
+<!ENTITY linkPropsPlus.labelOnlyHttpTip "仅能用于HTTP请求">
+<!ENTITY linkPropsPlus.buttonGetProps "获取属性">
+<!ENTITY linkPropsPlus.buttonGetPropsAccesskey "G">
+<!ENTITY linkPropsPlus.buttonOptions "选项">
+<!ENTITY linkPropsPlus.buttonOptionsAccesskey "O">
+
+<!ENTITY linkPropsPlus.labelSize "文件大小:">
+<!ENTITY linkPropsPlus.labelLastModified "最后修改:">
+<!ENTITY linkPropsPlus.labelContentType "文件类型:">
+<!ENTITY linkPropsPlus.labelStatus "响应状态:">
+<!ENTITY linkPropsPlus.labelDirectURI "实际链接:">
+<!ENTITY linkPropsPlus.labelGoToURI "打开此链接">
+<!ENTITY linkPropsPlus.labelDownloadURI "目标另存为…">
+<!ENTITY linkPropsPlus.labelHeaders "HTTP响应头:">
+
+<!ENTITY linkPropsPlus.autoCloseTip "自动关闭">
+
+<!ENTITY linkPropsPlus.copyRow "复制行">
+<!ENTITY linkPropsPlus.copyRowAccesskey "R">
+<!ENTITY linkPropsPlus.copyTip "复制工具提示">
+<!ENTITY linkPropsPlus.copyTipAccesskey "T">
+<!ENTITY linkPropsPlus.copyAll "全部复制">
+<!ENTITY linkPropsPlus.copyAllAccesskey "A">
+<!ENTITY linkPropsPlus.sendGetRequest "发送GET请求">
+<!ENTITY linkPropsPlus.sendGetRequestAccesskey "q">
+<!ENTITY linkPropsPlus.testDownloadResumability "断点续传测试">
+<!ENTITY linkPropsPlus.testDownloadResumabilityAccesskey "e">
+
+<!-- Page info -->
+<!ENTITY linkPropsPlus.linkProperties "链接属性">
+<!ENTITY linkPropsPlus.linksProperties "打开多个链接属性窗口">
+<!ENTITY linkPropsPlus.linkPropertiesAccesskey "P">
+
+<!-- Options -->
+<!ENTITY linkPropsPlus.opts.windowTitle "Link Properties Plus: 选项">
+<!ENTITY linkPropsPlus.opts.apply "应用">
+
+<!ENTITY linkPropsPlus.opts.paneGeneral "常规">
+<!ENTITY linkPropsPlus.opts.propertiesDialog "属性对话框">
+<!ENTITY linkPropsPlus.opts.ownWindow "独立窗口">
+<!ENTITY linkPropsPlus.opts.downloadDialog "打开文件的对话框">
+<!ENTITY linkPropsPlus.opts.showStatus "响应状态">
+<!ENTITY linkPropsPlus.opts.showDirectURI "实际链接">
+<!ENTITY linkPropsPlus.opts.showHeaders "HTTP响应头">
+
+<!ENTITY linkPropsPlus.opts.linkProperties "链接属性">
+<!ENTITY linkPropsPlus.opts.precision "文件大小小数位数:">
+<!ENTITY linkPropsPlus.opts.useBinaryPrefixes "使用二进制规范 (1 KiB=1024 字节)">
+<!ENTITY linkPropsPlus.opts.decodeURIs "解码URI">
+<!ENTITY linkPropsPlus.opts.testDownloadResumability "自动测试下载能否断点续传">
+<!ENTITY linkPropsPlus.opts.testDownloadResumability.download "在打开文件的对话框也进行测试">
+
+<!ENTITY linkPropsPlus.opts.paneIntegration "界面">
+<!ENTITY linkPropsPlus.opts.contextOnLinks "在链接的右键菜单中显示">
+<!ENTITY linkPropsPlus.opts.contextOnSelection "在文本的右键菜单中显示">
+<!ENTITY linkPropsPlus.opts.contextOnSelection.inInputFields "在输入框中也显示">
+<!ENTITY linkPropsPlus.opts.showInToolsMenu "在“工具”菜单中显示">
+<!ENTITY linkPropsPlus.opts.showInToolsSubMenu "在“开发者工具”的子菜单中显示">
+<!ENTITY linkPropsPlus.opts.showInAppMenu "在“应用”菜单（如“火狐橙”）中显示">
+<!ENTITY linkPropsPlus.opts.showIcon "显示图标">
+
+<!ENTITY linkPropsPlus.opts.paneMiscellaneous "杂项">
+<!ENTITY linkPropsPlus.opts.close "打开或保存链接后关闭窗口">
+<!ENTITY linkPropsPlus.opts.autoClose "自动关闭">
+<!ENTITY linkPropsPlus.opts.autoCloseAfter "指定时间后关闭窗口">
+<!ENTITY linkPropsPlus.opts.ms "ms（毫秒）">
+<!ENTITY linkPropsPlus.opts.dontCloseUnderCursor "鼠标置于界面时不关闭窗口">
+<!ENTITY linkPropsPlus.opts.onlyAfterRequest "仅在请求链接属性后关闭窗口">
+
+<!ENTITY linkPropsPlus.opts.httpHeaders "HTTP响应头">
+<!ENTITY linkPropsPlus.opts.showCaptionsInHeaders "始终在“数据”部分前显示标题行">
+<!ENTITY linkPropsPlus.opts.showTestResumabilityHeaders "显示断点续传测试的头部信息">

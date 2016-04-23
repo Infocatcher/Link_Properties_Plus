@@ -96,5 +96,17 @@
 		</Description>
 	</em:localized>
 
+	<em:localized>
+		<Description>
+			<em:locale>zh-CN</em:locale>
+			<em:name>Link Properties Plus</em:name>
+			<em:description>本扩展提供增强的链接属性，包括所链接文件的大小、最后修改时间等。</em:description>
+			<em:creator>Infocatcher</em:creator>
+			<em:developer>Torisugari (原 Extended Link Properties 扩展的作者)</em:developer>
+			<em:contributor>Jane Ocean (Seamaiden)</em:contributor>
+			<em:contributor>图标：Farm-fresh (http://fatcow.com/free-icons) 和 Gnome (https://gnome.org/)</em:contributor>
+		</Description>
+	</em:localized>
+
 </Description>
 </RDF>

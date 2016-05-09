@@ -385,13 +385,11 @@ var linkPropsPlusSvc = {
 				!(this.channel instanceof Components.interfaces.nsIHttpChannel)
 			);
 			if(forceTestResumability || this.testResumability) setTimeout(function(_this, channel) {
-				if(!requestMethod)
+				var lcr = !forceTestResumability && _this._lastCanResume || null;
+				if(lcr && lcr.uri == _this.requestURI)
+					_this.formatCanResumeDownload(lcr.canResume, lcr.isTested);
+				else
 					_this.checkChannelResumable(channel);
-				else if("_lastCanResume" in _this) {
-					var lcr = _this._lastCanResume;
-					if(lcr.uri == _this.requestURI)
-						_this.formatCanResumeDownload(lcr.canResume, lcr.isTested);
-				}
 			}, 0, this, this.channel);
 		}
 	},

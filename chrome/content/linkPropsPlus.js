@@ -1022,10 +1022,11 @@ var linkPropsPlusSvc = {
 		if(
 			"nsIPrivateBrowsingChannel" in Components.interfaces
 			&& ch instanceof Components.interfaces.nsIPrivateBrowsingChannel
-			&& "setPrivate" in ch
-			&& this.isPrivate
-		)
-			ch.setPrivate(true);
+		) {
+			var isPrivate = this.isPrivate;
+			if(ch.isChannelPrivate != isPrivate)
+				ch.setPrivate(isPrivate);
+		}
 
 		if(ch instanceof Components.interfaces.nsIHttpChannel) {
 			var ref = this.isOwnWindow ? this.realReferer : this.referer;

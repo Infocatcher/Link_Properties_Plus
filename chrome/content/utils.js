@@ -29,7 +29,7 @@ var linkPropsPlusUtils = {
 		catch(e) {
 		}
 		delete this.pbu;
-		return this.pbu = "PrivateBrowsingUtils" in window ? PrivateBrowsingUtils : null;
+		return this.pbu = window.PrivateBrowsingUtils || null;
 	},
 
 	openWindow: function(options) {
@@ -74,10 +74,7 @@ var linkPropsPlusUtils = {
 			);
 	},
 	isWindowPrivate: function(win) {
-		if(!win)
-			return false;
-		var pbu = this.pbu;
-		return pbu && pbu.isWindowPrivate(win);
+		return win && this.pbu && this.pbu.isWindowPrivate(win);
 	},
 	isTabPrivate: function(win, tab) {
 		var pbu = this.pbu;

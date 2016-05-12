@@ -79,6 +79,10 @@
 				onclick="if(event.button == 1) linkPropsPlusSvc.sendGetRequest(event);"
 				label="&linkPropsPlus.sendGetRequest;"
 				accesskey="&linkPropsPlus.sendGetRequestAccesskey;" />
+			<menuitem id="linkPropsPlus-context-testDownloadResumability2"
+				oncommand="linkPropsPlusSvc.checkChannelResumable();"
+				label="&linkPropsPlus.testDownloadResumability;"
+				accesskey="&linkPropsPlus.testDownloadResumabilityAccesskey;" />
 		</menupopup>
 	</popupset>
 

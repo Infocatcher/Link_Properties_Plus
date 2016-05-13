@@ -384,11 +384,12 @@ var linkPropsPlusSvc = {
 				"lpp_notAvailable",
 				!(this.channel instanceof Components.interfaces.nsIHttpChannel)
 			);
-			if(forceTestResumability || this.testResumability) setTimeout(function(_this, channel) {
-				var lcr = !forceTestResumability && _this._lastCanResume || null;
-				if(lcr && lcr.uri == _this.requestURI)
+			var lcr = this._lastCanResume || null;
+			var testResumability = forceTestResumability || this.testResumability;
+			if(lcr || testResumability) setTimeout(function(_this, channel) {
+				if(lcr && lcr.uri == _this.requestURI && !forceTestResumability)
 					_this.formatCanResumeDownload(lcr.canResume, lcr.isTested);
-				else
+				else if(testResumability)
 					_this.checkChannelResumable(channel);
 			}, 0, this, this.channel);
 		}

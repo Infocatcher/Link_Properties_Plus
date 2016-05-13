@@ -460,17 +460,21 @@ var linkPropsPlusSvc = {
 			copyTip.tooltipText = tip;
 		else
 			copyTip.removeAttribute("tooltiptext");
-
+		this.updateRequestItems();
+		return true;
+	},
+	updateRequestItems: function() {
 		var rowStatus = this.$("linkPropsPlus-rowStatus");
 		var testResume = this.$("linkPropsPlus-context-testDownloadResumability");
-		var hideTestResume = testResume.hidden =
+		var testResume2 = this.$("linkPropsPlus-context-testDownloadResumability2") || testResume;
+		var hideTestResume = testResume.hidden = testResume2.hidden =
 			!this.pu.get("testDownloadResumability.alwaysShowMenuItem")
 			&& (this.testResumability || rowStatus.boxObject.height <= 0);
 		if(!hideTestResume)
-			testResume.disabled = !this.uri || this.checkResumableChannel;
-		this.sendGetItem.disabled = this.activeRequest || !this.isHttp;
-
-		return true;
+			testResume.disabled = testResume2.disabled = !this.uri || this.checkResumableChannel;
+		var sendGet = this.sendGetItem;
+		var sendGet2 = this.$("linkPropsPlus-context-sendGetRequest2") || sendGet;
+		sendGet.disabled = sendGet2.disabled = this.activeRequest || !this.isHttp;
 	},
 	showContextMenu: function() {
 		this._allowOptions = true;
@@ -1979,7 +1983,8 @@ var linkPropsPlusSvc = {
 			return;
 		}
 		var testResume = this.$("linkPropsPlus-context-testDownloadResumability");
-		testResume.disabled = true;
+		var testResume2 = this.$("linkPropsPlus-context-testDownloadResumability2") || testResume;
+		testResume.disabled = testResume2.disabled = true;
 		this.checkResumableChannel = ch;
 		if(ch instanceof Components.interfaces.nsIHttpChannel)
 			ch.setRequestHeader("Range", "bytes=1-32", false);
@@ -2023,7 +2028,7 @@ var linkPropsPlusSvc = {
 				this.setCanResumeDownload(false);
 				this.parent.checkResumableChannel = null;
 				setTimeout(function() {
-					testResume.disabled = false;
+					testResume.disabled = testResume2.disabled = false;
 				}, 200);
 			},
 			_headers: { __proto__: null },

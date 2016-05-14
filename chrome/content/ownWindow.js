@@ -95,7 +95,7 @@ var linkPropsPlusWnd = {
 
 	get uriField() {
 		delete this.uriField;
-		return this.uriField = this.$("linkPropsPlus-uri");
+		return this.uriField = this.$l("uri");
 	},
 	get uri() {
 		return this.uriField.value;
@@ -105,7 +105,7 @@ var linkPropsPlusWnd = {
 	},
 	get refererField() {
 		delete this.refererField;
-		return this.refererField = this.$("linkPropsPlus-referer");
+		return this.refererField = this.$l("referer");
 	},
 	get referer() {
 		return this.refererField.value || null;
@@ -113,8 +113,8 @@ var linkPropsPlusWnd = {
 	set referer(val) {
 		this.refererField.value = val || "";
 	},
-	$: function(id) {
-		return document.getElementById(id);
+	$l: function(id) {
+		return document.getElementById("linkPropsPlus-" + id);
 	},
 
 	get baseTitle() {
@@ -168,13 +168,13 @@ var linkPropsPlusWnd = {
 	},
 	get getHeadersBtn() {
 		delete this.getHeadersBtn;
-		return this.getHeadersBtn = this.$("linkPropsPlus-getHeaders");
+		return this.getHeadersBtn = this.$l("getHeaders");
 	},
 	get cantGet() {
 		return this.getHeadersBtn.disabled;
 	},
 	set cantGet(val) {
-		this.getHeadersBtn.disabled = this.$("linkPropsPlus-context-sendGetRequest2").disabled = val;
+		this.getHeadersBtn.disabled = this.$l("context-sendGetRequest2").disabled = val;
 	},
 	getHeaders: function(e) {
 		var uri = this.uri;

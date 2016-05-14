@@ -93,6 +93,9 @@ var linkPropsPlusSvc = {
 	$: function(id) {
 		return document.getElementById(id);
 	},
+	$l: function(id) {
+		return this.$("linkPropsPlus-" + id);
+	},
 	makeURI: function(spec, originCharset, baseURI) {
 		return this.ios.newURI(spec, originCharset || null, baseURI || null);
 	},
@@ -120,7 +123,7 @@ var linkPropsPlusSvc = {
 		if(this.isPropsDialog) {
 			var showSep = false;
 			for(
-				var node = this.$("linkPropsPlus-container").parentNode.nextSibling;
+				var node = this.$l("container").parentNode.nextSibling;
 				node && node.nodeType == node.ELEMENT_NODE;
 				node = node.nextSibling
 			) {
@@ -130,13 +133,13 @@ var linkPropsPlusSvc = {
 					break;
 				}
 			}
-			this.$("linkPropsPlus-separator").setAttribute("hidden", !showSep);
+			this.$l("separator").setAttribute("hidden", !showSep);
 
 			var linkUrl = this.$("link-url");
 			if(linkUrl) {
 				var sep = linkUrl.firstChild;
 				if(sep && sep.localName == "separator")
-					this.$("linkPropsPlus-grid").style.marginLeft = sep.boxObject.width + "px";
+					this.$l("grid").style.marginLeft = sep.boxObject.width + "px";
 			}
 		}
 
@@ -210,11 +213,11 @@ var linkPropsPlusSvc = {
 		e.stopPropagation();
 	},
 	setRowHeight: function() {
-		var container = this.$("linkPropsPlus-container");
-		var tb = this.$("linkPropsPlus-directURI");
-		var btnSt1 = this.$("linkPropsPlus-goToDirectURI").style;
-		var btnSt2 = this.$("linkPropsPlus-downloadDirectURI").style;
-		var rowDirectURI = this.$("linkPropsPlus-rowDirectURI");
+		var container = this.$l("container");
+		var tb = this.$l("directURI");
+		var btnSt1 = this.$l("goToDirectURI").style;
+		var btnSt2 = this.$l("downloadDirectURI").style;
+		var rowDirectURI = this.$l("rowDirectURI");
 
 		var hidden = container.getAttribute("hidden") == "true";
 		hidden && container.removeAttribute("hidden");
@@ -224,8 +227,8 @@ var linkPropsPlusSvc = {
 		tb.removeAttribute("lpp_empty");
 		tb.parentNode.removeAttribute("lpp_empty");
 
-		var margin = this.$("linkPropsPlus-rowSize").boxObject.height
-			- this.$("linkPropsPlus-rowDirectURI").boxObject.height;
+		var margin = this.$l("rowSize").boxObject.height
+			- this.$l("rowDirectURI").boxObject.height;
 		btnSt1.marginTop = btnSt2.marginTop = margin + "px";
 		btnSt1.marginBottom = btnSt2.marginBottom = "-1px";
 
@@ -257,7 +260,7 @@ var linkPropsPlusSvc = {
 		this.showRow("Headers", "showHttpHeaders");
 	},
 	showRow: function(rowId, pName) {
-		var row = this.$("linkPropsPlus-row" + rowId);
+		var row = this.$l("row" + rowId);
 		if(
 			this.isPropsDialog && this.pu.get("properties." + pName)
 			|| this.isDownloadDialog && this.pu.get("download." + pName)
@@ -275,7 +278,7 @@ var linkPropsPlusSvc = {
 		}, 20, this);
 	},
 	_rowsVisibilityChanged: function() {
-		var rowHeaders = this.$("linkPropsPlus-rowHeaders");
+		var rowHeaders = this.$l("rowHeaders");
 		if(rowHeaders.getAttribute("hidden") != "true")
 			rowHeaders.setAttribute("minheight", rowHeaders.boxObject.height);
 		this.showRows();
@@ -378,9 +381,9 @@ var linkPropsPlusSvc = {
 		if(clear)
 			this.clearResults();
 		if(this.request(bypassCache, requestMethod)) {
-			this.$("linkPropsPlus-container").removeAttribute("hidden");
+			this.$l("container").removeAttribute("hidden");
 			this.restartAutoClose();
-			this.$("linkPropsPlus-rowHeaders").setAttribute(
+			this.$l("rowHeaders").setAttribute(
 				"lpp_notAvailable",
 				!(this.channel instanceof Components.interfaces.nsIHttpChannel)
 			);
@@ -410,7 +413,7 @@ var linkPropsPlusSvc = {
 	},
 	clearResults: function() {
 		Array.forEach(
-			this.$("linkPropsPlus-container").getElementsByTagName("textbox"),
+			this.$l("container").getElementsByTagName("textbox"),
 			function(tb) {
 				if(!tb.readOnly)
 					return;
@@ -426,10 +429,10 @@ var linkPropsPlusSvc = {
 		this._requestSection = null;
 		this.headers.clear();
 
-		var grid = this.$("linkPropsPlus-grid");
+		var grid = this.$l("grid");
 		grid.removeAttribute("lpp_canResumeDownload");
 		grid.removeAttribute("lpp_resumeDownloadTested");
-		var status = this.$("linkPropsPlus-status");
+		var status = this.$l("status");
 		status.removeAttribute("lpp_canResumeDownload");
 		status.removeAttribute("lpp_resumeDownloadTested");
 
@@ -441,12 +444,12 @@ var linkPropsPlusSvc = {
 	_contextNode: null,
 	get contextNode() {
 		return this._contextNode
-			|| this.$("linkPropsPlus-context").triggerNode
+			|| this.$l("context").triggerNode
 			|| document.popupNode;
 	},
 	get sendGetItem() {
 		delete this.sendGetItem;
-		return this.sendGetItem = this.$("linkPropsPlus-context-sendGetRequest");
+		return this.sendGetItem = this.$l("context-sendGetRequest");
 	},
 	initContextMenu: function(e) {
 		if(!this._allowOptions)
@@ -455,7 +458,7 @@ var linkPropsPlusSvc = {
 		var trg = this.contextNode;
 		var row = this.getRowFromChild(trg);
 		var tip = this.getTip(row);
-		var copyTip = this.$("linkPropsPlus-context-copyTip");
+		var copyTip = this.$l("context-copyTip");
 		copyTip.hidden = !tip;
 		if(tip)
 			copyTip.tooltipText = tip;
@@ -465,16 +468,16 @@ var linkPropsPlusSvc = {
 		return true;
 	},
 	updateRequestItems: function() {
-		var rowStatus = this.$("linkPropsPlus-rowStatus");
-		var testResume = this.$("linkPropsPlus-context-testDownloadResumability");
-		var testResume2 = this.$("linkPropsPlus-context-testDownloadResumability2") || testResume;
+		var rowStatus = this.$l("rowStatus");
+		var testResume = this.$l("context-testDownloadResumability");
+		var testResume2 = this.$l("context-testDownloadResumability2") || testResume;
 		var hideTestResume = testResume.hidden = testResume2.hidden =
 			!this.pu.get("testDownloadResumability.alwaysShowMenuItem")
 			&& (this.testResumability || rowStatus.boxObject.height <= 0);
 		if(!hideTestResume)
 			testResume.disabled = testResume2.disabled = !this.uri || this.checkResumableChannel;
 		var sendGet = this.sendGetItem;
-		var sendGet2 = this.$("linkPropsPlus-context-sendGetRequest2") || sendGet;
+		var sendGet2 = this.$l("context-sendGetRequest2") || sendGet;
 		sendGet.disabled = sendGet2.disabled = this.activeRequest || !this.isHttp;
 	},
 	showContextMenu: function() {
@@ -485,7 +488,7 @@ var linkPropsPlusSvc = {
 			fe = this.headers.frame;
 		var row = this.getRowFromChild(fe);
 		if(!row || row.parentNode.id != "linkPropsPlus-rows") {
-			var rows = this.$("linkPropsPlus-rows").childNodes;
+			var rows = this.$l("rows").childNodes;
 			for(var i = 0, l = rows.length; i < l; ++i) {
 				var r = rows[i];
 				if(r.boxObject.height > 0) {
@@ -495,7 +498,7 @@ var linkPropsPlusSvc = {
 			}
 		}
 		this._contextNode = row;
-		var cm = this.$("linkPropsPlus-context");
+		var cm = this.$l("context");
 		if("openPopup" in cm)
 			cm.openPopup(row, "after_start");
 		else
@@ -533,7 +536,7 @@ var linkPropsPlusSvc = {
 			this.openOptions();
 	},
 	isClickOnLeftCol: function(e) {
-		var col = this.$("linkPropsPlus-columnLabels");
+		var col = this.$l("columnLabels");
 		var bo = col.boxObject;
 		return e.screenX >= bo.screenX && e.screenX <= bo.screenX + bo.width
 		    && e.screenY >= bo.screenY && e.screenY <= bo.screenY + bo.height;
@@ -553,7 +556,7 @@ var linkPropsPlusSvc = {
 		}
 		else {
 			rows = Array.filter(
-				this.$("linkPropsPlus-rows").childNodes,
+				this.$l("rows").childNodes,
 				function(row) {
 					var bo = row.boxObject;
 					return bo.width > 0 && bo.height > 0;
@@ -639,7 +642,7 @@ var linkPropsPlusSvc = {
 			: this.fxVersion < 3.6;
 	},
 	goToURI: function(textboxId, invertCloseBehavior) {
-		var tb = this.$("linkPropsPlus-" + textboxId);
+		var tb = this.$l(textboxId);
 		var uri = tb
 			? tb.getAttribute("lpp_rawURI") || tb.value
 			: this.uri;
@@ -718,7 +721,7 @@ var linkPropsPlusSvc = {
 		}
 	},
 	saveLink: function(textboxId, invertCloseBehavior) {
-		var tb = this.$("linkPropsPlus-" + textboxId);
+		var tb = this.$l(textboxId);
 		var uri = tb
 			? tb.getAttribute("lpp_rawURI") || tb.value
 			: this.uri;
@@ -1149,12 +1152,12 @@ var linkPropsPlusSvc = {
 	progressInitialized: false,
 	get progress() {
 		this.progressInitialized = true;
-		var progressBlock = this.$("linkPropsPlus-autocloseProgressBlock");
+		var progressBlock = this.$l("autocloseProgressBlock");
 		var root = document.documentElement;
 		var cs = window.getComputedStyle(root, null); // May be null in closing window
 		cs && progressBlock.setAttribute("chromedir", cs.direction);
 		root.appendChild(progressBlock); // #linkPropsPlus-container can be hidden!
-		var progress = this.$("linkPropsPlus-autocloseProgress");
+		var progress = this.$l("autocloseProgress");
 		if(!("max" in progress)) { // Firefox 3.0 and older
 			progress._gain = 1;
 			progress.__defineGetter__("max", function() {
@@ -1186,7 +1189,7 @@ var linkPropsPlusSvc = {
 	_uri: null,
 	get uri() {
 		if(this.isOwnWindow)
-			return this.$("linkPropsPlus-uri").value;
+			return this.$l("uri").value;
 		if(this.isPropsDialog)
 			return this.$("link-url-text").value;
 
@@ -1598,7 +1601,7 @@ var linkPropsPlusSvc = {
 		var textSize = this.getSizeStr(rawSize);
 		if(!textSize)
 			return;
-		var target = this.$("linkPropsPlus-size");
+		var target = this.$l("size");
 		if(this._hasSize) {
 			if(textSize != target.value) {
 				this._lastSizeTip = rawSize;
@@ -1615,7 +1618,7 @@ var linkPropsPlusSvc = {
 		}
 	},
 	convertSize: function() {
-		var target = this.$("linkPropsPlus-size");
+		var target = this.$l("size");
 		if(this._lastSize !== null)
 			target.value = this.getSizeStr(this._lastSize);
 		if(this._lastSizeTip !== null)
@@ -1704,7 +1707,7 @@ var linkPropsPlusSvc = {
 			str = this._lastDate;
 		else
 			this._lastDate = str;
-		var target = this.$("linkPropsPlus-lastModified");
+		var target = this.$l("lastModified");
 		var date = new Date(str);
 		var isInvalid = !str || !isFinite(date.getTime());
 		this.setMissingStyle(target, isInvalid);
@@ -1722,7 +1725,7 @@ var linkPropsPlusSvc = {
 		}
 	},
 	formatType: function(str) {
-		var target = this.$("linkPropsPlus-contentType");
+		var target = this.$l("contentType");
 		if(this._hasType) {
 			if(str != target.value)
 				target.setAttribute("tooltiptext", str);
@@ -1735,14 +1738,14 @@ var linkPropsPlusSvc = {
 		}
 	},
 	formatStatus: function(status, statusText, canResumeDownload, isTested) {
-		var tb = this.$("linkPropsPlus-status");
+		var tb = this.$l("status");
 		tb.value = status + (statusText ? " " + statusText : "");
 		this.setMissingStyle(tb, status >= 400 && status < 600);
 		this.formatCanResumeDownload(canResumeDownload, isTested, tb);
 	},
 	formatCanResumeDownload: function(canResumeDownload, isTested, tb) {
 		if(!tb)
-			tb = this.$("linkPropsPlus-status");
+			tb = this.$l("status");
 		// We use clearResults() and may receive "tested" value before "non-tested"
 		if(!isTested && tb.getAttribute("lpp_resumeDownloadTested") == "true")
 			return;
@@ -1751,7 +1754,7 @@ var linkPropsPlusSvc = {
 			canResume: canResumeDownload,
 			isTested: isTested
 		};
-		var grid = this.$("linkPropsPlus-grid"); // May be used in userChrome.css
+		var grid = this.$l("grid"); // May be used in userChrome.css
 		grid.setAttribute("lpp_canResumeDownload", canResumeDownload);
 		grid.setAttribute("lpp_resumeDownloadTested", !!isTested);
 		tb.setAttribute("lpp_canResumeDownload", canResumeDownload);
@@ -1764,7 +1767,7 @@ var linkPropsPlusSvc = {
 			tb.tooltipText = this.ut.getLocalized(isTested ? "resumeDownloadNo" : "resumeDownloadShouldNot");
 	},
 	formatURI: function(uri) {
-		var tb = this.$("linkPropsPlus-directURI");
+		var tb = this.$l("directURI");
 		uri = this.getRealURI(uri);
 		if(arguments.length == 0)
 			uri = tb.getAttribute("lpp_rawURI") || "";
@@ -1803,7 +1806,7 @@ var linkPropsPlusSvc = {
 	},
 
 	fillInBlank: function() {
-		var target = this.$("linkPropsPlus-size");
+		var target = this.$l("size");
 		var missing = this.ut.getLocalized("missing");
 		if(!target.value) {
 		/*
@@ -1816,15 +1819,15 @@ var linkPropsPlusSvc = {
 			this.setMissingStatus(target, missing);
 		}
 
-		target = this.$("linkPropsPlus-contentType");
+		target = this.$l("contentType");
 		if(!target.value)
 			this.setMissingStatus(target, missing);
 
-		target = this.$("linkPropsPlus-lastModified");
+		target = this.$l("lastModified");
 		if(!target.value)
 			this.setMissingStatus(target, missing);
 
-		target = this.$("linkPropsPlus-status");
+		target = this.$l("status");
 		if(!target.value)
 			this.setMissingStatus(target, missing);
 	},
@@ -1983,8 +1986,8 @@ var linkPropsPlusSvc = {
 			this.formatCanResumeDownload(false, true);
 			return;
 		}
-		var testResume = this.$("linkPropsPlus-context-testDownloadResumability");
-		var testResume2 = this.$("linkPropsPlus-context-testDownloadResumability2") || testResume;
+		var testResume = this.$l("context-testDownloadResumability");
+		var testResume2 = this.$l("context-testDownloadResumability2") || testResume;
 		testResume.disabled = testResume2.disabled = true;
 		this.checkResumableChannel = ch;
 		if(ch instanceof Components.interfaces.nsIHttpChannel)

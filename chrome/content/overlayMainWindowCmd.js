@@ -121,7 +121,7 @@ var linkPropsPlusCmd = {
 		mi.hidden = hide;
 		if(!hide) {
 			var decoded = this.lpp.ut.decodeURI(uri);
-			mi.setAttribute("tooltiptext", decoded);
+			mi.tooltipText = decoded;
 			var crop = this.lpp.pu.get("context.onSelection.cropLinkInLabel");
 			var label = sel && crop > 0
 				? mi.getAttribute("lpp_label_for")

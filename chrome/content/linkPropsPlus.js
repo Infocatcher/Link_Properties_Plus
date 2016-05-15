@@ -460,10 +460,7 @@ var linkPropsPlusSvc = {
 		var tip = this.getTip(row);
 		var copyTip = this.$l("context-copyTip");
 		copyTip.hidden = !tip;
-		if(tip)
-			copyTip.tooltipText = tip;
-		else
-			copyTip.removeAttribute("tooltiptext");
+		copyTip.tooltipText = tip;
 		this.updateRequestItems();
 		return true;
 	},
@@ -1605,7 +1602,7 @@ var linkPropsPlusSvc = {
 		if(this._hasSize) {
 			if(textSize != target.value) {
 				this._lastSizeTip = rawSize;
-				target.setAttribute("tooltiptext", textSize);
+				target.tooltipText = textSize;
 			}
 		}
 		else {
@@ -1622,7 +1619,7 @@ var linkPropsPlusSvc = {
 		if(this._lastSize !== null)
 			target.value = this.getSizeStr(this._lastSize);
 		if(this._lastSizeTip !== null)
-			target.setAttribute("tooltiptext", this.getSizeStr(this._lastSizeTip));
+			target.tooltipText = this.getSizeStr(this._lastSizeTip);
 	},
 	getSizeStr: function(rawSize) {
 		var intSize = parseInt(rawSize);
@@ -1728,7 +1725,7 @@ var linkPropsPlusSvc = {
 		var target = this.$l("contentType");
 		if(this._hasType) {
 			if(str != target.value)
-				target.setAttribute("tooltiptext", str);
+				target.tooltipText = str;
 		}
 		else {
 			this._hasType = true;

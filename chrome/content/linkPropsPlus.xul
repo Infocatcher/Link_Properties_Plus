@@ -52,7 +52,7 @@
 							lpp_key="linkPropsPlus-key-downloadDirectURI" />
 					</hbox>
 				</row>
-				<row id="linkPropsPlus-rowHeaders" hidden="true" flex="1">
+				<row id="linkPropsPlus-rowHeaders" hidden="true" flex="1" persist="lpp_height">
 					<label value="&linkPropsPlus.labelHeaders;" control="linkPropsPlus-headers"
 						tooltiptext="&linkPropsPlus.labelOnlyHttpTip;" />
 					<browser id="linkPropsPlus-headers" flex="1" type="content" showcaret="true"

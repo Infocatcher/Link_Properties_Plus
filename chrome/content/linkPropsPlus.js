@@ -279,8 +279,15 @@ var linkPropsPlusSvc = {
 	},
 	_rowsVisibilityChanged: function() {
 		var rowHeaders = this.$l("rowHeaders");
-		if(rowHeaders.getAttribute("hidden") != "true")
-			rowHeaders.setAttribute("minheight", rowHeaders.boxObject.height);
+		var headersHeight;
+		if(rowHeaders.getAttribute("hidden") == "true")
+			headersHeight = rowHeaders.getAttribute("lpp_height");
+		else {
+			headersHeight = rowHeaders.boxObject.height;
+			rowHeaders.setAttribute("lpp_height", headersHeight);
+		}
+		if(headersHeight)
+			rowHeaders.setAttribute("minheight", headersHeight);
 		this.showRows();
 		if(this.isOwnWindow) {
 			// Unfortunately sizeToContent() works buggy with many flexible nodes

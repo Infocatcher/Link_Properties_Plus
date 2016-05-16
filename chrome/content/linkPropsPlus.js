@@ -255,16 +255,16 @@ var linkPropsPlusSvc = {
 		}, 0);
 	},
 	showRows: function() {
-		this.showRow("Status", "showResponseStatus");
+		this.showRow("Status",    "showResponseStatus");
 		this.showRow("DirectURI", "showDirectURI");
-		this.showRow("Headers", "showHttpHeaders");
+		this.showRow("Headers",   "showHttpHeaders");
 	},
 	showRow: function(rowId, pName) {
 		var row = this.$l("row" + rowId);
 		if(
-			this.isPropsDialog && this.pu.get("properties." + pName)
-			|| this.isDownloadDialog && this.pu.get("download." + pName)
-			|| this.isOwnWindow && this.pu.get("ownWindow." + pName)
+			this.isPropsDialog       && this.pu.get("properties." + pName)
+			|| this.isDownloadDialog && this.pu.get("download."   + pName)
+			|| this.isOwnWindow      && this.pu.get("ownWindow."  + pName)
 		)
 			row.removeAttribute("hidden");
 		else

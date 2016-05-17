@@ -127,8 +127,7 @@ var linkPropsPlusSvc = {
 				node && node.nodeType == node.ELEMENT_NODE;
 				node = node.nextSibling
 			) {
-				var bo = node.boxObject;
-				if(bo.width > 0 && bo.height > 0) {
+				if(this.isVisible(node)) {
 					showSep = true;
 					break;
 				}
@@ -211,6 +210,10 @@ var linkPropsPlusSvc = {
 	stopEvent: function(e) {
 		e.preventDefault();
 		e.stopPropagation();
+	},
+	isVisible: function(node) {
+		var bo = node.boxObject;
+		return bo.width > 0 && bo.height > 0;
 	},
 	setRowHeight: function() {
 		var container = this.$l("container");
@@ -477,7 +480,7 @@ var linkPropsPlusSvc = {
 		var testResume2 = this.$l("context-testDownloadResumability2") || testResume;
 		var hideTestResume = testResume.hidden = testResume2.hidden =
 			!this.pu.get("testDownloadResumability.alwaysShowMenuItem")
-			&& (this.testResumability || rowStatus.boxObject.height <= 0);
+			&& (this.testResumability || !this.isVisible(rowStatus));
 		if(!hideTestResume)
 			testResume.disabled = testResume2.disabled = !this.uri || this.checkResumableChannel;
 		var sendGet = this.sendGetItem;
@@ -495,7 +498,7 @@ var linkPropsPlusSvc = {
 			var rows = this.$l("rows").childNodes;
 			for(var i = 0, l = rows.length; i < l; ++i) {
 				var r = rows[i];
-				if(r.boxObject.height > 0) {
+				if(this.isVisible(r)) {
 					row = r;
 					break;
 				}
@@ -561,10 +564,7 @@ var linkPropsPlusSvc = {
 		else {
 			rows = Array.filter(
 				this.$l("rows").childNodes,
-				function(row) {
-					var bo = row.boxObject;
-					return bo.width > 0 && bo.height > 0;
-				}
+				this.isVisible
 			);
 		}
 		var lines = rows.map(function(row) {

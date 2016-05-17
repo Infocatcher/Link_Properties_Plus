@@ -555,18 +555,12 @@ var linkPropsPlusSvc = {
 		return null;
 	},
 	copy: function(node) {
-		var rows;
-		if(node) {
-			var row = this.getRowFromChild(node);
-			if(row)
-				rows = [row];
-		}
-		else {
-			rows = Array.filter(
+		var rows = node
+			? [this.getRowFromChild(node)]
+			: Array.filter(
 				this.$l("rows").childNodes,
 				this.isVisible
 			);
-		}
 		var lines = rows.map(function(row) {
 			var field = this.getField(row);
 			var data = field.value || this.getFrameText(field);

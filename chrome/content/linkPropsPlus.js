@@ -1187,7 +1187,7 @@ var linkPropsPlusSvc = {
 	_uri: null,
 	get uri() {
 		if(this.isOwnWindow)
-			return this.$l("uri").value;
+			return this.wnd.uri;
 		if(this.isPropsDialog)
 			return this.$("link-url-text").value;
 

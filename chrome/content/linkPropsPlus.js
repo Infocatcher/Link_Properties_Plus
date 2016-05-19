@@ -564,7 +564,7 @@ var linkPropsPlusSvc = {
 		var lines = rows.map(function(row) {
 			var field = this.getField(row);
 			var data = field.value || this.getFrameText(field);
-			return row.getElementsByTagName("label")[0].getAttribute("value")
+			return row.getElementsByTagName("label")[0].value
 				+ (data.indexOf("\n") == -1 ? " " : "\n") + data;
 		}, this);
 		this.copyString(lines.join("\n"));

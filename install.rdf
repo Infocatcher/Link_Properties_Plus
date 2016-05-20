@@ -7,6 +7,7 @@
 	<em:version>1.6.0.1</em:version>
 	<em:name>Link Properties Plus</em:name>
 	<em:type>2</em:type>
+	<em:multiprocessCompatible>true</em:multiprocessCompatible>
 	<em:description>Provides extended link properties: size of linked file, last modified time, etc.</em:description>
 	<em:creator>Infocatcher</em:creator>
 	<em:developer>Torisugari (author of the original Extended Link Properties extension)</em:developer>

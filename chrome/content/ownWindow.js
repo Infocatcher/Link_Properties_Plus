@@ -194,12 +194,11 @@ var linkPropsPlusWnd = {
 		if(e.button != 0)
 			return;
 		var uri = this.ut.readFromClipboard();
-		try {
-			this.ut.ios.newURI(uri, null, null); // Will throw for invalid URIs
+		if(this.svc.isValidURI(uri)) {
 			this.uri = uri;
 			this.uriChangedDelay();
 		}
-		catch(e) {
+		else {
 			this.svc.requestFailed("badURI");
 		}
 	},

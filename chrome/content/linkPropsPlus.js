@@ -1243,6 +1243,19 @@ var linkPropsPlusSvc = {
 		}
 		return uri == uri2;
 	},
+	isValidURI: function(spec) {
+		try {
+			var ios = this.ios;
+			var uri = ios.newURI(spec, null, null);
+			var testChannel = "newChannelFromURIWithLoadInfo" in ios // Firefox 37+
+				? ios.newChannelFromURIWithLoadInfo(uri, null)
+				: ios.newChannelFromURI(uri); // Deprecated in Firefox 48+
+			return true;
+		}
+		catch(e) {
+		}
+		return false;
+	},
 	get sourceDocument() {
 		var win = this.sourceWindow;
 		return win && win.document || null;

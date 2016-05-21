@@ -125,7 +125,7 @@ var linkPropsPlusWnd = {
 		var ttl = this.baseTitle;
 		var uri = this.svc.requestURI || this.uri;
 		var crop = this.pu.get("ownWindow.cropFileNameInTitle");
-		if(uri && crop > 0) {
+		if(uri && crop > 0 && this.svc.isValidURI(uri)) {
 			var uri = this.ut.decodeURI(uri).replace(/#.*$/, "");
 			var fName = /([^\/\\]+\/?|[^\/\\]+\/\?.*?)$/.test(uri)
 				? RegExp.lastMatch

@@ -82,9 +82,9 @@ var linkPropsPlus = {
 	},
 
 	prefsChanged: function(pName, pVal) {
-		if(pName.indexOf("showIn") == 0)
+		if(pName.substr(0, 6) == "showIn")
 			this.showMenuitems();
-		else if(pName.indexOf("icon.") == 0)
+		else if(pName.substr(0, 5) == "icon.")
 			this.showIcons();
 	},
 	showMenuitems: function() {

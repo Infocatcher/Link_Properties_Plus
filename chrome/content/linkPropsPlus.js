@@ -1196,8 +1196,15 @@ var linkPropsPlusSvc = {
 		return this._uri = dialog.mLauncher.source.spec;
 	},
 	get realReferer() {
-		if(this.isPropsDialog)
-			return window.arguments[0].ownerDocument.documentURI;
+		if(this.isPropsDialog) {
+			try { // e10s + unsafe CPOW usage?
+				return window.arguments[0].ownerDocument.documentURI;
+			}
+			catch(e) {
+				Components.utils.reportError(e);
+			}
+			return this._uri;
+		}
 		if(this.isOwnWindow)
 			return this.wnd.referer;
 		var err;
@@ -1264,8 +1271,15 @@ var linkPropsPlusSvc = {
 		return this.ensureWindowOpened(this._sourceWindow);
 	},
 	get _sourceWindow() {
-		if(this.isPropsDialog)
-			return window.arguments[0].ownerDocument.defaultView;
+		if(this.isPropsDialog) {
+			try { // e10s + unsafe CPOW usage?
+				return window.arguments[0].ownerDocument.defaultView;
+			}
+			catch(e) {
+				Components.utils.reportError(e);
+			}
+			return null;
+		}
 		if(this.isOwnWindow)
 			return this.wnd.sourceWindow;
 

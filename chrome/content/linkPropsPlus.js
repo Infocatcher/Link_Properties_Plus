@@ -116,9 +116,7 @@ var linkPropsPlusSvc = {
 			_this.setKeysDesc();
 		}, 0, this);
 
-		this.initStyles();
-		if(!this.isDownloadDialog)
-			this.setRowHeight();
+		this.setupRows();
 
 		if(this.isPropsDialog) {
 			var showSep = false;
@@ -214,6 +212,11 @@ var linkPropsPlusSvc = {
 	isVisible: function(node) {
 		var bo = node.boxObject;
 		return bo.width > 0 && bo.height > 0;
+	},
+	setupRows: function() {
+		this.initStyles();
+		if(!this.isDownloadDialog)
+			this.setRowHeight();
 	},
 	setRowHeight: function() {
 		var container = this.$l("container");
@@ -372,7 +375,7 @@ var linkPropsPlusSvc = {
 		)
 			this.headers.initStyles();
 		else if(pName == "showLinkButtons")
-			this.initStyles();
+			this.setupRows();
 		else if(pName.substr(0, 10) == "autoClose.")
 			this.reinitAutoClose();
 	},

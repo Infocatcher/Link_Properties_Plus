@@ -186,6 +186,11 @@ var linkPropsPlusWnd = {
 				|| e.type == "click" && e.button > 0
 			)
 		};
+		var fixedUri = this.fixProtocol(uri);
+		if(fixedUri) {
+			uri = this.uri = fixedUri;
+			this.uriChangedDelay();
+		}
 		this.svc.getHeaders(opts);
 		this.setTitle();
 		this.fixWindowHeight();
@@ -194,6 +199,10 @@ var linkPropsPlusWnd = {
 		if(e.button != 0)
 			return;
 		var uri = this.ut.readFromClipboard();
+		var fixedUri = uri && this.fixProtocol(uri);
+		if(fixedUri) {
+			uri = fixedUri;
+		}
 		if(this.svc.isValidURI(uri)) {
 			this.uri = uri;
 			this.uriChangedDelay();
@@ -201,6 +210,9 @@ var linkPropsPlusWnd = {
 		else {
 			this.svc.requestFailed("badURI");
 		}
+	},
+	fixProtocol: function(uri) {
+		return !/^[^:./]+:/.test(uri) && !this.svc.isValidURI(uri) && "http://" + uri;
 	},
 	setFakeReferer: function(e) {
 		var type = this.pu.get("useFakeReferer") || 2;

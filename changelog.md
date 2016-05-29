@@ -10,6 +10,7 @@
 `x` Fixed compatibility with Firefox 48+ (due to changes in nsIIOService, see <a href="bug 1254752">https://bugzilla.mozilla.org/show_bug.cgi?id=1254752</a>).<br>
 `x` Fixed integration with Page Info window in Firefox 44+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/22">#22</a>).<br>
 `+` Added Chinese (Simplified) locale (zh-CN), thanks to <a href="https://github.com/yfdyh000">YFdyh000</a> (<a href="https://github.com/Infocatcher/Link_Properties_Plus/pull/23">#23</a>).<br>
+`*` Improved startup performance: code around context menu and commands was moved into lazily loaded separate file (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/21">#21</a>).<br>
 
 ##### 1.6.0.1 (2015-12-21)
 `x` Workaround for empty properties window with enabled <a href="https://addons.mozilla.org/addon/adblock-plus/">Adblock Plus</a> 2.7 (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/19">#19</a>).<br>

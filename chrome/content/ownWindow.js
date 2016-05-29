@@ -189,6 +189,7 @@ var linkPropsPlusWnd = {
 		var fixedUri = this.fixProtocol(uri);
 		if(fixedUri) {
 			uri = this.uri = fixedUri;
+			this.svc.requestFailed("fixedURI");
 			this.uriChangedDelay();
 		}
 		this.svc.getHeaders(opts);
@@ -202,6 +203,7 @@ var linkPropsPlusWnd = {
 		var fixedUri = uri && this.fixProtocol(uri);
 		if(fixedUri) {
 			uri = fixedUri;
+			this.svc.requestFailed("fixedURI");
 		}
 		if(this.svc.isValidURI(uri)) {
 			this.uri = uri;

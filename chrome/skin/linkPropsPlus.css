@@ -123,6 +123,13 @@
 :root[linkPropsPlus_error="cantOpen"] #linkPropsPlus-getHeaders {
 	color: #e00;
 }
+/* Colors from [lpp_canResumeDownload="true"] */
+:root[linkPropsPlus_error="fixedURI"] #linkPropsPlus-uri {
+	color: #090;
+}
+:root[linkPropsPlus_darkBackground="true"][linkPropsPlus_error="fixedURI"] #linkPropsPlus-uri {
+	color: #0b0;
+}
 
 #linkPropsPlus-autocloseProgressBlock {
 	position: fixed !important;

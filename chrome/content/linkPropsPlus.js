@@ -1829,7 +1829,7 @@ var linkPropsPlusSvc = {
 				if(flags & ces.REDIRECT_INTERNAL)
 					types.push(this.ut.getLocalized("internal"));
 				if("REDIRECT_STS_UPGRADE" in ces && flags & ces.REDIRECT_STS_UPGRADE)
-					types.push("HSTS");
+					types.push(this.ut.getLocalized("HSTS"));
 				var type = types.join(this.ut.getLocalized("separator").slice(1, -1));
 				return this.ut.getLocalized("redirectInfo", [type, this.ut.decodeURI(uri)]);
 			}, this).join(" \n");

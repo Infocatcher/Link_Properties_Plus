@@ -65,7 +65,7 @@ if(!Object.create) { // Firefox 3.6 and older
 		if(hide == "__childNodes" in node)
 			return;
 		if(hide) {
-			node.__childNodes = Array.slice(node.childNodes);
+			node.__childNodes = Array.prototype.slice.call(node.childNodes);
 			node.textContent = "";
 		}
 		else {
@@ -82,11 +82,11 @@ if(!Object.create) { // Firefox 3.6 and older
 			updTimer = setTimeout(forceDontCopyHiddenNodes, 2000);
 			return;
 		}
-		Array.forEach(document.body.childNodes, function(node) {
+		Array.prototype.forEach.call(document.body.childNodes, function(node) {
 			forceDontCopyHiddenNode(node);
 			setTimeout(function() { // Pseudo async
 				if(node.hasChildNodes())
-					Array.forEach(node.childNodes, forceDontCopyHiddenNode);
+					Array.prototype.forEach.call(node.childNodes, forceDontCopyHiddenNode);
 			}, 0);
 		});
 	};

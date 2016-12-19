@@ -185,7 +185,7 @@ var linkPropsPlusOpts = {
 		document.getElementById(boxId).setAttribute("lpp_current", "true");
 	},
 	savePrefpanes: function() {
-		Array.forEach(
+		Array.prototype.forEach.call(
 			document.getElementsByTagName("prefpane"),
 			function(pp) {
 				pp.writePreferences(true /* aFlushToDisk */);
@@ -204,7 +204,7 @@ var linkPropsPlusOpts = {
 			this.applyBtn.disabled = !this.hasUnsaved;
 	},
 	saveState: function() {
-		Array.forEach(
+		Array.prototype.forEach.call(
 			document.getElementsByAttribute("preference", "*"),
 			function(node) {
 				node.__savedValue = this.getNodeValue(node);
@@ -214,7 +214,7 @@ var linkPropsPlusOpts = {
 		this.applyBtn.disabled = true;
 	},
 	get hasUnsaved() {
-		return Array.some(
+		return Array.prototype.some.call(
 			document.getElementsByAttribute("preference", "*"),
 			function(node) {
 				return node.__savedValue != this.getNodeValue(node);

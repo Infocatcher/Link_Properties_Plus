@@ -309,7 +309,7 @@ var linkPropsPlusSvc = {
 		}
 	},
 	setKeysDesc: function() {
-		var nodes = Array.slice(document.getElementsByAttribute("lpp_key", "*"));
+		var nodes = Array.prototype.slice.call(document.getElementsByAttribute("lpp_key", "*"));
 		//~ hack: show fake hidden popup with <menuitem key="keyId" /> to get descriptions
 		var mp = document.documentElement.appendChild(document.createElement("menupopup"));
 		mp.style.visibility = "collapse";
@@ -323,7 +323,7 @@ var linkPropsPlusSvc = {
 			mp.appendChild(mi);
 		});
 		mp._onpopupshown = function() {
-			Array.forEach(
+			Array.prototype.forEach.call(
 				this.childNodes,
 				function(mi) {
 					var keyDesk = mi.getAttribute("acceltext");
@@ -425,7 +425,7 @@ var linkPropsPlusSvc = {
 		}
 	},
 	clearResults: function() {
-		Array.forEach(
+		Array.prototype.forEach.call(
 			this.$l("container").getElementsByTagName("textbox"),
 			function(tb) {
 				if(!tb.readOnly)
@@ -560,7 +560,7 @@ var linkPropsPlusSvc = {
 	copy: function(node) {
 		var rows = node
 			? [this.getRowFromChild(node)]
-			: Array.filter(
+			: Array.prototype.filter.call(
 				this.$l("rows").childNodes,
 				this.isVisible
 			);
@@ -1356,7 +1356,7 @@ var linkPropsPlusSvc = {
 			attr("hideTestResume", !this.parent.pu.get("testDownloadResumability.showHttpHeaders"));
 			var showDiff = this.showDiff = this.parent.pu.get("showRequestHeadersDiff");
 			attr("hideDiff", !showDiff);
-			Array.forEach(
+			Array.prototype.forEach.call(
 				field.getElementsByTagName("div"),
 				function(node) {
 					var cn = node.className;
@@ -1592,7 +1592,7 @@ var linkPropsPlusSvc = {
 			var cd = document.commandDispatcher;
 			if(cd.focusedWindow != frame.contentWindow)
 				frame.contentWindow.focus();
-			Array.forEach(cm.getElementsByTagName("menuitem"), function(mi) {
+			Array.prototype.forEach.call(cm.getElementsByTagName("menuitem"), function(mi) {
 				var cmd = mi.getAttribute("cmd");
 				if(cmd) {
 					var controller = cd.getControllerForCommand(cmd);

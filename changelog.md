@@ -11,6 +11,8 @@
 `x` Fixed integration with Page Info window in Firefox 44+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/22">#22</a>).<br>
 `+` Added Chinese (Simplified) locale (zh-CN), thanks to <a href="https://github.com/yfdyh000">YFdyh000</a> (<a href="https://github.com/Infocatcher/Link_Properties_Plus/pull/23">#23</a>).<br>
 `*` Improved startup performance: code around context menu and commands was moved into lazily loaded separate file (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/21">#21</a>).<br>
+`x` Fixed compatibility with future Firefox versions: don't use Array generics like `Array.forEach()` (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1222547">bug 1222547</a>).<br>
+`+` Show <a href="https://en.wikipedia.org/wiki/HSTS">HSTS</a> redirect flag in tooltip for “Direct Link” field.<br>
 
 ##### 1.6.0.1 (2015-12-21)
 `x` Workaround for empty properties window with enabled <a href="https://addons.mozilla.org/addon/adblock-plus/">Adblock Plus</a> 2.7 (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/19">#19</a>).<br>

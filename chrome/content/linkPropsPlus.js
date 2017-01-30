@@ -1820,7 +1820,7 @@ var linkPropsPlusSvc = {
 				}
 				var types = [];
 				var flags = redirect.flags;
-				// See http://mxr.mozilla.org/mozilla-central/source/netwerk/base/nsIChannelEventSink.idl
+				// See https://dxr.mozilla.org/mozilla-central/source/netwerk/base/nsIChannelEventSink.idl
 				var ces = Components.interfaces.nsIChannelEventSink;
 				if(flags & ces.REDIRECT_TEMPORARY)
 					types.push(this.ut.getLocalized("temporary"));
@@ -1828,8 +1828,15 @@ var linkPropsPlusSvc = {
 					types.push(this.ut.getLocalized("permanent"));
 				if(flags & ces.REDIRECT_INTERNAL)
 					types.push(this.ut.getLocalized("internal"));
-				if("REDIRECT_STS_UPGRADE" in ces && flags & ces.REDIRECT_STS_UPGRADE)
+				if(flags & (ces.REDIRECT_STS_UPGRADE || 0))
 					types.push(this.ut.getLocalized("HSTS"));
+				var unknownFlags = flags & ~(
+					ces.REDIRECT_TEMPORARY
+					| ces.REDIRECT_PERMANENT
+					| ces.REDIRECT_INTERNAL
+					| (ces.REDIRECT_STS_UPGRADE || 0)
+				);
+				unknownFlags && this.ut.warning("Unknown nsIChannelEventSink flag(s): 0b" + unknownFlags.toString(2));
 				var type = types.join(this.ut.getLocalized("separator").slice(1, -1));
 				return this.ut.getLocalized("redirectInfo", [type, this.ut.decodeURI(uri)]);
 			}, this).join(" \n");

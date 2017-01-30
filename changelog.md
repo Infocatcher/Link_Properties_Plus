@@ -6,7 +6,7 @@
 `*` - improved<br>
 
 ##### master/HEAD
-`x` Corrected compatibility with Electrolysis (multi-process mode) in Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>
+`x` Fixed compatibility with multi-process mode (Electrolysis aka e10s) in Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>
 `x` Fixed compatibility with Firefox 48+ (due to changes in nsIIOService, see <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1254752">bug 1254752</a>).<br>
 `x` Fixed integration with Page Info window in Firefox 44+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/22">#22</a>).<br>
 `+` Added Chinese (Simplified) locale (zh-CN), thanks to <a href="https://github.com/yfdyh000">YFdyh000</a> (<a href="https://github.com/Infocatcher/Link_Properties_Plus/pull/23">#23</a>).<br>

@@ -75,8 +75,13 @@ var linkPropsPlusWnd = {
 			this.fixWindowHeight();
 		}
 		else if(type == "PrivateTab:PrivateChanged") {
-			if((e.originalTarget || e.target) == this.parentTab)
+			var tab = e.originalTarget || e.target;
+			if(tab == this.parentTab)
 				this.setTitle();
+			else if(e.explicitOriginalTarget == this.parentTab) { // Private Tab 0.2.1.3+
+				this.parentTab = tab;
+				this.setTitle();
+			}
 		}
 		else if(type == "TabClose") {
 			if((e.originalTarget || e.target) == this.parentTab)

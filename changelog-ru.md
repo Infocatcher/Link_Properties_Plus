@@ -13,6 +13,7 @@
 `*` Улучшена производительность при запуске: код для контекстного меню и команд перемещен в отдельный лениво загружаемый файл (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/21">#21</a>).<br>
 `x` Исправлена совместимость с будущими версиями Firefox: прекращено использование Array generics вида `Array.forEach()` (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1222547">bug 1222547</a>).<br>
 `+` Добавлено отображение флага перенаправления <a href="https://ru.wikipedia.org/wiki/HSTS">HSTS</a> во всплывающей подсказке для поля «Прямая ссылка».<br>
+`*` Обновлена совместимость с расширением <a href="https://addons.mozilla.org/addon/private-tab/">Private Tab</a>: добавлено отслеживание переключения приватности через дублирование вкладки в Firefox 51+ (см. <a href="https://github.com/Infocatcher/Private_Tab/issues/244">Private Tab #244</a>).<br>
 
 ##### 1.6.0.1 (2015-12-21)
 `x` Исправлено пустое окно свойств при включенном <a href="https://addons.mozilla.org/addon/adblock-plus/">Adblock Plus</a> 2.7 (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/19">#19</a>).<br>

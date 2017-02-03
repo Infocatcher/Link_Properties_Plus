@@ -63,6 +63,14 @@ var linkPropsPlusWnd = {
 		win.removeEventListener("TabClose", this, false);
 		win.removeEventListener("unload", this, false);
 	},
+	destroyTabWatcherTimer: 0,
+	destroyTabWatcherDelayed: function(useDelay) {
+		if(!useDelay)
+			return this.destroyTabWatcher();
+		return this.destroyTabWatcherTimer = setTimeout(function(_this) {
+			_this.destroyTabWatcher();
+		}, 3e3, this);
+	},
 	handleEvent: function(e) {
 		var type = e.type;
 		if(type == "resize") {
@@ -80,12 +88,14 @@ var linkPropsPlusWnd = {
 				this.setTitle();
 			else if(e.explicitOriginalTarget == this.parentTab) { // Private Tab 0.2.1.3+
 				this.parentTab = tab;
+				clearTimeout(this.destroyTabWatcherTimer);
 				this.setTitle();
 			}
 		}
 		else if(type == "TabClose") {
-			if((e.originalTarget || e.target) == this.parentTab)
-				this.destroyTabWatcher();
+			var tab = e.originalTarget || e.target;
+			if(tab == this.parentTab) // Will wait for Private Tab + toggling using duplication
+				this.destroyTabWatcherDelayed(tab.collapsed);
 		}
 		else if(type == "unload") {
 			this.destroyTabWatcher();

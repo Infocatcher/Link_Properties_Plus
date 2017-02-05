@@ -36,8 +36,8 @@ var linkPropsPlusPageInfo = {
 	showLinksProperties: function() {
 		// See chrome://browser/content/pageinfo/pageInfo.js
 		// See https://github.com/Infocatcher/Link_Properties_Plus/issues/22
-		var COL_IMAGE_ADDRESS = window.COL_IMAGE_ADDRESS || 0;
-		var COL_IMAGE_NODE    = window.COL_IMAGE_NODE    || 5;
+		var COL_IMAGE_ADDRESS = new window.Function("return COL_IMAGE_ADDRESS;")();
+		var COL_IMAGE_NODE    = new window.Function("return COL_IMAGE_NODE;")();
 		var tree = document.getElementById("imagetree");
 		var numRanges = tree.view.selection.getRangeCount();
 		var links = { __proto__: null };

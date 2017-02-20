@@ -1258,6 +1258,7 @@ var linkPropsPlusSvc = {
 			var ios = this.ios;
 			var uri = ios.newURI(spec, null, null);
 			var testChannel = "newChannelFromURIWithLoadInfo" in ios // Firefox 37+
+				&& this.fxVersion >= 44 // Throws in Firefox 37-43 with null nsILoadInfo
 				? ios.newChannelFromURIWithLoadInfo(uri, null)
 				: ios.newChannelFromURI(uri); // Deprecated in Firefox 48+
 			return true;

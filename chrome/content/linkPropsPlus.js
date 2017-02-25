@@ -1264,6 +1264,8 @@ var linkPropsPlusSvc = {
 			return true;
 		}
 		catch(e) {
+			if(("" + e).indexOf("NS_ERROR_MALFORMED_URI") == -1)
+				Components.utils.reportError(e);
 		}
 		return false;
 	},

@@ -922,9 +922,6 @@ var linkPropsPlusSvc = {
 		try {
 			_uri = this.checkFakeURINeeded(_uri);
 
-			//var uri = Components.classes["@mozilla.org/network/standard-url;1"]
-			//	.createInstance(Components.interfaces.nsIURI);
-			//uri.spec = _uri;
 			var uri = this.makeURI(_uri); //~ todo: specify charset ?
 			var schm = uri.scheme && uri.scheme.toLowerCase();
 
@@ -987,8 +984,8 @@ var linkPropsPlusSvc = {
 	_fakeURIs: { __proto__: null },
 	checkFakeURINeeded: function(uri) {
 		// Ugly workaround...
-		// Request will be sended after downloading file from "_uri" to %temp%.
-		// Following works for me in some tests, but it is very bad hack.
+		// In opening file dialog request may be sent after downloading to %temp%.
+		// So, used dirty hack with URI modification.
 		if(
 			this.isDownloadDialog
 			&& (this.fxVersion < 4 || this.pu.get("download.forceFakeURIHack")) //~ todo: test!
@@ -1849,16 +1846,8 @@ var linkPropsPlusSvc = {
 	fillInBlank: function() {
 		var target = this.$l("size");
 		var missing = this.ut.getLocalized("missing");
-		if(!target.value) {
-		/*
-			try {
-				this.channel.QueryInterface(Components.interfaces.nsICachingChannel);
-				if(this.channel.isFromCache())
-					alert(this.channel);
-			} catch(e) { alert(e) }
-		*/
+		if(!target.value)
 			this.setMissingStatus(target, missing);
-		}
 
 		target = this.$l("contentType");
 		if(!target.value)

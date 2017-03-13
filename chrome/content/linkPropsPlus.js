@@ -34,7 +34,7 @@ var linkPropsPlusSvc = {
 	},
 	get isDownloadDialog() {
 		delete this.isDownloadDialog;
-		return this.isDownloadDialog = "HelperApps" in window;
+		return this.isDownloadDialog = window.location == "chrome://mozapps/content/downloads/unknownContentType.xul";
 	},
 	get isPropsDialog() {
 		delete this.isPropsDialog;

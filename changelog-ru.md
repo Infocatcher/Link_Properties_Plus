@@ -6,6 +6,7 @@
 `*` - улучшено<br>
 
 ##### master/HEAD
+##### 1.6.1 (2017-03-13)
 `x` Исправлена совместимость с мультипроцессным режимом (Electrolysis aka e10s) в Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>
 `x` Исправлена совместимость с Firefox 48+ (из-за изменений в nsIIOService, см. <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1254752">bug 1254752</a>).<br>
 `x` Исправлена интеграция с окном информации со странице в Firefox 44+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/22">#22</a>).<br>

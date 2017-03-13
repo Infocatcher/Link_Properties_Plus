@@ -15,6 +15,7 @@
 `+` Добавлено отображение флага перенаправления <a href="https://ru.wikipedia.org/wiki/HSTS">HSTS</a> во всплывающей подсказке для поля «Прямая ссылка».<br>
 `*` Обновлена совместимость с расширением <a href="https://addons.mozilla.org/addon/private-tab/">Private Tab</a>: добавлено отслеживание переключения приватности через дублирование вкладки в Firefox 51+ (см. <a href="https://github.com/Infocatcher/Private_Tab/issues/244">Private Tab #244</a>).<br>
 `x` Исправлена валидация ссылок в Firefox 37-43 (возникало исключение в `nsIIOService.newChannelFromURIWithLoadInfo(…, null)`).<br>
+`x` Исправлено определение диалога открытия файла в Firefox 52+.<br>
 
 ##### 1.6.0.1 (2015-12-21)
 `x` Исправлено пустое окно свойств при включенном <a href="https://addons.mozilla.org/addon/adblock-plus/">Adblock Plus</a> 2.7 (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/19">#19</a>).<br>

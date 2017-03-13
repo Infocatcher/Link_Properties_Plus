@@ -15,6 +15,7 @@
 `+` Show <a href="https://en.wikipedia.org/wiki/HSTS">HSTS</a> redirect flag in tooltip for “Direct Link” field.<br>
 `*` Updated compatibility with <a href="https://addons.mozilla.org/addon/private-tab/">Private Tab</a> extension: track toggling of private state using tab duplication in Firefox 51+ (see <a href="https://github.com/Infocatcher/Private_Tab/issues/244">Private Tab #244</a>).<br>
 `x` Fixed URIs validation in Firefox 37-43 (caused by `nsIIOService.newChannelFromURIWithLoadInfo(…, null)` failure).<br>
+`x` Fixed detection of opening file dialog in Firefox 52+.<br>
 
 ##### 1.6.0.1 (2015-12-21)
 `x` Workaround for empty properties window with enabled <a href="https://addons.mozilla.org/addon/adblock-plus/">Adblock Plus</a> 2.7 (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/19">#19</a>).<br>

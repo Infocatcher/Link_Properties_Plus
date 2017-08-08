@@ -68,6 +68,9 @@ var linkPropsPlusSvc = {
 			.QueryInterface(Components.interfaces.nsIXULRuntime);
 	},
 	get fxVersion() {
+		delete this.fxVersion;
+		if(this.appInfo.name == "Pale Moon")
+			return this.fxVersion = parseFloat(this.appInfo.version);
 		var pv = this.appInfo.platformVersion;
 		// https://developer.mozilla.org/en-US/docs/Mozilla/Gecko/Versions
 		var v = parseFloat(pv);
@@ -87,7 +90,6 @@ var linkPropsPlusSvc = {
 			else //if(vc.compare(pv, "1.8a1pre") >= 0)
 				v = 1.5;
 		}
-		delete this.fxVersion;
 		return this.fxVersion = v;
 	},
 	$: function(id) {

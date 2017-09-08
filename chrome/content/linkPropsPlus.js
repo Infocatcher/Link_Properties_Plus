@@ -1002,11 +1002,20 @@ var linkPropsPlusSvc = {
 			return fakeURI.replace(/\?\d+$/, "");
 		return fakeURI;
 	},
+	get loadInfo() { // Required in Firefox 56+
+		var req = new XMLHttpRequest();
+		req.open("head", "chrome://linkpropsplus/content/headers.html", true);
+		delete this.loadInfo;
+		return this.loadInfo = req.channel.loadInfo;
+	},
 	newChannelFromURI: function(uri, bypassCache) {
 		var ch = uri.scheme == "about" && "nsIAboutModule" in Components.interfaces
-			? Components.classes["@mozilla.org/network/protocol/about;1?what=" + uri.path.replace(/[?&#].*$/, "")]
+			? Components.classes[
+				"@mozilla.org/network/protocol/about;1?what="
+				+ (uri.pathQueryRef || uri.path).replace(/[?&#].*$/, "")
+			]
 				.getService(Components.interfaces.nsIAboutModule)
-				.newChannel(uri, null /* nsILoadInfo since Firefox 36 */)
+				.newChannel(uri, this.loadInfo /* nsILoadInfo since Firefox 36 */)
 			: "newChannelFromURI2" in this.ios
 				? this.ios.newChannelFromURI2( // Firefox 36+
 					uri,
@@ -1258,7 +1267,7 @@ var linkPropsPlusSvc = {
 			var uri = ios.newURI(spec, null, null);
 			var testChannel = "newChannelFromURIWithLoadInfo" in ios // Firefox 37+
 				&& this.fxVersion >= 44 // Throws in Firefox 37-43 with null nsILoadInfo
-				? ios.newChannelFromURIWithLoadInfo(uri, null)
+				? ios.newChannelFromURIWithLoadInfo(uri, this.loadInfo)
 				: ios.newChannelFromURI(uri); // Deprecated in Firefox 48+
 			return true;
 		}

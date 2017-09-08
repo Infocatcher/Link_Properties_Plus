@@ -1441,12 +1441,13 @@ var linkPropsPlusSvc = {
 			return section;
 		},
 		getEntry: function(section, name) {
+			name = name.toLowerCase();
 			var entries = section.getElementsByTagName("strong");
 			for(var i = 0, l = entries.length; i < l; ++i) {
 				var entry = entries[i];
 				if(
 					/(?:^|\s)name(?:\s|$)/.test(entry.className)
-					&& entry.textContent == name
+					&& entry.textContent.toLowerCase() == name
 				)
 					return entry.parentNode;
 			}
@@ -1619,11 +1620,12 @@ var linkPropsPlusSvc = {
 	// nsIHttpHeaderVisitor
 	visitHeader: function(header, value) {
 		this.headers.entry(header, value);
+		header = header.toLowerCase(); // https://tools.ietf.org/html/rfc7230#section-3.2
 		this._headers[header] = value;
 		switch(header) {
-			case "Content-Length": this.formatSize(value); break;
-			case "Last-Modified":  this.formatDate(value); break;
-			case "Content-Type":   this.formatType(value);
+			case "content-length": this.formatSize(value); break;
+			case "last-modified":  this.formatDate(value); break;
+			case "content-type":   this.formatType(value);
 		}
 	},
 
@@ -1913,15 +1915,15 @@ var linkPropsPlusSvc = {
 				request.visitResponseHeaders(this);
 				this.headers.endSection();
 				if(
-					"X-Archive-Orig-Last-Modified" in headers // Used on http://archive.org/
-					&& !("Last-Modified" in headers) // We prefer Last-Modified, if available
+					"x-archive-orig-last-modified" in headers // Used on http://archive.org/
+					&& !("last-modified" in headers) // We prefer last-modified, if available
 				)
-					this.formatDate(headers["X-Archive-Orig-Last-Modified"]);
+					this.formatDate(headers["x-archive-orig-last-modified"]);
 				var canResumeDownload = request instanceof Components.interfaces.nsIResumableChannel
-					&& "Accept-Ranges" in headers
-					&& headers["Accept-Ranges"] == "bytes"
-					&& "Content-Length" in headers
-					&& headers["Content-Length"] > 0;
+					&& "accept-ranges" in headers
+					&& headers["accept-ranges"] == "bytes"
+					&& "content-length" in headers
+					&& headers["content-length"] > 0;
 				this.formatStatus(request.responseStatus, request.responseStatusText, canResumeDownload);
 			}
 			else {
@@ -1979,8 +1981,9 @@ var linkPropsPlusSvc = {
 				headers: this.headers,
 				// nsIHttpHeaderVisitor
 				visitHeader: function(header, value) {
-					newHeaders[header] = value;
 					this.headers.changeEntry(section, header, value);
+					header = header.toLowerCase(); // https://tools.ietf.org/html/rfc7230#section-3.2
+					newHeaders[header] = value;
 				}
 			});
 			for(var header in oldHeaders)
@@ -2071,6 +2074,7 @@ var linkPropsPlusSvc = {
 			// nsIHttpHeaderVisitor
 			visitHeader: function(header, value) {
 				this.parent.headers.entry(header, value);
+				header = header.toLowerCase(); // https://tools.ietf.org/html/rfc7230#section-3.2
 				this._headers[header] = value;
 			}
 		};

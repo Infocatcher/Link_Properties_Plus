@@ -1012,7 +1012,7 @@ var linkPropsPlusSvc = {
 		var ch = uri.scheme == "about" && "nsIAboutModule" in Components.interfaces
 			? Components.classes[
 				"@mozilla.org/network/protocol/about;1?what="
-				+ (uri.pathQueryRef || uri.path).replace(/[?&#].*$/, "")
+				+ (uri.path || uri.pathQueryRef || "").replace(/[?&#].*$/, "")
 			]
 				.getService(Components.interfaces.nsIAboutModule)
 				.newChannel(uri, this.loadInfo /* nsILoadInfo since Firefox 36 */)

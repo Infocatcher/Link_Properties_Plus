@@ -8,6 +8,7 @@
 ##### master/HEAD
 `*` Improved Pale Moon support (correctly detect version to not apply legacy fixes).<br>
 `+` Added support for case-insensitive headers (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/26">#26</a>).<br>
+`x` Fixed compatibility with Firefox 56+ (support for about:… URIs, URIs validation), <a href="https://forum.mozilla-russia.org/viewtopic.php?pid=742652#p742652">thanks to Dumby</a>.<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Fixed compatibility with multi-process mode (Electrolysis aka e10s) in Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

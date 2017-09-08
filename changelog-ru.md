@@ -8,6 +8,7 @@
 ##### master/HEAD
 `*` Улучшена поддержка Pale Moon (исправлено определение версии, чтобы не применялись устаревшие исправления).<br>
 `+` Добавлена поддержка регистронезависимых заголовков (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/26">#26</a>).<br>
+`x` Исправлена совместимость с Firefox 56+ (поддержка about:… ссылок, валидация ссылок), <a href="https://forum.mozilla-russia.org/viewtopic.php?pid=742652#p742652">thanks to Dumby</a>.<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Исправлена совместимость с мультипроцессным режимом (Electrolysis aka e10s) в Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

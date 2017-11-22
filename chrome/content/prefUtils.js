@@ -10,6 +10,22 @@ var linkPropsPlusPrefUtils = {
 	},
 
 	init: function() {
+		try {
+			var defaultBranch = this.prefSvc.getDefaultBranch("");
+			defaultBranch.getIntPref(this.prefNS + "prefsVersion");
+		}
+		catch(e) { // NS_ERROR_UNEXPECTED
+			// Firefox 58+: Remove support for extensions having their own prefs file
+			// https://bugzilla.mozilla.org/show_bug.cgi?id=1413413
+			var sl = Components.classes["@mozilla.org/moz/jssubscript-loader;1"]
+				.getService(Components.interfaces.mozIJSSubScriptLoader);
+			var ps = this;
+			sl.loadSubScript("chrome://linkpropsplus-icon/skin/defaults/preferences/prefs.js", {
+				pref: function(n, v) {
+					ps.setPref(n, v, defaultBranch);
+				}
+			}, "UTF-8");
+		}
 		window.addEventListener("unload", this, false);
 		var v = this.get("prefsVersion") || 0;
 		if(v < this.prefVer)

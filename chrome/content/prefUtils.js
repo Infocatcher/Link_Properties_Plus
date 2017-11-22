@@ -59,7 +59,10 @@ var linkPropsPlusPrefUtils = {
 		switch(ps.getPrefType(pName)) {
 			case ps.PREF_BOOL:   return ps.getBoolPref(pName);
 			case ps.PREF_INT:    return ps.getIntPref(pName);
-			case ps.PREF_STRING: return ps.getComplexValue(pName, Components.interfaces.nsISupportsString).data;
+			case ps.PREF_STRING:
+				if("getStringPref" in ps) // Firefox 58+
+					return ps.getStringPref(pName);
+				return ps.getComplexValue(pName, Components.interfaces.nsISupportsString).data;
 		}
 		return defaultVal;
 	},
@@ -69,14 +72,16 @@ var linkPropsPlusPrefUtils = {
 		if(pType == ps.PREF_INVALID)
 			pType = this.getValueType(val);
 		switch(pType) {
-			case ps.PREF_BOOL:   ps.setBoolPref(pName, val); break;
-			case ps.PREF_INT:    ps.setIntPref(pName, val);  break;
+			case ps.PREF_BOOL: return ps.setBoolPref(pName, val);
+			case ps.PREF_INT:  return ps.setIntPref(pName, val);
 			case ps.PREF_STRING:
+				if("setStringPref" in ps) // Firefox 58+
+					return ps.setStringPref(pName, val);
 				var ss = Components.interfaces.nsISupportsString;
 				var str = Components.classes["@mozilla.org/supports-string;1"]
 					.createInstance(ss);
 				str.data = val;
-				ps.setComplexValue(pName, ss, str);
+				return ps.setComplexValue(pName, ss, str);
 		}
 	},
 	getValueType: function(val) {

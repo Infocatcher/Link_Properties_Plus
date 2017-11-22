@@ -22,7 +22,12 @@ var linkPropsPlusPrefUtils = {
 			var ps = this;
 			sl.loadSubScript("chrome://linkpropsplus-icon/skin/defaults/preferences/prefs.js", {
 				pref: function(n, v) {
-					ps.setPref(n, v, defaultBranch);
+					try {
+						ps.setPref(n, v, defaultBranch);
+					}
+					catch(e) {
+						Components.utils.reportError(e);
+					}
 				}
 			}, "UTF-8");
 		}

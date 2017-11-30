@@ -41,7 +41,7 @@ var linkPropsPlusOpts = {
 		if(browserWin && "linkPropsPlus" in browserWin) {
 			if(!browserWin.linkPropsPlus.appMi)
 				this.hide(document.getElementById("appMenuOptions"), true);
-			if(!browserWin.linkPropsPlus.toolsMiSub || app == "Thunderbird")
+			if(!browserWin.linkPropsPlus.toolsMiSub)
 				this.hide(this.e("showInToolsMenuSub"), true);
 		}
 

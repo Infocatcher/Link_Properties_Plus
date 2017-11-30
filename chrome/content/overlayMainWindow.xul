@@ -120,4 +120,12 @@
 			insertbefore="appmenu_javascriptConsole"
 			command="linkPropsPlus-cmd-openWindow" key="linkPropsPlus-key-openWindow" />
 	</menupopup>
+	<!-- Thunderbird 52 -->
+	<menupopup id="devtoolsPopup">
+		<menuitem id="linkPropsPlus-toolsMenuitemSub" class="menuitem-iconic"
+			insertafter="openScratchpad,javascriptConsole"
+			command="linkPropsPlus-cmd-openWindow"
+			onclick="if(event.button == 1) linkPropsPlus.cmd.openWindow(event);"
+			key="linkPropsPlus-key-openWindow" />
+	</menupopup>
 </overlay>

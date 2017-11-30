@@ -70,7 +70,7 @@
 	<!-- SeaMonkey and Thunderbird -->
 	<menupopup id="taskPopup">
 		<menuitem id="linkPropsPlus-toolsMenuitem" class="menuitem-iconic"
-			insertbefore="tasksDataman,sanitizeSeparator,javascriptConsole,sep_switchprofile,sync-setup"
+			insertbefore="tasksDataman,sanitizeSeparator,devtoolsMenu,javascriptConsole,sep_switchprofile,sync-setup"
 			command="linkPropsPlus-cmd-openWindow"
 			onclick="if(event.button == 1) linkPropsPlus.cmd.openWindow(event);"
 			key="linkPropsPlus-key-openWindow" />

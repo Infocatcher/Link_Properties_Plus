@@ -1750,7 +1750,7 @@ var linkPropsPlusSvc = {
 			this._lastDate = str;
 		var target = this.$l("lastModified");
 		var date = new Date(str);
-		var isInvalid = !str || !isFinite(date.getTime());
+		var isInvalid = !str || isNaN(date);
 		this.setMissingStyle(target, isInvalid);
 		if(str && isInvalid)
 			target.tooltipText = str;

@@ -123,7 +123,16 @@ var linkPropsPlusWnd = {
 		return this.refererField = this.$l("referer");
 	},
 	get referer() {
-		return this.refererField.value || null;
+		//return this.refererField.value || null;
+		var ref = this.refererField.value || null;
+		if(ref) try { // Force encode into %XX format (Unicode characters not supported as referer)
+			//return "" + new URL(ref);
+			return this.svc.makeURI(ref).spec;
+		}
+		catch(e) {
+			Components.utils.reportError(e);
+		}
+		return ref;
 	},
 	set referer(val) {
 		this.refererField.value = val || "";

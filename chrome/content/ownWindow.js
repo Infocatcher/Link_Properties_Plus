@@ -116,7 +116,7 @@ var linkPropsPlusWnd = {
 		return this.uriField.value;
 	},
 	set uri(val) {
-		this.uriField.value = val || "";
+		this.uriField.value = this.ut.decodeURI(val || "");
 	},
 	get refererField() {
 		delete this.refererField;
@@ -135,7 +135,7 @@ var linkPropsPlusWnd = {
 		return ref;
 	},
 	set referer(val) {
-		this.refererField.value = val || "";
+		this.refererField.value = this.ut.decodeURI(val || "");
 	},
 	$l: function(id) {
 		return document.getElementById("linkPropsPlus-" + id);

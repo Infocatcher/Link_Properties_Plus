@@ -9,6 +9,13 @@
 `*` Улучшена поддержка Pale Moon (исправлено определение версии, чтобы не применялись устаревшие исправления).<br>
 `+` Добавлена поддержка регистронезависимых заголовков (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/26">#26</a>).<br>
 `x` Исправлена совместимость с Firefox 56+ (поддержка about:… ссылок, валидация ссылок), <a href="https://forum.mozilla-russia.org/viewtopic.php?pid=742652#p742652">thanks to Dumby</a>.<br>
+`x` Исправлены настройки в Firefox 58+ (<em>extensions.legacy.enabled</em> = true) (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1414096">bug 1414096</a>, <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1413413">bug 1413413</a>).<br>
+`*` Подправлено положение пункта меню в Thunderbird 52.<br>
+`+` Добавлена поддержка меню «Инструменты разработчика» в Thunderbird 52.<br>
+`x` Подправлены префиксы: 1024*1024 теперь конвертируется в 1,00 Мбайт.<br>
+`x` Ссылки, отправляемые в качестве referer'а теперь принудительно кодируются (символы Юникода не поддерживаются!).<br>
+`*` В текстовых полях теперь выводятся декодированные ссылки (<em>extensions.linkPropertiesPlus.decodeURIs</em> == true).<br>
+`x` Исправлены рамки поля для заголовков в Firefox 60+ (добавлена замена для -moz-border-*-colors).<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Исправлена совместимость с мультипроцессным режимом (Electrolysis aka e10s) в Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

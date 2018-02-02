@@ -9,6 +9,13 @@
 `*` Improved Pale Moon support (correctly detect version to not apply legacy fixes).<br>
 `+` Added support for case-insensitive headers (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/26">#26</a>).<br>
 `x` Fixed compatibility with Firefox 56+ (support for about:… URIs, URIs validation), <a href="https://forum.mozilla-russia.org/viewtopic.php?pid=742652#p742652">thanks to Dumby</a>.<br>
+`x` Fixed preferences in Firefox 58+ (<em>extensions.legacy.enabled</em> = true) (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1414096">bug 1414096</a>, <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1413413">bug 1413413</a>).<br>
+`*` Corrected menu item position in Thunderbird 52.<br>
+`+` Added support for “Developer Tools” menu in Thunderbird 52.<br>
+`x` Corrected prefixes: convert 1024*1024 into 1.00 MiB.<br>
+`x` Force use encoded URI as referer (Unicode characters not supported!).<br>
+`*` Show decoded URIs in text fields (<em>extensions.linkPropertiesPlus.decodeURIs</em> == true).<br>
+`x` Fixed headers border in Firefox 60+ (added replacement for -moz-border-*-colors).<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Fixed compatibility with multi-process mode (Electrolysis aka e10s) in Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

@@ -160,6 +160,13 @@
 		https://developer.mozilla.org/En/Preferences_System/Prefwindow#Issues_when_using_prefpanes_in_prefwindow
 		https://bugzilla.mozilla.org/show_bug.cgi?id=296418
 	-->
+	<script type="application/javascript">
+		if(!("acceptDialog" in document.documentElement)) {
+			// Firefox 59+, https://bugzilla.mozilla.org/show_bug.cgi?id=1379338
+			window.openDialog("about:config?filter=extensions.linkPropertiesPlus.", "_blank", "all,dialog=0,centerscreen");
+			window.close();
+		}
+	</script>
 	<script type="application/javascript" src="chrome://linkpropsplus/content/prefUtils.js" />
 	<script type="application/javascript" src="chrome://linkpropsplus/content/options.js" />
 	<keyset>

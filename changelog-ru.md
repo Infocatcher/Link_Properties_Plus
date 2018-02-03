@@ -16,6 +16,7 @@
 `x` Ссылки, отправляемые в качестве referer'а теперь принудительно кодируются (символы Юникода не поддерживаются!).<br>
 `*` В текстовых полях теперь выводятся декодированные ссылки (<em>extensions.linkPropertiesPlus.decodeURIs</em> == true).<br>
 `x` Исправлены рамки поля для заголовков в Firefox 60+ (добавлена замена для -moz-border-*-colors).<br>
+`x` В Firefox 59+ вместо сломанного окна настроек теперь открывается about:config?filter=extensions.linkPropertiesPlus. (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1379338">bug 1379338</a>).<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Исправлена совместимость с мультипроцессным режимом (Electrolysis aka e10s) в Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

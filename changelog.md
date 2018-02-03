@@ -16,6 +16,7 @@
 `x` Force use encoded URI as referer (Unicode characters not supported!).<br>
 `*` Show decoded URIs in text fields (<em>extensions.linkPropertiesPlus.decodeURIs</em> == true).<br>
 `x` Fixed headers border in Firefox 60+ (added replacement for -moz-border-*-colors).<br>
+`x` Open about:config?filter=extensions.linkPropertiesPlus. in Firefox 59+ instead of broken options window (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1379338">bug 1379338</a>).<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Fixed compatibility with multi-process mode (Electrolysis aka e10s) in Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

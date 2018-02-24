@@ -25,12 +25,12 @@ body[hideDiff] .entry.removed {
 }
 
 xul|*.twisty {
-	vertical-align: middle;
+	/*vertical-align: middle;*/
+	margin: -2px 0 -1px;
 }
 xul|*.twisty > xul|*.button-box {
-	margin: 0 0 3px;
-	-moz-margin-end: 1px;
-	padding: 1px 2px;
+	margin: 3px 0;
+	padding: 2px 3px;
 	-moz-padding-end: 4px;
 }
 

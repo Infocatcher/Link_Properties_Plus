@@ -161,10 +161,11 @@
 		https://bugzilla.mozilla.org/show_bug.cgi?id=296418
 	-->
 	<script type="application/javascript">
-		if(!("acceptDialog" in document.documentElement)) {
+		if((getComputedStyle(document.documentElement, null).MozBinding || "").substr(0, 4) != "url(") {
 			// Firefox 59+, https://bugzilla.mozilla.org/show_bug.cgi?id=1379338
-			window.openDialog("about:config?filter=extensions.linkPropertiesPlus.", "_blank", "all,dialog=0,centerscreen");
+			window.stop();
 			window.close();
+			window.openDialog("about:config?filter=extensions.linkPropertiesPlus.", "_blank", "all,dialog=0,centerscreen");
 		}
 	</script>
 	<script type="application/javascript" src="chrome://linkpropsplus/content/prefUtils.js" />

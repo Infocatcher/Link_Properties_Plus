@@ -69,11 +69,11 @@ var linkPropsPlusSvc = {
 	},
 	get fxVersion() {
 		delete this.fxVersion;
-		if(this.appInfo.name == "Pale Moon")
-			return this.fxVersion = parseFloat(this.appInfo.version);
 		var pv = this.appInfo.platformVersion;
-		// https://developer.mozilla.org/en-US/docs/Mozilla/Gecko/Versions
 		var v = parseFloat(pv);
+		if(this.appInfo.name == "Pale Moon" || this.appInfo.name == "Basilisk")
+			return this.fxVersion = v >= 4.1 ? 56 : 28;
+		// https://developer.mozilla.org/en-US/docs/Mozilla/Gecko/Versions
 		if(v < 5) {
 			var vc = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
 				.getService(Components.interfaces.nsIVersionComparator);

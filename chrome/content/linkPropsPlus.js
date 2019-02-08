@@ -252,14 +252,16 @@ var linkPropsPlusSvc = {
 		root.setAttribute("linkPropsPlus_showButtons",       showButtons > 0);
 		root.setAttribute("linkPropsPlus_showButtonsAlways", showButtons > 1);
 		setTimeout(function() {
-			var isDarkBG = false;
-			var bg = window.getComputedStyle(root, null).backgroundColor;
-			if(/^rgb\((\d+), *(\d+), *(\d+)\)$/.test(bg)) {
+			var isDarkFont = true;
+			var fc = getComputedStyle(root, null).color;
+			if(/^rgb\((\d+), *(\d+), *(\d+)\)$/.test(fc)) {
 				var r = +RegExp.$1, g = +RegExp.$2, b = +RegExp.$3;
-				var brightness = Math.max(r/255, g/255, b/255); // HSV, 0..1
-				isDarkBG = brightness < 0.4;
+				// See https://github.com/bgrins/TinyColor/blob/1.4.1/tinycolor.js#L70 getBrightness()
+				// + https://github.com/bgrins/TinyColor/blob/1.4.1/tinycolor.js#L52 isDark()
+				var brightness = (r*299 + g*587 + b*114)/1000;
+				isDarkFont = brightness < 128;
 			}
-			root.setAttribute("linkPropsPlus_darkBackground", isDarkBG);
+			root.setAttribute("linkPropsPlus_darkBackground", !isDarkFont);
 		}, 0);
 	},
 	showRows: function() {

@@ -1049,7 +1049,14 @@ var linkPropsPlusSvc = {
 
 		if(ch instanceof Components.interfaces.nsIHttpChannel) {
 			var ref = this.isOwnWindow ? this.realReferer : this.referer;
-			ref && ch.setRequestHeader("Referer", ref, false);
+			if(ref) try { // To correctly set non-ASCII URI
+				ch.referrer = this.makeURI(ref);
+			}
+			catch(e) {
+				this.ut.error("Invalid referrer URI: " + ref);
+				Components.utils.reportError(e);
+				ch.setRequestHeader("Referer", ref, false);
+			}
 		}
 
 		ch instanceof Components.interfaces.nsIFTPChannel;

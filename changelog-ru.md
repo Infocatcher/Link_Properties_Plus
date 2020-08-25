@@ -13,10 +13,13 @@
 `*` Подправлено положение пункта меню в Thunderbird 52.<br>
 `+` Добавлена поддержка меню «Инструменты разработчика» в Thunderbird 52.<br>
 `x` Подправлены префиксы: 1024*1024 теперь конвертируется в 1,00 Мбайт.<br>
-`x` Ссылки, отправляемые в качестве referer'а теперь принудительно кодируются (символы Юникода не поддерживаются!).<br>
 `*` В текстовых полях теперь выводятся декодированные ссылки (<em>extensions.linkPropertiesPlus.decodeURIs</em> == true).<br>
 `x` Исправлены рамки поля для заголовков в Firefox 60+ (добавлена замена для -moz-border-*-colors).<br>
 `x` В Firefox 59+ вместо сломанного окна настроек теперь открывается about:config?filter=extensions.linkPropertiesPlus. (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1379338">bug 1379338</a>).<br>
+`x` Исправлено определение версии Pale Moon 28.1+ и Basilisk.<br>
+`*` Улучшено извлечение ссылок: теперь из выделенного текста дополнительно удаляются кавычки «» и “”.<br>
+`*` Улучшено определение темной темы (спасибо <a href="https://github.com/bgrins/TinyColor">TinyColor</a>: <a href="https://github.com/bgrins/TinyColor/blob/1.4.1/tinycolor.js#L52">isDark()</a> -> <a href="https://github.com/bgrins/TinyColor/blob/1.4.1/tinycolor.js#L70">getBrightness()</a>).<br>
+`x` Исправлена установка HTTP referer'ов с не-ASCII символами.<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Исправлена совместимость с мультипроцессным режимом (Electrolysis aka e10s) в Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

@@ -13,10 +13,13 @@
 `*` Corrected menu item position in Thunderbird 52.<br>
 `+` Added support for “Developer Tools” menu in Thunderbird 52.<br>
 `x` Corrected prefixes: convert 1024*1024 into 1.00 MiB.<br>
-`x` Force use encoded URI as referer (Unicode characters not supported!).<br>
 `*` Show decoded URIs in text fields (<em>extensions.linkPropertiesPlus.decodeURIs</em> == true).<br>
 `x` Fixed headers border in Firefox 60+ (added replacement for -moz-border-*-colors).<br>
 `x` Open about:config?filter=extensions.linkPropertiesPlus. in Firefox 59+ instead of broken options window (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1379338">bug 1379338</a>).<br>
+`x` Fixed version detection for Pale Moon 28.1+ and Basilisk.<br>
+`*` Improved URIs extraction: also remove «» and “” quotes from selected text.<br>
+`*` Improved dark theme detection (thanks to <a href="https://github.com/bgrins/TinyColor">TinyColor</a>: <a href="https://github.com/bgrins/TinyColor/blob/1.4.1/tinycolor.js#L52">isDark()</a> -> <a href="https://github.com/bgrins/TinyColor/blob/1.4.1/tinycolor.js#L70">getBrightness()</a>).<br>
+`x` Fixed non-ASCII URI HTTP referers.<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Fixed compatibility with multi-process mode (Electrolysis aka e10s) in Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

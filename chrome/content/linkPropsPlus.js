@@ -1925,7 +1925,13 @@ var linkPropsPlusSvc = {
 		this.checkHeadersChanges(ch, this._requestSection, this._headers);
 		try {
 			if(request instanceof Components.interfaces.nsIHttpChannel) {
-				var statusStr = request.responseStatus + " " + request.responseStatusText;
+				try {
+					var statusStr = request.responseStatus + " " + request.responseStatusText;
+				}
+				catch(e) { // Will try extract something from nsIRequest
+					Components.utils.reportError(e);
+					statusStr = this.getErrorName(request.status);
+				}
 				this.headers.caption(this.ut.getLocalized("response"));
 				this.headers.beginSection();
 				this.headers.entry("Status", statusStr);
@@ -2011,6 +2017,13 @@ var linkPropsPlusSvc = {
 		catch(e) {
 			Components.utils.reportError(e);
 		}
+	},
+	getErrorName: function(code) {
+		var cr = Components.results;
+		for(var errName in cr)
+			if(cr[errName] == code)
+				return errName;
+		return "" + code;
 	},
 
 	checkResumableChannel: null,

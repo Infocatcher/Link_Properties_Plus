@@ -20,6 +20,7 @@
 `*` Улучшено извлечение ссылок: теперь из выделенного текста дополнительно удаляются кавычки «» и “”.<br>
 `*` Улучшено определение темной темы (спасибо <a href="https://github.com/bgrins/TinyColor">TinyColor</a>: <a href="https://github.com/bgrins/TinyColor/blob/1.4.1/tinycolor.js#L52">isDark()</a> -> <a href="https://github.com/bgrins/TinyColor/blob/1.4.1/tinycolor.js#L70">getBrightness()</a>).<br>
 `x` Исправлена установка HTTP referer'ов с не-ASCII символами.<br>
+`*` Добавлено отображение сетевых ошибок наподобие NS_ERROR_UNKNOWN_HOST из nsIRequest.status, если nsIHttpChannel.responseStatus недоступен.<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Исправлена совместимость с мультипроцессным режимом (Electrolysis aka e10s) в Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

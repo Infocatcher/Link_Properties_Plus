@@ -1930,7 +1930,10 @@ var linkPropsPlusSvc = {
 				}
 				catch(e) { // Will try extract something from nsIRequest
 					Components.utils.reportError(e);
-					statusStr = this.getErrorName(request.status);
+					var status = request.status;
+					statusStr = this.getErrorName(status);
+					if(!Components.isSuccessCode(status))
+						this.requestFailed("badURI");
 				}
 				this.headers.caption(this.ut.getLocalized("response"));
 				this.headers.beginSection();

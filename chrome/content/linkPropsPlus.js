@@ -1933,7 +1933,7 @@ var linkPropsPlusSvc = {
 					var status = request.status;
 					statusStr = this.getErrorName(status);
 					if(!Components.isSuccessCode(status))
-						this.requestFailed("badURI");
+						this.requestFailed("unknownHost");
 				}
 				this.headers.caption(this.ut.getLocalized("response"));
 				this.headers.beginSection();

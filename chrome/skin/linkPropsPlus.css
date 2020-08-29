@@ -120,6 +120,14 @@
 :root[linkPropsPlus_error="cantOpen"] #linkPropsPlus-getHeaders {
 	color: #e00;
 }
+:root[linkPropsPlus_error="unknownHost"] #linkPropsPlus-uri,
+:root[linkPropsPlus_error="unknownHost"] #linkPropsPlus-getHeaders {
+	color: #c50;
+}
+:root[linkPropsPlus_darkBackground="true"][linkPropsPlus_error="unknownHost"] #linkPropsPlus-uri,
+:root[linkPropsPlus_darkBackground="true"][linkPropsPlus_error="unknownHost"] #linkPropsPlus-getHeaders {
+	color: #f60;
+}
 /* Colors from [lpp_canResumeDownload="true"] */
 :root[linkPropsPlus_error="fixedURI"] #linkPropsPlus-uri {
 	color: #090;

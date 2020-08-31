@@ -1942,10 +1942,15 @@ var linkPropsPlusSvc = {
 				request.visitResponseHeaders(this);
 				this.headers.endSection();
 				if(
-					"x-archive-orig-last-modified" in headers // Used on http://archive.org/
-					&& !("last-modified" in headers) // We prefer last-modified, if available
+					"x-archive-orig-last-modified" in headers // Used by http://archive.org/
+					&& !("last-modified" in headers) // Prefer original header, if available
 				)
 					this.formatDate(headers["x-archive-orig-last-modified"]);
+				if(
+					"x-archive-orig-content-length" in headers // Used by http://archive.org/
+					&& !("content-length" in headers) // Prefer original header, if available
+				)
+					this.formatSize(headers["x-archive-orig-content-length"]);
 				var canResumeDownload = request instanceof Components.interfaces.nsIResumableChannel
 					&& "accept-ranges" in headers
 					&& headers["accept-ranges"] == "bytes"

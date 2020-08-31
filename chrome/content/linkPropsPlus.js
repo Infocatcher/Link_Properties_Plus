@@ -2026,7 +2026,7 @@ var linkPropsPlusSvc = {
 		for(var errName in cr)
 			if(cr[errName] == code)
 				return errName;
-		return "" + code;
+		return (Components.isSuccessCode(code) ? "" : "Error ") + code;
 	},
 
 	checkResumableChannel: null,

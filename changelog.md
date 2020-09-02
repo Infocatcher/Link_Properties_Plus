@@ -21,6 +21,7 @@
 `*` Improved dark theme detection (thanks to <a href="https://github.com/bgrins/TinyColor">TinyColor</a>: <a href="https://github.com/bgrins/TinyColor/blob/1.4.1/tinycolor.js#L52">isDark()</a> -> <a href="https://github.com/bgrins/TinyColor/blob/1.4.1/tinycolor.js#L70">getBrightness()</a>).<br>
 `x` Fixed non-ASCII URI HTTP referers.<br>
 `*` Show network errors like NS_ERROR_UNKNOWN_HOST from nsIRequest.status, if nsIHttpChannel.responseStatus not available.<br>
+`+` Added support for “X-Archive-Orig-Content-Length” header (used by <a href="http://archive.org/">archive.org</a>).<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Fixed compatibility with multi-process mode (Electrolysis aka e10s) in Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>
@@ -38,7 +39,7 @@
 `x` Workaround for empty properties window with enabled <a href="https://addons.mozilla.org/addon/adblock-plus/">Adblock Plus</a> 2.7 (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/19">#19</a>).<br>
 
 ##### 1.6.0 (2015-11-08)
-`+` Added support for “X-Archive-Orig-Last-Modified” header (used on <a href="http://archive.org/">archive.org</a>).<br>
+`+` Added support for “X-Archive-Orig-Last-Modified” header (used by <a href="http://archive.org/">archive.org</a>).<br>
 `x` Corrected handling of links like `private:///#http://example.com/` from <a href="https://addons.mozilla.org/addon/private-tab/">Private Tab</a> extension.<br>
 `+` Added displaying of resume download ability (in status field) (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/4">#4</a>).<br>
 `+` Added Ctrl+Shift+C hotkey to open context menu for current row (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/5">#5</a>).<br>

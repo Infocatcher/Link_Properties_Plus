@@ -299,6 +299,7 @@ var linkPropsPlusSvc = {
 		if(headersHeight)
 			rowHeaders.setAttribute("minheight", headersHeight);
 		this.showRows();
+		document.documentElement.boxObject.height; // Force reflow
 		if(this.isOwnWindow) {
 			// Unfortunately sizeToContent() works buggy with many flexible nodes
 			setTimeout(function(_this) { // Small delay to reduce flickers

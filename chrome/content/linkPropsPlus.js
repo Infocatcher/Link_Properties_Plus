@@ -71,8 +71,8 @@ var linkPropsPlusSvc = {
 		delete this.fxVersion;
 		var pv = this.appInfo.platformVersion;
 		var v = parseFloat(pv);
-		if(this.appInfo.name == "Pale Moon" || this.appInfo.name == "Basilisk")
-			return this.fxVersion = v >= 4.1 ? 56 : 28;
+		if(this.appInfo.name == "Pale Moon" || this.appInfo.name == "Iceape-UXP" || this.appInfo.name == "Basilisk")
+		return this.fxVersion = v >= 4.1 ? 56 : 28;
 		// https://developer.mozilla.org/en-US/docs/Mozilla/Gecko/Versions
 		if(v < 5) {
 			var vc = Components.classes["@mozilla.org/xpcom/version-comparator;1"]

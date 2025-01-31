@@ -36,6 +36,14 @@
 		</Description>
 	</em:targetApplication>
 
+	<em:targetApplication> <!-- Iceape-UXP -->
+		<Description>
+			<em:id>{9184b6fe-4a5c-484d-8b4b-efbfccbfb514}</em:id>
+			<em:minVersion>52.0</em:minVersion>
+			<em:maxVersion>52.*</em:maxVersion>
+		</Description>
+	</em:targetApplication>
+
 	<em:targetApplication> <!-- Pale Moon -->
 		<Description>
 			<em:id>{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}</em:id>

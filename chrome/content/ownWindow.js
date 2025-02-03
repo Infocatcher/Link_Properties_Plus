@@ -231,7 +231,19 @@ var linkPropsPlusWnd = {
 	fixProtocol: function(uri) {
 		return !/^[^:./]+:/.test(uri) && !this.svc.isValidURI(uri) && "http://" + uri;
 	},
+	_ignoreAuxclick: false,
+	_lastAuxclick: 0,
 	setFakeReferer: function(e) {
+		var et = e.type;
+		if(et == "dblclick" && e.button > 0)
+			this._ignoreAuxclick = true;
+		else if(et == "auxclick" && !this._ignoreAuxclick) {
+			var tl = this._lastAuxclick;
+			var tn = this._lastAuxclick = Date.now();
+			if(tn - tl > 350)
+				return;
+		}
+
 		var type = this.pu.get("useFakeReferer") || 2;
 		if(e.button > 0 || e.ctrlKey || e.altKey || e.shiftKey || e.metaKey)
 			type = type == 2 ? 1 : 2;

@@ -240,7 +240,7 @@ var linkPropsPlusWnd = {
 		else if(et == "auxclick" && !this._ignoreAuxclick) {
 			var tl = this._lastAuxclick;
 			var tn = this._lastAuxclick = Date.now();
-			if(tn - tl > 350)
+			if(tn - tl > this.pu.get("ownWindow.dblclickDelay"))
 				return;
 		}
 

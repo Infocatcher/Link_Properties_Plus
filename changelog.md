@@ -22,6 +22,8 @@
 `x` Fixed non-ASCII URI HTTP referers.<br>
 `*` Show network errors like NS_ERROR_UNKNOWN_HOST from nsIRequest.status, if nsIHttpChannel.responseStatus not available.<br>
 `+` Added support for “X-Archive-Orig-Content-Length” header (used by <a href="http://archive.org/">archive.org</a>).<br>
+`+` Added support for Iceape-UXP (<a href="https://github.com/Infocatcher/Link_Properties_Plus/pull/29">#29</a>, thanks to <a href="https://github.com/zanud">zanud</a>).<br>
+`x` Workaround for right-dblclick in Firefox 53+ (on “Referer:” label or text filed in properties window to extract value from link, <em>extensions.linkPropertiesPlus.ownWindow.dblclickDelay</em> preferences).<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Fixed compatibility with multi-process mode (Electrolysis aka e10s) in Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

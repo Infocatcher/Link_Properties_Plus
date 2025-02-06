@@ -255,13 +255,13 @@ var linkPropsPlusWnd = {
 	uriChanged: function(cantGet) {
 		var uri = this.uri;
 		this.cantGet = cantGet || this.svc.activeRequest || !uri;
-		var notHttp = String(!/^https?:\//.test(uri));
+		var notHttp = "" + !/^https?:\//.test(uri);
 		var rf = this.refererField;
 		if(rf.getAttribute("lpp_notUsed") != notHttp) {
 			rf.setAttribute("lpp_notUsed", notHttp);
 			rf.previousSibling.setAttribute("lpp_notUsed", notHttp);
 		}
-		var empty = String(!uri);
+		var empty = "" + !uri;
 		var uf = this.uriField;
 		if(uf.getAttribute("lpp_empty") != empty) {
 			uf.setAttribute("lpp_empty", empty);

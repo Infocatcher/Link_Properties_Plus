@@ -255,7 +255,7 @@ var linkPropsPlusWnd = {
 	uriChanged: function(cantGet) {
 		var uri = this.uri;
 		this.cantGet = cantGet || this.svc.activeRequest || !uri;
-		var notHttp = "" + !/^https?:\//.test(uri);
+		var notHttp = "" + !/^https?:\//i.test(uri);
 		var rf = this.refererField;
 		if(rf.getAttribute("lpp_notUsed") != notHttp) {
 			rf.setAttribute("lpp_notUsed", notHttp);

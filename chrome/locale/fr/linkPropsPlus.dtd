@@ -30,6 +30,8 @@
 <!ENTITY linkPropsPlus.sendGetRequestAccesskey "q">
 <!ENTITY linkPropsPlus.testDownloadResumability "Tester la possibilité de reprise">
 <!ENTITY linkPropsPlus.testDownloadResumabilityAccesskey "e">
+<!ENTITY linkPropsPlus.stopRequest "Stop Request">
+<!ENTITY linkPropsPlus.stopRequestAccesskey "S">
 
 <!-- Page info -->
 <!ENTITY linkPropsPlus.linkProperties "Propriété du lien">

@@ -30,6 +30,8 @@
 <!ENTITY linkPropsPlus.sendGetRequestAccesskey "q">
 <!ENTITY linkPropsPlus.testDownloadResumability "断点续传测试">
 <!ENTITY linkPropsPlus.testDownloadResumabilityAccesskey "e">
+<!ENTITY linkPropsPlus.stopRequest "Stop Request">
+<!ENTITY linkPropsPlus.stopRequestAccesskey "S">
 
 <!-- Page info -->
 <!ENTITY linkPropsPlus.linkProperties "链接属性">

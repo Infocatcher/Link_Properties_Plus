@@ -495,6 +495,7 @@ var linkPropsPlusSvc = {
 		var sendGet = this.sendGetItem;
 		var sendGet2 = this.$l("context-sendGetRequest2") || sendGet;
 		sendGet.disabled = sendGet2.disabled = this.activeRequest || !this.isHttp;
+		this.$l("context-stopRequest").disabled = !this.activeRequest;
 	},
 	showContextMenu: function() {
 		this._allowOptions = true;

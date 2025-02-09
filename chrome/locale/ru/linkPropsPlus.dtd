@@ -30,6 +30,8 @@
 <!ENTITY linkPropsPlus.sendGetRequestAccesskey "з">
 <!ENTITY linkPropsPlus.testDownloadResumability "Проверить докачку">
 <!ENTITY linkPropsPlus.testDownloadResumabilityAccesskey "д">
+<!ENTITY linkPropsPlus.stopRequest "Остановить запрос">
+<!ENTITY linkPropsPlus.stopRequestAccesskey "О">
 
 <!-- Page info -->
 <!ENTITY linkPropsPlus.linkProperties "Свойства ссылки">

@@ -471,10 +471,13 @@ var linkPropsPlusSvc = {
 		return this.sendGetItem = this.$l("context-sendGetRequest");
 	},
 	initContextMenu: function(e) {
-		if(!this._allowOptions)
-			return false;
-		var popup = e.currentTarget;
 		var trg = this.contextNode;
+		var fromBtn = trg.nodeName == "button";
+		if(!this._allowOptions && !fromBtn)
+			return false;
+		this.$l("context-copyRow").hidden =
+			this.$l("context-copyAll").hidden =
+			this.$l("context-altRequestSeparator").hidden = fromBtn;
 		var row = this.getRowFromChild(trg);
 		var tip = this.getTip(row);
 		var copyTip = this.$l("context-copyTip");
@@ -486,16 +489,15 @@ var linkPropsPlusSvc = {
 	updateRequestItems: function() {
 		var rowStatus = this.$l("rowStatus");
 		var testResume = this.$l("context-testDownloadResumability");
-		var testResume2 = this.$l("context-testDownloadResumability2") || testResume;
-		var hideTestResume = testResume.hidden = testResume2.hidden =
+		var hideTestResume = testResume.hidden =
 			!this.pu.get("testDownloadResumability.alwaysShowMenuItem")
 			&& (this.testResumability || !this.isVisible(rowStatus));
 		if(!hideTestResume)
-			testResume.disabled = testResume2.disabled = !this.uri || this.checkResumableChannel;
+			testResume.disabled = !this.uri || this.checkResumableChannel;
 		var sendGet = this.sendGetItem;
-		var sendGet2 = this.$l("context-sendGetRequest2") || sendGet;
-		sendGet.disabled = sendGet2.disabled = this.activeRequest || !this.isHttp;
-		this.$l("context-stopRequest").disabled = !this.activeRequest;
+		sendGet.disabled = this.activeRequest || !this.isHttp;
+		var stopRequest = this.$l("context-stopRequest");
+		stopRequest.disabled = !this.activeRequest;
 	},
 	showContextMenu: function() {
 		this._allowOptions = true;
@@ -2064,8 +2066,7 @@ var linkPropsPlusSvc = {
 			return;
 		}
 		var testResume = this.$l("context-testDownloadResumability");
-		var testResume2 = this.$l("context-testDownloadResumability2") || testResume;
-		testResume.disabled = testResume2.disabled = true;
+		testResume.disabled = true;
 		this.checkResumableChannel = ch;
 		if(ch instanceof Components.interfaces.nsIHttpChannel)
 			ch.setRequestHeader("Range", "bytes=1-32", false);
@@ -2109,7 +2110,7 @@ var linkPropsPlusSvc = {
 				this.setCanResumeDownload(false);
 				this.parent.checkResumableChannel = null;
 				setTimeout(function() {
-					testResume.disabled = testResume2.disabled = false;
+					testResume.disabled = false;
 				}, 200);
 			},
 			_headers: { __proto__: null },

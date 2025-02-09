@@ -187,7 +187,7 @@ var linkPropsPlusWnd = {
 		return this.getHeadersBtn.disabled;
 	},
 	set cantGet(val) {
-		this.getHeadersBtn.disabled = this.$l("context-sendGetRequest2").disabled = val;
+		this.getHeadersBtn.disabled = val;
 	},
 	getHeaders: function(e) {
 		var uri = this.uri;

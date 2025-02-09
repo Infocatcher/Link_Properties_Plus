@@ -46,7 +46,7 @@
 				<button id="linkPropsPlus-getHeaders"
 					oncommand="linkPropsPlusWnd.getHeaders(event);"
 					onclick="if(event.button == 1) linkPropsPlusWnd.getHeaders(event);"
-					context="linkPropsPlus-getHeadersContext"
+					context="linkPropsPlus-context"
 					label="&linkPropsPlus.buttonGetProps;" accesskey="&linkPropsPlus.buttonGetPropsAccesskey;" />
 			</row>
 			<row align="center">
@@ -70,20 +70,6 @@
 		<key id="linkPropsPlus-key-fullScreen" keycode="VK_F11"
 			oncommand="if('fullScreen' in window) fullScreen = !fullScreen; // Firefox 3.0+" />
 	</keyset>
-	<popupset id="linkPropsPlus-popupset">
-		<menupopup id="linkPropsPlus-getHeadersContext"
-			onpopupshowing="linkPropsPlusSvc.updateRequestItems();">
-			<menuitem id="linkPropsPlus-context-sendGetRequest2"
-				oncommand="linkPropsPlusSvc.sendGetRequest(event);"
-				onclick="if(event.button == 1) linkPropsPlusSvc.sendGetRequest(event);"
-				label="&linkPropsPlus.sendGetRequest;"
-				accesskey="&linkPropsPlus.sendGetRequestAccesskey;" />
-			<menuitem id="linkPropsPlus-context-testDownloadResumability2"
-				oncommand="linkPropsPlusSvc.checkChannelResumable();"
-				label="&linkPropsPlus.testDownloadResumability;"
-				accesskey="&linkPropsPlus.testDownloadResumabilityAccesskey;" />
-		</menupopup>
-	</popupset>
 
 	<!-- Scripts should be placed here, workaround for https://github.com/Infocatcher/Link_Properties_Plus/issues/19 -->
 	<script type="application/javascript" src="chrome://linkpropsplus/content/ownWindow.js" />

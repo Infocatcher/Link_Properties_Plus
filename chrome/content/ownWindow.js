@@ -190,6 +190,14 @@ var linkPropsPlusWnd = {
 	},
 	set cantGet(val) {
 		this.getHeadersBtn.disabled = val;
+		var sendGet = this.$l("context-sendGetRequest");
+		if(sendGet)
+			sendGet.disabled = val;
+		else { // Wait for overlay loading
+			setTimeout(function(_this) {
+				_this.$l("context-sendGetRequest").disabled = val;
+			}, 0, this);
+		}
 	},
 	getHeaders: function(e) {
 		var uri = this.uri;

@@ -49,6 +49,8 @@ var linkPropsPlusWnd = {
 	},
 	init: function() {
 		this.setTitle();
+		// Move out from hidden <vbox> to make accessible using context="" attribute
+ 		document.documentElement.appendChild(this.$l("context"));
 	},
 	destroy: function() {
 		this.destroyTabWatcher();

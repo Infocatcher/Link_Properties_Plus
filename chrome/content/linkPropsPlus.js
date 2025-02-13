@@ -470,6 +470,10 @@ var linkPropsPlusSvc = {
 		delete this.sendGetItem;
 		return this.sendGetItem = this.$l("context-sendGetRequest");
 	},
+	get stopItem() {
+		delete this.stopItem;
+		return this.stopItem = this.$l("context-stopRequest");
+	},
 	initContextMenu: function(e) {
 		var trg = this.contextNode;
 		var fromBtn = trg.nodeName == "button";
@@ -494,10 +498,8 @@ var linkPropsPlusSvc = {
 			&& (this.testResumability || !this.isVisible(rowStatus));
 		if(!hideTestResume)
 			testResume.disabled = !this.uri || this.checkResumableChannel;
-		var sendGet = this.sendGetItem;
-		sendGet.disabled = this.activeRequest || !this.isHttp;
-		var stopRequest = this.$l("context-stopRequest");
-		stopRequest.disabled = !this.activeRequest;
+		this.sendGetItem.disabled = this.activeRequest || !this.isHttp;
+		this.stopItem.disabled = !this.activeRequest;
 	},
 	showContextMenu: function() {
 		this._allowOptions = true;
@@ -2145,7 +2147,7 @@ var linkPropsPlusSvc = {
 		if(this.isOwnWindow)
 			this.wnd.onStopRequest(ok);
 		this.sendGetItem.disabled = /*this.activeRequest ||*/ !this.isHttp;
-		this.$l("context-stopRequest").disabled = true;
+		this.stopItem.disabled = true;
 		this.initAutoClose();
 	},
 

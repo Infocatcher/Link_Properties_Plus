@@ -2145,6 +2145,7 @@ var linkPropsPlusSvc = {
 		if(this.isOwnWindow)
 			this.wnd.onStopRequest(ok);
 		this.sendGetItem.disabled = /*this.activeRequest ||*/ !this.isHttp;
+		this.$l("context-stopRequest").disabled = true;
 		this.initAutoClose();
 	},
 

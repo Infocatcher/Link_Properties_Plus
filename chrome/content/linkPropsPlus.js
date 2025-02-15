@@ -400,7 +400,9 @@ var linkPropsPlusSvc = {
 		if(clear)
 			this.clearResults();
 		if(this.request(bypassCache, requestMethod)) {
-			this.$l("container").removeAttribute("hidden");
+			var container = this.$l("container");
+			container.removeAttribute("hidden");
+			container.style.opacity = "";
 			this.restartAutoClose();
 			this.$l("rowHeaders").setAttribute(
 				"lpp_notAvailable",

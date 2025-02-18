@@ -816,6 +816,7 @@ var linkPropsPlusSvc = {
 			}
 			catch(e) {
 				Components.utils.reportError(e);
+				this.ut.error("nsContextMenu.prototype.saveHelper() failed, will try new nsContextMenu().saveLink()");
 			}
 			finally {
 				gBrowser.selectedTab = origTab;
@@ -837,15 +838,14 @@ var linkPropsPlusSvc = {
 			defaultView: content,
 			__proto__: contentDoc
 		};
-		browserDoc.popupNode = link;
 		try {
 			link = link.wrappedJSObject || link;
 			Object.__defineGetter__.call(link, "ownerDocument", function() {
 				return fakeDoc;
 			});
+			browserDoc.popupNode = link;
 			if(
-				isMultiProcess
-				&& "gContextMenuContentData" in browserWin
+				"gContextMenuContentData" in browserWin
 				&& !browserWin.gContextMenuContentData
 			) { // Hack for Firefox 40+
 				browserWin.gContextMenuContentData = {

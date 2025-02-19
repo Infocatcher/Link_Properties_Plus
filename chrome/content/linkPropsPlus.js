@@ -124,7 +124,7 @@ var linkPropsPlusSvc = {
 		if(this.isPropsDialog) {
 			var showSep = false;
 			for(
-				var node = this.$l("container").parentNode.nextSibling;
+				var node = this.lppBox.parentNode.nextSibling;
 				node && node.nodeType == node.ELEMENT_NODE;
 				node = node.nextSibling
 			) {
@@ -222,14 +222,14 @@ var linkPropsPlusSvc = {
 			this.setRowHeight();
 	},
 	setRowHeight: function() {
-		var container = this.$l("container");
+		var lppBox = this.lppBox;
 		var tb = this.$l("directURI");
 		var btnSt1 = this.$l("goToDirectURI").style;
 		var btnSt2 = this.$l("downloadDirectURI").style;
 		var rowDirectURI = this.$l("rowDirectURI");
 
-		var hidden = container.getAttribute("hidden") == "true";
-		hidden && container.removeAttribute("hidden");
+		var hidden = lppBox.getAttribute("hidden") == "true";
+		hidden && lppBox.removeAttribute("hidden");
 		var rowHidden = rowDirectURI.getAttribute("hidden") == "true";
 		rowHidden && rowDirectURI.removeAttribute("hidden");
 		btnSt1.marginTop = btnSt2.marginTop = btnSt1.marginBottom = btnSt2.marginBottom = "";
@@ -245,7 +245,7 @@ var linkPropsPlusSvc = {
 		tb.setAttribute("lpp_empty", empty);
 		tb.parentNode.setAttribute("lpp_empty", empty);
 		rowHidden && rowDirectURI.setAttribute("hidden", "true");
-		hidden && container.setAttribute("hidden", "true");
+		hidden && lppBox.setAttribute("hidden", "true");
 	},
 	initStyles: function() {
 		var root = document.documentElement;
@@ -400,9 +400,9 @@ var linkPropsPlusSvc = {
 		if(clear)
 			this.clearResults();
 		if(this.request(bypassCache, requestMethod)) {
-			var container = this.$l("container");
-			container.removeAttribute("hidden");
-			container.style.opacity = "";
+			var lppBox = this.lppBox;
+			lppBox.removeAttribute("hidden");
+			lppBox.style.opacity = "";
 			this.restartAutoClose();
 			this.$l("rowHeaders").setAttribute(
 				"lpp_notAvailable",
@@ -434,7 +434,7 @@ var linkPropsPlusSvc = {
 	},
 	clearResults: function() {
 		Array.prototype.forEach.call(
-			this.$l("container").getElementsByTagName("textbox"),
+			this.lppBox.getElementsByTagName("textbox"),
 			function(tb) {
 				if(!tb.readOnly)
 					return;
@@ -468,6 +468,10 @@ var linkPropsPlusSvc = {
 			|| this.$l("context").triggerNode
 			|| document.popupNode;
 	},
+	get lppBox() {
+		delete this.lppBox;
+		return this.lppBox = this.$l("container");
+	},
 	get sendGetItem() {
 		delete this.sendGetItem;
 		return this.sendGetItem = this.$l("context-sendGetRequest");
@@ -481,7 +485,7 @@ var linkPropsPlusSvc = {
 		var fromBtn = trg.nodeName == "button";
 		if(!this._allowOptions && !fromBtn)
 			return false;
-		var noRows = this.$l("container").style.opacity == 0;
+		var noRows = this.lppBox.style.opacity == 0;
 		this.$l("context-copyRow").hidden =
 			this.$l("context-copyAll").hidden =
 			this.$l("context-altRequestSeparator").hidden = fromBtn || noRows;
@@ -522,7 +526,7 @@ var linkPropsPlusSvc = {
 			}
 		}
 		var anchor = this.isOwnWindow
-			&& this.$l("container").style.opacity == 0
+			&& this.lppBox.style.opacity == 0
 			&& this.wnd.getHeadersBtn
 			|| row;
 		this._contextNode = anchor;
@@ -1620,7 +1624,7 @@ var linkPropsPlusSvc = {
 				</menupopup>').replace(/>\s+</g, "><"),
 				"application/xml").documentElement;
 			if(cm.localName == "menupopup")
-				this.parent.$("linkPropsPlus-container").appendChild(cm);
+				this.parent.lppBox.appendChild(cm);
 		},
 		initMenu: function(cm) {
 			var frame = this.frame;

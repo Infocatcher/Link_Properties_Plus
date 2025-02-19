@@ -481,9 +481,10 @@ var linkPropsPlusSvc = {
 		var fromBtn = trg.nodeName == "button";
 		if(!this._allowOptions && !fromBtn)
 			return false;
+		var noRows = this.$l("container").style.opacity == 0;
 		this.$l("context-copyRow").hidden =
 			this.$l("context-copyAll").hidden =
-			this.$l("context-altRequestSeparator").hidden = fromBtn;
+			this.$l("context-altRequestSeparator").hidden = fromBtn || noRows;
 		var row = this.getRowFromChild(trg);
 		var tip = this.getTip(row);
 		var copyTip = this.$l("context-copyTip");
@@ -520,12 +521,16 @@ var linkPropsPlusSvc = {
 				}
 			}
 		}
-		this._contextNode = row;
+		var anchor = this.isOwnWindow
+			&& this.$l("container").style.opacity == 0
+			&& this.wnd.getHeadersBtn
+			|| row;
+		this._contextNode = anchor;
 		var cm = this.$l("context");
 		if("openPopup" in cm)
-			cm.openPopup(row, "after_start");
+			cm.openPopup(anchor, "after_start");
 		else
-			cm.showPopup(row, -1, -1, "popup", "bottomleft", "topleft");
+			cm.showPopup(anchor, -1, -1, "popup", "bottomleft", "topleft");
 	},
 	openOptions: function(paneId) {
 		var win = this.ut.wm.getMostRecentWindow("linkPropsPlus:optionsWindow");

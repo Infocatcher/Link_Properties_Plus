@@ -112,25 +112,25 @@ var linkPropsPlusWnd = {
 			this.setTitle();
 	},
 
-	get uriField() {
-		delete this.uriField;
-		return this.uriField = this.$l("uri");
+	get tbUri() {
+		delete this.tbUri;
+		return this.tbUri = this.$l("uri");
 	},
 	get uri() {
-		return this.uriField.value;
+		return this.tbUri.value;
 	},
 	set uri(val) {
-		this.uriField.value = this.ut.decodeURI(val || "");
+		this.tbUri.value = this.ut.decodeURI(val || "");
 	},
-	get refererField() {
-		delete this.refererField;
-		return this.refererField = this.$l("referer");
+	get tbReferer() {
+		delete this.tbReferer;
+		return this.tbReferer = this.$l("referer");
 	},
 	get referer() {
-		return this.refererField.value || null;
+		return this.tbReferer.value || null;
 	},
 	set referer(val) {
-		this.refererField.value = this.ut.decodeURI(val || "");
+		this.tbReferer.value = this.ut.decodeURI(val || "");
 	},
 	$l: function(id) {
 		return document.getElementById("linkPropsPlus-" + id);
@@ -183,15 +183,15 @@ var linkPropsPlusWnd = {
 			ttl += this.ut.getLocalized("privateTitleModifier");
 		document.title = ttl;
 	},
-	get getHeadersBtn() {
-		delete this.getHeadersBtn;
-		return this.getHeadersBtn = this.$l("getHeaders");
+	get btnHeaders() {
+		delete this.btnHeaders;
+		return this.btnHeaders = this.$l("getHeaders");
 	},
 	get cantGet() {
-		return this.getHeadersBtn.disabled;
+		return this.btnHeaders.disabled;
 	},
 	set cantGet(val) {
-		this.getHeadersBtn.disabled = val;
+		this.btnHeaders.disabled = val;
 		var sendGet = this.$l("context-sendGetRequest");
 		if(sendGet)
 			sendGet.disabled = val;
@@ -268,16 +268,16 @@ var linkPropsPlusWnd = {
 		var uri = this.uri;
 		this.cantGet = cantGet || this.svc.activeRequest || !uri;
 		var notHttp = "" + !/^https?:\//i.test(uri);
-		var rf = this.refererField;
-		if(rf.getAttribute("lpp_notUsed") != notHttp) {
-			rf.setAttribute("lpp_notUsed", notHttp);
-			rf.previousSibling.setAttribute("lpp_notUsed", notHttp);
+		var tbr = this.tbReferer;
+		if(tbr.getAttribute("lpp_notUsed") != notHttp) {
+			tbr.setAttribute("lpp_notUsed", notHttp);
+			tbr.previousSibling.setAttribute("lpp_notUsed", notHttp);
 		}
 		var empty = "" + !uri;
-		var uf = this.uriField;
-		if(uf.getAttribute("lpp_empty") != empty) {
-			uf.setAttribute("lpp_empty", empty);
-			uf.parentNode.setAttribute("lpp_empty", empty);
+		var tbu = this.tbUri;
+		if(tbu.getAttribute("lpp_empty") != empty) {
+			tbu.setAttribute("lpp_empty", empty);
+			tbu.parentNode.setAttribute("lpp_empty", empty);
 		}
 	},
 	uriChangedDelay: function() {
@@ -287,8 +287,8 @@ var linkPropsPlusWnd = {
 	},
 	setClickSelectsAll: function() {
 		var csa = this.pu.get("ownWindow.clickSelectsAll");
-		this.uriField.setAttribute("clickSelectsAll", csa);
-		this.refererField.setAttribute("clickSelectsAll", csa);
+		this.tbUri.setAttribute("clickSelectsAll", csa);
+		this.tbReferer.setAttribute("clickSelectsAll", csa);
 	},
 	closeOther: function() {
 		var ws = this.ut.wm.getEnumerator("linkPropsPlus:ownWindow");

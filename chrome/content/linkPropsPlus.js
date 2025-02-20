@@ -472,13 +472,13 @@ var linkPropsPlusSvc = {
 		delete this.lppBox;
 		return this.lppBox = this.$l("container");
 	},
-	get sendGetItem() {
-		delete this.sendGetItem;
-		return this.sendGetItem = this.$l("context-sendGetRequest");
+	get miGet() {
+		delete this.miGet;
+		return this.miGet = this.$l("context-sendGetRequest");
 	},
-	get stopItem() {
-		delete this.stopItem;
-		return this.stopItem = this.$l("context-stopRequest");
+	get miStop() {
+		delete this.miStop;
+		return this.miStop = this.$l("context-stopRequest");
 	},
 	initContextMenu: function(e) {
 		var trg = this.contextNode;
@@ -505,8 +505,8 @@ var linkPropsPlusSvc = {
 			&& (this.testResumability || !this.isVisible(rowStatus));
 		if(!hideTestResume)
 			testResume.disabled = !this.uri || this.checkResumableChannel;
-		this.sendGetItem.disabled = this.activeRequest || !this.isHttp;
-		this.stopItem.disabled = !this.activeRequest;
+		this.miGet.disabled = this.activeRequest || !this.isHttp;
+		this.miStop.disabled = !this.activeRequest;
 	},
 	showContextMenu: function() {
 		this._allowOptions = true;
@@ -527,7 +527,7 @@ var linkPropsPlusSvc = {
 		}
 		var anchor = this.isOwnWindow
 			&& this.lppBox.style.opacity == 0
-			&& this.wnd.getHeadersBtn
+			&& this.wnd.btnHeaders
 			|| row;
 		this._contextNode = anchor;
 		var cm = this.$l("context");
@@ -2157,8 +2157,8 @@ var linkPropsPlusSvc = {
 		this.requestFinished = true;
 		if(this.isOwnWindow)
 			this.wnd.onStopRequest(ok);
-		this.sendGetItem.disabled = /*this.activeRequest ||*/ !this.isHttp;
-		this.stopItem.disabled = true;
+		this.miGet.disabled = /*this.activeRequest ||*/ !this.isHttp;
+		this.miStop.disabled = true;
 		this.initAutoClose();
 	},
 

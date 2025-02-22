@@ -12,14 +12,14 @@
 	width="620"
 	height="80"
 	persist="screenX screenY width height sizemode">
-	<grid>
+	<grid id="linkPropsPlus-request-grid">
 		<columns>
 			<column />
 			<column flex="1" minwidth="150" />
 			<column />
 		</columns>
 		<rows>
-			<row align="center">
+			<row id="linkPropsPlus-request-rowUri" align="center">
 				<label value="&linkPropsPlus.labelLink;" accesskey="&linkPropsPlus.labelLinkAccesskey;"
 					control="linkPropsPlus-uri"
 					ondblclick="linkPropsPlusWnd.setURI(event);" />
@@ -49,7 +49,7 @@
 					context="linkPropsPlus-context"
 					label="&linkPropsPlus.buttonGetProps;" accesskey="&linkPropsPlus.buttonGetPropsAccesskey;" />
 			</row>
-			<row align="center">
+			<row id="linkPropsPlus-request-rowReferer" align="center">
 				<label id="linkPropsPlus-referer-label"
 					value="&linkPropsPlus.labelReferer;" accesskey="&linkPropsPlus.labelRefererAccesskey;"
 					tooltiptext="&linkPropsPlus.labelOnlyHttpTip;"

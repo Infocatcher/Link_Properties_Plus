@@ -472,6 +472,11 @@ var linkPropsPlusSvc = {
 		delete this.lppBox;
 		return this.lppBox = this.$l("container");
 	},
+	get lppBoxHidden() {
+		var lppBox = this.lppBox;
+		return lppBox.getAttribute("hidden") == "true"
+			|| lppBox.style.opacity == "0";
+	},
 	get miGet() {
 		delete this.miGet;
 		return this.miGet = this.$l("context-sendGetRequest");
@@ -485,10 +490,9 @@ var linkPropsPlusSvc = {
 		var fromBtn = trg.nodeName == "button";
 		if(!this._allowOptions && !fromBtn)
 			return false;
-		var noRows = this.lppBox.style.opacity == 0;
 		this.$l("context-copyRow").hidden =
 			this.$l("context-copyAll").hidden =
-			this.$l("context-altRequestSeparator").hidden = fromBtn || noRows;
+			this.$l("context-altRequestSeparator").hidden = fromBtn || this.lppBoxHidden;
 		var row = this.getRowFromChild(trg);
 		var tip = this.getTip(row);
 		var copyTip = this.$l("context-copyTip");
@@ -526,7 +530,7 @@ var linkPropsPlusSvc = {
 			}
 		}
 		var anchor = this.isOwnWindow
-			&& this.lppBox.style.opacity == 0
+			&& this.lppBoxHidden
 			&& this.wnd.btnHeaders
 			|| row;
 		this._contextNode = anchor;

@@ -58,46 +58,62 @@
 					<browser id="linkPropsPlus-headers" flex="1" type="content" showcaret="true"
 						autoscroll="true" disablehistory="true"
 						context="linkPropsPlus-headers-context"
+						tooltip="linkPropsPlus-headers-tooltip"
 						src="chrome://linkpropsplus/content/headers.html" />
 				</row>
 			</rows>
 		</grid>
-		<menupopup id="linkPropsPlus-context"
-			onpopupshowing="return linkPropsPlusSvc.initContextMenu(event);"
-			onpopuphidden="linkPropsPlusSvc._contextNode = null;">
-			<menuitem id="linkPropsPlus-context-copyRow"
-				oncommand="linkPropsPlusSvc.copy(linkPropsPlusSvc.contextNode);"
-				label="&linkPropsPlus.copyRow;"
-				accesskey="&linkPropsPlus.copyRowAccesskey;" />
-			<menuitem id="linkPropsPlus-context-copyTip"
-				oncommand="linkPropsPlusSvc.copyTip(linkPropsPlusSvc.contextNode);"
-				label="&linkPropsPlus.copyTip;"
-				accesskey="&linkPropsPlus.copyTipAccesskey;" />
-			<menuitem id="linkPropsPlus-context-copyAll"
-				oncommand="linkPropsPlusSvc.copy();"
-				label="&linkPropsPlus.copyAll;"
-				accesskey="&linkPropsPlus.copyAllAccesskey;" />
-			<menuseparator id="linkPropsPlus-context-altRequestSeparator" />
-			<menuitem id="linkPropsPlus-context-sendGetRequest"
-				oncommand="linkPropsPlusSvc.sendGetRequest(event);"
-				onclick="if(event.button == 1) linkPropsPlusSvc.sendGetRequest(event);"
-				label="&linkPropsPlus.sendGetRequest;"
-				accesskey="&linkPropsPlus.sendGetRequestAccesskey;" />
-			<menuitem id="linkPropsPlus-context-testDownloadResumability"
-				oncommand="linkPropsPlusSvc.checkChannelResumable();"
-				label="&linkPropsPlus.testDownloadResumability;"
-				accesskey="&linkPropsPlus.testDownloadResumabilityAccesskey;" />
-			<menuseparator id="linkPropsPlus-context-stopRequestSeparator" />
-			<menuitem id="linkPropsPlus-context-stopRequest"
-				oncommand="linkPropsPlusSvc.cancel();"
-				label="&linkPropsPlus.stopRequest;"
-				accesskey="&linkPropsPlus.stopRequestAccesskey;" />
-			<menuseparator id="linkPropsPlus-context-optionsSeparator" />
-			<menuitem id="linkPropsPlus-context-options"
-				oncommand="linkPropsPlusSvc.openOptions();"
-				label="&linkPropsPlus.buttonOptions;"
-				accesskey="&linkPropsPlus.buttonOptionsAccesskey;" />
-		</menupopup>
+		<popupset id="linkPropsPlus-popupset">
+			<menupopup id="linkPropsPlus-context"
+				onpopupshowing="return linkPropsPlusSvc.initContextMenu(event);"
+				onpopuphidden="linkPropsPlusSvc._contextNode = null;">
+				<menuitem id="linkPropsPlus-context-copyRow"
+					oncommand="linkPropsPlusSvc.copy(linkPropsPlusSvc.contextNode);"
+					label="&linkPropsPlus.copyRow;"
+					accesskey="&linkPropsPlus.copyRowAccesskey;" />
+				<menuitem id="linkPropsPlus-context-copyTip"
+					oncommand="linkPropsPlusSvc.copyTip(linkPropsPlusSvc.contextNode);"
+					label="&linkPropsPlus.copyTip;"
+					accesskey="&linkPropsPlus.copyTipAccesskey;" />
+				<menuitem id="linkPropsPlus-context-copyAll"
+					oncommand="linkPropsPlusSvc.copy();"
+					label="&linkPropsPlus.copyAll;"
+					accesskey="&linkPropsPlus.copyAllAccesskey;" />
+				<menuseparator id="linkPropsPlus-context-altRequestSeparator" />
+				<menuitem id="linkPropsPlus-context-sendGetRequest"
+					oncommand="linkPropsPlusSvc.sendGetRequest(event);"
+					onclick="if(event.button == 1) linkPropsPlusSvc.sendGetRequest(event);"
+					label="&linkPropsPlus.sendGetRequest;"
+					accesskey="&linkPropsPlus.sendGetRequestAccesskey;" />
+				<menuitem id="linkPropsPlus-context-testDownloadResumability"
+					oncommand="linkPropsPlusSvc.checkChannelResumable();"
+					label="&linkPropsPlus.testDownloadResumability;"
+					accesskey="&linkPropsPlus.testDownloadResumabilityAccesskey;" />
+				<menuseparator id="linkPropsPlus-context-stopRequestSeparator" />
+				<menuitem id="linkPropsPlus-context-stopRequest"
+					oncommand="linkPropsPlusSvc.cancel();"
+					label="&linkPropsPlus.stopRequest;"
+					accesskey="&linkPropsPlus.stopRequestAccesskey;" />
+				<menuseparator id="linkPropsPlus-context-optionsSeparator" />
+				<menuitem id="linkPropsPlus-context-options"
+					oncommand="linkPropsPlusSvc.openOptions();"
+					label="&linkPropsPlus.buttonOptions;"
+					accesskey="&linkPropsPlus.buttonOptionsAccesskey;" />
+			</menupopup>
+			<tooltip id="linkPropsPlus-headers-tooltip"
+				onpopupshowing="
+					for(
+						var t, tn = this.triggerNode || document.tooltipNode;
+						tn &amp;&amp; 'getAttribute' in tn;
+						tn = tn.parentNode
+					) {
+						if((t = tn.title))
+							return this.firstChild.value = t;
+					}
+					return false;">
+				<label id="linkPropsPlus-tt-value" />
+			</tooltip>
+		</popupset>
 		<hbox id="linkPropsPlus-autocloseProgressBlock">
 			<progressmeter id="linkPropsPlus-autocloseProgress" mode="normal"
 				onclick="linkPropsPlusSvc.openOptions('pane-misc');"

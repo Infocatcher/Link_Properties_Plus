@@ -1474,9 +1474,14 @@ var linkPropsPlusSvc = {
 		},
 		entry: function(name, value) {
 			var section = this.beginSection("entry");
+			if(/ \d{1,2}:\d{1,2}:\d{1,2} GMT$/.test(value)) {
+				var dt = new Date(value);
+				if(dt > 0)
+					var dtl = dt.toLocaleString();
+			}
 			this._appendNode("strong", "name", name);
 			this._appendNode("span", "colon", this.colon);
-			this._appendNode("span", "value", value);
+			this._appendNode("span", "value", value, dtl);
 			this.endSection();
 			return section;
 		},
@@ -1576,14 +1581,16 @@ var linkPropsPlusSvc = {
 		_elt: function(nodeName) {
 			return document.createElementNS("http://www.w3.org/1999/xhtml", nodeName);
 		},
-		_appendNode: function(nodeName, nodeClass, nodeText) {
+		_appendNode: function(nodeName, nodeClass, nodeText, nodeTitle) {
 			return this._append(this._node.apply(this, arguments));
 		},
-		_node: function(nodeName, nodeClass, nodeText) {
+		_node: function(nodeName, nodeClass, nodeText, nodeTitle) {
 			var node = this._elt(nodeName);
 			node.className = nodeClass;
 			if(nodeText)
 				node.appendChild(document.createTextNode(nodeText));
+			if(nodeTitle)
+				node.title = nodeTitle;
 			return node;
 		},
 		_append: function(node) {

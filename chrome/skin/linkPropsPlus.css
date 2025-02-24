@@ -15,6 +15,10 @@
 	min-height: 90px;
 	min-width: 160px;
 }
+#linkPropsPlus-tt-value {
+	margin: 0;
+	padding: 0;
+}
 #linkPropsPlus-grid textbox[lpp_missing="true"] {
 	font-style: italic;
 }

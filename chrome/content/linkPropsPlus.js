@@ -1792,16 +1792,19 @@ var linkPropsPlusSvc = {
 		this.setMissingStyle(target, isInvalid);
 		if(str && isInvalid)
 			target.tooltipText = str;
+		target.value = this.localizeDate(date);
+	},
+	localizeDate: function(date) {
 		var locale = this.pu.get("localeDates") || undefined;
 		if(locale == "<browser>")
 			locale = navigator.language;
 		try {
-			target.value = date.toLocaleString(locale);
+			return date.toLocaleString(locale);
 		}
 		catch(e) {
 			Components.utils.reportError(e);
-			target.value = date.toLocaleString(); // Fallback for "invalid language tag" error
 		}
+		return date.toLocaleString(); // Fallback for "invalid language tag" error
 	},
 	formatType: function(str) {
 		var target = this.$l("contentType");

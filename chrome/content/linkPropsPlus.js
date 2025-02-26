@@ -1476,8 +1476,8 @@ var linkPropsPlusSvc = {
 			var section = this.beginSection("entry");
 			if(/ \d{1,2}:\d{1,2}:\d{1,2} GMT$/.test(value)) {
 				var dt = new Date(value);
-				if(dt > 0)
-					var dtl = dt.toLocaleString();
+				if(!isNaN(dt))
+					var dtl = this.parent.localizeDate(dt);
 			}
 			this._appendNode("strong", "name", name);
 			this._appendNode("span", "colon", this.colon);
@@ -1788,7 +1788,7 @@ var linkPropsPlusSvc = {
 			this._lastDate = str;
 		var target = this.$l("lastModified");
 		var date = new Date(str);
-		var isInvalid = !str || isNaN(date);
+		var isInvalid = isNaN(date);
 		this.setMissingStyle(target, isInvalid);
 		if(str && isInvalid)
 			target.tooltipText = str;

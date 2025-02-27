@@ -18,6 +18,9 @@ body {
 	height: 0.6em;
 	max-height: 0.6em;
 }
+.value[title] {
+	text-decoration: underline dotted graytext;
+}
 
 body[hideDiff] .entry.replaced,
 body[hideDiff] .entry.removed {

@@ -1704,7 +1704,7 @@ var linkPropsPlusSvc = {
 			target.tooltipText = this.getSizeStr(this._lastSizeTip);
 	},
 	getSizeStr: function(rawSize) {
-		var intSize = parseInt(rawSize);
+		var intSize = parseInt(rawSize, 10);
 		if(intSize < 0) // We get -1 for FTP directories
 			return "";
 		var size = this.formatNum(intSize, 0);

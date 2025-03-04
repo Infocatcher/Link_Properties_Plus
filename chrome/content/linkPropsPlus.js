@@ -1474,19 +1474,21 @@ var linkPropsPlusSvc = {
 		},
 		entry: function(name, value) {
 			var section = this.beginSection("entry");
-			if(/content-length$/i.test(name)) {
-				var tip = this.parent.getSizeStr(value);
-			}
-			else if(/ \d{1,2}:\d{1,2}:\d{1,2} GMT$/.test(value)) {
-				var dt = new Date(value);
-				if(!isNaN(dt))
-					var tip = this.parent.localizeDate(dt);
-			}
 			this._appendNode("strong", "name", name);
 			this._appendNode("span", "colon", this.colon);
-			this._appendNode("span", "value", value, tip);
+			this._appendNode("span", "value", value, this.getTip(name, value));
 			this.endSection();
 			return section;
+		},
+		getTip: function(name, value) {
+			if(/content-length$/i.test(name) && /^\d+$/.test(value))
+				return this.parent.getSizeStr(value);
+			if(/ \d{1,2}:\d{1,2}:\d{1,2} GMT$/.test(value)) {
+				var dt = new Date(value);
+				if(!isNaN(dt))
+					return this.parent.localizeDate(dt);
+			}
+			return undefined;
 		},
 		getEntry: function(section, name) {
 			name = name.toLowerCase();

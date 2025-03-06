@@ -1605,12 +1605,18 @@ var linkPropsPlusSvc = {
 
 		fillTooltip: function(ttNode, labelNode) {
 			for(
-				var t, tn = ttNode;
+				var ttl, tn = ttNode;
 				tn && "getAttribute" in tn;
 				tn = tn.parentNode
 			) {
-				if((t = tn.title))
-					return labelNode.value = t;
+				if((ttl = tn.title)) {
+					var name = tn.parentNode.firstChild.textContent;
+					var value = tn.textContent;
+					var newTtl = this.getTip(name, value);
+					if(newTtl != ttl)
+						tn.title = newTtl;
+					return labelNode.value = newTtl;
+				}
 			}
 			return false;
 		},

@@ -1603,6 +1603,17 @@ var linkPropsPlusSvc = {
 			return section.appendChild(node);
 		},
 
+		fillTooltip: function(ttNode, labelNode) {
+			for(
+				var t, tn = ttNode;
+				tn && "getAttribute" in tn;
+				tn = tn.parentNode
+			) {
+				if((t = tn.title))
+					return labelNode.value = t;
+			}
+			return false;
+		},
 		createMenu: function() {
 			var dtd = "chrome://global/locale/textcontext.dtd";
 			// Trick: fallback entities works fine, but only if all previous DTD files exists

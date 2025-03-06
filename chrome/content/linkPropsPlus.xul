@@ -101,16 +101,7 @@
 					accesskey="&linkPropsPlus.buttonOptionsAccesskey;" />
 			</menupopup>
 			<tooltip id="linkPropsPlus-headers-tooltip"
-				onpopupshowing="
-					for(
-						var t, tn = this.triggerNode || document.tooltipNode;
-						tn &amp;&amp; 'getAttribute' in tn;
-						tn = tn.parentNode
-					) {
-						if((t = tn.title))
-							return this.firstChild.value = t;
-					}
-					return false;">
+				onpopupshowing="return linkPropsPlusSvc.headers.fillTooltip(this.triggerNode || document.tooltipNode, this.firstChild);">
 				<label id="linkPropsPlus-tt-value" />
 			</tooltip>
 		</popupset>

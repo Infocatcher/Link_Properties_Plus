@@ -357,10 +357,14 @@ var linkPropsPlusSvc = {
 			pName == "sizePrecision"
 			|| pName == "useBinaryPrefixes"
 			|| pName == "localeNumbers"
-		)
+		) {
 			this.convertSize();
-		else if(pName == "localeDates")
+			this.headers.updateTooltips();
+		}
+		else if(pName == "localeDates") {
 			this.formatDate();
+			this.headers.updateTooltips();
+		}
 		else if(pName == "decodeURIs") {
 			this.formatURI();
 			if(this.isOwnWindow)
@@ -1605,20 +1609,28 @@ var linkPropsPlusSvc = {
 
 		fillTooltip: function(ttNode, labelNode) {
 			for(
-				var ttl, tn = ttNode;
+				var t, tn = ttNode;
 				tn && "getAttribute" in tn;
 				tn = tn.parentNode
 			) {
-				if((ttl = tn.title)) {
-					var name = tn.parentNode.firstChild.textContent;
-					var value = tn.textContent;
-					var newTtl = this.getTip(name, value);
-					if(newTtl != ttl)
-						tn.title = newTtl;
-					return labelNode.value = newTtl;
-				}
+				if((t = tn.title))
+					return labelNode.value = t;
 			}
 			return false;
+		},
+		updateTooltips: function() {
+			var nodes = this.field.getElementsByTagName("span");
+			for(var i = 0, l = nodes.length; i < l; ++i) {
+				var node = nodes[i];
+				var ttl = node.title;
+				if(!ttl)
+					continue;
+				var name = node.parentNode.firstChild.textContent;
+				var value = node.textContent;
+				var newTtl = this.getTip(name, value);
+				if(newTtl != ttl)
+					node.title = newTtl;
+			}
 		},
 		createMenu: function() {
 			var dtd = "chrome://global/locale/textcontext.dtd";

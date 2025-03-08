@@ -1663,9 +1663,9 @@ var linkPropsPlusSvc = {
 					id="linkPropsPlus-headers-context"\n\
 					onpopupshowing="linkPropsPlusSvc.headers.initMenu(this);"\n\
 					oncommand="linkPropsPlusSvc.headers.doMenuCommand(event);">\n\
-					<menuitem label="&copyCmd.label;" accesskey="&copyCmd.accesskey;" cmd="cmd_copy" />\n\
+					<menuitem label="&copyCmd.label;" accesskey="&copyCmd.accesskey;" lpp_cmd="cmd_copy" />\n\
 					<menuseparator />\n\
-					<menuitem label="&selectAllCmd.label;" accesskey="&selectAllCmd.accesskey;" cmd="cmd_selectAll" />\n\
+					<menuitem label="&selectAllCmd.label;" accesskey="&selectAllCmd.accesskey;" lpp_cmd="cmd_selectAll" />\n\
 				</menupopup>').replace(/>\s+</g, "><"),
 				"application/xml").documentElement;
 			if(cm.localName == "menupopup")
@@ -1677,7 +1677,7 @@ var linkPropsPlusSvc = {
 			if(cd.focusedWindow != frame.contentWindow)
 				frame.contentWindow.focus();
 			Array.prototype.forEach.call(cm.getElementsByTagName("menuitem"), function(mi) {
-				var cmd = mi.getAttribute("cmd");
+				var cmd = mi.getAttribute("lpp_cmd");
 				if(cmd) {
 					var controller = cd.getControllerForCommand(cmd);
 					if(controller.isCommandEnabled(cmd))
@@ -1688,7 +1688,7 @@ var linkPropsPlusSvc = {
 			});
 		},
 		doMenuCommand: function(e) {
-			var cmd = e.originalTarget.getAttribute("cmd");
+			var cmd = e.originalTarget.getAttribute("lpp_cmd");
 			if(cmd) {
 				var controller = document.commandDispatcher.getControllerForCommand(cmd);
 				controller.doCommand(cmd);

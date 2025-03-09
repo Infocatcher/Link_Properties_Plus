@@ -1487,7 +1487,7 @@ var linkPropsPlusSvc = {
 		getTip: function(name, value) {
 			if(/content-length$/i.test(name) && /^\d+$/.test(value))
 				return this.parent.getSizeStr(value);
-			if(/ \d{1,2}:\d{1,2}:\d{1,2} GMT$/.test(value)) {
+			if(/ \d\d?:\d\d?:\d\d? GMT$/.test(value)) {
 				var dt = new Date(value);
 				if(!isNaN(dt))
 					return this.parent.localizeDate(dt);

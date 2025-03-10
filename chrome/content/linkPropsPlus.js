@@ -571,9 +571,9 @@ var linkPropsPlusSvc = {
 		if(e.type == "mousedown")
 			this._allowOptions = inLeftCol;
 		else if(e.type == "click" && e.button == 1 && inLeftCol)
-			this.openOptions();
+			this.openOptions("pane-general");
 		else if(e.type == "dblclick" && e.button == 0 && this._allowOptions)
-			this.openOptions();
+			this.openOptions("pane-general");
 	},
 	isClickOnLeftCol: function(e) {
 		var col = this.$l("columnLabels");

@@ -570,9 +570,10 @@ var linkPropsPlusSvc = {
 		var inLeftCol = this.isClickOnLeftCol(e);
 		if(e.type == "mousedown")
 			this._allowOptions = inLeftCol;
-		else if(e.type == "click" && e.button == 1 && inLeftCol)
-			this.openOptions("pane-general");
-		else if(e.type == "dblclick" && e.button == 0 && this._allowOptions)
+		else if(
+			e.type == "click" && e.button == 1 && inLeftCol
+			|| e.type == "dblclick" && e.button == 0 && this._allowOptions
+		)
 			this.openOptions("pane-general");
 	},
 	isClickOnLeftCol: function(e) {

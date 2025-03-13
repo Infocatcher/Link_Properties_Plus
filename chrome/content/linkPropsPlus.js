@@ -2171,7 +2171,7 @@ var linkPropsPlusSvc = {
 				}
 				this.setCanResumeDownload(false);
 				this.parent.checkResumableChannel = null;
-				setTimeout(function() {
+				if(!window.closed) setTimeout(function() {
 					testResume.disabled = false;
 				}, 200);
 			},

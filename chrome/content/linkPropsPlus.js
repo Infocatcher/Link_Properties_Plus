@@ -407,7 +407,13 @@ var linkPropsPlusSvc = {
 			var lppBox = this.lppBox;
 			lppBox.removeAttribute("hidden");
 			lppBox.style.opacity = "";
-			this.restartAutoClose();
+			this.requestFinished = false;
+			if(!this.pu.get("autoClose.onlyAfterRequest"))
+				this.restartAutoClose();
+			else {
+				this.cancelDelayedClose();
+				this.destroyAutoClose();
+			}
 			this.$l("rowHeaders").setAttribute(
 				"lpp_notAvailable",
 				!(this.channel instanceof Components.interfaces.nsIHttpChannel)

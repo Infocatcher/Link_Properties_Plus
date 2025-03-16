@@ -21,6 +21,9 @@ body {
 .value[title] {
 	text-decoration: underline dotted graytext;
 }
+.entry.added .value[title] {
+	text-decoration: underline dotted -moz-field;
+}
 
 body[hideDiff] .entry.replaced,
 body[hideDiff] .entry.removed {

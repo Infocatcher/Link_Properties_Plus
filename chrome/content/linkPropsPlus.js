@@ -1437,7 +1437,7 @@ var linkPropsPlusSvc = {
 			return this.frame = this.parent.$("linkPropsPlus-headers");
 		},
 		get field() {
-			var field = this.frame.contentDocument.body
+			var field = this.frame.contentDocument.body;
 			this.initStyles(field);
 			delete this.field;
 			return this.field = field;

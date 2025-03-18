@@ -18,10 +18,10 @@ body {
 	height: 0.6em;
 	max-height: 0.6em;
 }
-.value[title] {
+body[showTooltips] .value[title] {
 	text-decoration: underline dotted graytext;
 }
-.entry.added .value[title] {
+body[showTooltips] .entry.added .value[title] {
 	text-decoration: underline dotted -moz-field;
 }
 

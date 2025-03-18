@@ -382,6 +382,7 @@ var linkPropsPlusSvc = {
 			pName == "showCaptionsInHttpHeaders"
 			|| pName == "testDownloadResumability.showHttpHeaders"
 			|| pName == "showRequestHeadersDiff"
+			|| pName == "showHeadersTips"
 		)
 			this.headers.initStyles();
 		else if(pName == "showLinkButtons")
@@ -1407,6 +1408,7 @@ var linkPropsPlusSvc = {
 			}
 			attr("hideCaptions",   !this.parent.pu.get("showCaptionsInHttpHeaders"));
 			attr("hideTestResume", !this.parent.pu.get("testDownloadResumability.showHttpHeaders"));
+			attr("showTooltips",   this.parent.pu.get("showHeadersTips"));
 			var showDiff = this.showDiff = this.parent.pu.get("showRequestHeadersDiff");
 			attr("hideDiff", !showDiff);
 			Array.prototype.forEach.call(
@@ -1621,7 +1623,7 @@ var linkPropsPlusSvc = {
 				tn = tn.parentNode
 			) {
 				if((t = tn.title))
-					return labelNode.value = t;
+					return this.parent.pu.get("showHeadersTips") && (labelNode.value = t);
 			}
 			return false;
 		},

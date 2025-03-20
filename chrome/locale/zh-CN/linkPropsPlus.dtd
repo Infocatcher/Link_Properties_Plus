@@ -77,3 +77,4 @@
 <!ENTITY linkPropsPlus.opts.httpHeaders "HTTP响应头">
 <!ENTITY linkPropsPlus.opts.showCaptionsInHeaders "始终在“数据”部分前显示标题行">
 <!ENTITY linkPropsPlus.opts.showTestResumabilityHeaders "显示断点续传测试的头部信息">
+<!ENTITY linkPropsPlus.opts.showHeadersTips "Show tooltips">

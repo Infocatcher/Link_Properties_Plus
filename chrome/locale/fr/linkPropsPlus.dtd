@@ -77,3 +77,4 @@
 <!ENTITY linkPropsPlus.opts.httpHeaders "En-têtes HTTP">
 <!ENTITY linkPropsPlus.opts.showCaptionsInHeaders "Toujours afficher les légendes avant les sections de données">
 <!ENTITY linkPropsPlus.opts.showTestResumabilityHeaders "Afficher les en-têtes du test de possibilité de reprise de téléchargement">
+<!ENTITY linkPropsPlus.opts.showHeadersTips "Show tooltips">

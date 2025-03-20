@@ -77,3 +77,4 @@
 <!ENTITY linkPropsPlus.opts.httpHeaders "Заголовки HTTP">
 <!ENTITY linkPropsPlus.opts.showCaptionsInHeaders "Всегда показывать подписи перед блоками данных">
 <!ENTITY linkPropsPlus.opts.showTestResumabilityHeaders "Показывать заголовки от проверки возможности докачки">
+<!ENTITY linkPropsPlus.opts.showHeadersTips "Показывать всплывающие подсказки">

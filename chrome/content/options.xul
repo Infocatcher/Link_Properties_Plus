@@ -131,6 +131,7 @@
 			<preference id="autoClose.onlyAfterRequest" name="extensions.linkPropertiesPlus.autoClose.onlyAfterRequest" type="bool" />
 			<preference id="showCaptionsInHttpHeaders" name="extensions.linkPropertiesPlus.showCaptionsInHttpHeaders" type="bool" />
 			<preference id="testDownloadResumability.showHttpHeaders" name="extensions.linkPropertiesPlus.testDownloadResumability.showHttpHeaders" type="bool" />
+			<preference id="showHeadersTips" name="extensions.linkPropertiesPlus.showHeadersTips" type="bool" />
 		</preferences>
 
 		<checkbox preference="closeAfterOpen" label="&linkPropsPlus.opts.close;" />
@@ -153,6 +154,7 @@
 			<caption label="&linkPropsPlus.opts.httpHeaders;" />
 			<checkbox preference="showCaptionsInHttpHeaders" label="&linkPropsPlus.opts.showCaptionsInHeaders;" />
 			<checkbox preference="testDownloadResumability.showHttpHeaders" label="&linkPropsPlus.opts.showTestResumabilityHeaders;" />
+			<checkbox preference="showHeadersTips" label="&linkPropsPlus.opts.showHeadersTips;" />
 		</groupbox>
 	</prefpane>
 

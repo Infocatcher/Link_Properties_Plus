@@ -12,6 +12,8 @@
 	width="620"
 	height="80"
 	persist="screenX screenY width height sizemode">
+	<link xmlns="http://www.w3.org/1999/xhtml" style="display: none;"
+		rel="shortcut icon" type="image/x-icon" href="chrome://linkpropsplus-icon/skin/icon.png" />
 	<grid id="linkPropsPlus-request-grid">
 		<columns>
 			<column />

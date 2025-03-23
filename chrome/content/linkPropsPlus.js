@@ -1928,11 +1928,17 @@ var linkPropsPlusSvc = {
 				types.push(this.ut.getLocalized("internal"));
 			if(flags & (ces.REDIRECT_STS_UPGRADE || 0))
 				types.push(this.ut.getLocalized("HSTS"));
+			if(flags & (ces.REDIRECT_AUTH_RETRY || 0))
+				types.push(this.ut.getLocalized("auth"));
+			if(flags & (ces.REDIRECT_TRANSPARENT || 0))
+				types.push(this.ut.getLocalized("transparent"));
 			var unknownFlags = flags & ~(
 				ces.REDIRECT_TEMPORARY
 				| ces.REDIRECT_PERMANENT
 				| ces.REDIRECT_INTERNAL
 				| (ces.REDIRECT_STS_UPGRADE || 0)
+				| (ces.REDIRECT_AUTH_RETRY || 0)
+				| (ces.REDIRECT_TRANSPARENT || 0)
 			);
 			unknownFlags && this.ut.warning("Unknown nsIChannelEventSink flag(s): 0b" + unknownFlags.toString(2));
 			var type = types.join(this.ut.getLocalized("separator").slice(1, -1));

@@ -1905,39 +1905,39 @@ var linkPropsPlusSvc = {
 		this.setMissingStyle(tb, this.compareURIs(uri, this.requestURI));
 
 		var redirects = this.redirects;
-		if(!redirects.length)
+		if(!redirects.length) {
 			tb.removeAttribute("tooltiptext");
-		else {
-			var header = this.ut.getLocalized("redirectsHeader", [redirects.length - 1]) + " \n";
-			tb.tooltipText = header + redirects.map(function(redirect, i) {
-				var uri = redirect.uri;
-				if(i == 0) {
-					uri = this.getRealURI(uri);
-					return this.ut.decodeURI(uri);
-				}
-				var types = [];
-				var flags = redirect.flags;
-				// See https://dxr.mozilla.org/mozilla-central/source/netwerk/base/nsIChannelEventSink.idl
-				var ces = Components.interfaces.nsIChannelEventSink;
-				if(flags & ces.REDIRECT_TEMPORARY)
-					types.push(this.ut.getLocalized("temporary"));
-				if(flags & ces.REDIRECT_PERMANENT)
-					types.push(this.ut.getLocalized("permanent"));
-				if(flags & ces.REDIRECT_INTERNAL)
-					types.push(this.ut.getLocalized("internal"));
-				if(flags & (ces.REDIRECT_STS_UPGRADE || 0))
-					types.push(this.ut.getLocalized("HSTS"));
-				var unknownFlags = flags & ~(
-					ces.REDIRECT_TEMPORARY
-					| ces.REDIRECT_PERMANENT
-					| ces.REDIRECT_INTERNAL
-					| (ces.REDIRECT_STS_UPGRADE || 0)
-				);
-				unknownFlags && this.ut.warning("Unknown nsIChannelEventSink flag(s): 0b" + unknownFlags.toString(2));
-				var type = types.join(this.ut.getLocalized("separator").slice(1, -1));
-				return this.ut.getLocalized("redirectInfo", [type, this.ut.decodeURI(uri)]);
-			}, this).join(" \n");
+			return;
 		}
+		var header = this.ut.getLocalized("redirectsHeader", [redirects.length - 1]) + " \n";
+		tb.tooltipText = header + redirects.map(function(redirect, i) {
+			var uri = redirect.uri;
+			if(i == 0) {
+				uri = this.getRealURI(uri);
+				return this.ut.decodeURI(uri);
+			}
+			var types = [];
+			var flags = redirect.flags;
+			// See https://dxr.mozilla.org/mozilla-central/source/netwerk/base/nsIChannelEventSink.idl
+			var ces = Components.interfaces.nsIChannelEventSink;
+			if(flags & ces.REDIRECT_TEMPORARY)
+				types.push(this.ut.getLocalized("temporary"));
+			if(flags & ces.REDIRECT_PERMANENT)
+				types.push(this.ut.getLocalized("permanent"));
+			if(flags & ces.REDIRECT_INTERNAL)
+				types.push(this.ut.getLocalized("internal"));
+			if(flags & (ces.REDIRECT_STS_UPGRADE || 0))
+				types.push(this.ut.getLocalized("HSTS"));
+			var unknownFlags = flags & ~(
+				ces.REDIRECT_TEMPORARY
+				| ces.REDIRECT_PERMANENT
+				| ces.REDIRECT_INTERNAL
+				| (ces.REDIRECT_STS_UPGRADE || 0)
+			);
+			unknownFlags && this.ut.warning("Unknown nsIChannelEventSink flag(s): 0b" + unknownFlags.toString(2));
+			var type = types.join(this.ut.getLocalized("separator").slice(1, -1));
+			return this.ut.getLocalized("redirectInfo", [type, this.ut.decodeURI(uri)]);
+		}, this).join(" \n");
 	},
 
 	fillInBlank: function() {

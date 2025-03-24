@@ -1494,6 +1494,12 @@ var linkPropsPlusSvc = {
 			return section;
 		},
 		getTip: function(name, value) {
+			if(name.toLowerCase() == "host" && /^xn--/.test(value)) try {
+				return this.parent.makeURI("http://" + value).host;
+			}
+			catch(e) {
+				Components.utils.reportError(e);
+			}
 			if(/content-length$/i.test(name) && /^\d+$/.test(value))
 				return this.parent.getSizeStr(value);
 			if(/ \d\d?:\d\d?:\d\d? GMT$/.test(value)) {

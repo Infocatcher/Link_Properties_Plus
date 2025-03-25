@@ -7,5 +7,6 @@
 	<vbox id="link-sec" flex="1">
 		<vbox id="linkPropsPlus-container" flex="1" />
 		<separator id="linkPropsPlus-separator" />
+		<popupset id="linkPropsPlus-popupset" />
 	</vbox>
 </overlay>

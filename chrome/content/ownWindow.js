@@ -49,10 +49,6 @@ var linkPropsPlusWnd = {
 	},
 	init: function() {
 		this.setTitle();
-		// Make accessible using context="" attribute
- 		var lppBox = this.svc.lppBox;
- 		lppBox.style.opacity = 0;
- 		lppBox.removeAttribute("hidden");
 	},
 	destroy: function() {
 		this.destroyTabWatcher();

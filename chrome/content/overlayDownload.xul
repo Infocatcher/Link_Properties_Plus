@@ -7,5 +7,6 @@
 	<vbox id="container" flex="1">
 		<vbox id="linkPropsPlus-container" insertbefore="basicBox" flex="1" />
 		<separator class="thin" insertbefore="basicBox" />
+		<popupset id="linkPropsPlus-popupset" />
 	</vbox>
 </overlay>

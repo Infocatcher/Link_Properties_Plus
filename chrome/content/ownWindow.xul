@@ -72,6 +72,7 @@
 		<key id="linkPropsPlus-key-fullScreen" keycode="VK_F11"
 			oncommand="if('fullScreen' in window) fullScreen = !fullScreen; // Firefox 3.0+" />
 	</keyset>
+	<popupset id="linkPropsPlus-popupset" />
 
 	<!-- Scripts should be placed here, workaround for https://github.com/Infocatcher/Link_Properties_Plus/issues/19 -->
 	<script type="application/javascript" src="chrome://linkpropsplus/content/ownWindow.js" />

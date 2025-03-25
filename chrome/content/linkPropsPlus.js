@@ -407,7 +407,6 @@ var linkPropsPlusSvc = {
 		if(this.request(bypassCache, requestMethod)) {
 			var lppBox = this.lppBox;
 			lppBox.removeAttribute("hidden");
-			lppBox.style.opacity = "";
 			this.requestFinished = false;
 			if(!this.pu.get("autoClose.onlyAfterRequest"))
 				this.restartAutoClose();
@@ -484,9 +483,7 @@ var linkPropsPlusSvc = {
 		return this.lppBox = this.$l("container");
 	},
 	get lppBoxHidden() {
-		var lppBox = this.lppBox;
-		return lppBox.getAttribute("hidden") == "true"
-			|| lppBox.style.opacity == "0";
+		return this.lppBox.getAttribute("hidden") == "true";
 	},
 	get miGet() {
 		delete this.miGet;

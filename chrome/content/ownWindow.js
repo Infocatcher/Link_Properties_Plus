@@ -45,7 +45,26 @@ var linkPropsPlusWnd = {
 		}
 		this.uriChanged(this.autostart);
 		this.setClickSelectsAll();
+		this.addTabIcon();
 		window.addEventListener("resize", this, false);
+	},
+	addTabIcon: function() {
+		var nsHTML = "http://www.w3.org/1999/xhtml";
+		var canvas = document.createElementNS(nsHTML, "canvas");
+		if(!("toDataURL" in canvas))
+			return; // Too old browser
+		canvas.width = canvas.height = 16;
+		var ctx = canvas.getContext("2d");
+		var img = new Image();
+		img.onload = function() {
+			ctx.drawImage(img, 0, 0, 16, 16, 0, 0, 16, 16);
+			var icon = document.createElementNS(nsHTML, "link");
+			icon.rel = "shortcut icon";
+			icon.style.display = "none";
+			icon.href = canvas.toDataURL();
+			document.documentElement.appendChild(icon);
+		};
+		img.src = "chrome://linkpropsplus/skin/icons16.png";
 	},
 	init: function() {
 		this.setTitle();

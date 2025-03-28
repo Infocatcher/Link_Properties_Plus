@@ -54,6 +54,7 @@ var linkPropsPlusWnd = {
 				: window.docShell.rootTreeItem.domWindow; // Firefox 70+
 			if(top != window) { // Looks opened in tab
 				this._parentWindow = top;
+				this._sourceWindow = window;
 				this.parentTab = top.gBrowser && top.gBrowser.selectedTab;
 			}
 		}

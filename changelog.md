@@ -25,8 +25,9 @@
 `+` Added support for Iceape-UXP (<a href="https://github.com/Infocatcher/Link_Properties_Plus/pull/29">#29</a>, thanks to <a href="https://github.com/zanud">zanud</a>).<br>
 `x` Workaround for right-dblclick in Firefox 53+ (on “Referer:” label or text filed in properties window to extract value from link, <em>extensions.linkPropertiesPlus.ownWindow.dblclickDelay</em> preferences).<br>
 `+` Added “Stop Request” context menu item.<br>
-`+` Added tooltips with localized time and file size to HTTP headers field (<em>extensions.linkPropertiesPlus.showHeadersTips</em> preference).<br>
+`+` Added tooltips with localized time, file size and decoded punycode host to HTTP headers field (<em>extensions.linkPropertiesPlus.showHeadersTips</em> preference).<br>
 `x` Fixed auto-close restarting in case of new request: now correctly waits for request finishing.<br>
+`*` Updated redirect flags from <a href="https://searchfox.org/mozilla-central/source/netwerk/base/nsIChannelEventSink.idl">nsIChannelEventSink.idl</a> (REDIRECT_AUTH_RETRY, REDIRECT_TRANSPARENT, not tested).<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Fixed compatibility with multi-process mode (Electrolysis aka e10s) in Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

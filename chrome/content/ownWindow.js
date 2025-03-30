@@ -22,6 +22,29 @@ var linkPropsPlusWnd = {
 		return this.svc.ensureWindowOpened(this._sourceWindow);
 	},
 
+	get topWindow() {
+		try {
+			var top = "QueryInterface" in window
+				? window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+					.getInterface(Components.interfaces.nsIWebNavigation)
+					.QueryInterface(Components.interfaces.nsIDocShellTreeItem)
+					.rootTreeItem
+					.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+					.getInterface(Components.interfaces.nsIDOMWindow)
+				: window.docShell.rootTreeItem.domWindow; // Firefox 70+
+		}
+		catch(e) {
+			Components.utils.reportError(e);
+		}
+		delete this.topWindow;
+		return this.topWindow = top;
+	},
+	get inTab() {
+		var top = this.topWindow;
+		delete this.inTab;
+		return this.inTab = top && top != window;
+	},
+
 	instantInit: function() {
 		if("arguments" in window) {
 			// { uri, referer, sourceWindow, autostart, parentWindow, sourceTab }
@@ -43,23 +66,11 @@ var linkPropsPlusWnd = {
 				win.addEventListener("unload", this, false);
 			}
 		}
-		else try {
-			var top = "QueryInterface" in window
-				? window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
-					.getInterface(Components.interfaces.nsIWebNavigation)
-					.QueryInterface(Components.interfaces.nsIDocShellTreeItem)
-					.rootTreeItem
-					.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
-					.getInterface(Components.interfaces.nsIDOMWindow)
-				: window.docShell.rootTreeItem.domWindow; // Firefox 70+
-			if(top != window) { // Looks opened in tab
-				this._parentWindow = top;
-				this._sourceWindow = window;
-				this.parentTab = top.gBrowser && top.gBrowser.selectedTab;
-			}
-		}
-		catch(e) {
-			Components.utils.reportError(e);
+		else if(this.inTab) {
+			var top = this.topWindow;
+			this._parentWindow = top;
+			this._sourceWindow = window;
+			this.parentTab = top.gBrowser && top.gBrowser.selectedTab;
 		}
 		this.uriChanged(this.autostart);
 		this.setClickSelectsAll();
@@ -89,6 +100,7 @@ var linkPropsPlusWnd = {
 	},
 	destroy: function() {
 		this.destroyTabWatcher();
+		delete this.topWindow;
 	},
 	destroyTabWatcher: function() {
 		var tab = this.parentTab;

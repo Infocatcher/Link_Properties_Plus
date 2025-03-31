@@ -303,7 +303,7 @@ var linkPropsPlusSvc = {
 		document.documentElement.boxObject.height; // Force reflow
 		if(this.isOwnWindow) {
 			// Unfortunately sizeToContent() works buggy with many flexible nodes
-			setTimeout(function(_this) { // Small delay to reduce flickers
+			if(!this.wnd.inTab) setTimeout(function(_this) { // Small delay to reduce flickers
 				window.resizeTo(window.outerWidth, 100); // This allows decrease height of window
 				_this.wnd.fixWindowHeight();
 				rowHeaders.removeAttribute("minheight");

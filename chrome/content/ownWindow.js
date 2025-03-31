@@ -75,7 +75,7 @@ var linkPropsPlusWnd = {
 		this.uriChanged(this.autostart);
 		this.setClickSelectsAll();
 		this.addTabIcon();
-		window.addEventListener("resize", this, false);
+		!this.inTab && window.addEventListener("resize", this, false);
 	},
 	addTabIcon: function() {
 		var nsHTML = "http://www.w3.org/1999/xhtml";
@@ -266,7 +266,7 @@ var linkPropsPlusWnd = {
 		}
 		this.svc.getHeaders(opts);
 		this.setTitle();
-		this.fixWindowHeight();
+		!this.inTab && this.fixWindowHeight();
 	},
 	setURI: function(e) {
 		if(e.button != 0)

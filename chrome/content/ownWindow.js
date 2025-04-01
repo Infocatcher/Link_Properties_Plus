@@ -67,6 +67,8 @@ var linkPropsPlusWnd = {
 			}
 		}
 		else if(this.inTab) {
+			this.uri = this.argUri;
+			this.referer = this.argReferer;
 			var top = this.topWindow;
 			this._parentWindow = top;
 			this._sourceWindow = window;
@@ -161,6 +163,9 @@ var linkPropsPlusWnd = {
 		delete this.tbUri;
 		return this.tbUri = this.$l("uri");
 	},
+	get argUri() {
+		return /[?&]uri=([^?&#]+)/.test(location.href) && decodeURIComponent(RegExp.$1) || "";
+	},
 	get uri() {
 		return this.tbUri.value;
 	},
@@ -171,6 +176,9 @@ var linkPropsPlusWnd = {
 		delete this.tbReferer;
 		return this.tbReferer = this.$l("referer");
 	},
+	get argReferer() {
+		return /[?&]referer=([^?&#]+)/.test(location.href) && decodeURIComponent(RegExp.$1) || "";
+	},
 	get referer() {
 		return this.tbReferer.value || null;
 	},
@@ -179,6 +187,26 @@ var linkPropsPlusWnd = {
 	},
 	$l: function(id) {
 		return document.getElementById("linkPropsPlus-" + id);
+	},
+	updArgs: function() {
+		var uri = this.uri;
+		var referer = this.referer || "";
+		if(!uri && !referer)
+			return;
+		var loc = location.href;
+		var url = loc.replace(/\?.*$/, "")
+			+ "?uri=" + encodeURIComponent(uri)
+			+ "&referer=" + encodeURIComponent(referer);
+		if(url != loc)
+			history.pushState({}, "", url);
+	},
+	_updArgsTimer: 0,
+	updArgsProxy: function() {
+		this._updArgsTimer && clearTimeout(this._updArgsTimer);
+		this._updArgsTimer = setTimeout(function(_this) {
+			_this._updArgsTimer = 0;
+			_this.updArgs();
+		}, 250, this);
 	},
 
 	get baseTitle() {
@@ -324,6 +352,7 @@ var linkPropsPlusWnd = {
 			tbu.setAttribute("lpp_empty", empty);
 			tbu.parentNode.setAttribute("lpp_empty", empty);
 		}
+		this.updArgsProxy();
 	},
 	uriChangedDelay: function() {
 		setTimeout(function(_this) {

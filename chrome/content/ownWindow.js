@@ -73,6 +73,7 @@ var linkPropsPlusWnd = {
 			this._parentWindow = top;
 			this._sourceWindow = window;
 			this.parentTab = top.gBrowser && top.gBrowser.selectedTab;
+			window.addEventListener("popstate", this, false);
 		}
 		this.uriChanged(this.autostart);
 		this.setClickSelectsAll();
@@ -103,6 +104,7 @@ var linkPropsPlusWnd = {
 	destroy: function() {
 		this.destroyTabWatcher();
 		delete this.topWindow;
+		window.removeEventListener("popstate", this, false);
 	},
 	destroyTabWatcher: function() {
 		var tab = this.parentTab;
@@ -147,6 +149,10 @@ var linkPropsPlusWnd = {
 			var tab = e.originalTarget || e.target;
 			if(tab == this.parentTab) // Will wait for Private Tab + toggling using duplication
 				this.destroyTabWatcherDelayed(tab.collapsed);
+		}
+		else if(type == "popstate") {
+			this.uri = this.argUri;
+			this.referer = this.argReferer;
 		}
 		else if(type == "unload") {
 			this.destroyTabWatcher();

@@ -333,6 +333,7 @@ var linkPropsPlusWnd = {
 		if(e.button > 0 || e.ctrlKey || e.altKey || e.shiftKey || e.metaKey)
 			type = type == 2 ? 1 : 2;
 		this.referer = this.ut.getFakeReferer(this.uri, type);
+		this.updArgsProxy();
 	},
 	onStopRequest: function(ok) {
 		this.cantGet = !this.uri;

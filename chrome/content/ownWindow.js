@@ -197,12 +197,10 @@ var linkPropsPlusWnd = {
 	updArgs: function() {
 		var uri = this.uri;
 		var referer = this.referer || "";
-		if(!uri && !referer)
-			return;
 		var loc = location.href;
-		var url = loc.replace(/\?.*$/, "")
-			+ "?uri=" + encodeURIComponent(uri)
-			+ "&referer=" + encodeURIComponent(referer);
+		var url = loc.replace(/\?.*$/, "");
+		if(uri || referer)
+			url += "?uri=" + encodeURIComponent(uri) + "&referer=" + encodeURIComponent(referer);
 		if(url != loc)
 			history.pushState({}, "", url);
 	},

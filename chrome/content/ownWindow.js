@@ -69,6 +69,7 @@ var linkPropsPlusWnd = {
 		else if(this.inTab) {
 			this.uri = this.argUri;
 			this.referer = this.argReferer;
+			this.autostart = this.argAutostart;
 			var top = this.topWindow;
 			this._parentWindow = top;
 			this._sourceWindow = window;
@@ -190,6 +191,9 @@ var linkPropsPlusWnd = {
 	},
 	set referer(val) {
 		this.tbReferer.value = this.ut.decodeURI(val || "");
+	},
+	get argAutostart() {
+		return !/[?&]autostart=0(?:[&#]|$)/.test(location.href);
 	},
 	$l: function(id) {
 		return document.getElementById("linkPropsPlus-" + id);

@@ -1,5 +1,6 @@
 var linkPropsPlusWnd = {
 	autostart: true,
+	autostop: false,
 
 	get ut() {
 		return window.linkPropsPlusUtils;
@@ -69,7 +70,10 @@ var linkPropsPlusWnd = {
 		else if(this.inTab) {
 			this.uri = this.argUri;
 			this.referer = this.argReferer;
-			this.autostart = this.argAutostart;
+			if(this.argAutostop) {
+				this.autostart = false;
+				this.autostop = true;
+			}
 			var top = this.topWindow;
 			this._parentWindow = top;
 			this._sourceWindow = window;
@@ -192,8 +196,8 @@ var linkPropsPlusWnd = {
 	set referer(val) {
 		this.tbReferer.value = this.ut.decodeURI(val || "");
 	},
-	get argAutostart() {
-		return !/[?&]autostart=0(?:[&#]|$)/.test(location.href);
+	get argAutostop() {
+		return /[?&]autostart=0(?:[&#]|$)/.test(location.href);
 	},
 	$l: function(id) {
 		return document.getElementById("linkPropsPlus-" + id);
@@ -205,6 +209,8 @@ var linkPropsPlusWnd = {
 		var url = loc.replace(/\?.*$/, "");
 		if(uri || referer)
 			url += "?uri=" + encodeURIComponent(uri) + "&referer=" + encodeURIComponent(referer);
+		if(this.autostop)
+			url += (uri || referer ? "&" : "?") + "autostart=0";
 		if(url != loc)
 			history.pushState({}, "", url);
 	},

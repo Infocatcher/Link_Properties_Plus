@@ -216,6 +216,8 @@ var linkPropsPlusWnd = {
 	},
 	_updArgsTimer: 0,
 	updArgsProxy: function() {
+		if(!this.inTab)
+			return;
 		this._updArgsTimer && clearTimeout(this._updArgsTimer);
 		this._updArgsTimer = setTimeout(function(_this) {
 			_this._updArgsTimer = 0;

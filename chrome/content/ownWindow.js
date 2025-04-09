@@ -216,7 +216,7 @@ var linkPropsPlusWnd = {
 	},
 	_updArgsTimer: 0,
 	updArgsProxy: function() {
-		if(!this.inTab)
+		if(!this.inTab || !("pushState" in history))
 			return;
 		this._updArgsTimer && clearTimeout(this._updArgsTimer);
 		this._updArgsTimer = setTimeout(function(_this) {

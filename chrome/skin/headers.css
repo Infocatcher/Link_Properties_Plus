@@ -19,10 +19,16 @@ body {
 	max-height: 0.6em;
 }
 body[showTooltips] .value[title] {
-	text-decoration: underline dotted graytext;
+	border-bottom: 1px dotted graytext;
 }
-body[showTooltips] .entry.added .value[title] {
-	text-decoration: underline dotted -moz-field;
+@supports(text-decoration: underline dotted graytext) {
+	body[showTooltips] .value[title] {
+		border-bottom: none;
+		text-decoration: underline dotted graytext;
+	}
+	body[showTooltips] .entry.added .value[title] {
+		text-decoration: underline dotted -moz-field;
+	}
 }
 
 body[hideDiff] .entry.replaced,

@@ -197,7 +197,7 @@ var linkPropsPlusWnd = {
 		this.tbReferer.value = this.ut.decodeURI(val || "");
 	},
 	get argAutostop() {
-		return /[?&]autostart=0(?:[&#]|$)/.test(location.href);
+		return /[?&]autostart=(?:0|false)(?:[&#]|$)/.test(location.href);
 	},
 	$l: function(id) {
 		return document.getElementById("linkPropsPlus-" + id);

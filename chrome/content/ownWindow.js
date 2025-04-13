@@ -375,8 +375,12 @@ var linkPropsPlusWnd = {
 		}
 		this.updArgsProxy();
 	},
+	_uriChangedTimer: 0,
 	uriChangedDelay: function() {
-		setTimeout(function(_this) {
+		if(this._uriChangedTimer)
+			return;
+		this._uriChangedTimer = setTimeout(function(_this) {
+			_this._uriChangedTimer = 0;
 			_this.uriChanged();
 		}, 0, this);
 	},

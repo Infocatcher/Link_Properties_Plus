@@ -211,8 +211,12 @@ var linkPropsPlusWnd = {
 			url += "?uri=" + encodeURIComponent(uri) + "&referer=" + encodeURIComponent(referer);
 		if(this.autostop)
 			url += (uri || referer ? "&" : "?") + "autostart=0";
-		if(url != loc)
-			history.pushState({}, "", url);
+		if(
+			url == loc
+			|| url == loc.replace(/([?&])autostart=false([&#]|$)/, "$1autostart=0$2")
+		)
+			return;
+		history.pushState({}, "", url);
 	},
 	_updArgsTimer: 0,
 	updArgsProxy: function() {

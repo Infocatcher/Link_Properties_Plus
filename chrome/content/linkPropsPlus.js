@@ -1688,15 +1688,13 @@ var linkPropsPlusSvc = {
 			var cd = document.commandDispatcher;
 			if(cd.focusedWindow != frame.contentWindow)
 				frame.contentWindow.focus();
-			Array.prototype.forEach.call(cm.getElementsByTagName("menuitem"), function(mi) {
+			Array.prototype.forEach.call(cm.getElementsByAttribute("lpp_cmd", "*"), function(mi) {
 				var cmd = mi.getAttribute("lpp_cmd");
-				if(cmd) {
-					var controller = cd.getControllerForCommand(cmd);
-					if(controller.isCommandEnabled(cmd))
-						mi.removeAttribute("disabled");
-					else
-						mi.setAttribute("disabled", "true");
-				}
+				var controller = cd.getControllerForCommand(cmd);
+				if(controller.isCommandEnabled(cmd))
+					mi.removeAttribute("disabled");
+				else
+					mi.setAttribute("disabled", "true");
 			});
 		},
 		doMenuCommand: function(e) {

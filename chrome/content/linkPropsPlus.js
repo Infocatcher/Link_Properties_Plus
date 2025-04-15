@@ -1684,14 +1684,17 @@ var linkPropsPlusSvc = {
 				this.parent.lppBox.appendChild(cm);
 		},
 		initMenu: function(cm) {
-			var frame = this.frame;
+			var contentWindow = this.frame.contentWindow;
 			var cd = document.commandDispatcher;
-			if(cd.focusedWindow != frame.contentWindow)
-				frame.contentWindow.focus();
+			if(cd.focusedWindow != contentWindow)
+				contentWindow.focus();
 			Array.prototype.forEach.call(cm.getElementsByAttribute("lpp_cmd", "*"), function(mi) {
 				var cmd = mi.getAttribute("lpp_cmd");
 				var controller = cd.getControllerForCommand(cmd);
-				if(controller.isCommandEnabled(cmd))
+				var isEnabled = controller.isCommandEnabled(cmd);
+				if(cmd == "cmd_copy" && isEnabled && contentWindow.getSelection().isCollapsed)
+					isEnabled = false;
+				if(isEnabled)
 					mi.removeAttribute("disabled");
 				else
 					mi.setAttribute("disabled", "true");

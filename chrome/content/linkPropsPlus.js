@@ -1684,7 +1684,8 @@ var linkPropsPlusSvc = {
 				this.parent.lppBox.appendChild(cm);
 		},
 		initMenu: function(cm) {
-			var contentWindow = this.frame.contentWindow;
+			var frame = this.frame;
+			var contentWindow = frame.contentWindow;
 			var cd = document.commandDispatcher;
 			if(cd.focusedWindow != contentWindow)
 				contentWindow.focus();
@@ -1692,13 +1693,23 @@ var linkPropsPlusSvc = {
 				var cmd = mi.getAttribute("lpp_cmd");
 				var controller = cd.getControllerForCommand(cmd);
 				var isEnabled = controller.isCommandEnabled(cmd);
-				if(cmd == "cmd_copy" && isEnabled && contentWindow.getSelection().isCollapsed)
+				var sel = contentWindow.getSelection();
+				if(cmd == "cmd_copy" && isEnabled && sel.isCollapsed)
+					isEnabled = false;
+				else if(
+					cmd == "cmd_selectAll"
+					&& isEnabled
+					&& !sel.isCollapsed
+					&& sel.rangeCount > 0
+					&& sel.getRangeAt(0).commonAncestorContainer == contentWindow.document.body
+					&& sel.toString() == this.parent.getFrameText(frame)
+				)
 					isEnabled = false;
 				if(isEnabled)
 					mi.removeAttribute("disabled");
 				else
 					mi.setAttribute("disabled", "true");
-			});
+			}, this);
 		},
 		doMenuCommand: function(e) {
 			var cmd = e.originalTarget.getAttribute("lpp_cmd");

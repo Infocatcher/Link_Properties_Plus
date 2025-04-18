@@ -28,6 +28,8 @@
 `+` Добавлены всплывающие подсказки с локальным временем, размером файла и декодированным punycode хостом в поле для заголовков HTTP (настройка <em>extensions.linkPropertiesPlus.showHeadersTips</em>).<br>
 `x` Исправлен перезапуск автоматического закрытия при повторном запросе: теперь корректно начинается ожидание завершения запроса.<br>
 `*` Обновлены флаги перенаправления из <a href="https://searchfox.org/mozilla-central/source/netwerk/base/nsIChannelEventSink.idl">nsIChannelEventSink.idl</a> (REDIRECT_AUTH_RETRY, REDIRECT_TRANSPARENT, не протестированы).<br>
+`+` Добавлена базовая поддержка для chrome://linkpropsplus/content/ownWindow.xul во вкладке (ссылка должна быть открыта вручную).<br>
+`x` Принудительно исправлено отключение пунктов контекстного меню «Копировать» и «Выделить всё» фрейма заголовков HTTP (похоже на ошибку в реализации nsIController.isCommandEnabled() для «cmd_copy», как минимум, в Basilisk 2025.02.22 и Pale Moon 33.7).<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Исправлена совместимость с мультипроцессным режимом (Electrolysis aka e10s) в Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

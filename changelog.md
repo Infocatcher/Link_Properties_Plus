@@ -28,6 +28,8 @@
 `+` Added tooltips with localized time, file size and decoded punycode host to HTTP headers field (<em>extensions.linkPropertiesPlus.showHeadersTips</em> preference).<br>
 `x` Fixed auto-close restarting in case of new request: now correctly waits for request finishing.<br>
 `*` Updated redirect flags from <a href="https://searchfox.org/mozilla-central/source/netwerk/base/nsIChannelEventSink.idl">nsIChannelEventSink.idl</a> (REDIRECT_AUTH_RETRY, REDIRECT_TRANSPARENT, not tested).<br>
+`+` Added basic support for chrome://linkpropsplus/content/ownWindow.xul in tab (should be opened manually).<br>
+`x` Force fixed disabled state for “Copy” and “Select All” context menu items in HTTP headers frame (looks like bug in nsIController.isCommandEnabled() implementation for “cmd_copy” at least in Basilisk 2025.02.22 and Pale Moon 33.7).<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Fixed compatibility with multi-process mode (Electrolysis aka e10s) in Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

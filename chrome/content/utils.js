@@ -55,7 +55,7 @@ var linkPropsPlusUtils = {
 			}
 		}
 		return window.openDialog(
-			"chrome://linkpropsplus/content/ownWindow.xul",
+			"chrome://linkpropsplus/content/properties.xul",
 			"_blank",
 			"chrome,resizable,centerscreen,dialog=0",
 			options

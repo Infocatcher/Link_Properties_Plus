@@ -205,7 +205,7 @@ var linkPropsPlusWnd = {
 	updArgs: function() {
 		var uri = this.uri;
 		var referer = this.referer || "";
-		var loc = location.href;
+		var loc = location.href.replace(/\/ownWindow\.xul/, "/properties.xul");
 		var url = loc.replace(/\?.*$/, "");
 		if(uri || referer)
 			url += "?uri=" + encodeURIComponent(uri) + "&referer=" + encodeURIComponent(referer);

@@ -9,6 +9,8 @@ overlay chrome://browser/content/pageinfo/pageInfo.xul chrome://linkpropsplus/co
 # Element Properties 4+ https://addons.mozilla.org/firefox/addon/element-properties/
 overlay chrome://properties_darktrojan_net/content/metaData.xul chrome://linkpropsplus/content/overlayMetaData.xul
 
+override chrome://linkpropsplus/content/ownWindow.xul chrome://linkpropsplus/content/properties.xul
+
 # SeaMonkey:
 overlay chrome://navigator/content/navigator.xul chrome://linkpropsplus/content/overlayMainWindow.xul
 overlay chrome://navigator/content/metadata.xul chrome://linkpropsplus/content/overlayMetaData.xul

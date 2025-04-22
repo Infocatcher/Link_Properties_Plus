@@ -1689,11 +1689,11 @@ var linkPropsPlusSvc = {
 			var cd = document.commandDispatcher;
 			if(cd.focusedWindow != contentWindow)
 				contentWindow.focus();
+			var sel = contentWindow.getSelection();
 			Array.prototype.forEach.call(cm.getElementsByAttribute("lpp_cmd", "*"), function(mi) {
 				var cmd = mi.getAttribute("lpp_cmd");
 				var controller = cd.getControllerForCommand(cmd);
 				var isEnabled = controller.isCommandEnabled(cmd);
-				var sel = contentWindow.getSelection();
 				if(cmd == "cmd_copy" && isEnabled && sel.isCollapsed)
 					isEnabled = false;
 				else if(

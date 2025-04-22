@@ -2127,6 +2127,8 @@ var linkPropsPlusSvc = {
 		for(var errName in cr)
 			if(cr[errName] == code)
 				return errName;
+		if(!("NS_ERROR_UNKNOWN_HOST" in cr) && code == 2152398878)
+			return "NS_ERROR_UNKNOWN_HOST";
 		return (Components.isSuccessCode(code) ? "" : "Error ") + code;
 	},
 

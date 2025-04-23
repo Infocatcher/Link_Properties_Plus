@@ -2022,7 +2022,9 @@ var linkPropsPlusSvc = {
 		try {
 			if(request instanceof Components.interfaces.nsIHttpChannel) {
 				try {
-					var statusStr = request.responseStatus + " " + request.responseStatusText;
+					var respStatus = request.responseStatus;
+					var respStatusText = request.responseStatusText;
+					var statusStr = respStatus + " " + respStatusText;
 				}
 				catch(e) { // Will try extract something from nsIRequest
 					Components.utils.reportError(e);
@@ -2052,7 +2054,7 @@ var linkPropsPlusSvc = {
 					&& headers["accept-ranges"] == "bytes"
 					&& "content-length" in headers
 					&& headers["content-length"] > 0;
-				this.formatStatus(request.responseStatus, request.responseStatusText, canResumeDownload);
+				this.formatStatus(respStatus || statusStr, respStatusText, canResumeDownload);
 			}
 			else {
 				var canResumeDownload = request instanceof Components.interfaces.nsIResumableChannel

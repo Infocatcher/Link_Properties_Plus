@@ -2021,21 +2021,10 @@ var linkPropsPlusSvc = {
 		this.checkHeadersChanges(ch, this._requestSection, this._headers);
 		try {
 			if(request instanceof Components.interfaces.nsIHttpChannel) {
-				try {
-					var respStatus = request.responseStatus;
-					var respStatusText = request.responseStatusText;
-					var statusStr = respStatus + " " + respStatusText;
-				}
-				catch(e) { // Will try extract something from nsIRequest
-					Components.utils.reportError(e);
-					var status = request.status;
-					statusStr = this.getErrorName(status);
-					if(!Components.isSuccessCode(status))
-						this.requestFailed("unknownHost");
-				}
+				var rs = this.getRequestStatus(request);
 				this.headers.caption(this.ut.getLocalized("response"));
 				this.headers.beginSection();
-				this.headers.entry("Status", statusStr);
+				this.headers.entry("Status", rs.statusText);
 				var headers = this._headers = { __proto__: null };
 				try {
 					request.visitResponseHeaders(this);
@@ -2059,7 +2048,7 @@ var linkPropsPlusSvc = {
 					&& headers["accept-ranges"] == "bytes"
 					&& "content-length" in headers
 					&& headers["content-length"] > 0;
-				this.formatStatus(respStatus || statusStr, respStatusText, canResumeDownload);
+				this.formatStatus(rs.responseStatus || rs.statusText, rs.responseStatusText, canResumeDownload);
 			}
 			else {
 				var canResumeDownload = request instanceof Components.interfaces.nsIResumableChannel
@@ -2108,6 +2097,25 @@ var linkPropsPlusSvc = {
 		//	this.checkChannelResumable(request);
 
 		this.onStopRequestCallback(true);
+	},
+	getRequestStatus: function(request) {
+		try {
+			var respStatus = request.responseStatus;
+			var respStatusText = request.responseStatusText;
+			var statusStr = respStatus + " " + respStatusText;
+		}
+		catch(e) { // Will try extract something from nsIRequest
+			Components.utils.reportError(e);
+			var status = request.status;
+			statusStr = this.getErrorName(status);
+			if(!Components.isSuccessCode(status))
+				this.requestFailed("unknownHost");
+		}
+		return {
+			responseStatus: respStatus,
+			responseStatusText: respStatusText,
+			statusText: statusStr
+		};
 	},
 	checkHeadersChanges: function(ch, section, oldHeaders) {
 		if(ch && section && oldHeaders && ch instanceof Components.interfaces.nsIHttpChannel) try {

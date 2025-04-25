@@ -2037,7 +2037,12 @@ var linkPropsPlusSvc = {
 				this.headers.beginSection();
 				this.headers.entry("Status", statusStr);
 				var headers = this._headers = { __proto__: null };
-				request.visitResponseHeaders(this);
+				try {
+					request.visitResponseHeaders(this);
+				}
+				catch(e) {
+					Components.utils.reportError(e);
+				}
 				this.headers.endSection();
 				if(
 					"x-archive-orig-last-modified" in headers // Used by http://archive.org/

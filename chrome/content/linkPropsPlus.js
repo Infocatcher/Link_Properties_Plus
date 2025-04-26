@@ -2021,7 +2021,7 @@ var linkPropsPlusSvc = {
 		this.checkHeadersChanges(ch, this._requestSection, this._headers);
 		try {
 			if(request instanceof Components.interfaces.nsIHttpChannel) {
-				var rs = this.getRequestStatus(request);
+				var rs = this.getRequestStatus(request, true);
 				this.headers.caption(this.ut.getLocalized("response"));
 				this.headers.beginSection();
 				this.headers.entry("Status", rs.statusText);
@@ -2098,7 +2098,7 @@ var linkPropsPlusSvc = {
 
 		this.onStopRequestCallback(true);
 	},
-	getRequestStatus: function(request) {
+	getRequestStatus: function(request, isMain) {
 		try {
 			var respStatus = request.responseStatus;
 			var respStatusText = request.responseStatusText;
@@ -2108,7 +2108,7 @@ var linkPropsPlusSvc = {
 			Components.utils.reportError(e);
 			var status = request.status;
 			statusStr = this.getErrorName(status);
-			if(!Components.isSuccessCode(status))
+			if(isMain && !Components.isSuccessCode(status))
 				this.requestFailed("unknownHost");
 		}
 		return {
@@ -2204,10 +2204,10 @@ var linkPropsPlusSvc = {
 			onStopRequest: function(request, ctxt, status) {
 				if(!this.canceled && request instanceof Components.interfaces.nsIHttpChannel) try {
 					var headers = this.parent.headers;
-					var statusStr = request.responseStatus + " " + request.responseStatusText;
+					var rs = this.parent.getRequestStatus(request);
 					headers.caption(this.parent.ut.getLocalized("testResumabilityResponse"), "caption testResume");
 					headers.beginSection("block testResume");
-					headers.entry("Status", statusStr);
+					headers.entry("Status", rs.statusText);
 					request.visitResponseHeaders(this);
 					headers.endSection();
 				}

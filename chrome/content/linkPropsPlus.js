@@ -2208,7 +2208,12 @@ var linkPropsPlusSvc = {
 					headers.caption(this.parent.ut.getLocalized("testResumabilityResponse"), "caption testResume");
 					headers.beginSection("block testResume");
 					headers.entry("Status", rs.statusText);
-					request.visitResponseHeaders(this);
+					try {
+						request.visitResponseHeaders(this);
+					}
+					catch(e) {
+						Components.utils.reportError(e);
+					}
 					headers.endSection();
 				}
 				catch(e) {

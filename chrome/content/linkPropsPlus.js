@@ -1491,8 +1491,15 @@ var linkPropsPlusSvc = {
 			return section;
 		},
 		getTip: function(name, value) {
-			if(name.toLowerCase() == "host" && /^xn--/.test(value)) try {
+			var nl = name.toLowerCase();
+			if(nl == "host" && /^xn--/.test(value)) try {
 				return this.parent.makeURI("http://" + value).host;
+			}
+			catch(e) {
+				Components.utils.reportError(e);
+			}
+			if(nl == "referer" && /^https?:\/\/xn--/.test(value)) try {
+				return this.parent.makeURI(value).spec;
 			}
 			catch(e) {
 				Components.utils.reportError(e);

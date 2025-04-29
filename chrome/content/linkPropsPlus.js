@@ -1504,7 +1504,7 @@ var linkPropsPlusSvc = {
 			catch(e) {
 				Components.utils.reportError(e);
 			}
-			if(/content-length$/i.test(name) && /^\d+$/.test(value))
+			if(/content-length$/.test(nl) && /^\d+$/.test(value))
 				return this.parent.getSizeStr(value);
 			if(/ \d\d?:\d\d?:\d\d? GMT$/.test(value)) {
 				var dt = new Date(value);

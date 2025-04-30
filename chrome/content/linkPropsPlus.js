@@ -1498,7 +1498,7 @@ var linkPropsPlusSvc = {
 			catch(e) {
 				Components.utils.reportError(e);
 			}
-			if(nl == "referer" && /^https?:\/\/xn--/.test(value)) try {
+			if(/^https?:\/\/xn--\S*$/i.test(value)) try {
 				return this.parent.makeURI(value).spec;
 			}
 			catch(e) {

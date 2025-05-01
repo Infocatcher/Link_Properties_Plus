@@ -1492,7 +1492,7 @@ var linkPropsPlusSvc = {
 		},
 		getTip: function(name, value) {
 			var nl = name.toLowerCase();
-			if(nl == "host" && /^xn--/.test(value)) try {
+			if(/(?:^|-)host$/.test(nl) && /^xn--/.test(value)) try {
 				return this.parent.makeURI("http://" + value).host;
 			}
 			catch(e) {
@@ -1504,7 +1504,7 @@ var linkPropsPlusSvc = {
 			catch(e) {
 				Components.utils.reportError(e);
 			}
-			if(/content-length$/.test(nl) && /^\d+$/.test(value))
+			if(/(?:^|-)content-length$/.test(nl) && /^\d+$/.test(value))
 				return this.parent.getSizeStr(value);
 			if(/ \d\d?:\d\d?:\d\d? GMT$/.test(value)) {
 				var dt = new Date(value);

@@ -1499,7 +1499,7 @@ var linkPropsPlusSvc = {
 				Components.utils.reportError(e);
 			}
 			if(/^https?:\/\/xn--\S*$/i.test(value)) try {
-				return this.parent.makeURI(value).spec;
+				return this.parent.ut.decodeURI(this.parent.makeURI(value).spec);
 			}
 			catch(e) {
 				Components.utils.reportError(e);

@@ -1504,6 +1504,8 @@ var linkPropsPlusSvc = {
 			catch(e) {
 				Components.utils.reportError(e);
 			}
+			if(/^https?:\/\/\S*%[0-9A-F]{2}\S*$/i.test(value))
+				return this.parent.ut.decodeURI(value);
 			if(/(?:^|-)content-length$/.test(nl) && /^\d+$/.test(value))
 				return this.parent.getSizeStr(value);
 			if(/ \d\d?:\d\d?:\d\d? GMT$/.test(value)) {

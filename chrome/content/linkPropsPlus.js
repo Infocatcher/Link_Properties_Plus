@@ -1498,13 +1498,13 @@ var linkPropsPlusSvc = {
 			catch(e) {
 				Components.utils.reportError(e);
 			}
-			if(/^https?:\/\/xn--\S*$/i.test(value)) try {
+			if(/^(?:ht|f)tps?:\/\/xn--\S*$/i.test(value)) try {
 				return this.parent.ut.decodeURI(this.parent.makeURI(value).spec);
 			}
 			catch(e) {
 				Components.utils.reportError(e);
 			}
-			if(/^https?:\/\/\S*%[0-9A-F]{2}\S*$/i.test(value))
+			if(/^(?:ht|f)tps?:\/\/\S*%[0-9A-F]{2}\S*$/i.test(value))
 				return this.parent.ut.decodeURI(value);
 			if(/(?:^|-)content-length$/.test(nl) && /^\d+$/.test(value))
 				return this.parent.getSizeStr(value);

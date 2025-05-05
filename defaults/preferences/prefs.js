@@ -40,6 +40,7 @@ pref("extensions.linkPropertiesPlus.testDownloadResumability.showHttpHeaders", f
 pref("extensions.linkPropertiesPlus.sizePrecision", 2);
 pref("extensions.linkPropertiesPlus.useBinaryPrefixes", true);
 pref("extensions.linkPropertiesPlus.decodeURIs", true);
+pref("extensions.linkPropertiesPlus.decodeURIs.tips", true);
 pref("extensions.linkPropertiesPlus.closeAfterOpen", true);
 pref("extensions.linkPropertiesPlus.showLinkButtons", 1); // 0 - don't show, 1 - hide, if direct link are the same, 2 - always show
 pref("extensions.linkPropertiesPlus.openInChildTab", true);

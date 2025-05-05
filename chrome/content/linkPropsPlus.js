@@ -1499,13 +1499,13 @@ var linkPropsPlusSvc = {
 				Components.utils.reportError(e);
 			}
 			if(/^(?:ht|f)tps?:\/\/xn--\S*$/i.test(value)) try {
-				return this.parent.ut.decodeURI(this.parent.makeURI(value).spec);
+				return this.parent.ut.decodeURI(this.parent.makeURI(value).spec, true);
 			}
 			catch(e) {
 				Components.utils.reportError(e);
 			}
 			if(/^(?:ht|f)tps?:\/\/\S*%[0-9A-F]{2}\S*$/i.test(value))
-				return this.parent.ut.decodeURI(value);
+				return this.parent.ut.decodeURI(value, true);
 			if(/(?:^|-)content-length$/.test(nl) && /^\d+$/.test(value))
 				return this.parent.getSizeStr(value);
 			if(/ \d\d?:\d\d?:\d\d? GMT$/.test(value)) {

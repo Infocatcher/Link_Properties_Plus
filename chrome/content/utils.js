@@ -145,8 +145,8 @@ var linkPropsPlusUtils = {
 		}
 		return "";
 	},
-	decodeURI: function(uri) {
-		if(!this.pu.get("decodeURIs"))
+	decodeURI: function(uri, tip) {
+		if(!this.pu.get(tip ? "decodeURIs.tips" : "decodeURIs"))
 			return uri;
 
 		var win = this.wm.getMostRecentWindow("navigator:browser");

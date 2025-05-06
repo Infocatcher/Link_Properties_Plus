@@ -370,6 +370,8 @@ var linkPropsPlusSvc = {
 			if(this.isOwnWindow)
 				this.wnd.setTitle();
 		}
+		else if(pName == "decodeURIs.tips")
+			this.headers.updateTooltips();
 		else if(pName == "testDownloadResumability") {
 			if(this.testResumability)
 				this.checkChannelResumable(this.channel);
@@ -1619,8 +1621,12 @@ var linkPropsPlusSvc = {
 			node.className = nodeClass;
 			if(nodeText)
 				node.appendChild(document.createTextNode(nodeText));
-			if(nodeTitle)
-				node.title = nodeTitle;
+			if(nodeTitle) {
+				if(nodeTitle == nodeText)
+					node.setAttribute("lpp_title", nodeTitle);
+				else
+					node.title = nodeTitle;
+			}
 			return node;
 		},
 		_append: function(node) {
@@ -1643,14 +1649,20 @@ var linkPropsPlusSvc = {
 			var nodes = this.field.getElementsByTagName("span");
 			for(var i = 0, l = nodes.length; i < l; ++i) {
 				var node = nodes[i];
-				var ttl = node.title;
+				var ttl = node.title || node.getAttribute("lpp_title");
 				if(!ttl)
 					continue;
 				var name = node.parentNode.firstChild.textContent;
 				var value = node.textContent;
 				var newTtl = this.getTip(name, value);
-				if(newTtl != ttl)
+				if(newTtl == value) {
+					node.removeAttribute("title");
+					node.setAttribute("lpp_title", newTtl);
+				}
+				else if(newTtl != ttl) {
 					node.title = newTtl;
+					node.removeAttribute("lpp_title");
+				}
 			}
 		},
 		createMenu: function() {

@@ -1494,13 +1494,13 @@ var linkPropsPlusSvc = {
 		},
 		getTip: function(name, value) {
 			var nl = name.toLowerCase();
-			if(/(?:^|-)host$/.test(nl) && /^xn--/.test(value)) try {
+			if(/(?:^|-)host$/.test(nl) && /^(?:[a-zA-Z\d-]+\.)*xn--/.test(value)) try {
 				return this.parent.makeURI("http://" + value).host;
 			}
 			catch(e) {
 				Components.utils.reportError(e);
 			}
-			if(/^(?:ht|f)tps?:\/\/xn--\S*$/i.test(value)) try {
+			if(/^(?:ht|f)tps?:\/\/(?:[a-z\d-]+\.)*xn--\S*$/i.test(value)) try {
 				return this.parent.ut.decodeURI(this.parent.makeURI(value).spec, true);
 			}
 			catch(e) {

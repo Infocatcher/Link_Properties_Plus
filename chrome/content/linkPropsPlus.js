@@ -2055,10 +2055,13 @@ var linkPropsPlusSvc = {
 				}
 				this.headers.endSection();
 				if(
-					"x-archive-orig-last-modified" in headers // Used by http://archive.org/
+					(
+						"x-archive-orig-last-modified" in headers // Used by http://archive.org/
+						|| "memento-datetime" in headers // https://archive.fo/ or https://archive.org/
+					)
 					&& !("last-modified" in headers) // Prefer original header, if available
 				)
-					this.formatDate(headers["x-archive-orig-last-modified"]);
+					this.formatDate(headers["x-archive-orig-last-modified"] || headers["memento-datetime"]);
 				if(
 					"x-archive-orig-content-length" in headers // Used by http://archive.org/
 					&& !("content-length" in headers) // Prefer original header, if available

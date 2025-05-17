@@ -2054,19 +2054,17 @@ var linkPropsPlusSvc = {
 					Components.utils.reportError(e);
 				}
 				this.headers.endSection();
-				if(
-					(
-						"x-archive-orig-last-modified" in headers // Used by http://archive.org/
-						|| "memento-datetime" in headers // https://archive.fo/ or https://archive.org/
-					)
-					&& !("last-modified" in headers) // Prefer original header, if available
-				)
-					this.formatDate(headers["x-archive-orig-last-modified"] || headers["memento-datetime"]);
-				if(
-					"x-archive-orig-content-length" in headers // Used by http://archive.org/
-					&& !("content-length" in headers) // Prefer original header, if available
-				)
-					this.formatSize(headers["x-archive-orig-content-length"]);
+				if(!("last-modified" in headers)) {
+					var arch = headers["x-archive-orig-last-modified"] // https://archive.org/
+						|| headers["memento-datetime"] // https://archive.fo/ or https://archive.org/
+						|| null;
+					arch && this.formatDate(arch);
+				}
+				if(!("content-length" in headers)) {
+					var arch = headers["x-archive-orig-content-length"] // https://archive.org/
+						|| null;
+					arch && this.formatSize(arch);
+				}
 				var canResumeDownload = request instanceof Components.interfaces.nsIResumableChannel
 					&& "accept-ranges" in headers
 					&& headers["accept-ranges"] == "bytes"

@@ -31,6 +31,7 @@
 `+` Добавлена базовая поддержка для chrome://linkpropsplus/content/properties.xul во вкладке (ссылка должна быть открыта вручную).<br>
 `x` Принудительно исправлено отключение пунктов контекстного меню «Копировать» и «Выделить всё» фрейма заголовков HTTP (похоже на ошибку в реализации nsIController.isCommandEnabled() для «cmd_copy», как минимум, в Basilisk 2025.02.22 и Pale Moon 33.7).<br>
 `x` Исправлена обработка ошибок запроса в случае невозможности полноценного открытия nsIHttpChannel.<br>
+`+` Добавлена поддержка заголовка «<a href="https://www.rfc-editor.org/rfc/rfc7089.html#section-2.1.1">Memento-Datetime</a>».<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Исправлена совместимость с мультипроцессным режимом (Electrolysis aka e10s) в Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

@@ -31,6 +31,7 @@
 `+` Added basic support for chrome://linkpropsplus/content/properties.xul in tab (should be opened manually).<br>
 `x` Force fixed disabled state for “Copy” and “Select All” context menu items in HTTP headers frame (looks like bug in nsIController.isCommandEnabled() implementation for “cmd_copy” at least in Basilisk 2025.02.22 and Pale Moon 33.7).<br>
 `x` Fixed request error handling in case of not completely opened nsIHttpChannel.<br>
+`+` Added support for “<a href="https://www.rfc-editor.org/rfc/rfc7089.html#section-2.1.1">Memento-Datetime</a>” header.<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Fixed compatibility with multi-process mode (Electrolysis aka e10s) in Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

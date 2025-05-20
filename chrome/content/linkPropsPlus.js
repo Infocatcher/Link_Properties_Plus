@@ -1954,28 +1954,25 @@ var linkPropsPlusSvc = {
 			}
 			var types = [];
 			var flags = redirect.flags;
+			var unknownFlags = flags;
 			// See https://dxr.mozilla.org/mozilla-central/source/netwerk/base/nsIChannelEventSink.idl
 			var ces = Components.interfaces.nsIChannelEventSink;
-			if(flags & ces.REDIRECT_TEMPORARY)
-				types.push(this.ut.getLocalized("temporary"));
-			if(flags & ces.REDIRECT_PERMANENT)
-				types.push(this.ut.getLocalized("permanent"));
-			if(flags & ces.REDIRECT_INTERNAL)
-				types.push(this.ut.getLocalized("internal"));
-			if(flags & (ces.REDIRECT_STS_UPGRADE || 0))
-				types.push(this.ut.getLocalized("HSTS"));
-			if(flags & (ces.REDIRECT_AUTH_RETRY || 0))
-				types.push(this.ut.getLocalized("auth"));
-			if(flags & (ces.REDIRECT_TRANSPARENT || 0))
-				types.push(this.ut.getLocalized("transparent"));
-			var unknownFlags = flags & ~(
-				ces.REDIRECT_TEMPORARY
-				| ces.REDIRECT_PERMANENT
-				| ces.REDIRECT_INTERNAL
-				| (ces.REDIRECT_STS_UPGRADE || 0)
-				| (ces.REDIRECT_AUTH_RETRY || 0)
-				| (ces.REDIRECT_TRANSPARENT || 0)
-			);
+			var redirect = {
+				temporary:   ces.REDIRECT_TEMPORARY,
+				permanent:   ces.REDIRECT_PERMANENT,
+				internal:    ces.REDIRECT_INTERNAL,
+				HSTS:        ces.REDIRECT_STS_UPGRADE || 0,
+				auth:        ces.REDIRECT_AUTH_RETRY  || 0,
+				transparent: ces.REDIRECT_TRANSPARENT || 0,
+				__proto__: null
+			};
+			for(var type in redirect) {
+				var flag = redirect[type];
+				if(flags & flag) {
+					types.push(this.ut.getLocalized(type));
+					unknownFlags &= ~flag;
+				}
+			}
 			unknownFlags && this.ut.warning("Unknown nsIChannelEventSink flag(s): 0b" + unknownFlags.toString(2));
 			var type = types.join(this.ut.getLocalized("separator").slice(1, -1));
 			return this.ut.getLocalized("redirectInfo", [type, this.ut.decodeURI(uri)]);

@@ -1957,7 +1957,7 @@ var linkPropsPlusSvc = {
 			var unknownFlags = flags;
 			// See https://dxr.mozilla.org/mozilla-central/source/netwerk/base/nsIChannelEventSink.idl
 			var ces = Components.interfaces.nsIChannelEventSink;
-			var redirect = {
+			var knownFlags = {
 				temporary:   ces.REDIRECT_TEMPORARY,
 				permanent:   ces.REDIRECT_PERMANENT,
 				internal:    ces.REDIRECT_INTERNAL,
@@ -1966,8 +1966,8 @@ var linkPropsPlusSvc = {
 				transparent: ces.REDIRECT_TRANSPARENT || 0,
 				__proto__: null
 			};
-			for(var type in redirect) {
-				var flag = redirect[type];
+			for(var type in knownFlags) {
+				var flag = knownFlags[type];
 				if(flags & flag) {
 					types.push(this.ut.getLocalized(type));
 					unknownFlags &= ~flag;

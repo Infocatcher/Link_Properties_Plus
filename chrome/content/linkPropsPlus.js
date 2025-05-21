@@ -2320,24 +2320,24 @@ var linkPropsPlusSvc = {
 	cancellingTimer: 0,
 	cancel: function() {
 		var ch = this.channel;
-		if(ch && this.activeRequest) {
-			this.channel = null;
-
-			// Allow press Escape twice to cancel request and close window
-			this.cancelling = true;
-			clearTimeout(this.cancellingTimer);
-			this.cancellingTimer = setTimeout(function(_this) {
-				_this.cancelling = false;
-			}, this.blockEscapeKeyDelay, this);
-
-			ch.cancel(this.abortReason);
-			this.fillInBlank();
-			//if(this.channel instanceof Components.interfaces.nsIFTPChannel)
-			this.onStopRequest(ch);
-			return true;
+		if(!ch || !this.activeRequest) {
+			this.cancelCheckChannelResumable();
+			return false;
 		}
-		this.cancelCheckChannelResumable();
-		return false;
+		this.channel = null;
+
+		// Allow press Escape twice to cancel request and close window
+		this.cancelling = true;
+		clearTimeout(this.cancellingTimer);
+		this.cancellingTimer = setTimeout(function(_this) {
+			_this.cancelling = false;
+		}, this.blockEscapeKeyDelay, this);
+
+		ch.cancel(this.abortReason);
+		this.fillInBlank();
+		//if(this.channel instanceof Components.interfaces.nsIFTPChannel)
+		this.onStopRequest(ch);
+		return true;
 	}
 };
 linkPropsPlusSvc.instantInit();

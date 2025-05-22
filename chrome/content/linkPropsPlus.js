@@ -2290,6 +2290,14 @@ var linkPropsPlusSvc = {
 				&& new Error().stack.indexOf("@chrome://privatetab/content/protocol.") != -1 // js or jsm
 		)
 			return this;
+		for(var p in Components.interfaces) {
+			var i = Components.interfaces[p];
+			if(i && i.equals && iid.equals(i)) {
+				var iif = p;
+				break;
+			}
+		}
+		this.ut.console.logStringMessage("[Link Properties Plus]: getInterface " + iid + " " + iif);
 		throw Components.results.NS_ERROR_NO_INTERFACE;
 	},
 	// nsIChannelEventSink

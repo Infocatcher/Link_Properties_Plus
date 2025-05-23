@@ -93,3 +93,5 @@ pref("extensions.linkPropertiesPlus.key.contextMenu", "control shift c");
 pref("extensions.linkPropertiesPlus.key.closeOtherWindows", "shift VK_ESCAPE");
 
 pref("extensions.linkPropertiesPlus.prefsVersion", 0);
+
+pref("extensions.linkPropertiesPlus.debug", false);

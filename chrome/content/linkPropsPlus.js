@@ -2297,7 +2297,7 @@ var linkPropsPlusSvc = {
 				break;
 			}
 		}
-		this.ut.console.logStringMessage("[Link Properties Plus]: getInterface " + iid + " " + iif);
+		this.ut._log("getInterface " + iid + " " + iif);
 		throw Components.results.NS_ERROR_NO_INTERFACE;
 	},
 	// nsIChannelEventSink

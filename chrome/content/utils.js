@@ -265,13 +265,18 @@ var linkPropsPlusUtils = {
 		return this.console = Components.classes["@mozilla.org/consoleservice;1"]
 			.getService(Components.interfaces.nsIConsoleService);
 	},
+	_logPrefix: "[Link Properties Plus]: ",
+	_log: function(msg) {
+		if(this.pu.get("debug"))
+			this.console.logStringMessage(this._logPrefix + msg);
+	},
 	error: function(msg, caller, isWarning) {
 		if(!caller)
 			caller = Components.stack.caller;
 		var err = Components.classes["@mozilla.org/scripterror;1"]
 			.createInstance(Components.interfaces.nsIScriptError);
 		err.init(
-			"[Link Properties Plus]: " + msg,
+			this._logPrefix + msg,
 			caller.filename || caller.fileName, // Allow use new Error() as caller
 			null,
 			caller.lineNumber || 0,

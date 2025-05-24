@@ -267,7 +267,7 @@ var linkPropsPlusUtils = {
 	},
 	_logPrefix: "[Link Properties Plus]: ",
 	_log: function(msg) {
-		if(this.pu.get("debug"))
+		if(this.pu.debug)
 			this.console.logStringMessage(this._logPrefix + msg);
 	},
 	error: function(msg, caller, isWarning) {

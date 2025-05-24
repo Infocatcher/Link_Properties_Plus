@@ -8,6 +8,10 @@ var linkPropsPlusPrefUtils = {
 			.getService(Components.interfaces.nsIPrefService)
 			.QueryInterface(Components.interfaces.nsIPrefBranch2 || Components.interfaces.nsIPrefBranch);
 	},
+	get debug() {
+		delete this.debug;
+		return this.debug = this.get("debug");
+	},
 
 	init: function() {
 		try {
@@ -63,6 +67,10 @@ var linkPropsPlusPrefUtils = {
 					o.prefsChanged(shortName, val);
 			}
 		);
+		if(shortName == "debug") {
+			delete this.debug;
+			this.debug = val;
+		}
 	},
 
 	_prefs: { __proto__: null },

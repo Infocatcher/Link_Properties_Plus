@@ -404,31 +404,30 @@ var linkPropsPlusSvc = {
 			forceTestResumability = opts.forceTestResumability || undefined;
 			requestMethod         = opts.requestMethod         || undefined;
 		}
-		if(clear)
-			this.clearResults();
-		if(this.request(bypassCache, requestMethod)) {
-			var lppBox = this.lppBox;
-			lppBox.removeAttribute("hidden");
-			this.requestFinished = false;
-			if(!this.pu.get("autoClose.onlyAfterRequest"))
-				this.restartAutoClose();
-			else {
-				this.cancelDelayedClose();
-				this.destroyAutoClose();
-			}
-			this.$l("rowHeaders").setAttribute(
-				"lpp_notAvailable",
-				!(this.channel instanceof Components.interfaces.nsIHttpChannel)
-			);
-			var lcr = this._lastCanResume || null;
-			var testResumability = forceTestResumability || this.testResumability;
-			if(lcr || testResumability) setTimeout(function(_this, channel) {
-				if(lcr && lcr.uri == _this.requestURI && !forceTestResumability)
-					_this.formatCanResumeDownload(lcr.canResume, lcr.isTested);
-				else if(testResumability)
-					_this.checkChannelResumable(channel);
-			}, 0, this, this.channel);
+		clear && this.clearResults();
+		if(!this.request(bypassCache, requestMethod))
+			return;
+		var lppBox = this.lppBox;
+		lppBox.removeAttribute("hidden");
+		this.requestFinished = false;
+		if(!this.pu.get("autoClose.onlyAfterRequest"))
+			this.restartAutoClose();
+		else {
+			this.cancelDelayedClose();
+			this.destroyAutoClose();
 		}
+		this.$l("rowHeaders").setAttribute(
+			"lpp_notAvailable",
+			!(this.channel instanceof Components.interfaces.nsIHttpChannel)
+		);
+		var lcr = this._lastCanResume || null;
+		var testResumability = forceTestResumability || this.testResumability;
+		if(lcr || testResumability) setTimeout(function(_this, channel) {
+			if(lcr && lcr.uri == _this.requestURI && !forceTestResumability)
+				_this.formatCanResumeDownload(lcr.canResume, lcr.isTested);
+			else if(testResumability)
+				_this.checkChannelResumable(channel);
+		}, 0, this, this.channel);
 	},
 	sendGetRequest: function(e) {
 		var svc = window.linkPropsPlusWnd || this;

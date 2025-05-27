@@ -430,7 +430,7 @@ var linkPropsPlusSvc = {
 		}, 0, this, this.channel);
 	},
 	sendGetRequest: function(e) {
-		var svc = window.linkPropsPlusWnd || this;
+		var svc = this.wnd || this;
 		svc.getHeaders({
 			clear: !e || !(
 				e.shiftKey
@@ -438,10 +438,8 @@ var linkPropsPlusSvc = {
 			),
 			requestMethod: "GET"
 		});
-		if(e) {
-			var menu = e.target.parentNode;
-			menu.hidePopup && menu.hidePopup();
-		}
+		var menu = e && e.target.parentNode;
+		menu && menu.hidePopup && menu.hidePopup();
 	},
 	clearResults: function() {
 		Array.prototype.forEach.call(

@@ -955,6 +955,7 @@ var linkPropsPlusSvc = {
 
 		try {
 			_uri = this.checkFakeURINeeded(_uri);
+			this.ut._log("Request: " + _uri);
 
 			var uri = this.makeURI(_uri); //~ todo: specify charset ?
 			var schm = uri.scheme && uri.scheme.toLowerCase();
@@ -2009,6 +2010,7 @@ var linkPropsPlusSvc = {
 		request.cancel(this.abortReason);
 		if(window.closed)
 			return;
+		this.ut._log("request() -> onDataAvailable(): something went wrong");
 		if(request.URI && request.URI.scheme == "data")
 			return;
 		this.realCount += count;
@@ -2209,6 +2211,7 @@ var linkPropsPlusSvc = {
 			},
 			// nsIStreamListener
 			onDataAvailable: function(request, ctxt, input, offset, count) {
+				this.parent.ut._log("checkChannelResumable() -> onDataAvailable(): " + count + " bytes");
 				var data = this.parent.getStreamData(input, count);
 				request.cancel(this.parent.abortReason);
 				this.setCanResumeDownload(!!data);

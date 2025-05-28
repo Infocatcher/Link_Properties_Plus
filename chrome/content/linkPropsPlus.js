@@ -2290,14 +2290,18 @@ var linkPropsPlusSvc = {
 				&& new Error().stack.indexOf("@chrome://privatetab/content/protocol.") != -1 // js or jsm
 		)
 			return this;
-		if(this.pu.debug) for(var p in Components.interfaces) {
-			var i = Components.interfaces[p];
-			if(i && i.equals && iid.equals(i)) {
-				var iif = p;
-				break;
+		if(this.pu.debug) {
+			for(var p in Components.interfaces) {
+				var i = Components.interfaces[p];
+				if(i && i.equals && iid.equals(i)) {
+					var iif = p;
+					break;
+				}
 			}
+			if(!iif && iid == "{1040ebe3-6ed1-45a6-8587-995e082518d7}")
+				iif = "nsISpeculativeConnectionOverrider";
+			this.ut._log("getInterface " + iid + " " + iif);
 		}
-		this.ut._log("getInterface " + iid + " " + iif);
 		throw Components.results.NS_ERROR_NO_INTERFACE;
 	},
 	// nsIChannelEventSink

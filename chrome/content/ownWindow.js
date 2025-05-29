@@ -274,7 +274,8 @@ var linkPropsPlusWnd = {
 		}
 		if(this.svc.isPrivate)
 			ttl += this.ut.getLocalized("privateTitleModifier");
-		document.title = ttl;
+		if(ttl != document.title)
+			document.title = ttl;
 	},
 	get btnHeaders() {
 		delete this.btnHeaders;

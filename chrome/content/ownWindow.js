@@ -252,7 +252,8 @@ var linkPropsPlusWnd = {
 				var curLen = 0;
 				var dirs = uri
 					.replace(/\/$/, "")
-					.replace(/^[^:]+:\/*[^\/]+\//, "") // Remove host: http://example.com/dir/ -> dir/
+					//.replace(/^[^:]+:\/*[^\/]+\//, "") // Remove host: http://example.com/dir/ -> dir/
+					.replace(/^[^:]+:\/*/, "") // Remove protocol: http://example.com/dir/ -> example.com/dir/
 					.split("/");
 				var last = dirs.length - 1;
 				if(last >= 0 && dirs[last] + lastSlash == fName) {

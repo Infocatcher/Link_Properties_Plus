@@ -244,7 +244,7 @@ var linkPropsPlusWnd = {
 				: uri;
 			if(
 				fName.length < crop*0.4
-				&& /^[^.\/?&:]+\/?$/.test(fName) // Looks like "directory": dir or dir/
+				&& /^[^\/?&:]+\/?$/.test(fName) // Looks like file or directory: file.ext or dir or dir/
 			) {
 				var lastSlash = uri.substr(-1) == "/" ? "/" : "";
 				var path = [];

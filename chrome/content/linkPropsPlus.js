@@ -932,6 +932,7 @@ var linkPropsPlusSvc = {
 
 	request: function(bypassCache, requestMethod) {
 		var _uri = this.requestURI = this.uri;
+		this.directURI = null;
 		if(!_uri)
 			return false;
 
@@ -1236,6 +1237,8 @@ var linkPropsPlusSvc = {
 	},
 
 	_uri: null,
+	requestURI: null,
+	directURI: null,
 	get uri() {
 		if(this.isOwnWindow)
 			return this.wnd.uri;
@@ -1975,6 +1978,7 @@ var linkPropsPlusSvc = {
 			var type = types.join(this.ut.getLocalized("separator").slice(1, -1));
 			return this.ut.getLocalized("redirectInfo", [type, this.ut.decodeURI(uri)]);
 		}, this).join(" \n");
+		this.isOwnWindow && this.wnd.setTitle();
 	},
 
 	fillInBlank: function() {
@@ -2110,7 +2114,7 @@ var linkPropsPlusSvc = {
 		if(this.realCount > 0)
 			this.formatSize(this.realCount.toString());
 		if(request instanceof Components.interfaces.nsIChannel && request.URI)
-			this.formatURI(request.URI.spec);
+			this.formatURI((this.directURI = request.URI.spec));
 		//if(this.testResumability)
 		//	this.checkChannelResumable(request);
 

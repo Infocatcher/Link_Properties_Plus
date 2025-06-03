@@ -248,12 +248,12 @@ var linkPropsPlusWnd = {
 			) {
 				var lastSlash = uri.substr(-1) == "/" ? "/" : "";
 				var path = [];
-				var maxLen = crop*0.6;
+				var maxLen = crop*0.7;
 				var curLen = 0;
 				var dirs = uri
 					.replace(/\/$/, "")
 					//.replace(/^[^:]+:\/*[^\/]+\//, "") // Remove host: http://example.com/dir/ -> dir/
-					.replace(/^[^:]+:\/*/, "") // Remove protocol: http://example.com/dir/ -> example.com/dir/
+					.replace(/^[^:]+:\/*(?:www\.)?/, "") // Remove protocol: http://www.example.com/dir/ -> example.com/dir/
 					.split("/");
 				var last = dirs.length - 1;
 				if(last >= 0 && dirs[last] + lastSlash == fName) {

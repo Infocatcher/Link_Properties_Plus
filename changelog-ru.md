@@ -34,6 +34,7 @@
 `+` Добавлена поддержка заголовка «<a href="https://www.rfc-editor.org/rfc/rfc7089.html#section-2.1.1">Memento-Datetime</a>».<br>
 `+` Добавлен вывод отладочных логов (отключен по умолчанию, настройка <em>extensions.linkPropertiesPlus.debug</em>).<br>
 `*` Окно свойств: добавлено отображение дополнительной информации в заголовке окна, если имя файла/папки слишком короткое.<br>
+`*` Окно свойств: улучшен алгоритм обрезания слишком длинных имен файлов в заголовке окна, теперь отдается предпочтение заданной в настройке <em>extensions.linkPropertiesPlus.ownWindow.cropFileNameInTitle</em> длине и оставляется часть пути перед именем файла.<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Исправлена совместимость с мультипроцессным режимом (Electrolysis aka e10s) в Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

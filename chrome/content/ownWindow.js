@@ -243,12 +243,12 @@ var linkPropsPlusWnd = {
 				? RegExp.lastMatch
 				: uri;
 			if(
-				fName.length < crop*0.4
+				fName.length < Math.max(crop*0.5, crop - 14)
 				&& /^[^\/?&:]+\/?$/.test(fName) // Looks like file or directory: file.ext or dir or dir/
 			) {
 				var lastSlash = uri.substr(-1) == "/" ? "/" : "";
 				var path = [];
-				var maxLen = crop*0.7;
+				var maxLen = Math.max(crop*0.7, crop - 20);
 				var curLen = 0;
 				var dirs = uri
 					.replace(/\/$/, "")

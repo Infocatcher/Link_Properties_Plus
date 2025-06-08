@@ -235,6 +235,15 @@ var linkPropsPlusWnd = {
 	},
 	setTitle: function() {
 		var ttl = this.baseTitle;
+		var fName = this.titleFileName;
+		if(fName)
+			ttl += " [" + fName + "]";
+		if(this.svc.isPrivate)
+			ttl += this.ut.getLocalized("privateTitleModifier");
+		if(ttl != document.title)
+			document.title = ttl;
+	},
+	get titleFileName() {
 		var uri = this.svc.directURI || this.svc.requestURI || this.uri;
 		var crop = this.pu.get("ownWindow.cropFileNameInTitle");
 		if(uri && crop > 0 && this.svc.isValidURI(uri)) {
@@ -271,12 +280,9 @@ var linkPropsPlusWnd = {
 				var half = Math.floor(crop/2);
 				fName = fName.substr(0, half) + "…" + fName.substr(half - crop);
 			}
-			ttl += " [" + fName + "]";
+			return fName;
 		}
-		if(this.svc.isPrivate)
-			ttl += this.ut.getLocalized("privateTitleModifier");
-		if(ttl != document.title)
-			document.title = ttl;
+		return "";
 	},
 	get btnHeaders() {
 		delete this.btnHeaders;

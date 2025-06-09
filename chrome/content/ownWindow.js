@@ -245,44 +245,45 @@ var linkPropsPlusWnd = {
 	},
 	get titleFileName() {
 		var uri = this.svc.directURI || this.svc.requestURI || this.uri;
+		if(!uri || !this.svc.isValidURI(uri))
+			return "";
 		var crop = this.pu.get("ownWindow.cropFileNameInTitle");
-		if(uri && crop > 0 && this.svc.isValidURI(uri)) {
-			var uri = this.ut.decodeURI(uri).replace(/#.*$/, "");
-			var fName = /([^\/\\]+\/?|[^\/\\]+\/\?.*?)$/.test(uri)
-				? RegExp.lastMatch
-				: uri;
-			if(
-				fName.length < Math.max(crop*0.5, crop - 14)
-				&& /^[^\/?&:]+\/?$/.test(fName) // Looks like file or directory: file.ext or dir or dir/
-			) {
-				var lastSlash = uri.substr(-1) == "/" ? "/" : "";
-				var path = [];
-				var maxLen = Math.max(crop*0.7, crop - 20);
-				var curLen = 0;
-				var dirs = uri
-					.replace(/\/$/, "")
-					//.replace(/^[^:]+:\/*[^\/]+\//, "") // Remove host: http://example.com/dir/ -> dir/
-					.replace(/^[^:]+:\/*(?:www\.)?/, "") // Remove protocol: http://www.example.com/dir/ -> example.com/dir/
-					.split("/");
-				var last = dirs.length - 1;
-				if(last >= 0 && dirs[last] + lastSlash == fName) {
-					for(var i = last; i >= 0; --i) {
-						var dir = dirs[i];
-						curLen += dir.length + 1;
-						if(curLen > maxLen)
-							break;
-						path.push(dir);
-					}
-					fName = path.reverse().join("/") + lastSlash; // Example: dir1/dir2/dir3/
+		if(crop <= 0)
+			return "";
+		var uri = this.ut.decodeURI(uri).replace(/#.*$/, "");
+		var fName = /([^\/\\]+\/?|[^\/\\]+\/\?.*?)$/.test(uri)
+			? RegExp.lastMatch
+			: uri;
+		if(
+			fName.length < Math.max(crop*0.5, crop - 14)
+			&& /^[^\/?&:]+\/?$/.test(fName) // Looks like file or directory: file.ext or dir or dir/
+		) {
+			var lastSlash = uri.substr(-1) == "/" ? "/" : "";
+			var path = [];
+			var maxLen = Math.max(crop*0.7, crop - 20);
+			var curLen = 0;
+			var dirs = uri
+				.replace(/\/$/, "")
+				//.replace(/^[^:]+:\/*[^\/]+\//, "") // Remove host: http://example.com/dir/ -> dir/
+				.replace(/^[^:]+:\/*(?:www\.)?/, "") // Remove protocol: http://www.example.com/dir/ -> example.com/dir/
+				.split("/");
+			var last = dirs.length - 1;
+			if(last >= 0 && dirs[last] + lastSlash == fName) {
+				for(var i = last; i >= 0; --i) {
+					var dir = dirs[i];
+					curLen += dir.length + 1;
+					if(curLen > maxLen)
+						break;
+					path.push(dir);
 				}
+				fName = path.reverse().join("/") + lastSlash; // Example: dir1/dir2/dir3/
 			}
-			if(fName.length > crop) {
-				var half = Math.floor(crop/2);
-				fName = fName.substr(0, half) + "…" + fName.substr(half - crop);
-			}
-			return fName;
 		}
-		return "";
+		if(fName.length > crop) {
+			var half = Math.floor(crop/2);
+			fName = fName.substr(0, half) + "…" + fName.substr(half - crop);
+		}
+		return fName;
 	},
 	get btnHeaders() {
 		delete this.btnHeaders;

@@ -43,8 +43,8 @@ var linkPropsPlusUtils = {
 			var svc = o && o.svc;
 			if(
 				svc
-				&& (o.uri || "") == _uri
-				&& (o.referer || "") == _referer
+				&& svc.compareURIs(o.uri || "", _uri)
+				&& svc.compareURIs(o.referer || "", _referer)
 				&& svc.isPrivate == this.isTabPrivate(options.parentWindow || null, options.sourceTab || null)
 			) {
 				w.focus();

@@ -1298,7 +1298,10 @@ var linkPropsPlusSvc = {
 	},
 	compareURIs: function(uri, uri2) {
 		try {
-			return this.makeURI(uri).equals(this.makeURI(uri2));
+			var u = this.makeURI(uri);
+			var u2 = this.makeURI(uri2);
+			return u.equals(u2)
+				|| u.asciiSpec == u2.asciiSpec;
 		}
 		catch(e) {
 		}

@@ -1043,7 +1043,7 @@ var linkPropsPlusSvc = {
 		return this.loadInfo = req.channel.loadInfo;
 	},
 	newChannelFromURI: function(uri, bypassCache) {
-		var ch = uri.scheme == "about" && "nsIAboutModule" in Components.interfaces
+		var ch = uri.schemeIs("about") && "nsIAboutModule" in Components.interfaces
 			? Components.classes[
 				"@mozilla.org/network/protocol/about;1?what="
 				+ (uri.path || uri.pathQueryRef || "").replace(/[?&#].*$/, "")
@@ -1290,7 +1290,8 @@ var linkPropsPlusSvc = {
 	},
 	get isHttp() {
 		try {
-			return /^https?:?$/i.test(this.makeURI(this.uri).scheme);
+			var u = this.makeURI(this.uri);
+			return u.schemeIs("http") || u.schemeIs("https");
 		}
 		catch(e) {
 		}
@@ -2018,7 +2019,7 @@ var linkPropsPlusSvc = {
 		if(window.closed)
 			return;
 		this.ut._log("request() -> onDataAvailable(): something went wrong");
-		if(request.URI && request.URI.scheme == "data")
+		if(request.URI && request.URI.schemeIs("data"))
 			return;
 		this.realCount += count;
 		this.headers.caption(this.ut.getLocalized("rawData"));

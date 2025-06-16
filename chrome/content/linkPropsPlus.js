@@ -959,13 +959,12 @@ var linkPropsPlusSvc = {
 			this.ut._log("Request: " + _uri);
 
 			var uri = this.makeURI(_uri); //~ todo: specify charset ?
-			var schm = uri.scheme && uri.scheme.toLowerCase();
 
 			var ph = Components.interfaces.nsIProtocolHandler;
 			if("URI_DOES_NOT_RETURN_DATA" in ph) { // Firefox 3+
-				var flags = this.ios.getProtocolFlags(schm);
+				var flags = this.ios.getProtocolFlags(uri.scheme);
 				if(flags & ph.URI_DOES_NOT_RETURN_DATA) {
-					this.ut.warning('URI_DOES_NOT_RETURN_DATA (scheme: "' + schm + '")');
+					this.ut.warning('URI_DOES_NOT_RETURN_DATA (scheme: "' + uri.scheme + '")');
 					this.requestFailed("noDataProtocol");
 					this.onStopRequestCallback(false);
 					return false;

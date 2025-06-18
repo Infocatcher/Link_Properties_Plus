@@ -14,16 +14,21 @@ catch(e) {
 }
 function commandHandler(e) {
 	var btn = e.target;
-	if(btn.className == "twisty") {
-		var show = btn.getAttribute("open") != "true";
-		toggleTwisty(btn, show);
-		if(e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) {
-			var twisties = document.getElementsByTagName("button");
-			for(var i = 0, l = twisties.length; i < l; ++i) {
-				var twisty = twisties[i];
-				if(twisty.className == "twisty" && twisty != btn)
-					toggleTwisty(twisty, show);
-			}
+	if(isTwisty(btn))
+		handleTwisty(btn, e.shiftKey || e.ctrlKey || e.altKey || e.metaKey);
+}
+function isTwisty(node) {
+	return node.className == "twisty";
+}
+function handleTwisty(btn, multiple) {
+	var show = btn.getAttribute("open") != "true";
+	toggleTwisty(btn, show);
+	if(multiple) {
+		var twisties = document.getElementsByTagName("button");
+		for(var i = 0, l = twisties.length; i < l; ++i) {
+			var twisty = twisties[i];
+			if(isTwisty(twisty) && twisty != btn)
+				toggleTwisty(twisty, show);
 		}
 	}
 }

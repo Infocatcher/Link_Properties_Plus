@@ -17,6 +17,17 @@ function commandHandler(e) {
 	if(isTwisty(btn))
 		handleTwisty(btn, e.shiftKey || e.ctrlKey || e.altKey || e.metaKey);
 }
+function clickHandler(e) {
+	var btn = e.target;
+	if(isTwisty(btn) && e.button == 1) {
+		if(e.type == "mousedown")
+			e.preventDefault(); // Prevent auto-scroll
+		else {
+			btn.focus();
+			handleTwisty(btn, true);
+		}
+	}
+}
 function isTwisty(node) {
 	return node.className == "twisty";
 }
@@ -54,9 +65,13 @@ function toggleTwisty(btn, show) {
 	btn.setAttribute("open", show);
 }
 window.addEventListener("command", commandHandler, true);
+window.addEventListener("mousedown", clickHandler, true);
+window.addEventListener("click", clickHandler, true);
 window.addEventListener("unload", function destroy(e) {
 	window.removeEventListener("unload", destroy, false);
 	window.removeEventListener("command", commandHandler, true);
+	window.removeEventListener("mousedown", clickHandler, true);
+	window.removeEventListener("click", clickHandler, true);
 	document.commandDispatcher = null;
 }, false);
 

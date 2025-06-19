@@ -15,11 +15,11 @@ catch(e) {
 function commandHandler(e) {
 	var btn = e.target;
 	if(isTwisty(btn))
-		handleTwisty(btn, e.shiftKey || e.ctrlKey || e.altKey || e.metaKey);
+		handleTwisty(btn, hasModifier(e));
 }
 function clickHandler(e) {
 	var btn = e.target;
-	if(isTwisty(btn) && e.button == 1) {
+	if(isTwisty(btn) && e.button == 1 && !hasModifier(e)) {
 		if(e.type == "mousedown")
 			e.preventDefault(); // Prevent auto-scroll
 		else {
@@ -27,6 +27,9 @@ function clickHandler(e) {
 			handleTwisty(btn, true);
 		}
 	}
+}
+function hasModifier(e) {
+	return e.shiftKey || e.ctrlKey || e.altKey || e.metaKey;
 }
 function isTwisty(node) {
 	return node.className == "twisty";

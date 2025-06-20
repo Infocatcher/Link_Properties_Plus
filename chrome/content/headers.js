@@ -20,8 +20,10 @@ function commandHandler(e) {
 function clickHandler(e) {
 	var btn = e.target;
 	if(isTwisty(btn) && e.button == 1 && !hasModifier(e)) {
-		if(e.type == "mousedown")
-			e.preventDefault(); // Prevent auto-scroll
+		if(e.type == "mousedown") { // Prevent auto-scroll
+			e.preventDefault();
+			e.stopPropagation();
+		}
 		else {
 			btn.focus();
 			handleTwisty(btn, true);

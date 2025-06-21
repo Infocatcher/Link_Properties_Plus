@@ -37,6 +37,7 @@
 `*` Properties window: improved algorithm to crop too long file names in window title, now preferred length from <em>extensions.linkPropertiesPlus.ownWindow.cropFileNameInTitle</em> preference and leaved path part before file name.<br>
 `*` Properties window: prefer direct URI for window title (better readable in most cases).<br>
 `x` Correctly switch to already already opened properties window with decoded URI and/or referer (<em>extensions.linkPropertiesPlus.decodeURIs</em> = true preference and some non-latin characters in URI like <a href="https://ru.wikipedia.org/wiki/Заглавная_страница">https://ru.wikipedia.org/wiki/Заглавная_страница</a>).<br>
+`*` Improved HTTP headers field: middle-click to collapse/expand all sections (in addition for left-click with any modifier).<br>
 
 ##### 1.6.1 (2017-03-13)
 `x` Fixed compatibility with multi-process mode (Electrolysis aka e10s) in Firefox 47+ (<a href="https://github.com/Infocatcher/Link_Properties_Plus/issues/20">#20</a>).<br>

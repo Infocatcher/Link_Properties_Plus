@@ -33,7 +33,6 @@
 `x` Fixed request error handling in case of not completely opened nsIHttpChannel.<br>
 `+` Added support for “<a href="https://www.rfc-editor.org/rfc/rfc7089.html#section-2.1.1">Memento-Datetime</a>” header.<br>
 `+` Added debug logs (disabled by default, <em>extensions.linkPropertiesPlus.debug</em> preference).<br>
-`*` Properties window: show more information in window title, if file/directory name is too short.<br>
 `*` Properties window: improved algorithm to crop too long file names in window title, now preferred length from <em>extensions.linkPropertiesPlus.ownWindow.cropFileNameInTitle</em> preference and leaved path part before file name.<br>
 `*` Properties window: prefer direct URI for window title (better readable in most cases).<br>
 `x` Correctly switch to already already opened properties window with decoded URI and/or referer (<em>extensions.linkPropertiesPlus.decodeURIs</em> = true preference and some non-latin characters in URI like <a href="https://ru.wikipedia.org/wiki/Заглавная_страница">https://ru.wikipedia.org/wiki/Заглавная_страница</a>).<br>

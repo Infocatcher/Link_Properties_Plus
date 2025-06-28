@@ -53,17 +53,18 @@ var linkPropsPlusCmd = {
 		this.destroyContextMenu();
 		var hide = true;
 		var uri = "";
+		var gCM = gContextMenu;
 		if(
-			gContextMenu
-			&& gContextMenu.onSaveableLink
+			gCM
+			&& gCM.onSaveableLink
 			&& this.lpp.pu.get("context.onLinks")
 		) {
-			uri = typeof gContextMenu.linkURL == "function" // SeaMonkey
-				? gContextMenu.linkURL()
-				: gContextMenu.linkURL;
+			uri = typeof gCM.linkURL == "function" // SeaMonkey
+				? gCM.linkURL()
+				: gCM.linkURL;
 			if(this.isValidURI(uri)) {
-				var sourceDoc = gContextMenu.ownerDoc
-					|| gContextMenu.target && gContextMenu.target.ownerDocument;
+				var sourceDoc = gCM.ownerDoc
+					|| gCM.target && gCM.target.ownerDocument;
 				this.linkURL = uri;
 				this.referer = this._getContextReferer(sourceDoc);
 				this.sourceWindow = sourceDoc.defaultView;
@@ -74,20 +75,20 @@ var linkPropsPlusCmd = {
 			var selObj = document.commandDispatcher.focusedWindow.getSelection();
 			var sel = selObj.toString();
 			if(
-				!sel && gContextMenu && "selectionInfo" in gContextMenu // e10s-compatible
+				!sel && gCM && "selectionInfo" in gCM // e10s-compatible
 				&& (
-					!gContextMenu.selectionInfo.docSelectionIsCollapsed // Document selection
+					!gCM.selectionInfo.docSelectionIsCollapsed // Document selection
 					|| this.lpp.pu.get("context.onSelection.inInputFields") // Or looks like input field
 				)
 			) {
-				sel = gContextMenu.selectionInfo.text;
+				sel = gCM.selectionInfo.text;
 			}
 			if(
 				!sel
-				&& gContextMenu && gContextMenu.target
+				&& gCM && gCM.target
 				&& this.lpp.pu.get("context.onSelection.inInputFields")
 			) {
-				var trg = gContextMenu.target;
+				var trg = gCM.target;
 				if(
 					trg instanceof HTMLTextAreaElement
 					|| trg instanceof HTMLInputElement && trg.type != "password"
@@ -100,14 +101,14 @@ var linkPropsPlusCmd = {
 			uri = this.extractURI(sel);
 			if(
 				!uri // Fallback for Electrolysis + easy way to detect strings like "example.com"
-				&& gContextMenu && gContextMenu.onPlainTextLink
-				&& typeof gContextMenu.linkURL == "string"
+				&& gCM && gCM.onPlainTextLink
+				&& typeof gCM.linkURL == "string"
 			)
-				uri = sel = gContextMenu.linkURL;
+				uri = sel = gCM.linkURL;
 			if(uri) {
-				var sourceDoc = gContextMenu && (
-						gContextMenu.ownerDoc
-						|| gContextMenu.target && gContextMenu.target.ownerDocument
+				var sourceDoc = gCM && (
+						gCM.ownerDoc
+						|| gCM.target && gCM.target.ownerDocument
 					)
 					|| selObj.getRangeAt(0).commonAncestorContainer.ownerDocument; // For SeaMonkey
 				this.linkURL = uri;

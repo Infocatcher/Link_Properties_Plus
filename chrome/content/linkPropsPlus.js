@@ -1543,10 +1543,8 @@ var linkPropsPlusSvc = {
 				if(valNode.textContent == value)
 					return;
 				oldEntry.className += " replaced";
-				//if(this.showDiff)
 				oldEntry.style.textDecoration = "line-through";
 				oldEntry.style.fontStyle = "italic";
-				//oldEntry.style.display = "none";
 			}
 			var activeSection = this._activeSection;
 			this._activeSection = section;
@@ -1575,9 +1573,7 @@ var linkPropsPlusSvc = {
 			if(!entry)
 				return;
 			entry.className += " removed";
-			//if(this.showDiff)
 			entry.style.textDecoration = "line-through";
-			//entry.style.display = "none";
 		},
 		rawData: function(data) {
 			// Note: here may be \0 symbol and we can't copy it

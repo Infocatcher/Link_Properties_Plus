@@ -38,15 +38,15 @@ var linkPropsPlusPageInfo = {
 		// See https://github.com/Infocatcher/Link_Properties_Plus/issues/22
 		var COL_IMAGE_ADDRESS = new window.Function("return COL_IMAGE_ADDRESS;")();
 		var COL_IMAGE_NODE    = new window.Function("return COL_IMAGE_NODE;")();
-		var tree = document.getElementById("imagetree");
-		var numRanges = tree.view.selection.getRangeCount();
+		var tSel = document.getElementById("imagetree").view.selection;
+		var numRanges = tSel.getRangeCount();
 		var links = { __proto__: null };
 		var wins = { __proto__: null };
 		var count = 0;
 		for(var t = 0; t < numRanges; ++t) {
 			var start = {};
 			var end   = {};
-			tree.view.selection.getRangeAt(t, start, end);
+			tSel.getRangeAt(t, start, end);
 			for(var v = start.value; v <= end.value; ++v) {
 				var data = gImageView.data[v];
 				var uri  = data[COL_IMAGE_ADDRESS];

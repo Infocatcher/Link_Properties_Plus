@@ -1760,19 +1760,17 @@ var linkPropsPlusSvc = {
 		if(!textSize)
 			return;
 		var target = this.$l("size");
-		if(this._hasSize) {
-			if(textSize != target.value) {
-				this._lastSizeTip = rawSize;
-				target.tooltipText = textSize;
-			}
-		}
-		else {
+		if(!this._hasSize) {
 			this._hasSize = true;
 			this._lastSize = rawSize;
 			this.setMissingStyle(target, false);
 			target.value = textSize;
 			if(!this._hasSize)
 				target.removeAttribute("tooltiptext");
+		}
+		else if(textSize != target.value) {
+			this._lastSizeTip = rawSize;
+			target.tooltipText = textSize;
 		}
 	},
 	convertSize: function() {

@@ -8,6 +8,8 @@ overlay chrome://browser/content/pageinfo/pageInfo.xul chrome://linkpropsplus/co
 # https://bugzilla.mozilla.org/show_bug.cgi?id=513147
 # Element Properties 4+ https://addons.mozilla.org/firefox/addon/element-properties/
 overlay chrome://properties_darktrojan_net/content/metaData.xul chrome://linkpropsplus/content/overlayMetaData.xul
+# Properties dialog https://addons.palemoon.org/addon/properties-dialog/
+overlay chrome://properties_dialog/content/metaData.xul chrome://linkpropsplus/content/overlayMetaData.xul
 
 override chrome://linkpropsplus/content/ownWindow.xul chrome://linkpropsplus/content/properties.xul
 

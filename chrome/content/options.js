@@ -51,24 +51,35 @@ var linkPropsPlusOpts = {
 			(app == "Firefox" || app == "Pale Moon")
 			&& parseFloat(appInfo.version) >= 3.6
 		) {
-			var guid = "properties@darktrojan.net";
+			var guids = [
+				"properties@darktrojan.net",
+				"{a150bd71-76a4-42d0-bf94-0aab126c801a}" // Properties dialog
+			];
 			if("@mozilla.org/extensions/manager;1" in Components.classes) {
 				Components.classes["@mozilla.org/moz/jssubscript-loader;1"]
 					.getService(Components.interfaces.mozIJSSubScriptLoader)
 					.loadSubScript("chrome://linkpropsplus/content/extsHelper.js");
-				linkPropsPlusExtensionsHelper.isAvailable(guid) && this.hide(propsBox, false);
+				guids.some(function(guid) {
+					var found = linkPropsPlusExtensionsHelper.isAvailable(guid);
+					found && this.hide(propsBox, false);
+					return found;
+				});
 			}
 			else try { // Firefox 4+
 				Components.utils["import"]("resource://gre/modules/AddonManager.jsm");
-				var _this = this;
-				AddonManager.getAddonByID(guid, function(addon) {
-					if(addon && addon.isActive) {
-						_this.hide(propsBox, false)
-						_this.disableDecodeCheckbox();
-						_this.disableHeadersOptions();
-						_this._sizeChanged && window.sizeToContent();
-					}
-				});
+				var found;
+				guids.forEach(function(guid) {
+					var _this = this;
+					AddonManager.getAddonByID(guid, function(addon) {
+						if(addon && addon.isActive && !found) {
+							found = true;
+							_this.hide(propsBox, false)
+							_this.disableDecodeCheckbox();
+							_this.disableHeadersOptions();
+							_this._sizeChanged && window.sizeToContent();
+						}
+					});
+				}, this);
 			}
 			catch(e) {
 				Components.utils.reportError(e);

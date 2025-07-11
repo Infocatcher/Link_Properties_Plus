@@ -104,8 +104,7 @@ var linkPropsPlusOpts = {
 	},
 	_sizeChanged: false,
 	hide: function(node, hide) {
-		var h = node.getAttribute("hidden");
-		if(!hide ^ h == "true")
+		if(hide == (node.getAttribute("hidden") == "true"))
 			return;
 		if(hide)
 			node.setAttribute("hidden", "true");

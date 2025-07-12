@@ -63,6 +63,13 @@ var linkPropsPlusOpts = {
 			this.hide(propsBox, false);
 		}
 
+		if(
+			"linkPropsPlusSvc" in opener
+			&& opener.linkPropsPlusSvc.isPropsDialog
+		) {
+			this.hide(propsBox, false);
+		}
+
 		this._sizeChanged && window.sizeToContent();
 
 		this.setDisabled();

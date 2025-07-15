@@ -181,17 +181,9 @@ var linkPropsPlusOpts = {
 			win = window.opener;
 		if(!win || !("linkPropsPlusSvc" in win))
 			return;
-		var elpSvc = win.linkPropsPlusSvc;
-		var boxId;
-		if(elpSvc.isPropsDialog)
-			boxId = "propertiesBox";
-		else if(elpSvc.isOwnWindow)
-			boxId = "ownWindowBox";
-		else if(elpSvc.isDownloadDialog)
-			boxId = "downloadBox";
-		else
-			return;
-		document.getElementById(boxId).setAttribute("lpp_current", "true");
+		var wt = win.linkPropsPlusSvc.windowType;
+		var boxId = wt && wt + "Box";
+		boxId && document.getElementById(boxId).setAttribute("lpp_current", "true");
 	},
 	savePrefpanes: function() {
 		Array.prototype.forEach.call(

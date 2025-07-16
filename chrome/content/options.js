@@ -174,9 +174,8 @@ var linkPropsPlusOpts = {
 		this.e("testDownloadResumability.download").disabled = dis || !testResumability.checked;
 	},
 	highlight: function(win) {
-		var cur = document.getElementsByAttribute("lpp_current", "true");
-		if(cur.length)
-			cur[0].removeAttribute("lpp_current");
+		var cur = document.getElementsByAttribute("lpp_current", "true")[0] || null;
+		cur && cur.removeAttribute("lpp_current");
 		if(!win)
 			win = window.opener;
 		if(!win || !("linkPropsPlusSvc" in win))

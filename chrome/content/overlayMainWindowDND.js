@@ -16,14 +16,14 @@ var linkPropsPlusDND = {
 		return this.panelPopup = document.getElementById("PanelUI-popup");
 	},
 	buttonDragOver: function(e) {
-		if(this.hasDropLink(e)) {
-			var dt = e.dataTransfer;
-			dt.effectAllowed = dt.dropEffect = "link";
-			e.preventDefault();
-			e.stopPropagation();
-			if(!this.button.hasAttribute("checked"))
-				this.button.setAttribute("checked", "true");
-		}
+		if(!this.hasDropLink(e))
+			return;
+		var dt = e.dataTransfer;
+		dt.effectAllowed = dt.dropEffect = "link";
+		e.preventDefault();
+		e.stopPropagation();
+		if(!this.button.hasAttribute("checked"))
+			this.button.setAttribute("checked", "true");
 	},
 	_firstPanelDragOver: 0,
 	panelButtonDragOver: function(e) {

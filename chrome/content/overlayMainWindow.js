@@ -33,11 +33,11 @@ var linkPropsPlus = {
 		this.setupPanelButton(false);
 	},
 	setupPanelButton: function(setup) {
-		var panelBtn = this.panelBtn;
-		if(panelBtn) {
-			var fn = setup ? panelBtn.addEventListener : panelBtn.removeEventListener;
-			fn.call(panelBtn, "dragover", this, false);
-			fn.call(panelBtn, "dragleave", this, false);
+		var tbbPanel = this.tbbPanel;
+		if(tbbPanel) {
+			var fn = setup ? tbbPanel.addEventListener : tbbPanel.removeEventListener;
+			fn.call(tbbPanel, "dragover", this, false);
+			fn.call(tbbPanel, "dragleave", this, false);
 		}
 	},
 	handleEvent: function(e) {
@@ -63,21 +63,21 @@ var linkPropsPlus = {
 		delete this.mi;
 		return this.mi = this.$("linkPropsPlus-contextMenuitem");
 	},
-	get toolsMi() {
-		delete this.toolsMi;
-		return this.toolsMi = this.$("linkPropsPlus-toolsMenuitem");
+	get miTools() {
+		delete this.miTools;
+		return this.miTools = this.$("linkPropsPlus-toolsMenuitem");
 	},
-	get toolsMiSub() {
-		delete this.toolsMiSub;
-		return this.toolsMiSub = this.$("linkPropsPlus-toolsMenuitemSub");
+	get miToolsSub() {
+		delete this.miToolsSub;
+		return this.miToolsSub = this.$("linkPropsPlus-toolsMenuitemSub");
 	},
-	get appMi() {
-		delete this.appMi;
-		return this.appMi = this.$("linkPropsPlus-appMenuitem");
+	get miApp() {
+		delete this.miApp;
+		return this.miApp = this.$("linkPropsPlus-appMenuitem");
 	},
-	get panelBtn() {
-		delete this.panelBtn;
-		return this.panelBtn = "CustomizableUI" in window
+	get tbbPanel() {
+		delete this.tbbPanel;
+		return this.tbbPanel = "CustomizableUI" in window
 			&& this.$("PanelUI-menu-button");
 	},
 
@@ -90,19 +90,19 @@ var linkPropsPlus = {
 	showMenuitems: function() {
 		var showTools = this.pu.get("showInToolsMenu");
 		var showToolsSub = showTools
-			&& this.toolsMiSub
+			&& this.miToolsSub
 			&& this.pu.get("showInToolsMenuSub");
-		this.toolsMi    && this.toolsMi   .setAttribute("hidden", !(showTools && !showToolsSub));
-		this.toolsMiSub && this.toolsMiSub.setAttribute("hidden", !showToolsSub);
-		this.appMi      && this.appMi     .setAttribute("hidden", !this.pu.get("showInAppMenu"));
+		this.miTools    && this.miTools   .setAttribute("hidden", !(showTools && !showToolsSub));
+		this.miToolsSub && this.miToolsSub.setAttribute("hidden", !showToolsSub);
+		this.miApp      && this.miApp     .setAttribute("hidden", !this.pu.get("showInAppMenu"));
 	},
 	showIcons: function() {
 		const attr = "lpp_iconized";
 		this.mi.setAttribute(attr, this.pu.get("icon.contextMenu"));
 		var iconTools = this.pu.get("icon.toolsMenu");
-		this.toolsMi    && this.toolsMi   .setAttribute(attr, iconTools);
-		this.toolsMiSub && this.toolsMiSub.setAttribute(attr, iconTools);
-		this.appMi      && this.appMi     .setAttribute(attr, this.pu.get("icon.appMenu"));
+		this.miTools    && this.miTools   .setAttribute(attr, iconTools);
+		this.miToolsSub && this.miToolsSub.setAttribute(attr, iconTools);
+		this.miApp      && this.miApp     .setAttribute(attr, this.pu.get("icon.appMenu"));
 	}
 };
 window.addEventListener("load", linkPropsPlus, false);

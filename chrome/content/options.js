@@ -39,9 +39,10 @@ var linkPropsPlusOpts = {
 		var browserWin = wm.getMostRecentWindow("navigator:browser")
 			|| wm.getMostRecentWindow("mail:3pane");
 		if(browserWin && "linkPropsPlus" in browserWin) {
-			if(!browserWin.linkPropsPlus.appMi)
+			var lpp = browserWin.linkPropsPlus;
+			if(!lpp.miApp)
 				this.hide(document.getElementById("appMenuOptions"), true);
-			if(!browserWin.linkPropsPlus.toolsMiSub)
+			if(!lpp.miToolsSub)
 				this.hide(this.e("showInToolsMenuSub"), true);
 		}
 

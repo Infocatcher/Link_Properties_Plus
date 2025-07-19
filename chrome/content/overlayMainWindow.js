@@ -25,6 +25,21 @@ var linkPropsPlus = {
 			_this.showIcons();
 			_this.setupPanelButton(true);
 		}, 50, this);
+
+		var renamed = { //= Deprecated since 2025-07-20
+			toolsMi:    "miTools",
+			toolsMiSub: "miToolsSub",
+			appMi:      "miApp",
+			panelBtn:   "tbbPanel"
+		};
+		for(var p in renamed) {
+			(function(p, pn) {
+				this.__defineGetter__(p, function() {
+					this.ut.warning("linkPropsPlus." + p + " is deprecated, use linkPropsPlus." + pn + " instead");
+					return this[pn];
+				});
+			}).call(this, p, renamed[p]);
+		}
 	},
 	destroy: function() {
 		window.removeEventListener("unload", this, false);

@@ -35,7 +35,10 @@ var linkPropsPlus = {
 		for(var p in renamed) {
 			(function(p, pn) {
 				this.__defineGetter__(p, function() {
-					this.ut.warning("linkPropsPlus." + p + " is deprecated, use linkPropsPlus." + pn + " instead");
+					this.ut.warning(
+						"linkPropsPlus." + p + " is deprecated, use linkPropsPlus." + pn + " instead",
+						Components.stack.caller
+					);
 					return this[pn];
 				});
 			}).call(this, p, renamed[p]);

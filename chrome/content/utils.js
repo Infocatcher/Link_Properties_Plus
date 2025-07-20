@@ -286,7 +286,7 @@ var linkPropsPlusUtils = {
 		);
 		this.console.logMessage(err);
 	},
-	warning: function(msg) {
-		this.error(msg, Components.stack.caller, true);
+	warning: function(msg, caller) {
+		this.error(msg, caller || Components.stack.caller, true);
 	}
 };
